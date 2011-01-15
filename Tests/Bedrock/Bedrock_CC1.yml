@@ -1,0 +1,44 @@
+---
+counter_count:
+ audit_trail:
+   create_date: "2010-05-02T11:00:03-04:00"
+   operator: Bambam Rubble
+   software: TTV Precinct Counter 0.1 JAN-1-2010
+   file_ident: 8F023408009B11DF924800163E3DE33F
+ election_ident: ELECTION-2May2010
+ jurisdiction_ident: JURISDICTION-BedrockCounty
+ precinct_ident: PRECINCT-002Quarry
+ reporting_group: PollingPlaceCast
+ counter_ident: COUNTER-PCOS2
+ cast_ballot_count: 27
+ actual_count_list:
+ - type: contest
+   ident: CONTEST-Mayor
+   undervote_count: 0
+   overvote_count: 0
+   writein_count: 1
+   candidate_count_list:
+   - candidate_ident: CANDIDATE-FredFlintstone
+     count: 9
+   - candidate_ident: CANDIDATE-BettyRubble
+     count: 17
+ - type: contest
+   ident: CONTEST-QuarryCommissioner3
+   undervote_count: 3
+   overvote_count: 0
+   writein_count: 0
+   candidate_count_list:
+   - candidate_ident: CANDIDATE-WilmaFlintstone
+     count: 21
+   - candidate_ident: CANDIDATE-BarneyRubble
+     count: 3
+ - type: question
+   ident: QUESTION-MeasureA
+   undervote_count: 9
+   overvote_count: 1
+   answer_count_list:
+   - answer: "IN FAVOR OF usage fee"
+     count: 10
+   - answer: "AGAINST usage fee"
+     count: 7
+

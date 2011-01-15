@@ -1,0 +1,11 @@
+--- 
+audit_trail: 
+  software: String
+  "|OPT2|": 
+    provenance: 
+    - String
+  "|OPT1|": 
+    hardware: String
+  operator: String
+  create_date: Date
+  file_ident: Any

@@ -1,0 +1,7 @@
+---
+display_name: Precinct 1
+ident: PRECINCT_1
+district_ident_list: [DISTRICT_1, DISTRICT_2]
+expected_count_list:
+- {counter_ident: COUNTER_1, count: 1}
+- {counter_ident: COUNTER_2, count: 2}

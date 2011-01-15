@@ -1,0 +1,200 @@
+#########################
+## ELECTION DEFINITION ##
+#########################
+
+# An Election Definition is all the information about a specific election in
+# specific electoral jurisdiction (e.g., county, parish, township).
+# Represented here is only the subset that is relevant to the processes of
+# counting via counters (e.g. precinct count optical scanners), and of
+# tabulation, i.e., aggregating the counters' output, and producing vote
+# totals for every contest in the election in the jurisdiction.  The list of
+# contests is the complete list of contests across the whole jurisdiction.
+# Each ballot also has a list of contests, typically a subset of the
+# jurisdiction's contest list.
+
+<ElectionDefinition> ::= { election_definition: 
+                 { <AuditTrail>
+                   <Election>
+                   <Jurisdiction>
+                   contest_list:   <Contest>+
+                   candidate_list: <Candidate>+
+                   question_list:  <Question>+
+                   district_list:  <District>+
+                   precinct_list:  <Precinct>+
+                   precount_list:  <Precount>+
+                   counter_list:   <Counter>+
+                   ballot_list:    <Ballot>+
+                 }}
+
+<Election> ::= { election:
+                 { ident:                <UniqueID>
+                   display_name:         <string>
+                   start_date:           <string>
+                 [ type:                 <string>  ]
+		 [ reporting_group_list: <string>+ ]
+                 }}
+
+<UniqueID> ::= <string> | <integer>
+
+<Jurisdiction> ::= { jurisdiction: 
+                 { ident:        <UniqueID>
+                   display_name: <string>
+                 }}
+
+# Electoral Districts are the primary geographic areas in elections, with
+# states at the top.  Each electoral district includes one or more precincts.
+
+<District> ::= { ident:        <UniqueID>
+               	 display_name: <string>
+               [ type:         <string> ]
+		 }
+
+# A Precinct is a local geographic area, typically in multiple electoral
+# Districts, and includes one or more Counters (counting devices)
+
+<Precinct> ::= { ident:        <UniqueID>
+                 display_name: <string>
+		 }
+
+# A Precount gives the expected counts for a Precinct, lists the Districts in
+# which the Precinct lies, and tells how many counts are expected for each
+# Counter in the Precinct.
+
+<Precount> ::= { ident:               <UniqueID>
+                 district_ident_list: <UniqueID>+
+                 expected_count_list: <ExpectedCount>+
+		 }
+
+<ExpectedCount> ::= { counter_ident: <UniqueID>, 
+                      count: <number>
+		      }
+
+# A Counter (counting device) counts votes at a Voting Place in a Precinct,
+# recording each ballot's votes (a cast vote record) and counting the votes
+# for each candidate or question.
+
+<Counter> ::= { ident:        <UniqueID>
+                display_name: <string>
+		}
+
+# A Contest is held in an electoral District and permits Voters to make
+# a Decision regarding who holds Office
+
+<Contest> ::= { ident:          <UniqueID>
+	        display_name:   <string>
+                district_ident: <UniqueID>
+                election_ident: <UniqueID>
+		}
+                
+# A Question is posed in an electoral District and permits Voters to make
+# a Decision regarding a Referendum
+
+<Question> ::= { ident:          <UniqueID>
+	         display_name:   <string>
+                 district_ident: <UniqueID>
+                 election_ident: <UniqueID>
+		 question:       <string>
+		 answer_list:    <string>+
+		}
+                
+# A Candidate runs in a Contest for Office Holder
+
+<Candidate> ::= { ident:              <UniqueID>
+                  display_name:       <string>
+                  contest_ident:      <UniqueID>
+		[ party_display_name: <string>  ]
+                [ position:           <integer> ]
+		  }
+
+# A Ballot is handed out at a Voting Place in a Precinct in which are held a
+# number of Contests
+
+<Ballot> ::= { ident:               <UniqueID>
+               display_name:        <string>
+               precinct_ident:      <UniqueID>
+               contest_ident_list:  <UniqueID>+
+             [ question_ident_list: <UniqueID>+ ]
+	       }
+
+##############
+## COUNTING ##
+##############
+
+# A CounterCount comes from a specific Counter in a specific Precinct, 
+# and encompasses Contest Counts for both type of contest: 
+# Office Holder and Referendum
+
+<CounterCount> ::= { counter_count:
+                     { <AuditTrail>
+                       election_ident:     <UniqueID>
+                       jurisdiction_ident: <UniqueID>
+                       precinct_ident:     <UniqueID>
+                       reporting_group:    <string>
+                       counter_ident:      <UniqueID>
+                       cast_ballot_count:  <number>
+                       actual_count_list:  <ActualCount>+
+                     }}
+
+# An Actual Count includes counts for a candidate or question, and a count
+# of under-votes, over-votes, and an optional count of write-in votes.
+
+<ActualCount> ::= { type:            "contest"
+	            ident:           <UniqueID>
+		    undervote_count: <number>
+                    overvote_count:  <number>
+                  [ writein_count:   <number> ]
+                    candidate_count_list: <CandidateCount>+
+                    } 
+               |
+                  { type:            "question"
+	            ident:           <UniqueID>
+		    undervote_count: <number>
+                    overvote_count:  <number>
+                  [ writein_count:   <number> ]
+                    answer_count_list: <AnswerCount>+
+                    }
+
+<CandidateCount> ::= { candidate_ident: <UniqueID>
+		     [ candidate_name:  <string> ]
+                       count:           <number>
+		       }
+
+<AnswerCount> ::= { answer: <string>, count:  <number>  }
+
+################
+## TABULATION ##
+################
+
+# A Tabulator Count is what a tabulator produces by 
+# (1) accumulating Counter Counts into a list of them;
+# (2) cross check each, and the total set, against an 
+# Election Definition. The total count is produced
+# when the counter count list is complete, i.e., there is a 
+# counter count for each counter in each precinct; the list of
+# counters is part of the Election Definition denoted by the
+# election_id field of Tabulator Count
+
+<TabulatorCount> ::= { tabulator_count:
+                       { <AuditTrail>
+                         election_ident:     <UniqueID>
+                         jurisdiction_ident: <UniqueID>
+			 <ElectionDefinition>
+                         counter_count_list: <CounterCount>+
+                         running_count_list: <ActualCount>+
+                       }}
+
+#################
+## AUDIT TRAIL ##
+#################
+
+<AuditTrail> ::= { audit_trail:
+                  { file_ident:    <UniqueID>
+		    create_date:   <string>
+		    operator:      <string>
+		    software:      <string>
+		  [ schema_verion: <string>    ]
+		  [ type:          <string>    ]
+                  [ hardware:      <string>    ]
+                  [ provenance:    <UniqueID>+ ]
+		  }}
+

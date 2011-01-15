@@ -1,0 +1,4 @@
+--- 
+candidate_name: String
+candidate_ident: String
+count: Integer

@@ -1,0 +1,111 @@
+---
+election_definition:
+  audit_trail:
+    create_date: 2010-04-02T11:00:03-04:00
+    operator: Gregory Granite
+    software: TTV Election Management System 0.1 JAN-1-2010
+    file_ident: 9F023408009B11DF924800163E3DE33F
+  election:
+    ident: ELECTION-2May2010
+    display_name: Bedrock Special Mayoral Election
+    date: 2 May 2010
+    reporting_group_list: [PollingPlaceCast, PollingPlaceProvisional, Absentee]
+  jurisdiction:
+    ident: JURISDICTION-BedrockCounty
+    display_name: Bedrock County
+  district_list:
+  - ident: DISTRICT-BedrockCounty
+    display_name: Bedrock County
+  - ident: DISTRICT-TownOfBedrock
+    display_name: Town of Bedrock
+  - ident: DISTRICT-MineralDistrict
+    display_name: Mineral District
+  precinct_list:
+  - ident: PRECINCT-001Downtown
+    display_name: Downtown Precinct
+  - ident: PRECINCT-002Quarry
+    display_name: Quarry Precinct
+  - ident: PRECINCT-003Unincorporated
+    display_name: Unincorporated Precinct
+  - ident: PRECINCT-004UnincorporatedQuarry
+    display_name: Unincorporated Quarry Precinct
+  precount_list:
+  - ident: PRECINCT-001Downtown
+    display_name: Downtown Precinct
+    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-TownOfBedrock]
+    expected_count_list:
+    - {counter_ident: COUNTER-PCOS1, count: 1}
+    - {counter_ident: COUNTER-CCOS1, count: 2}
+  - ident: PRECINCT-002Quarry
+    display_name: Quarry Precinct
+    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-TownOfBedrock, DISTRICT-MineralDistrict]
+    expected_count_list:
+    - {counter_ident: COUNTER-PCOS2, count: 1}
+  - ident: PRECINCT-003Unincorporated
+    display_name: Unincorporated Precinct
+    district_ident_list: [DISTRICT-BedrockCounty]
+    expected_count_list:
+    - {counter_ident: COUNTER-PCOS3, count: 1}
+    - {counter_ident: COUNTER-CCOS1, count: 2}
+  - ident: PRECINCT-004UnincorporatedQuarry
+    display_name: Unincorporated Quarry Precinct
+    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-MineralDistrict]
+    expected_count_list:
+    - {counter_ident: COUNTER-PCOS4, count: 1}
+    - {counter_ident: COUNTER-CCOS1, count: 2}
+  counter_list:
+  - ident: COUNTER-PCOS1
+    display_name: Precinct Counter 1
+  - ident: COUNTER-PCOS2
+    display_name: Precinct Counter 2
+  - ident: COUNTER-PCOS3
+    display_name: Precinct Counter 3
+  - ident: COUNTER-PCOS4
+    display_name: Precinct Counter 4
+  - ident: COUNTER-CCOS1
+    display_name: The Only Central Counter We Have, And It Wasn't Cheap!
+  contest_list:
+  - ident: CONTEST-Mayor
+    display_name: Mayor of Town of Bedrock
+    district_ident: DISTRICT-TownOfBedrock
+  - ident: CONTEST-QuarryCommissioner3
+    display_name: Quarry Commission, Seat 3
+    district_ident: DISTRICT-MineralDistrict
+  candidate_list:
+  - ident: CANDIDATE-FredFlintstone
+    display_name: Fred Flintstone
+    contest_ident: CONTEST-Mayor
+  - ident: CANDIDATE-BettyRubble
+    display_name: Betty Rubble
+    contest_ident: CONTEST-Mayor
+  - ident: CANDIDATE-WilmaFlintstone
+    display_name: Wilma Flintstone
+    contest_ident: CONTEST-QuarryCommissioner3
+  - ident: CANDIDATE-BarneyRubble
+    display_name: Barney Rubble
+    contest_ident: CONTEST-QuarryCommissioner3
+  question_list:
+  - ident: QUESTION-MeasureA
+    display_name: "Measure A: Quarry Usage Fee"
+    district_ident: DISTRICT-BedrockCounty
+    question: "Shall the County of Bedrock impose a per-day quarry usage fee for the removal of igneous or metamorphic rock only?"
+    answer_list:
+    - "IN FAVOR OF usage fee"
+    - "AGAINST usage fee"
+  ballot_list:
+  - ident: BALLOT-Precinct1
+    display_name: Precinct 1 Ballot
+    precinct_ident: PRECINCT-001Downtown
+    contest_ident_list: [CONTEST-Mayor, CONTEST-MeasureA]
+  - ident: BALLOT-Precinct2
+    display_name: Precinct 2 Ballot
+    precinct_ident: PRECINCT-002Quarry
+    contest_ident_list: [CONTEST-Mayor, CONTEST-QuarryCommissioner3, CONTEST-MeasureA]
+  - ident: BALLOT-Precinct3
+    display_name: Precinct 3 Ballot
+    precinct_ident: PRECINCT-003Unincorporated
+    contest_ident_list: [CONTEST-MeasureA]
+  - ident: BALLOT-Precinct4
+    display_name: Precinct 4 Ballot
+    precinct_ident: PRECINCT-004UnincorporatedQuarry
+    contest_ident_list: [CONTEST-QuarryCommissioner3, CONTEST-MeasureA]

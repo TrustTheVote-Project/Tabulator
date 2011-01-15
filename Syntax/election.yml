@@ -1,0 +1,6 @@
+---
+election:
+  display_name: Election 1
+  ident: ELECTION_1
+  date: 2010-12-10
+  reporting_group_list: [Normal, Absentee]

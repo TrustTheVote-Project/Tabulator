@@ -1,0 +1,6 @@
+--- 
+ident: Any
+question: String
+answer_list: 
+- String
+district_ident: Any

@@ -1,0 +1,57 @@
+#################
+# Ruby Programs #
+#################
+
+operator.rb
+- Operates the Tabulator
+- Prints help info when called without args
+- Reads and Writes the file TABULATOR_COUNT.yml
+
+tabulator.rb
+- The Tabulator
+
+tab_schemas.rb
+- Defines and tests schemas for the syntax recognized by Tabulator
+
+tab_syntax_check.rb
+- Performs syntax checking for the Tabulator
+
+emgr_data_handler.rb
+- Converts two real EMGR datasets into an Election Definition in preparation
+  for syntax checking and validation by the Tabulator
+- Writes the file EMGR_ELECTION_DEFINITION.yml
+
+################
+# Bash Scripts #
+################
+
+TESTS.sh
+- Valid arguments are: <nothing>, syntax, bedrock, dc, va, all
+- <nothing>: run the built-in tests of a simple Election Definition and three
+             Counter Counts, achieving the Tabulator DONE state
+- syntax: run all of the Tabulator syntax tests
+- bedrock: run John's Bedrock tests, with only partial counts
+- dc: convert the DC November 2010 datasets into an Election Definition and
+      have the Tabulator syntax check and then validate it
+- va: convert the VA November 2010 datasets into an Election Definition and
+      have the Tabulator syntax check and then validate it
+- all: run all of the above tests
+
+###############
+# Directories #
+###############
+
+Docs/
+- the BNF for the language recognized by the Tabulator
+- a list of Tabulator ERRORS
+- the Tabulator SPEC
+
+Syntax/
+- schemas and syntax examples for all data processed by the Tabulator
+
+Tests/
+- test files (Election Definitions, Counter Counts, EMGR datasets)
+
+-----------------
+Author: Jeff Cook
+Date: 14 Jan 2011

@@ -1,0 +1,7 @@
+--- 
+audit_trail: 
+  software: GNU
+  file_ident: FILE_1
+  operator: El Jefe
+  create_date: 2010-12-03
+  provenance: [FILE_11, FILE_12]

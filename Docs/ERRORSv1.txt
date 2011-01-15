@@ -1,0 +1,32 @@
+Election Definition
+
+**ED WARNING** Duplicate Reporting Group: Absentee
+**ED ERROR** Non-unique District: DISTRICT_3
+**ED ERROR** Non-unique Precinct: PRECINCT_1
+**ED ERROR** Duplicate Precinct (PRECINCT_1) District: DISTRICT_1
+**ED ERROR** Non-existent Precinct (PRECINCT_1) District: DISTRICT_5
+**ED WARNING** Precinct (PRECINCT_1) has unexpected Counter: COUNTER_5
+**ED WARNING** Precinct (PRECINCT_1) has duplicate expected Counter: COUNTER_1
+**ED WARNING** Not all Counters designated as expected in listed Precincts
+**ED ERROR** Non-unique Counter: COUNTER_2
+**ED ERROR** Non-unique Contest: CONTEST_1
+**ED ERROR** Non-existent Contest (CONTEST_1) District: DISTRICT_5
+**ED ERROR** Non-existent Contest (CONTEST_1) Candidate: CANDIDATE_22
+**ED ERROR** Duplicate Contest (CONTEST_1) Candidate: CANDIDATE_1
+**ED ERROR** Duplicate Contest (CONTEST_2) Answer: A
+
+Counter Count
+
+**CC ERROR** Invalid Election: ELECTION_2
+**CC ERROR** Invalid Jurisdiction: JURISDICTION_12
+**CC ERROR** Invalid Precinct: PRECINCT_12
+**CC ERROR** Invalid Counter: COUNTER_12
+**CC ERROR** Invalid Contest: CONTEST_13
+**CC WARNING** Unrecognized Reporting Group: Foobar
+**CC ERROR** Invalid Contest (CONTEST_1) Candidate: CANDIDATE_10
+**CC ERROR** Improper Contest (CONTEST_1) Candidate: CANDIDATE_3
+**CC ERROR** Duplicate Contest (CONTEST_1) Candidate: CANDIDATE_1
+**CC ERROR** Not all Candidates (CANDIDATE_2) appear in Contest: CONTEST_1
+**CC ERROR** Improper Contest (CONTEST_2) Answer: C
+**CC ERROR** Duplicate Contest (CONTEST_2) Answer: B
+**CC ERROR** Not all Answers (B, C) appear in Contest: CONTEST_2

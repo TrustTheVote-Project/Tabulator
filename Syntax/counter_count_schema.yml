@@ -1,0 +1,32 @@
+--- 
+counter_count: 
+  jurisdiction_ident: Any
+  actual_count_list: 
+  - "|OR|": 
+    - candidate_count_list: 
+      - candidate_ident: Any
+        count: Integer
+    - answer_count_list: 
+      - answer: String
+        count: Integer
+    overvote_count: Integer
+    type: String
+    "|OPT|": 
+      writein_count: Integer
+    ident: Any
+    undervote_count: Integer
+  cast_ballot_count: Integer
+  audit_trail: 
+    software: String
+    "|OPT2|": 
+      provenance: 
+      - String
+    "|OPT1|": 
+      hardware: String
+    operator: String
+    create_date: Date
+    file_ident: Any
+  counter_ident: Any
+  reporting_group: String
+  precinct_ident: Any
+  election_ident: Any

@@ -1,0 +1,70 @@
+--- 
+tabulator_count: 
+  jurisdiction_ident: Any
+  audit_trail: &id002 
+    software: String
+    "|OPT2|": 
+      provenance: 
+      - String
+    "|OPT1|": 
+      hardware: String
+    operator: String
+    create_date: Date
+    file_ident: Any
+  running_count_list: 
+  - &id001 
+    "|OR|": 
+    - candidate_count_list: 
+      - candidate_ident: Any
+        count: Integer
+    - answer_count_list: 
+      - answer: String
+        count: Integer
+    overvote_count: Integer
+    type: String
+    "|OPT|": 
+      writein_count: Integer
+    ident: Any
+    undervote_count: Integer
+  election_definition: 
+    precinct_list: 
+    - ident: Any
+    question_list: 
+    - ident: Any
+      question: String
+      answer_list: 
+      - String
+      district_ident: Any
+    jurisdiction: 
+      ident: Any
+    candidate_list: 
+    - contest_ident: Any
+      ident: Any
+    counter_list: 
+    - ident: Any
+    election: 
+      ident: Any
+    district_list: 
+    - ident: Any
+    contest_list: 
+    - ident: Any
+      district_ident: Any
+    precount_list: 
+    - ident: Any
+      district_ident_list: 
+      - Any
+      expected_count_list: 
+      - counter_ident: Any
+        count: Integer
+  counter_count_list: 
+  - counter_count: 
+      jurisdiction_ident: Any
+      actual_count_list: 
+      - *id001
+      cast_ballot_count: Integer
+      audit_trail: *id002
+      counter_ident: Any
+      reporting_group: String
+      precinct_ident: Any
+      election_ident: Any
+  election_ident: Any
