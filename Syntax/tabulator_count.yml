@@ -97,5 +97,27 @@ tabulator_count:
       ident: BALLOT_1
     - display_name: Ballot 2
       ident: BALLOT_2
-  running_count_list: []
+  contest_count_list: 
+  - contest_ident: CONTEST_1
+    undervote_count: 1
+    overvote_count: 2
+    writein_count: 3
+    candidate_count_list:
+    - candidate_name: Candidate 1
+      candidate_ident: CANDIDATE_1
+      count: 7
+    - candidate_name: Candidate 2
+      candidate_ident: CANDIDATE_2
+      count: 9
+  question_count_list: 
+  - question_ident: QUESTION_2
+    undervote_count: 4
+    overvote_count: 5
+    answer_count_list:
+    - answer: A
+      count: 10
+    - answer: B
+      count: 55
+    - answer: C
+      count: 99
   counter_count_list: []

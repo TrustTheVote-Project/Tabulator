@@ -1,5 +1,7 @@
 --- 
-counter_count: 
+counter_count:   
+  counter_ident: COUNTER_2
+  reporting_group: Normal
   election_ident: ELECTION_1
   audit_trail: 
     software: GNU
@@ -9,11 +11,11 @@ counter_count:
   cast_ballot_count: 99
   jurisdiction_ident: JURISDICTION_1
   precinct_ident: PRECINCT_2
-  actual_count_list: 
-  - type: question
+  question_count_list: 
+  - question_ident: QUESTION_2
     undervote_count: 4
     overvote_count: 5
-    ident: QUESTION_2
+    
     answer_count_list: 
     - answer: A
       count: 10
@@ -21,5 +23,4 @@ counter_count:
       count: 55
     - answer: C
       count: 99
-  reporting_group: Normal
-  counter_ident: COUNTER_2
+  contest_count_list: []

@@ -11,9 +11,8 @@ counter_count:
  reporting_group: PollingPlaceCast
  counter_ident: COUNTER-PCOS2
  cast_ballot_count: 27
- actual_count_list:
- - type: contest
-   ident: CONTEST-Mayor
+ contest_count_list:
+ - contest_ident: CONTEST-Mayor
    undervote_count: 0
    overvote_count: 0
    writein_count: 1
@@ -22,8 +21,7 @@ counter_count:
      count: 9
    - candidate_ident: CANDIDATE-BettyRubble
      count: 17
- - type: contest
-   ident: CONTEST-QuarryCommissioner3
+ - contest_ident: CONTEST-QuarryCommissioner3
    undervote_count: 3
    overvote_count: 0
    writein_count: 0
@@ -32,8 +30,8 @@ counter_count:
      count: 21
    - candidate_ident: CANDIDATE-BarneyRubble
      count: 3
- - type: question
-   ident: QUESTION-MeasureA
+ question_count_list:
+ - question_ident: QUESTION-MeasureA
    undervote_count: 9
    overvote_count: 1
    answer_count_list:

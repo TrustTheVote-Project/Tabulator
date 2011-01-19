@@ -8,7 +8,7 @@ class UidErr < Exception
 end
 
 class ShouldntErr < Exception
-  def initialize(tag, mesg)
+  def initialize(mesg)
     print "\n**FATAL ERROR SHOULD NOT HAPPEN (#{tag})**\n**#{mesg}\n\n"
   end
 end
@@ -48,32 +48,43 @@ end
 def tabulator_initaliaze
   $unique_ids = Hash.new { |h,k| h[k] = [] }
   $precinct_distids = Hash.new { |h,k| h[k] = [] }
-  $count_info = Hash.new { |h,k| h[k] = {} }
   $precinct_counts = Hash.new { |h,k| h[k] = {} }
+  $contest_count_info = Hash.new { |h,k| h[k] = {} }
+  $question_count_info = Hash.new { |h,k| h[k] = {} }
 end
 
-def tab_init_votes
-  $count_info.sort.each do |k, v|
-    v['overvote_count']=0
-    v['undervote_count']=0
-    v['writein_count']=0 if ($count_info[k]['type'] == 'contest')
-    v['items'].each { |id| v[id]=0 }
+def tab_incr_contest_xvote(conid, id, n)
+  unless $contest_count_info[conid].key?(id)
+    raise ShouldntErr.new("No such vote type (#{id}) for Contest ID: #{conid}\n")
   end
+  $contest_count_info[conid][id] += n
 end
 
-def tab_incr_vote(conid, id, n)
-  tab_check_vote(conid,id)
-  $count_info[conid][id] += n
+def tab_incr_contest_candidate_count(conid, canid, n)
+  $contest_count_info[conid]['candidate_count_list'].each do |cc|
+    if (cc['candidate_ident'] == canid)
+      cc['count'] += n
+      return
+    end
+  end
+  raise ShouldntErr.new("No such Candidate ID (#{canid}) for Contest ID: #{conid}\n")
 end
 
-def tab_check_vote(conid, id) # Keep making sure $count_info is well-formed
-  raise ShouldntErr.new('UV',"No such Contest: #{conid}") unless
-    $count_info.key?(conid)
-  raise ShouldntErr.new('UV',"No such #{conid} Vote Item: #{id}") unless
-    $count_info[conid].key?(id)
-  vote = $count_info[conid][id]
-  raise ShouldntErr.new('UV',"Non-numeric #{conid}/#{id} Vote: #{vote}") unless
-    vote.is_a?(Integer)
+def tab_incr_question_xvote(qid, id, n)
+  unless $question_count_info[qid].key?(id)
+    raise ShouldntErr.new("No such vote type (#{id}) for Question ID: #{qid}\n")
+  end
+  $question_count_info[qid][id] += n
+end
+
+def tab_incr_question_answer_count(qid, aid, n)
+  $question_count_info[qid]['answer_count_list'].each do |cc|
+    if (cc['answer'] == aid)
+      cc['count'] += n
+      return
+    end
+  end
+  raise ShouldntErr.new("No such Answer ID (#{aid}) for Question ID: #{qid}\n")
 end
 
 def tabulator_validate_election_definition(edinfo)
@@ -124,26 +135,28 @@ def tabulator_validate_election_definition(edinfo)
     conid = contest['ident']
     did = contest['district_ident']
     tab_check_district_id(did, conid, 'Contest')
-    $count_info[conid]['items'] = []
-    $count_info[conid]['type'] = 'contest'
+    $contest_count_info[conid]['contest_ident'] = conid
+    $contest_count_info[conid]['overvote_count'] = 0
+    $contest_count_info[conid]['undervote_count'] = 0
+    $contest_count_info[conid]['writein_count'] = 0
+    $contest_count_info[conid]['candidate_count_list'] = []
   end
   edinfo['candidate_list'].each do |candidate|
     canid = candidate['ident']
     conid = candidate['contest_ident']
     tab_check_candidate_contest_id(canid,conid)
-    tab_new_count_subid(conid,canid,'Candidate','candidate')
+     $contest_count_info[conid]['candidate_count_list'].push({"candidate_ident"=>canid, "count"=>0})
   end
   edinfo['question_list'].each do |question|
     qid = question['ident']
     did = question['district_ident']
     tab_check_district_id(did, qid, 'Question')
-    $count_info[qid]['items'] = []
-    $count_info[qid]['type'] = 'question'
-    question['answer_list'].each do |answer|
-      tab_new_count_subid(question['ident'],answer,'Answer')
-    end
+    $question_count_info[qid]['question_ident'] = qid
+    $question_count_info[qid]['overvote_count'] = 0
+    $question_count_info[qid]['undervote_count'] = 0
+    $question_count_info[qid]['answer_count_list'] = 
+      question['answer_list'].collect {|ans| {"answer"=> ans,"count"=> 0}}
   end
-  tab_init_votes()
 end
 
 def tab_check_precinct_id(pid)
@@ -193,11 +206,6 @@ def tab_new_precinct_district(uid, subid, text, subname = '')
   $precinct_distids[uid].push(subid.to_s)
 end
 
-def tab_new_count_subid(uid, subid, text, subname = '')
-  tab_check_subid($count_info[uid]['items'],'Contest',uid,subid,text,subname)
-  $count_info[uid]['items'].push(subid.to_s)
-end
-
 def tab_uid_exists?(name, uid)
   #print "tab_uid_exists? name: #{name} uid: #{uid}\n\n"
   return $unique_ids[name].include?(uid.to_s)
@@ -208,21 +216,40 @@ def tab_check_uid(tag, name, uid) # Invalid if Non-existent
     tab_uid_exists?(name,uid)
 end
 
-def tab_check_count_items(ids, uid, text) # Not all present
-  if (ids.length != $count_info[uid]['items'].length)
-      unids = $count_info[uid]['items'] - ids
+def tab_check_contest_count_items(count_info, ids, uid, text) # Not all present
+  if (ids.length != count_info[uid]['candidate_count_list'].length)
+      unids = count_info[uid]['candidate_count_list'] - ids
       unids = unids.inspect.sub(/\[\"/,'(').sub(/\"\]/,')').gsub(/\"/,'')
     raise UidErr.new('CC',"Not all #{text} #{unids} appear in Contest: #{uid}") 
   end
 end
 
-def tab_check_count_item(conid, id, existing, text) # Invalid, Improper, Duplicate
+def tab_check_question_count_items(count_info, ids, uid, text) # Not all present
+  if (ids.length != count_info[uid]['answer_count_list'].length)
+      unids = count_info[uid]['answer_count_list'] - ids
+      unids = unids.inspect.sub(/\[\"/,'(').sub(/\"\]/,')').gsub(/\"/,'')
+    raise UidErr.new('CC',"Not all #{text} #{unids} appear in Contest: #{uid}") 
+  end
+end
+
+def tab_check_contest_count_item(count_info, conid, id, existing, text) # Invalid, Improper, Duplicate
   if (text == 'Candidate')
     raise UidErr.new('CC',"Invalid Contest (#{conid}) Candidate: #{id}") unless
       tab_uid_exists?('candidate',id)
   end
-  raise UidErr.new('CC',"Improper Contest (#{conid}) #{text}: #{id}") unless
-    $count_info[conid]['items'].include?(id.to_s)
+  # JVC raise UidErr.new('CC',"Improper Contest (#{conid}) #{text}: #{id}") unless
+  #  count_info[conid]['candidate_count_list'].include?(id.to_s)
+  raise UidErr.new('CC',"Duplicate Contest (#{conid}) #{text}: #{id}") if
+    existing.include?(id.to_s)
+end
+
+def tab_check_question_count_item(count_info, conid, id, existing, text) # Invalid, Improper, Duplicate
+  if (text == 'Candidate')
+    raise UidErr.new('CC',"Invalid Contest (#{conid}) Candidate: #{id}") unless
+      tab_uid_exists?('candidate',id)
+  end
+  # JVC raise UidErr.new('CC',"Improper Contest (#{conid}) #{text}: #{id}") unless
+  # JVC  count_info[conid]['answer_count_list'].include?(id.to_s)
   raise UidErr.new('CC',"Duplicate Contest (#{conid}) #{text}: #{id}") if
     existing.include?(id.to_s)
 end
@@ -244,48 +271,38 @@ def tab_check_question_id(conid, conids)
   true
 end
 
-def tab_validate_actual_count(ac, acids)
-  type = ac['type']
-  acid = ac['ident']
-  if (type == "contest")
-    acids.push(acid.to_s) if tab_check_contest_id(acid, acids)
-    canids = []
-    ac['candidate_count_list'].each do |offcount|
-      canid = offcount['candidate_ident']
-      tab_check_count_item(acid, canid, canids, 'Candidate')
-      canids.push(canid.to_s)
-    end
-    tab_check_count_items(canids,acid,'Candidates')
-  else
-    acids.push(acid.to_s) if tab_check_question_id(acid, acids)
-    ansids = []
-    ac['answer_count_list'].each do |anscount|
-      ansid = anscount['answer']
-      tab_check_count_item(acid,ansid,ansids,'Answer')
-      ansids.push(ansid.to_s)
-    end
-    tab_check_count_items(ansids,acid,'Answer')
+def tab_validate_contest_count(cc, conids)
+  conid = cc['contest_ident']
+  conids.push(conid.to_s) if tab_check_contest_id(conid, conids)
+  canids = []
+  cc['candidate_count_list'].each do |cancount|
+    canid = cancount['candidate_ident']
+    tab_check_contest_count_item($contest_count_info, conid, canid, canids, 'Candidate')
+    canids.push(canid.to_s)
   end
-  acids
+  tab_check_contest_count_items($contest_count_info, canids, conid,'Candidates')
+  conids
 end
 
-def tab_build_running_counts
-  $count_info.keys.sort.collect do |k|
-    ((v = $count_info[k])['type'] == 'contest' ?
-     {"type"=>"contest",
-       "ident"=> k,
-       "undervote_count"=> v['undervote_count'],
-       "overvote_count"=> v['overvote_count'],
-       "writein_count"=> v['writein_count'],
-       "candidate_count_list"=>
-       v['items'].collect { |id| {"candidate_ident"=>id, "count"=> v[id]}}} :
-     {"type"=>"question",
-       "ident"=> k,
-       "undervote_count"=> v['undervote_count'],
-       "overvote_count"=> v['overvote_count'],
-       "answer_count_list"=>
-       v['items'].collect { |ans| {"answer"=>ans, "count"=> v[ans]}}})
+def tab_validate_question_count(qc, qids)
+  qid = qc['question_ident']
+  qids.push(qid.to_s) if tab_check_question_id(qid, qids)
+  ansids = []
+  qc['answer_count_list'].each do |anscount|
+    ansid = anscount['answer']
+    tab_check_question_count_item($question_count_info, qid, ansid, ansids, 'Answer')
+    ansids.push(ansid.to_s)
   end
+  tab_check_question_count_items($question_count_info, ansids, qid, 'Answer')
+  qids
+end
+
+def tab_build_contest_counts
+  $contest_count_info.keys.sort.collect { |k| $contest_count_info[k] }
+end
+
+def tab_build_question_counts
+  $question_count_info.keys.sort.collect { |k| $question_count_info[k] }
 end
 
 def tabulator_validate_counter_count(ccval) # counter_count val
@@ -297,8 +314,12 @@ def tabulator_validate_counter_count(ccval) # counter_count val
     tab_uid_exists?('reporting_group',reporting_group)
   counter_id = tab_check_uid('CC', 'counter', ccval['counter_ident'])
   conids = []
-  ccval['actual_count_list'].each do |actual_count|
-    conids = tab_validate_actual_count(actual_count, conids)
+  ccval['contest_count_list'].each do |cc|
+    conids = tab_validate_contest_count(cc, conids)
+  end
+  qids = []
+  ccval['question_count_list'].each do |qc|
+    qids = tab_validate_question_count(qc, qids)
   end
 end
 
@@ -321,9 +342,15 @@ def tabulator_accumulated_counter_counts(tc)
     else
       accumulated_counts[pid][cid] = 1
     end
-    counter_count['actual_count_list'].each do |actual_count|
-      conid = actual_count['ident']
-      accumulated_conids.push(conid.to_s) unless accumulated_conids.include?(conid.to_s)
+    counter_count['contest_count_list'].each do |cc|
+      conid = cc['contest_ident']
+      accumulated_conids.push(conid.to_s) unless
+        accumulated_conids.include?(conid.to_s)
+    end
+    counter_count['question_count_list'].each do |qc|
+      qid = qc['question_ident']
+      accumulated_conids.push(qid.to_s) unless
+        accumulated_conids.include?(qid.to_s)
     end
   end
   [accumulated_counts, $unique_ids['contest'] - accumulated_conids]
@@ -339,24 +366,33 @@ def tabulator_validate_tabulator_count(tc)
       tab_new_uid_check2('file',fid)
     end
   end
-  tabulator_gather_votes(tc['tabulator_count']['running_count_list'])
+  tc['tabulator_count']['contest_count_list'].each do |cc|
+    $contest_count_info[cc['contest_ident']] = cc
+  end
+  tc['tabulator_count']['question_count_list'].each do |qc|
+    $question_count_info[qc['question_ident']] = qc
+  end
   tc
 end
 
-def tabulator_gather_votes(actual_count_list)
-  actual_count_list.each do |acount|
-    acid = acount['ident']
-    tab_incr_vote(acid,'overvote_count',acount['overvote_count'])
-    tab_incr_vote(acid,'undervote_count',acount['undervote_count'])
-    if (acount['type'] == "contest")
-      tab_incr_vote(acid,'writein_count',acount['writein_count'])
-      acount['candidate_count_list'].each do |cancount|
-        tab_incr_vote(acid,cancount['candidate_ident'],cancount['count'])
-      end
-    else
-      acount['answer_count_list'].each do |anscount|
-        tab_incr_vote(acid,anscount['answer'],anscount['count'])
-      end
+def tabulator_gather_votes(contest_count_list, question_count_list)
+  contest_count_list.each do |cc|
+    conid = cc['contest_ident']
+    tab_incr_contest_xvote(conid,'overvote_count',cc['overvote_count'])
+    tab_incr_contest_xvote(conid,'undervote_count',cc['undervote_count'])
+    tab_incr_contest_xvote(conid,'writein_count',cc['writein_count'])
+    cc['candidate_count_list'].each do |cancount|
+      tab_incr_contest_candidate_count(conid,
+                                       cancount['candidate_ident'],
+                                       cancount['count'])
+    end
+  end
+  question_count_list.each do |qc|
+    qid = qc['question_ident']
+    tab_incr_question_xvote(qid,'overvote_count',qc['overvote_count'])
+    tab_incr_question_xvote(qid,'undervote_count',qc['undervote_count'])
+    qc['answer_count_list'].each do |anscount|
+      tab_incr_question_answer_count(qid,anscount['answer'],anscount['count'])
     end
   end
 end
@@ -372,7 +408,8 @@ def tabulator_new(edinfo)
         "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S"),
       },
       "election_definition"=>edinfo,
-      "running_count_list"=>tab_build_running_counts(),
+      "contest_count_list"=>tab_build_contest_counts(),
+      "question_count_list"=>tab_build_question_counts(),
       "counter_count_list"=>[]}}
 end
 
@@ -380,18 +417,17 @@ def tabulator_update(tc, cc)
   fid = cc['counter_count']['audit_trail']['file_ident']
   at = tc['tabulator_count']['audit_trail']
   (at['provenance'] ? at['provenance'].push(fid.to_s) : at['provenance'] = [fid])
-  tc['tabulator_count']['running_count_list'] = tab_build_running_counts()
   tc['tabulator_count']['counter_count_list'].push(cc)
   tc
 end
 
 def tabulator_spreadsheet
-  info = $count_info.collect do |k, v|
+  info = $contest_count_info.collect do |k, v|
     [['CONTEST', 'undervote_count','overvote_count','writein_count'] +
-     v['items'].collect { |id| id },
+     v['candidate_count_list'].collect { |id| id },
      [k, v['undervote_count'],v['overvote_count'],
-     ($count_info[k]['type'] == 'contest' ? v['writein_count'] : 0 )] +
-     v['items'].collect { |id| v[id] }]
+     ($contest_count_info[k]['type'] == 'contest' ? v['writein_count'] : 0 )] +
+     v['candidate_count_list'].collect { |id| v[id] }]
   end
   lastinfo = info.collect do |x|
     str = ''
@@ -414,16 +450,23 @@ def tabulator_dump_data
       print "      #{c}: ",n,"\n"
     end
   end
-  print "  Contest/Question Info:\n"
-  $count_info.sort.each do |k, v|
-    print "    #{k}: ",v['type']," ",v['items'].inspect.gsub(/\"/,''),"\n"
+  print "  Contest Info:\n"
+  $contest_count_info.sort.each do |k, v|
+    print "    #{k}:\n"
     print "      overvote = #{v['overvote_count']}, "
-    print "undervote = #{v['undervote_count']}"
-    (v['type'] == 'contest' ?
-     (print ", writeins = #{v['writein_count']}\n") :
-     (print "\n"))
-    v['items'].sort.each do |item|
-      print "      #{item} = #{v[item]}\n"
+    print "undervote = #{v['undervote_count']}, "
+    print "writeins = #{v['writein_count']}\n"
+    v['candidate_count_list'].each do |item|
+      print "      #{item['candidate_ident']} = #{item['count']}\n"
+    end
+  end
+  print "  Question Info:\n"
+  $question_count_info.sort.each do |k, v|
+    print "    #{k}:\n"
+    print "      overvote = #{v['overvote_count']}, "
+    print "undervote = #{v['undervote_count']}\n"
+    v['answer_count_list'].each do |item|
+      print "      #{item['answer']} = #{item['count']}\n"
     end
   end
   print "\n"

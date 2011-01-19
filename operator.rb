@@ -205,7 +205,8 @@ def operator_file(file)
     tabulator_check_duplicate_counter_count(cc['counter_count'])
     tabulator_validate_counter_count(cc['counter_count'])
     print ": OK\n\n"
-    tabulator_gather_votes(cc['counter_count']['actual_count_list'])
+    tabulator_gather_votes(cc['counter_count']['contest_count_list'],
+                           cc['counter_count']['question_count_list'])
     tc = tabulator_update(tc,cc)
     op_write_yaml_file(tabulator_count_file(),tc,'Tabulator Count')
     print "TABULATOR DONE!!!\n\n" if op_state_donep(tc)

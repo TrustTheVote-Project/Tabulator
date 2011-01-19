@@ -36,16 +36,19 @@ $ts_election_definition_info =
   "counter_list"=>[$ts_counter_info]}
 $ts_election_definition =
   {"election_definition"=>$ts_election_definition_info}
-$ts_answer_count = {"answer"=>"String", "count"=>"Integer"}
 $ts_candidate_count = {"candidate_ident"=>"Any","count"=>"Integer"}
-$ts_actual_count =
-  {"ident"=>"Any",
-  "type"=>"String",
+$ts_contest_count =
+  {"contest_ident"=>"Any",
   "undervote_count"=>"Integer",
   "overvote_count"=>"Integer",
   "|OPT|"=>{"writein_count","Integer"},
-  "|OR|"=>[{"candidate_count_list"=>[$ts_candidate_count]},
-           {"answer_count_list"=>[$ts_answer_count]}]}
+  "candidate_count_list"=>[$ts_candidate_count]}
+$ts_answer_count = {"answer"=>"String", "count"=>"Integer"}
+$ts_question_count =
+  {"question_ident"=>"Any",
+  "undervote_count"=>"Integer",
+  "overvote_count"=>"Integer",
+  "answer_count_list"=>[$ts_answer_count]}
 $ts_audit_trail_info =
   {"file_ident"=>"Any",
   "create_date"=>"Date",
@@ -63,7 +66,8 @@ $ts_counter_count =
     "reporting_group"=>"String",
     "counter_ident"=>"Any",
     "cast_ballot_count"=>"Integer",
-    "actual_count_list"=>[$ts_actual_count]}}
+    "contest_count_list"=>[$ts_contest_count],
+    "question_count_list"=>[$ts_question_count]}}
 $ts_tabulator_count =
   {"tabulator_count"=>
   {"audit_trail"=>$ts_audit_trail_info,
@@ -71,7 +75,8 @@ $ts_tabulator_count =
     "jurisdiction_ident"=>"Any",
     "election_definition"=>$ts_election_definition_info,
     "counter_count_list"=>[$ts_counter_count],
-    "running_count_list"=>[$ts_actual_count]}}
+    "contest_count_list"=>[$ts_contest_count],
+    "question_count_list"=>[$ts_question_count]}}
 
 def read_yaml_file(file, label = "")
   print "Reading YAML #{label} file: #{file}\n" if label != ""
@@ -98,8 +103,9 @@ def write_schema_files
   write_yaml_file("Syntax/counter_info_schema.yml",$ts_counter_info)
   write_yaml_file("Syntax/election_definition_schema.yml",$ts_election_definition)
   write_yaml_file("Syntax/answer_count_schema.yml",$ts_answer_count)
-  write_yaml_file("Syntax/candidate_count_schema.yml",$ts_candidate_count)
   write_yaml_file("Syntax/question_count_schema.yml",$ts_question_count)
+  write_yaml_file("Syntax/candidate_count_schema.yml",$ts_candidate_count)
+  write_yaml_file("Syntax/contest_count_schema.yml",$ts_contest_count)
   write_yaml_file("Syntax/counter_count_schema.yml",$ts_counter_count)
   write_yaml_file("Syntax/audit_trail_schema.yml",$ts_audit_trail)
   write_yaml_file("Syntax/tabulator_count_schema.yml",$ts_tabulator_count)
@@ -131,8 +137,10 @@ def schemas_check_syntax
   schema_check("election_definition")
   schema_check("answer_count", "_A")
   schema_check("answer_count", "_B")
+  schema_check("question_count")
   schema_check("candidate_count", "_1")
   schema_check("candidate_count", "_2")
+  schema_check("contest_count")
   schema_check("audit_trail")
   schema_check("audit_trail", "_hardware")
   schema_check("audit_trail", "_provenance")

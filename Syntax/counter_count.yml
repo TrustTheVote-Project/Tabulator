@@ -9,9 +9,8 @@ counter_count:
   cast_ballot_count: 99
   jurisdiction_ident: JURISDICTION_1
   precinct_ident: PRECINCT_1
-  actual_count_list: 
-  - type: contest
-    ident: CONTEST_1
+  contest_count_list: 
+  - contest_ident: CONTEST_1
     undervote_count: 1
     overvote_count: 2
     writein_count: 3
@@ -22,8 +21,8 @@ counter_count:
     - candidate_name: Candidate 2
       candidate_ident: CANDIDATE_2
       count: 9
-  - type: question
-    ident: QUESTION_2
+  question_count_list: 
+  - question_ident: QUESTION_2
     undervote_count: 4
     overvote_count: 5
     answer_count_list:
