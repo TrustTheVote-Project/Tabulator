@@ -13,11 +13,11 @@ def check_syntax_internal(schema, datum, n) # n is depth of datum
     (datum.is_a?(Array) ?
      ((datum.length == 0) ||
       check_syntax_array(0, schema[0], datum, n)) :
-     check_syntax_error(5, schema, datum))
+     check_syntax_error(6, schema, datum))
   elsif (schema.is_a?(Hash))
     (datum.is_a?(Hash) ?
      check_syntax_hash(0, schema.keys, schema, datum, n) :
-     check_syntax_error(6, schema, datum))
+     check_syntax_error(7, schema, datum))
   else
     check_syntax_error(0, schema, datum)
   end
@@ -35,13 +35,16 @@ def check_syntax_string(schema, datum, n)
      ((schema == "Date") ?
       ((datum.is_a?(String) || datum.is_a?(Date)) ||
        check_syntax_error(4, schema, datum)) :
-      check_syntax_error(1, schema, datum)))))
+      ((schema == "Atomic") ?
+       ((datum.is_a?(Integer) || datum.is_a?(String) || datum.is_a?(Date)) ||
+        check_syntax_error(5, schema, datum)) :
+       check_syntax_error(1, schema, datum))))))
 end
 
 def check_syntax_array(i, schema, datum, n) # i is array index
   check_syntax_trace("check_syntax_array#{i}", schema, datum, n)
   ((check_syntax_internal(schema, datum[i], n+1) ||
-    check_syntax_error(7, schema, datum, i)) &&
+    check_syntax_error(8, schema, datum, i)) &&
     ((datum.length == i+1) || check_syntax_array(i+1, schema, datum, n)))
 end
 
@@ -56,21 +59,21 @@ def check_syntax_hash_key(key, schema, datum, n)
   ((key =~ /^\|OR.*\|/) ?
    ((datum.key?(schema[key][0].keys[0])) ?
     ((datum.key?(schema[key][1].keys[0])) ?
-     check_syntax_error(13, schema, datum) :
+     check_syntax_error(14, schema, datum) :
      (check_syntax_hash_key(schema[key][0].keys[0], schema[key][0], datum, n) ||
-      check_syntax_error(12, schema, datum, "First"))) :
+      check_syntax_error(13, schema, datum, "First"))) :
     ((datum.key?(schema[key][1].keys[0])) ?
      (check_syntax_hash_key(schema[key][1].keys[0], schema[key][1], datum, n) ||
-      check_syntax_error(12, schema, datum, "Second")) :
-     check_syntax_error(11, schema, datum))) :
+      check_syntax_error(13, schema, datum, "Second")) :
+     check_syntax_error(12, schema, datum))) :
    ((key =~ /^\|OPT.*\|/) ?
     ( ! datum.key?(schema[key].keys[0]) ||
      (check_syntax_hash_key(schema[key].keys[0], schema[key], datum, n) ||
-      check_syntax_error(10, schema, datum))) :
+      check_syntax_error(11, schema, datum))) :
     (datum.key?(key) ?
      (check_syntax_internal(schema[key], datum[key], n) ||
-      check_syntax_error(9, schema, datum, key)) :
-     check_syntax_error(8, schema, datum, key))))
+      check_syntax_error(10, schema, datum, key)) :
+     check_syntax_error(9, schema, datum, key))))
 end
 
 $check_syntax_trace = false
@@ -101,22 +104,24 @@ def check_syntax_error(errcode, schema, datum, extra = '')
   when 4
     print "Datum not a Date"
   when 5
-    print "Datum not an Array (Sequence)"
+    print "Datum not Atomic"
   when 6
-    print "Datum not a Hash (Dictionary)"
+    print "Datum not an Array (Sequence)"
   when 7
-    print "Array element Datum[#{extra}] of incorrect type"
+    print "Datum not a Hash (Dictionary)"
   when 8
-    print "Hash key \'#{extra}\' not found in Datum"
+    print "Array element Datum[#{extra}] of incorrect type"
   when 9
-    print "Hash value Datum[#{extra}] of incorrect type"
+    print "Hash key \'#{extra}\' not found in Datum"
   when 10
-    print "OPT(ional) Hash value of incorrect type"
+    print "Hash value Datum[#{extra}] of incorrect type"
   when 11
-    print "Failure to match either key in OR Hash"
+    print "OPT(ional) Hash value of incorrect type"
   when 12
-    print "#{extra} OR hash value of incorrect type"
+    print "Failure to match either key in OR Hash"
   when 13
+    print "#{extra} OR hash value of incorrect type"
+  when 14
     print "Both keys present for OR hash"
   else
     print "Unknown error code: #{errcode}"

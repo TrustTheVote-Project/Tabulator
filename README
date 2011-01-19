@@ -27,8 +27,8 @@ emgr_data_handler.rb
 
 TESTS.sh
 - Valid arguments are: <nothing>, syntax, bedrock, dc, va, all
-- <nothing>: run the built-in tests of a simple Election Definition and three
-             Counter Counts, achieving the Tabulator DONE state
+- <nothing>: run the built-in tests of a prototypical Election Definition and
+             three Counter Counts, achieving the Tabulator DONE state
 - syntax: run all of the Tabulator syntax tests
 - bedrock: run John's Bedrock tests, with only partial counts
 - dc: convert the DC November 2010 datasets into an Election Definition and
@@ -46,11 +46,11 @@ Docs/
 - a list of Tabulator ERRORS
 - the Tabulator SPEC
 
-Syntax/
-- schemas and syntax examples for all data processed by the Tabulator
+Schemas/
+- schema files encompassing all data structures processed by the Tabulator
 
 Tests/
-- test files (Election Definitions, Counter Counts, EMGR datasets)
+- test data files (Syntax, Election Definitions, Counter Counts, EMGR datasets)
 
 -----------------
 Author: Jeff Cook

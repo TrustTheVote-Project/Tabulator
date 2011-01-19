@@ -14,21 +14,21 @@ test_default ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb Tests/ED.yml 
+    ruby operator.rb Tests/Prototypical/ED.yml 
     exitif
     ruby operator.rb data
     exitif
-    ruby operator.rb Tests/CC1.yml
+    ruby operator.rb Tests/Prototypical/CC1.yml
     exitif
     ruby operator.rb state
     exitif
-    ruby operator.rb Tests/CC2.yml
+    ruby operator.rb Tests/Prototypical/CC2.yml
     exitif
     ruby operator.rb state
     exitif
     ruby operator.rb data
     exitif
-    ruby operator.rb Tests/CC3.yml
+    ruby operator.rb Tests/Prototypical/CC3.yml
     exitif
     ruby operator.rb state
     exitif

@@ -144,7 +144,7 @@ def op_instantiate_tabulator(printit = true)
   tc = op_read_yaml_file(tcfile)
   if (tc.is_a?(Hash) && (tc.keys.length == 1) &&
       (tc.keys[0] == 'tabulator_count'))
-    schema_file = "Syntax/tabulator_count_schema.yml"
+    schema_file = "Schemas/tabulator_count_schema.yml"
     schema = op_read_yaml_file(schema_file)
     if (check_syntax(schema, tc))
       tabulator_initaliaze()
@@ -173,7 +173,7 @@ def op_check_syntax(file)
   if ((datum = op_read_yaml_file(file, 'data')) &&
       (datum.is_a?(Hash) && (datum.keys.length == 1)) &&
       (type = datum.keys[0]) && 
-      (schema_file = "Syntax/#{type}_schema.yml") &&
+      (schema_file = "Schemas/#{type}_schema.yml") &&
       File.exists?(schema_file) &&
       (schema = op_read_yaml_file(schema_file, 'schema')) &&
       check_syntax(schema, datum))

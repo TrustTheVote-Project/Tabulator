@@ -15,7 +15,7 @@ tabulator_count:
   audit_trail: 
     software: TTV Tabulator v JVC
     operator: El Jefe
-    create_date: 2011-01-18 16:26:32
+    create_date: 2011-01-19 14:07:41
     file_ident: TABULATOR_COUNT.yml
   election_definition: 
     precinct_list: 

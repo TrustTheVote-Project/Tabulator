@@ -6,27 +6,27 @@ $ts_test_opt = {"test_opt"=>"String", "|OPT|"=>{"foo"=>"Integer"}}
 $ts_test_or = {"test_or"=>"String", "|OR|"=>[{"foo"=>"Date"},{"bar"=>"Date"}]}
 $ts_unknown_type = {"unknown_type"=>100}
 $ts_unknown_string = {"unknown_string"=>"Foobar"}
-$ts_district_info = {"ident"=>"Any"}
-$ts_precinct_info = {"ident"=>"Any"}
+$ts_district_info = {"ident"=>"Atomic"}
+$ts_precinct_info = {"ident"=>"Atomic"}
 $ts_precount_info =
-  {"ident"=>"Any",
-    "district_ident_list"=>["Any"],
-    "expected_count_list"=>[{"counter_ident"=>"Any", "count"=>"Integer"}]}
+  {"ident"=>"Atomic",
+    "district_ident_list"=>["Atomic"],
+    "expected_count_list"=>[{"counter_ident"=>"Atomic", "count"=>"Integer"}]}
 $ts_contest_info =
-  {"ident"=>"Any",
-  "district_ident"=>"Any"}
+  {"ident"=>"Atomic",
+  "district_ident"=>"Atomic"}
 $ts_candidate_info =
-  {"ident"=>"Any",
-  "contest_ident"=>"Any"}
+  {"ident"=>"Atomic",
+  "contest_ident"=>"Atomic"}
 $ts_question_info =
-  {"ident"=>"Any",
-  "district_ident"=>"Any",
+  {"ident"=>"Atomic",
+  "district_ident"=>"Atomic",
   "question"=>"String",
   "answer_list"=>["String"]}
-$ts_counter_info = {"ident"=>"Any"}
+$ts_counter_info = {"ident"=>"Atomic"}
 $ts_election_definition_info =
-  {"election"=>{"ident"=>"Any"},
-  "jurisdiction"=>{"ident"=>"Any"},
+  {"election"=>{"ident"=>"Atomic"},
+  "jurisdiction"=>{"ident"=>"Atomic"},
   "district_list"=>[$ts_district_info],
   "precinct_list"=>[$ts_precinct_info],
   "precount_list"=>[$ts_precount_info],
@@ -36,21 +36,21 @@ $ts_election_definition_info =
   "counter_list"=>[$ts_counter_info]}
 $ts_election_definition =
   {"election_definition"=>$ts_election_definition_info}
-$ts_candidate_count = {"candidate_ident"=>"Any","count"=>"Integer"}
+$ts_candidate_count = {"candidate_ident"=>"Atomic","count"=>"Integer"}
 $ts_contest_count =
-  {"contest_ident"=>"Any",
+  {"contest_ident"=>"Atomic",
   "undervote_count"=>"Integer",
   "overvote_count"=>"Integer",
   "|OPT|"=>{"writein_count","Integer"},
   "candidate_count_list"=>[$ts_candidate_count]}
 $ts_answer_count = {"answer"=>"String", "count"=>"Integer"}
 $ts_question_count =
-  {"question_ident"=>"Any",
+  {"question_ident"=>"Atomic",
   "undervote_count"=>"Integer",
   "overvote_count"=>"Integer",
   "answer_count_list"=>[$ts_answer_count]}
 $ts_audit_trail_info =
-  {"file_ident"=>"Any",
+  {"file_ident"=>"Atomic",
   "create_date"=>"Date",
   "operator"=>"String",
   "software"=>"String",
@@ -60,19 +60,19 @@ $ts_audit_trail = {"audit_trail"=>$ts_audit_trail_info}
 $ts_counter_count =
   {"counter_count"=>
   {"audit_trail"=>$ts_audit_trail_info,
-    "election_ident"=>"Any",
-    "jurisdiction_ident"=>"Any",
-    "precinct_ident"=>"Any",
+    "election_ident"=>"Atomic",
+    "jurisdiction_ident"=>"Atomic",
+    "precinct_ident"=>"Atomic",
     "reporting_group"=>"String",
-    "counter_ident"=>"Any",
+    "counter_ident"=>"Atomic",
     "cast_ballot_count"=>"Integer",
     "contest_count_list"=>[$ts_contest_count],
     "question_count_list"=>[$ts_question_count]}}
 $ts_tabulator_count =
   {"tabulator_count"=>
   {"audit_trail"=>$ts_audit_trail_info,
-    "election_ident"=>"Any",
-    "jurisdiction_ident"=>"Any",
+    "election_ident"=>"Atomic",
+    "jurisdiction_ident"=>"Atomic",
     "election_definition"=>$ts_election_definition_info,
     "counter_count_list"=>[$ts_counter_count],
     "contest_count_list"=>[$ts_contest_count],
@@ -89,32 +89,32 @@ def write_yaml_file(file, datum, label = "")
 end
      
 def write_schema_files
-  write_yaml_file("Syntax/test_new_schema.yml",$ts_test_new)
-  write_yaml_file("Syntax/test_opt_schema.yml",$ts_test_opt)
-  write_yaml_file("Syntax/test_or_schema.yml",$ts_test_or)
-  write_yaml_file("Syntax/unknown_type_schema.yml",$ts_unknown_type)
-  write_yaml_file("Syntax/unknown_string_schema.yml",$ts_unknown_string)
-  write_yaml_file("Syntax/district_info_schema.yml",$ts_district_info)
-  write_yaml_file("Syntax/precinct_info_schema.yml",$ts_precinct_info)
-  write_yaml_file("Syntax/precount_info_schema.yml",$ts_precount_info)
-  write_yaml_file("Syntax/contest_info_schema.yml",$ts_contest_info)
-  write_yaml_file("Syntax/candidate_info_schema.yml",$ts_candidate_info)
-  write_yaml_file("Syntax/question_info_schema.yml",$ts_question_info)
-  write_yaml_file("Syntax/counter_info_schema.yml",$ts_counter_info)
-  write_yaml_file("Syntax/election_definition_schema.yml",$ts_election_definition)
-  write_yaml_file("Syntax/answer_count_schema.yml",$ts_answer_count)
-  write_yaml_file("Syntax/question_count_schema.yml",$ts_question_count)
-  write_yaml_file("Syntax/candidate_count_schema.yml",$ts_candidate_count)
-  write_yaml_file("Syntax/contest_count_schema.yml",$ts_contest_count)
-  write_yaml_file("Syntax/counter_count_schema.yml",$ts_counter_count)
-  write_yaml_file("Syntax/audit_trail_schema.yml",$ts_audit_trail)
-  write_yaml_file("Syntax/tabulator_count_schema.yml",$ts_tabulator_count)
+  write_yaml_file("Schemas/test_new_schema.yml",$ts_test_new)
+  write_yaml_file("Schemas/test_opt_schema.yml",$ts_test_opt)
+  write_yaml_file("Schemas/test_or_schema.yml",$ts_test_or)
+  write_yaml_file("Schemas/unknown_type_schema.yml",$ts_unknown_type)
+  write_yaml_file("Schemas/unknown_string_schema.yml",$ts_unknown_string)
+  write_yaml_file("Schemas/district_info_schema.yml",$ts_district_info)
+  write_yaml_file("Schemas/precinct_info_schema.yml",$ts_precinct_info)
+  write_yaml_file("Schemas/precount_info_schema.yml",$ts_precount_info)
+  write_yaml_file("Schemas/contest_info_schema.yml",$ts_contest_info)
+  write_yaml_file("Schemas/candidate_info_schema.yml",$ts_candidate_info)
+  write_yaml_file("Schemas/question_info_schema.yml",$ts_question_info)
+  write_yaml_file("Schemas/counter_info_schema.yml",$ts_counter_info)
+  write_yaml_file("Schemas/election_definition_schema.yml",$ts_election_definition)
+  write_yaml_file("Schemas/answer_count_schema.yml",$ts_answer_count)
+  write_yaml_file("Schemas/question_count_schema.yml",$ts_question_count)
+  write_yaml_file("Schemas/candidate_count_schema.yml",$ts_candidate_count)
+  write_yaml_file("Schemas/contest_count_schema.yml",$ts_contest_count)
+  write_yaml_file("Schemas/counter_count_schema.yml",$ts_counter_count)
+  write_yaml_file("Schemas/audit_trail_schema.yml",$ts_audit_trail)
+  write_yaml_file("Schemas/tabulator_count_schema.yml",$ts_tabulator_count)
 end
      
 def schema_check(type, extra = "")
-  data_file = "Syntax/#{type}" + extra + ".yml"
+  data_file = "Tests/Syntax/#{type}" + extra + ".yml"
   data = read_yaml_file(data_file, "data")
-  schema_file = "Syntax/#{type}_schema.yml"
+  schema_file = "Schemas/#{type}_schema.yml"
   schema = read_yaml_file(schema_file, "schema")
   if (! check_syntax(schema, data))
     print "\nERROR - THE PREVIOUS TEST MUST NOT FAIL\n\n"
@@ -151,9 +151,9 @@ def schemas_check_syntax
 end
      
 def schema_check_error(type, extra1, extra2 = "", extra3 = "")
-  data_file = "Syntax/Errors/#{type}_" + extra1.inspect + ".yml"
+  data_file = "Tests/Syntax/Errors/#{type}_" + extra1.inspect + ".yml"
   data = read_yaml_file(data_file, "data")
-  schema_file = "Syntax/#{type}_schema.yml"
+  schema_file = "Schemas/#{type}_schema.yml"
   schema = read_yaml_file(schema_file, "schema")
   if (check_syntax(schema, data))
     print "\nERROR - THE TEST MUST FAIL - CHECKING ERROR CODES\n"
@@ -173,24 +173,25 @@ def schema_check_error(type, extra1, extra2 = "", extra3 = "")
   end
   print "Check Syntax: #{type}: OK\n\n"
 end
-     
+
 def schemas_check_syntax_errors
   schema_check_error("unknown_type",0)
   schema_check_error("unknown_string",1)
   schema_check_error("question_info",2)
   schema_check_error("test_opt",3)
   schema_check_error("test_or",4)
-  schema_check_error("precount_info",5)
-  schema_check_error("audit_trail",6)
-  schema_check_error("question_info",2,7)
-  schema_check_error("contest_info",8)
-  schema_check_error("test_opt",3,9)
-  schema_check_error("test_opt",3,9,10)
-  schema_check_error("test_or",11)
-  schema_check_error("test_or",4,9,12)
-  schema_check_error("test_or",13)
+  schema_check_error("district_info",5)
+  schema_check_error("precount_info",6)
+  schema_check_error("audit_trail",7)
+  schema_check_error("question_info",2,8)
+  schema_check_error("contest_info",9)
+  schema_check_error("test_opt",3,10)
+  schema_check_error("test_opt",3,10,11)
+  schema_check_error("test_or",12)
+  schema_check_error("test_or",4,10,13)
+  schema_check_error("test_or",14)
 end
-     
+  
 begin
   # There is a problem with Syck, loading true for Yes, etc. Must be fixed.
   # Another problem concerns loading strings, all should be double-quoted
