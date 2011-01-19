@@ -1,7 +1,0 @@
---- 
-ident: Any
-district_ident_list: 
-- Any
-expected_count_list: 
-- counter_ident: Any
-  count: Integer

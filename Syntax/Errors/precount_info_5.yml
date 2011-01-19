@@ -1,5 +1,0 @@
----
-display_name: Precinct 1
-ident: PRECINCT_1
-district_ident_list: Not an array
-expected_count_list: []

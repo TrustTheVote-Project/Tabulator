@@ -1,9 +1,0 @@
---- 
-answer_count_list: 
-- answer: A
-  count: 10
-- answer: B
-  count: 55
-undervote_count: 0
-overvote_count: 0
-question_ident: ANSWER_2
