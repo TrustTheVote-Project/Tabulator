@@ -1,0 +1,31 @@
+--- 
+election_definition: 
+  precinct_list: 
+  - ident: Atomic
+  question_list: 
+  - ident: Atomic
+    question: String
+    answer_list: 
+    - String
+    district_ident: Atomic
+  jurisdiction: 
+    ident: Atomic
+  candidate_list: 
+  - contest_ident: Atomic
+    ident: Atomic
+  counter_list: 
+  - ident: Atomic
+  election: 
+    ident: Atomic
+  district_list: 
+  - ident: Atomic
+  contest_list: 
+  - ident: Atomic
+    district_ident: Atomic
+  precount_list: 
+  - ident: Atomic
+    district_ident_list: 
+    - Atomic
+    expected_count_list: 
+    - counter_ident: Atomic
+      count: Integer

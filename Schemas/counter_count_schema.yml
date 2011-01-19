@@ -1,0 +1,34 @@
+--- 
+counter_count: 
+  question_count_list: 
+  - question_ident: Atomic
+    overvote_count: Integer
+    undervote_count: Integer
+    answer_count_list: 
+    - answer: String
+      count: Integer
+  jurisdiction_ident: Atomic
+  cast_ballot_count: Integer
+  audit_trail: 
+    software: String
+    "|OPT2|": 
+      provenance: 
+      - String
+    "|OPT1|": 
+      hardware: String
+    operator: String
+    create_date: Date
+    file_ident: Atomic
+  counter_ident: Atomic
+  contest_count_list: 
+  - candidate_count_list: 
+    - candidate_ident: Atomic
+      count: Integer
+    overvote_count: Integer
+    "|OPT|": 
+      writein_count: Integer
+    contest_ident: Atomic
+    undervote_count: Integer
+  reporting_group: String
+  precinct_ident: Atomic
+  election_ident: Atomic

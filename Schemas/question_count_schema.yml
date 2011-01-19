@@ -1,0 +1,7 @@
+--- 
+question_ident: Atomic
+overvote_count: Integer
+undervote_count: Integer
+answer_count_list: 
+- answer: String
+  count: Integer

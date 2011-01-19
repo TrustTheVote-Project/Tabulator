@@ -1,0 +1,71 @@
+---
+election_definition:
+  audit_trail: 
+    file_ident: FILE_1
+    create_date: Sometime
+    operator: El Jefe
+  election:
+    display_name: Election 1
+    ident: ELECTION_1
+    start_date: 2010-12-10
+    type: GENERAL
+    reporting_group_list: [Normal, Absentee]
+  jurisdiction:
+    display_name: Jurisdiction 1
+    ident: JURISDICTION_1
+  district_list:
+  - display_name: District 1
+    ident: DISTRICT_1
+  - display_name: District 2
+    ident: DISTRICT_2
+  - display_name: District 3
+    ident: DISTRICT_3
+  - display_name: District 4
+    ident: DISTRICT_4
+  precinct_list:
+  - display_name: Precinct 1
+    ident: PRECINCT_1
+  - display_name: Precinct 2
+    ident: PRECINCT_2
+  precount_list:
+  - ident: PRECINCT_1
+    district_ident_list: [DISTRICT_1, DISTRICT_2]
+    expected_count_list:
+    - {counter_ident: COUNTER_1, count: 1}
+  - ident: PRECINCT_2
+    district_ident_list: [DISTRICT_3, DISTRICT_4]
+    expected_count_list:
+    - {counter_ident: COUNTER_2, count: 1}
+  counter_list:
+  - display_name: Counter 1
+    ident: COUNTER_1
+  - display_name: Counter 2
+    ident: COUNTER_2
+  contest_list:
+  - display_name: Contest 1
+    ident: CONTEST_1
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+  - display_name: Contest 3
+    ident: CONTEST_3
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+  candidate_list:
+  - display_name: Candidate 1
+    ident: CANDIDATE_1
+    contest_ident: CONTEST_1
+    party_display_name: Green
+  - display_name: Candidate 2
+    ident: CANDIDATE_2
+    contest_ident: CONTEST_1
+    party_display_name: Green
+  - display_name: Candidate 3
+    ident: CANDIDATE_3
+    contest_ident: CONTEST_3
+    party_display_name: Brown
+  question_list:
+  - ident: QUESTION_2
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+    question: Free Beer
+    answer_list: [A, B, C]

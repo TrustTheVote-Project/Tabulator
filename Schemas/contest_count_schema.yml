@@ -1,0 +1,9 @@
+--- 
+candidate_count_list: 
+- candidate_ident: Atomic
+  count: Integer
+overvote_count: Integer
+"|OPT|": 
+  writein_count: Integer
+contest_ident: Atomic
+undervote_count: Integer

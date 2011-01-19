@@ -1,0 +1,23 @@
+--- 
+counter_count: 
+  counter_ident: COUNTER_2
+  reporting_group: Normal
+  election_ident: ELECTION_1
+  audit_trail: 
+    software: GNU
+    file_ident: FILE_3
+    operator: El Jefe
+    create_date: 2010-12-03
+  cast_ballot_count: 99
+  jurisdiction_ident: JURISDICTION_1
+  precinct_ident: PRECINCT_1
+  contest_count_list: 
+  - contest_ident: CONTEST_3
+    candidate_count_list:
+    - candidate_name: Candidate 3
+      candidate_ident: CANDIDATE_3
+      count: 19
+    undervote_count: 10
+    overvote_count: 20
+    writein_count: 30
+  question_count_list: []
