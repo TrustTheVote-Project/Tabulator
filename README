@@ -10,11 +10,11 @@ operator.rb
 tabulator.rb
 - The Tabulator
 
-tab_schemas.rb
-- Defines and tests schemas for the syntax recognized by Tabulator
+check_syntax_yaml.rb
+- YAML Syntax Checker for TTV Common Data Format (CDF) datasets
 
-tab_syntax_check.rb
-- Performs syntax checking for the Tabulator
+check_syntax_yaml_test.rb
+- Setup and Test the YAML Syntax Checker
 
 emgr_data_handler.rb
 - Converts two real EMGR datasets into an Election Definition in preparation

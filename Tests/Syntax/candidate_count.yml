@@ -1,4 +1,4 @@
 --- 
-candidate_name: String
-candidate_ident: String
-count: Integer
+candidate_name: Candidate 1
+candidate_ident: CANDIDATE_1
+count: 7

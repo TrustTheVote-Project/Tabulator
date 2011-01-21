@@ -1,6 +1,3 @@
-require "yaml"
-require "tab_check_syntax"
-
 class UidErr < Exception
   def initialize(tag, mesg)
     print "\n**#{tag} ERROR** #{mesg}\n\n"

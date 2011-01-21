@@ -36,7 +36,7 @@ test_default ()
 
 test_syntax ()
 {
-    ruby tab_schemas.rb
+    ruby check_syntax_yaml_test.rb
     exitif
 }
 
@@ -84,7 +84,7 @@ all*)
     test_bedrock
     test_dc
     test_va
-    echo -e "\n** ALL TABULATOR TESTS SUCCESSFUL**\n"
+    echo -e "\n** ALL TABULATOR TESTS SUCCESSFUL **\n"
     exit
     ;;
 syn*)

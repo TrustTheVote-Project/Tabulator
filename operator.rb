@@ -1,5 +1,5 @@
 require "yaml"
-require "tab_check_syntax"
+require "check_syntax_yaml"
 require "tabulator"
 
 def operator_help
@@ -36,9 +36,9 @@ def operator_reset
   print "\n"
 end
 
-def operator_output
+def operator_output(cs)
   op_state_exit_initial()
-  tc = op_instantiate_tabulator()
+  tc = op_instantiate_tabulator(cs)
   lines = tabulator_spreadsheet()
   print "\nCSV Output:\n\n"
   print lines,"\n"
@@ -47,17 +47,17 @@ def operator_output
   outfile.close()
 end
 
-def operator_data
+def operator_data(cs)
   op_state_exit_initial()
-  tc = op_instantiate_tabulator()
+  tc = op_instantiate_tabulator(cs)
   print YAML::dump(tc),"\n"
   tabulator_dump_data()
 end
 
-def operator_state
+def operator_state(cs)
   state = op_state_exit_initial()
   print "\nChecking Tabulator State\n\n"
-  tc = op_instantiate_tabulator()
+  tc = op_instantiate_tabulator(cs)
   if (tc['tabulator_count']['counter_count_list'].length == 0)
     print "\nNo counts accumulated so far\n"
     print "\nTabulator State: ",state,"\n\n"
@@ -138,7 +138,7 @@ def op_print_accumulated_counts(accumulated)
   end
 end
 
-def op_instantiate_tabulator(printit = true)
+def op_instantiate_tabulator(cs, printit = true)
   print "Instantiating Tabulator (Check Syntax, Validate)\n" if printit
   tcfile = tabulator_count_file()
   tc = op_read_yaml_file(tcfile)
@@ -146,7 +146,7 @@ def op_instantiate_tabulator(printit = true)
       (tc.keys[0] == 'tabulator_count'))
     schema_file = "Schemas/tabulator_count_schema.yml"
     schema = op_read_yaml_file(schema_file)
-    if (check_syntax(schema, tc))
+    if (cs.check_syntax(schema, tc))
       tabulator_initaliaze()
       tabulator_validate_tabulator_count(tc)
     else
@@ -169,20 +169,20 @@ def op_write_yaml_file(file, datum, label = '')
   File.open(file, 'w') { |outfile| YAML::dump(datum, outfile) }
 end
 
-def op_check_syntax(file)
+def op_check_syntax(cs, file)
   if ((datum = op_read_yaml_file(file, 'data')) &&
       (datum.is_a?(Hash) && (datum.keys.length == 1)) &&
       (type = datum.keys[0]) && 
       (schema_file = "Schemas/#{type}_schema.yml") &&
       File.exists?(schema_file) &&
       (schema = op_read_yaml_file(schema_file, 'schema')) &&
-      check_syntax(schema, datum))
+      cs.check_syntax(schema, datum))
     datum
   end
 end
 
-def operator_file(file)
-  datum = op_check_syntax(file)
+def operator_file(cs, file)
+  datum = op_check_syntax(cs, file)
   if (! datum.is_a?(Hash))
     print "Unexpected contents of tabulator file: #{file}\n"
     exit(1)
@@ -201,7 +201,7 @@ def operator_file(file)
     op_write_yaml_file(tabulator_count_file(),tc,'Tabulator Count')
   when 'counter_count'
     cc = datum
-    tc = op_instantiate_tabulator(false)
+    tc = op_instantiate_tabulator(cs, false)
     tabulator_check_duplicate_counter_count(cc['counter_count'])
     tabulator_validate_counter_count(cc['counter_count'])
     print ": OK\n\n"
@@ -230,42 +230,43 @@ def op_print_warnings(short = false)
 end  
 
 begin
+  cs = CheckSyntaxYaml.new
   operator_print = false
   file = ''
   ARGV.each do |arg|
-    (arg == 'trace' ? ($check_syntax_trace = true) :
+    (arg == 'trace' ? (cs.trace(true)) :
      (arg == 'print' ? (operator_print = true) : (file = arg)))
   end
-  print "Trace ON\n" if $check_syntax_trace
+  print "Trace ON\n" if ARGV.include?('trace')
   print "Print ON\n" if operator_print
   if (file == '' || file == 'help')
-    operator_data() if operator_print
+    operator_data(cs) if operator_print
     operator_help() unless operator_print and file == ''
     exit(0)
   elsif (file == 'reset')
     operator_reset()
     exit(0)
   elsif (file == 'output')
-    operator_data() if operator_print
-    operator_output()
+    operator_data(cs) if operator_print
+    operator_output(cs)
     exit(0)
   elsif (file == 'data')
-    operator_data()
+    operator_data(cs)
     exit(0)
   elsif (file == 'state')
-    operator_data() if operator_print
-    operator_state()
+    operator_data(cs) if operator_print
+    operator_state(cs)
     exit(0)
   elsif (File.exists?(file))
-    operator_file(file)
-    operator_data() if operator_print;
+    operator_file(cs, file)
+    operator_data(cs) if operator_print;
   else
     print "\nERROR, non-existent file: #{file}\n\n"
   end
 rescue UidErr, ShouldntErr
-  op_print_warnings() if ($check_syntax_trace || operator_print)
+  op_print_warnings() if (ARGV.include?('trace') || operator_print)
   exit(1)
 else
-  op_print_warnings() if ($check_syntax_trace || operator_print)
+  op_print_warnings() if (ARGV.include?('trace') || operator_print)
   exit(0)
 end

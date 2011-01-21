@@ -1,5 +1,4 @@
 require "yaml"
-require "tab_check_syntax"
 
 $DEBUG = true
  
