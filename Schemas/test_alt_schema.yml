@@ -1,0 +1,5 @@
+--- 
+"|ALT|": 
+  foo: Date
+  bar: Date
+test_alt: String
