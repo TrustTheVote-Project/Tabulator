@@ -1,3 +1,4 @@
+  private
 # OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
@@ -90,6 +91,7 @@ class CheckSyntaxYaml
 # an Array or a Hash, and likewise for the <i>datum</i>, so either
 # check_syntax_array or check_syntax_hash checks the syntax.
 
+  private
   def check_syntax_internal(schema, datum, depth)
     check_syntax_trace("check_syntax", schema, datum, depth)
     if (schema.is_a?(String))
@@ -323,6 +325,7 @@ class CheckSyntaxYaml
 #
 # Returns the current value of the <i>@errors</i> error stack.
 
+  public
   def error_stack()
     @errors
   end
@@ -387,6 +390,7 @@ class CheckSyntaxYaml
 # A <i>schema</i> of type Array is valid only if it has one element and that element is
 # a valid schema.
 
+  private
   def schema_is_valid_array?(schema)
     schema_valid_trace("schema_is_valid_array?", schema)
     ((schema.length == 1) ?

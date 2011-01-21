@@ -238,6 +238,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # <i>true</i>, then it is over-written.  Deleting schema files allows them to be
 # re-generated when these unit tests are run.
 
+  private
   def schema_setup(prefix, schema, check = true, write = false)
     if (check)
       print "Checking Validity of Schema: #{prefix}\n"
