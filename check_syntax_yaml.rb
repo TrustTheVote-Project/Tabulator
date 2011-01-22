@@ -1,4 +1,3 @@
-  private
 # OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
@@ -24,6 +23,11 @@
 require "yaml"
 
 class CheckSyntaxYaml
+
+# TRACE_DEFAULT is an Integer constant (300) that holds the default setting
+# for character-limited printing while tracing output.
+
+  TRACE_DEFAULT = 300
 
 # initialize
 #
@@ -53,11 +57,11 @@ class CheckSyntaxYaml
 # the functions check_syntax_trace, check_syntax_error, and
 # schema_is_valid_trace.  When <i>trace</i> is negative, calls to all
 # syntax-checking and schema-validity-checking functions in this library are
-# traced, and the amount of output generated is limited to trace.abs characters
-# of output per item printed.  When positive, it acts similarly to limit the
-# output printed by check_syntax_error.
+# traced, and the amount of output generated is limited to <i>trace.abs</i>
+# characters of output per item printed.  When positive, it acts similarly to
+# limit the output printed by check_syntax_error.
 
-  def check_syntax(schema, datum, trace = 300)
+  def check_syntax(schema, datum, trace = TRACE_DEFAULT)
     @errors = []
     unless (schema_is_valid?(schema))
       print "** FATAL ERROR ** Invalid schema: #{schema.inspect}\n"
@@ -72,7 +76,7 @@ class CheckSyntaxYaml
 # does not check the validity of the schema, so it can be used for test cases
 # involving invalid schemas.
 
-  def check_syntax_test(schema, datum, trace = 300)
+  def check_syntax_test(schema, datum, trace = TRACE_DEFAULT)
     @errors = []
     check_syntax_internal(schema, datum, 0, trace)
   end
@@ -127,8 +131,9 @@ class CheckSyntaxYaml
 # * "Date":    matches any <i>datum</i> of type String or Date
 # * "Atomic":  matches any <i>datum</i> of type String, Integer, or Date
 #
-# All other schema strings are invalid and result in a syntax error, which may indicate the
-# presence of an internal error, in that the schema being used is invalid.
+# All other schema strings are invalid and result in a syntax error, which may
+# indicate the presence of an internal error, in that the schema being used is
+# invalid.
 
   def check_syntax_string(schema, datum, depth, trace)
     check_syntax_trace('check_syntax_string', schema, datum, depth, trace)
@@ -158,8 +163,10 @@ class CheckSyntaxYaml
 #
 # Returns: Boolean
 #
-# Recursively check all elements in the Array <i>datum</i> to ensure they match the
-# <i>schema</i>.
+# Recursively check all elements in the Array <i>datum</i> to ensure they
+# match the <i>schema</i>.  Under our syntax-checking regime, for each
+# individual data array, all array elements must have the same type and match
+# the same schema.
 
   def check_syntax_array(index, schema, datum, depth, trace)
     check_syntax_trace("check_syntax_array#{index}", schema, datum, depth, trace)
@@ -198,23 +205,26 @@ class CheckSyntaxYaml
 #
 # Returns: Boolean
 #
-# There are three types of Hash schemas, all of whose keys must be of type String.  Two
-# reserved types of strings are used to represent special cases when matching Hash keys: 
+# There are three types of Hash schemas, all of whose keys must be of type
+# String.  Two reserved types of strings are used to represent special cases
+# when matching Hash keys:
 # * strings matching "|OPT.*|", for optional Hash keys, and
 # * strings matching "|ALT.*|", for alternative Hash keys.  
-# The reason for not just using either "|OPT|" or "|ALT|" is that there may
-# be requirements for more than
-# one such match within a single Hash schema, and Hash keys must be unique, so one may use
-# "|OPT1|" and "|OPT2|", for instance, to disambiguate them.
+# The reason for not just using either "|OPT|" or "|ALT|" is that there may be
+# requirements for more than one such match within a single Hash schema, and
+# Hash keys must be unique, so one may use "|OPT1|" and "|OPT2|", for
+# instance, to disambiguate them.
 #
-# For OPT(ional)-keyed Hash schemas, the corresponding value in the schema is a single-keyed
-# Hash that may or may not appear in the datum, but if it does, must match.
+# For OPT(ional)-keyed Hash schemas, the corresponding value in the schema is
+# a single-keyed Hash that may or may not appear in the datum, but if it does,
+# must match.
 #
-# For ALT(ernative)-keyed Hash schemas, the corresponding value in the schema is a dual-keyed
-# Hash, one of whose keys and values must appear in the datum, and both of which may not.
+# For ALT(ernative)-keyed Hash schemas, the corresponding value in the schema
+# is a dual-keyed Hash, one of whose keys and values must appear in the datum,
+# and both of which may not.
 #
-# For all other Hash schemas, the Hash key must appear in the datum and the corresponding
-# value must match.
+# For all other Hash schemas, the Hash key must appear in the datum and the
+# corresponding value must match.
 
   def check_syntax_hash_key(key, schema, datum, depth, trace)
     check_syntax_trace("check_syntax_hash_#{key}", schema, datum, depth, trace)
@@ -273,15 +283,16 @@ class CheckSyntaxYaml
 # Operates only when the  <i>trace</i> limit is negative, by printing the
 # Returns: <i>false</i>
 # 
-# Called when a syntax error is discovered.  Pushes the <i>errcode</i> onto the
-# <i>@errors</i> error code stack, prints an error message (potentially
+# Called when a syntax error is discovered.  Pushes the <i>errcode</i> onto
+# the <i>@errors</i> error code stack, prints an error message (potentially
 # utilizing the optional <i>extra</i> argument), and then prints the values of
 # the mismatched <i>schema</i> and <i>data</i> items (printout is
-# character-limited to <i>trace.abs</i> characters foch<i> it.abs </i> When a
-# syntax error is discovered, error codes are stacked onto <i>@errors</i>, via
-# repeated calls to check_syntax_error, as the syntax checker recursively
-# unwinds.  Error stacking permits the testing of other than 1st-level errors,
-# like 2nd-level, 3rd-level, etc.
+# character-limited to <i>trace.abs</i> characters per item). 
+#
+# When a syntax error is discovered, error codes are stacked onto
+# <i>@errors</i>, via repeated calls to check_syntax_error, as the syntax
+# checker recursively unwinds.  Error stacking permits the testing of other
+# than 1st-level errors, e.g., 2nd-level, 3rd-level, etc.
 
   def check_syntax_error(errcode, schema, datum, trace, extra = '')
     @errors.push(errcode)
@@ -331,9 +342,8 @@ class CheckSyntaxYaml
 #
 # Returns: <i>@errors</i>
 #
-# Returns the current value of the <i>@errors</i> error stack.
+# Returns the current value of the <i>@errors</i> error stack of Integer error codes.
 
-  public
   def error_stack()
     @errors
   end
@@ -349,7 +359,7 @@ class CheckSyntaxYaml
 # combinations thereof, and nothing else.  The function schema_is_valid? returns
 # <i>true</i> only when the <i>schema</i> has a valid format.
 
-  def schema_is_valid?(schema, trace = 300)
+  def schema_is_valid?(schema, trace = TRACE_DEFAULT)
     schema_is_valid_trace("schema_is_valid?", schema, trace)
     schema_is_valid_internal?(schema, trace)
   end    
@@ -388,8 +398,9 @@ class CheckSyntaxYaml
 #
 # Returns: Boolean
 #
-# A <i>schema</i> of type Array is valid only if it has one element and that element is
-# a valid schema.
+# A <i>schema</i> of type Array is valid only if it has one element and that
+# element is a valid schema.  This provision limits the type of data arrays to
+# those whose elements all have the same type and match the same schema.
 
   def schema_is_valid_array?(schema, trace)
     schema_is_valid_trace("schema_is_valid_array?", schema, trace)
@@ -433,8 +444,8 @@ class CheckSyntaxYaml
 #
 # OPT(ional) schema keys permit schemas to match data with an optional Hash key.
 #
-# ALT(ernative) schema keys permit schemas to match data with one or another alternative
-# Hash keys, but not both.
+# ALT(ernative) schema keys permit schemas to match data with one or another
+# alternative Hash keys, but not both.
 
   def schema_is_valid_key_value?(key, value, trace)
     schema_is_valid_trace("schema_is_valid_key_value?", value, trace, key)
