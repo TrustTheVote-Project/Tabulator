@@ -90,7 +90,7 @@ def tabulator_validate_election_definition(edinfo)
     edinfo['election']['reporting_group_list'].each { |group|
       tab_new_uid_check2('reporting_group',group,'Reporting Group') }
   end
-  tab_new_uid_check('jurisdiction',edinfo)
+  tab_new_uid_check('jurisdiction',edinfo['jurisdiction'])
   edinfo['district_list'].each { |x|
     tab_new_uid_check('district',x,'District (Ignored)') }
   edinfo['precinct_list'].each { |x|
@@ -179,11 +179,7 @@ def tab_check_duplicated_answer(answer_list, qid)
 end  
 
 def tab_new_uid_check(name, obj, text = '')
-  if (obj.key?(name) && name != "question")
-    tab_new_uid_check2(name, obj[name]['ident'], text)
-  else
-    tab_new_uid_check2(name, obj['ident'], text)
-  end
+  tab_new_uid_check2(name, obj['ident'], text)
 end
 
 def tab_new_uid_check2(name, uid, text = '')

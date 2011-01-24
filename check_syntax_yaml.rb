@@ -280,7 +280,7 @@ class CheckSyntaxYaml
     print "\n**SYNTAX ERROR \##{errcode}** "
     case errcode
     when -1
-      print "Invalid schema: #{schema.inspect}"
+      print "Invalid schema: #{schema.inspect[0 .. trace.abs]}"
     when 0
       print "Schema type \'#{schema.class}\' not handled"
     when 1
