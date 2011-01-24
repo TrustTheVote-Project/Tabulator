@@ -1,3 +1,5 @@
+require "yaml"
+
 class UidErr < Exception
   def initialize(tag, mesg)
     print "\n**#{tag} ERROR** #{mesg}\n\n"
@@ -44,8 +46,7 @@ end
 
 def tabulator_initaliaze
   $unique_ids = Hash.new { |h,k| h[k] = [] }
-  $precinct_distids = Hash.new { |h,k| h[k] = [] }
-  $precinct_counts = Hash.new { |h,k| h[k] = {} }
+  $expected_counts = Hash.new { |h,k| h[k] = [] }
   $contest_count_info = Hash.new { |h,k| h[k] = {} }
   $question_count_info = Hash.new { |h,k| h[k] = {} }
 end
@@ -88,7 +89,7 @@ def tabulator_validate_election_definition(edinfo)
   tab_new_uid_check2('election',edinfo['election']['ident'])
   if (edinfo['election']['reporting_group_list'].is_a?(Array))
     edinfo['election']['reporting_group_list'].each { |group|
-      tab_new_uid_check2('reporting_group',group,'Reporting Group') }
+      tab_new_uid_check2('reporting group',group,'Reporting Group') }
   end
   tab_new_uid_check('jurisdiction',edinfo['jurisdiction'])
   edinfo['district_list'].each { |x|
@@ -103,30 +104,19 @@ def tabulator_validate_election_definition(edinfo)
     tab_new_uid_check('question',x,'Question (Ignored)') }
   edinfo['counter_list'].each { |x|
     tab_new_uid_check('counter',x,'Counter (Ignored)') }
-  allcids = []
-  edinfo['precount_list'].each do |precinct|
-    pid = precinct['ident']
-    tab_check_precinct_id(pid)
-    $precinct_distids[pid] = []
-    precinct['district_ident_list'].each do |uid|
-      tab_new_precinct_district(pid,uid,'District','district')
+  edinfo['expected_count_list'].each do |ecount|
+    cid = ecount['counter_ident']
+    tab_warn('ED',"Expected Count has unrecognized Counter: #{cid}") unless tab_uid_exists?('counter', cid)
+    rg = ecount['reporting_group']
+    tab_warn('ED',"Expected Count for #{cid} has unrecognized reporting group: #{rg}") unless tab_uid_exists?('reporting group',rg)
+    ecount['precinct_ident_list'].each do |pid|
+      tab_warn('ED',"Expected Count for #{cid} has invalid precinct: #{pid}") unless tab_uid_exists?('precinct', pid)
+      if ($expected_counts[cid].is_a?(Hash))
+        $expected_counts[cid][rg] = ecount['precinct_ident_list']
+      else
+        $expected_counts[cid] = {rg=>ecount['precinct_ident_list']}
+      end
     end
-    cids = []
-    precinct['expected_count_list'].each do |ecval|
-      cid = ecval['counter_ident']
-      tab_warn('ED',"Precinct (#{pid}) has unexpected Counter: #{cid}") unless
-        tab_uid_exists?('counter',cid)
-      tab_warn('ED',"Precinct (#{pid}) has duplicate expected Counter: #{cid}") if
-        cids.include?(cid.to_s)
-      $precinct_counts[pid][cid] = ecval['count']
-      cids.push(cid.to_s)
-      allcids.push(cid.to_s) unless allcids.include?(cid.to_s)
-    end
-  end
-  if (allcids.length != $unique_ids['counter'].length)
-    allcids = $unique_ids['counter'] - allcids
-    allcids = allcids.inspect.sub(/\[\"/,'(').sub(/\"\]/,')').gsub(/\"/,'')
-    tab_warn('ED',"Not all Counters #{allcids} expected by listed Precincts")
   end
   edinfo['contest_list'].each do |contest|
     conid = contest['ident']
@@ -190,20 +180,6 @@ def tab_new_uid_check2(name, uid, text = '')
   else
     $unique_ids[name].push(uid.to_s)
   end
-end
-
-def tab_check_subid(sublist, name, uid, subid, text, subname) # Duplicate, Non-existent
-  if ( sublist.include?(subid.to_s) )
-    raise UidErr.new('ED',"Duplicate #{name} (#{uid}) #{text}: #{subid}")
-  elsif ( subname != '' && ! tab_uid_exists?(subname,subid) )
-    subname = subname.capitalize
-    raise UidErr.new('ED',"Non-existent #{name} (#{uid}) #{subname}: #{subid}")
-  end
-end
-
-def tab_new_precinct_district(uid, subid, text, subname = '')
-  tab_check_subid($precinct_distids[uid],'Precinct',uid,subid,text,subname)
-  $precinct_distids[uid].push(subid.to_s)
 end
 
 def tab_uid_exists?(name, uid)
@@ -318,7 +294,7 @@ def tabulator_validate_counter_count(ccval) # counter_count val
   precinct_id = tab_check_uid('CC', 'precinct', ccval['precinct_ident'])
   reporting_group = ccval['reporting_group']
   tab_warn('CC',"Unrecognized Reporting Group: #{reporting_group}\n") unless
-    tab_uid_exists?('reporting_group',reporting_group)
+    tab_uid_exists?('reporting group',reporting_group)
   counter_id = tab_check_uid('CC', 'counter', ccval['counter_ident'])
   conids = []
   ccval['contest_count_list'].each do |cc|
@@ -336,31 +312,27 @@ def tabulator_check_duplicate_counter_count(ccval) # counter_count val
     tab_uid_exists?('file',file_id)
 end
 
-def tabulator_accumulated_counter_counts(tc)
-  accumulated_counts = {}
-  accumulated_conids = []
+def tab_find_count(tc, cid, rg, pid)
   tc['tabulator_count']['counter_count_list'].each do |counter_count|
     counter_count = counter_count['counter_count']
-    pid = counter_count['precinct_ident']
-    accumulated_counts[pid] = {} unless accumulated_counts.key?(pid)
-    cid = counter_count['counter_ident']
-    if (accumulated_counts[pid].key?(cid))
-      accumulated_counts[pid][cid] += 1
-    else
-      accumulated_counts[pid][cid] = 1
-    end
-    counter_count['contest_count_list'].each do |cc|
-      conid = cc['contest_ident']
-      accumulated_conids.push(conid.to_s) unless
-        accumulated_conids.include?(conid.to_s)
-    end
-    counter_count['question_count_list'].each do |qc|
-      qid = qc['question_ident']
-      accumulated_conids.push(qid.to_s) unless
-        accumulated_conids.include?(qid.to_s)
+    cid1 = counter_count['counter_ident']
+    rg1 = counter_count['reporting_group']
+    pid1 = counter_count['precinct_ident']
+    return true if ((cid == cid1) && (rg == rg1) && (pid == pid1))
+  end
+  false
+end
+  
+def tabulator_missing_counts(tc)
+  missing = []
+  $expected_counts.keys.sort.each do |cid|
+    $expected_counts[cid].keys.sort.each do |rg|
+      $expected_counts[cid][rg].each do |pid|
+        missing.push([cid, rg, pid]) unless tab_find_count(tc, cid, rg, pid)
+      end
     end
   end
-  [accumulated_counts, $unique_ids['contest'] - accumulated_conids]
+  missing
 end
 
 def tabulator_gather_counter_count_votes(ccval)
@@ -445,16 +417,17 @@ def tabulator_spreadsheet
   str
 end
 
-def tabulator_dump_data
+def tabulator_dump_data(datum = false)
+  print YAML::dump(datum),"\n" if datum
   print "Dumping Data Structures\n"
   $unique_ids.sort.each do |k, v|
     print "  ",k.capitalize," IDs: ",v.inspect.gsub(/\"/,''),"\n"
   end
-  print "  Precinct Districts and Expected Counts:\n"
-  $precinct_distids.sort.each do |k, v|
-    print "    #{k}: ",v.inspect.gsub(/\"/,''),"\n"
-    $precinct_counts[k].each do |c, n|
-      print "      #{c}: ",n,"\n"
+  print "  Expected Counts:\n"
+  $expected_counts.keys.sort.each do |cid|
+    $expected_counts[cid].keys.sort.each do |rg|
+      pids = $expected_counts[cid][rg]
+      print "    #{cid} #{rg} #{pids.inspect.gsub(/\"/,'')}\n"
     end
   end
   print "  Contest Info:\n"

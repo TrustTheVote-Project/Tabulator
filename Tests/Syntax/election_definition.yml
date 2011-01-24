@@ -37,19 +37,16 @@ election_definition:
     expected_count_list:
     - {counter_ident: COUNTER_3, count: 1}
     - {counter_ident: COUNTER_4, count: 1}
-  precount_list:
-  - display_name: Precinct 1
-    ident: PRECINCT_1
-    district_ident_list: [DISTRICT_1, DISTRICT_2]
-    expected_count_list:
-    - {counter_ident: COUNTER_1, count: 1}
-    - {counter_ident: COUNTER_2, count: 2}
-  - display_name: Precinct 2
-    ident: PRECINCT_2
-    district_ident_list: [DISTRICT_3, DISTRICT_4]
-    expected_count_list:
-    - {counter_ident: COUNTER_3, count: 1}
-    - {counter_ident: COUNTER_4, count: 1}
+  expected_count_list:
+  - counter_ident: COUNTER_1
+    precinct_ident_list: [PRECINCT_1]
+    reporting_group: Normal
+  - counter_ident: COUNTER_2
+    precinct_ident_list: [PRECINCT_2]
+    reporting_group: Normal
+  - counter_ident: COUNTER_2
+    precinct_ident_list: [PRECINCT_2]
+    reporting_group: Absentee
   counter_list:
   - display_name: Counter 1
     ident: COUNTER_1

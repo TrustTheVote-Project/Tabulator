@@ -1,7 +1,0 @@
---- 
-ident: Atomic
-district_ident_list: 
-- Atomic
-expected_count_list: 
-- counter_ident: Atomic
-  count: Integer

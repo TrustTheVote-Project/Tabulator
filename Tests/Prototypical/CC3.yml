@@ -10,7 +10,7 @@ counter_count:
     create_date: 2010-12-03
   cast_ballot_count: 99
   jurisdiction_ident: JURISDICTION_1
-  precinct_ident: PRECINCT_1
+  precinct_ident: PRECINCT_2
   contest_count_list: 
   - contest_ident: CONTEST_3
     candidate_count_list:

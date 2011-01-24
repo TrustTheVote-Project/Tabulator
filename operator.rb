@@ -63,17 +63,14 @@ def operator_state(cs)
     print "\nTabulator State: ",state,"\n\n"
     return
   end
-  missing, unconids = op_state_donep(tc, true)
-  print "\nTotal Missing Counts: #{missing}\n"
+  missing = op_state_donep(tc, true)
+  print "\nTotal Missing Counts: #{missing.length}\n"
   label = ''
-  if (missing == 0)
-    print "\nTabulator State: DONE!"
-    label = "   BUT??? ... \n\n  "
+  if (missing.length == 0)
+    print "\nTabulator State: DONE!\n"
   else
-    print "\nTabulator State: ",state
-    label = "\n\n"
+    print "\nTabulator State: #{state}\n"
   end
-  op_print_missing_contests(label, unconids)
 end
 
 def op_state_exit_initial
@@ -86,39 +83,13 @@ def op_state_exit_initial
 end
 
 def op_state_donep(tc, printit = false)
-  accumulated, unconids = tabulator_accumulated_counter_counts(tc)
-  op_print_accumulated_counts(accumulated) if printit
-  missing = op_find_missing_expected_counts(accumulated, printit)
+  missing = tabulator_missing_counts(tc)
   if (printit)
-    [missing, unconids]
+    op_print_missing_counts(missing)
+    missing
   else
-    ((unconids.length) == 0 && (missing == 0))
+    missing.length == 0
   end
-end
-
-def op_find_missing_expected_counts(accumulated, printit)
-  missing = 0
-  print "\nMissing Counts:\n" if printit
-  $precinct_counts.sort.each do |pid, v|
-    pmissing = 0
-    overdone = false
-    print "  #{pid}: " if printit
-    v.each do |cid, n|
-      r = ((accumulated.key?(pid) && accumulated[pid].key?(cid)) ?
-           accumulated[pid][cid] : 0)
-      if ( r < n )
-        print "\n" if printit && pmissing == 0
-        print "    #{cid}: ", (n-r) ,"\n" if printit
-        pmissing += n
-      elsif (r > n)
-        overdone = true
-      end
-    end
-    print "Done\n" if printit && pmissing == 0 && ! overdone
-    print "Overdone\n" if printit && pmissing == 0 && overdone
-    missing += pmissing
-  end
-  missing
 end
 
 def op_print_missing_contests(label, unconids)
@@ -130,11 +101,14 @@ def op_print_missing_contests(label, unconids)
   end
 end
 
-def op_print_accumulated_counts(accumulated)
-  print "\nAccumulated Counts:\n"
-  accumulated.sort.each do |pid, v|
-    print "  #{pid}: \n"
-    v.each { |cid, n| print "    #{cid}: ",n,"\n" }
+def op_print_missing_counts(missing)
+  if (missing.length == 0)
+    print "\nAll Counts Accumulated\n"
+  else
+    print "\nMissing Counts:\n"
+    missing.each do |cid, rg, pid|
+      print "  #{cid} #{rg} #{pid}\n"
+    end
   end
 end
 

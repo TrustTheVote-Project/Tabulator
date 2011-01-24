@@ -22,10 +22,8 @@ election_definition:
   contest_list: 
   - ident: Atomic
     district_ident: Atomic
-  precount_list: 
-  - ident: Atomic
-    district_ident_list: 
+  expected_count_list: 
+  - precinct_ident_list: 
     - Atomic
-    expected_count_list: 
-    - counter_ident: Atomic
-      count: Integer
+    counter_ident: Atomic
+    reporting_group: String

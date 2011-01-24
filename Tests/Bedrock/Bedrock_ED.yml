@@ -29,30 +29,19 @@ election_definition:
     display_name: Unincorporated Precinct
   - ident: PRECINCT-004UnincorporatedQuarry
     display_name: Unincorporated Quarry Precinct
-  precount_list:
-  - ident: PRECINCT-001Downtown
-    display_name: Downtown Precinct
-    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-TownOfBedrock]
-    expected_count_list:
-    - {counter_ident: COUNTER-PCOS1, count: 1}
-    - {counter_ident: COUNTER-CCOS1, count: 2}
-  - ident: PRECINCT-002Quarry
-    display_name: Quarry Precinct
-    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-TownOfBedrock, DISTRICT-MineralDistrict]
-    expected_count_list:
-    - {counter_ident: COUNTER-PCOS2, count: 1}
-  - ident: PRECINCT-003Unincorporated
-    display_name: Unincorporated Precinct
-    district_ident_list: [DISTRICT-BedrockCounty]
-    expected_count_list:
-    - {counter_ident: COUNTER-PCOS3, count: 1}
-    - {counter_ident: COUNTER-CCOS1, count: 2}
-  - ident: PRECINCT-004UnincorporatedQuarry
-    display_name: Unincorporated Quarry Precinct
-    district_ident_list: [DISTRICT-BedrockCounty, DISTRICT-MineralDistrict]
-    expected_count_list:
-    - {counter_ident: COUNTER-PCOS4, count: 1}
-    - {counter_ident: COUNTER-CCOS1, count: 2}
+  expected_count_list:
+  - counter_ident: COUNTER-PCOS1
+    precinct_ident_list: [PRECINCT-001Downtown]
+    reporting_group: PollingPlaceCast
+  - counter_ident: COUNTER-CCOS1
+    precinct_ident_list: [PRECINCT-002Quarry]
+    reporting_group: PollingPlaceProvisional
+  - counter_ident: COUNTER-PCOS3
+    precinct_ident_list: [PRECINCT-003Unincorporated]
+    reporting_group: Absentee
+  - counter_ident: COUNTER-PCOS4
+    precinct_ident_list: [PRECINCT-004UnincorporatedQuarry]
+    reporting_group: Absentee
   counter_list:
   - ident: COUNTER-PCOS1
     display_name: Precinct Counter 1

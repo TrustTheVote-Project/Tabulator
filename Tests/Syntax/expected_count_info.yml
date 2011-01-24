@@ -1,0 +1,4 @@
+---
+counter_ident: COUNTER_1
+precinct_ident_list: [PRECINCT_1, PRECINCT_2]
+reporting_group: Normal

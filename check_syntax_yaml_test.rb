@@ -39,7 +39,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # * test_alt: for testing schemas with ALT(ernate) Hash keys
 # * district_info: District information schema
 # * precinct_info: Precinct information schema
-# * precount_info: Precount information schema
+# * expected_count_info: Expected Count information schema
 # * contest_info: Contest information schema
 # * candidate_info: Candidate information schema
 # * question_info: Question information schema
@@ -70,10 +70,10 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_alt = {"test_alt"=>"String", "|ALT|"=>{"foo"=>"Date", "bar"=>"Date"}}
     schema_district_info = {"ident"=>"Atomic"}
     schema_precinct_info = {"ident"=>"Atomic"}
-    schema_precount_info =
-      {"ident"=>"Atomic",
-      "district_ident_list"=>["Atomic"],
-      "expected_count_list"=>[{"counter_ident"=>"Atomic", "count"=>"Integer"}]}
+    schema_expected_count_info =
+      {"counter_ident"=>"Atomic",
+      "precinct_ident_list"=>["Atomic"],
+      "reporting_group"=>"String"}
     schema_contest_info =
       {"ident"=>"Atomic",
       "district_ident"=>"Atomic"}
@@ -91,7 +91,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "jurisdiction"=>{"ident"=>"Atomic"},
       "district_list"=>[schema_district_info],
       "precinct_list"=>[schema_precinct_info],
-      "precount_list"=>[schema_precount_info],
+      "expected_count_list"=>[schema_expected_count_info],
       "contest_list"=>[schema_contest_info],
       "candidate_list"=>[schema_candidate_info],
       "question_list"=>[schema_question_info],
@@ -146,7 +146,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_setup(trace, "test_alt", schema_test_alt)
     schema_setup(trace, "district_info", schema_district_info)
     schema_setup(trace, "precinct_info", schema_precinct_info)
-    schema_setup(trace, "precount_info", schema_precount_info)
+    schema_setup(trace, "expected_count_info", schema_expected_count_info)
     schema_setup(trace, "contest_info", schema_contest_info)
     schema_setup(trace, "candidate_info", schema_candidate_info)
     schema_setup(trace, "question_info", schema_question_info)
@@ -182,7 +182,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_syntax_error(trace, "test_opt", true, 3)
     schema_test_syntax_error(trace, "test_alt", true, 4)
     schema_test_syntax_error(trace, "district_info", true, 5)
-    schema_test_syntax_error(trace, "precount_info", true, 6)
+    schema_test_syntax_error(trace, "expected_count_info", true, 6)
     schema_test_syntax_error(trace, "audit_trail", true, 7)
     schema_test_syntax_error(trace, "question_info", true, 2, 8)
     schema_test_syntax_error(trace, "invalid_hash_key", false, 9)
@@ -196,7 +196,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_syntax(trace, "test_alt")
     schema_test_syntax(trace, "district_info")
     schema_test_syntax(trace, "precinct_info")
-    schema_test_syntax(trace, "precount_info")
+    schema_test_syntax(trace, "expected_count_info")
     schema_test_syntax(trace, "contest_info")
     schema_test_syntax(trace, "candidate_info")
     schema_test_syntax(trace, "question_info")

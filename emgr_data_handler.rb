@@ -82,7 +82,7 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
         "election"=>elecs['elections'][0],
         "district_list"=>juris['districts'],
         "precinct_list"=>juris['precincts'],
-        "precount_list"=>[],
+        "expected_count_list"=>[],
         "contest_list"=>elecs['contests'],
         "candidate_list"=>cands['candidates'],
         "question_list"=>(quest.is_a?(Hash) ? quest['questions'] : []),

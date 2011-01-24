@@ -1,7 +1,7 @@
 --- 
 counter_count:   
   counter_ident: COUNTER_2
-  reporting_group: Normal
+  reporting_group: Absentee
   election_ident: ELECTION_1
   audit_trail: 
     software: GNU
