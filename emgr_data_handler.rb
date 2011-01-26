@@ -1,5 +1,8 @@
 require "yaml"
 
+# This is a temporary class used to process some test datasets from the DC and
+# Viginia elections held in November 2010. 
+
 class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
 
   def initialize

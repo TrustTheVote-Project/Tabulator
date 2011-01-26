@@ -51,7 +51,7 @@ def operator_data(cs)
   op_state_exit_initial()
   tc = op_instantiate_tabulator(cs)
   print YAML::dump(tc),"\n"
-  tabulator_dump_data()
+  tabulator_dump()
 end
 
 def operator_state(cs)
@@ -187,7 +187,7 @@ def operator_file(cs, file1, file2)
     print "Validating: #{datum.keys[0]}"
     ed = datum
     tabulator_validate_election_definition(ed['election_definition'])
-    tc = tabulator_new(jd['jurisdiction_definition'], ed['election_definition'])
+    tc = tabulator_create(jd['jurisdiction_definition'], ed['election_definition'])
     print ": OK\n\n"
     op_write_yaml_file(tabulator_count_file(),tc,'Tabulator Count')
   when 'counter_count'
@@ -197,7 +197,7 @@ def operator_file(cs, file1, file2)
     tabulator_validate_counter_count(cc['counter_count'])
     print ": OK\n\n"
     tabulator_gather_counter_count_votes(cc['counter_count'])
-    tc = tabulator_update(tc,cc)
+    tc = tabulator_update_counter_count(tc,cc)
     op_write_yaml_file(tabulator_count_file(),tc,'Tabulator Count')
     print "TABULATOR DONE!!!\n\n" if op_state_donep(tc)
   when 'tabulator_count'

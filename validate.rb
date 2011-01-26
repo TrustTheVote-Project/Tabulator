@@ -164,6 +164,9 @@ class TabulatorValidate
 # Returns an Array of the <i>errors</i> and <i>warnings</i> stacks
 
   def errors_return()
+    if (self.errors.length > 0)
+      exit(1)
+    end
     [self.errors, self.warnings]
   end
 

@@ -380,7 +380,7 @@ def tabulator_validate_tabulator_count(tc)
   tc
 end
 
-def tabulator_new(jdinfo, edinfo)
+def tabulator_create(jdinfo, edinfo)
   {"tabulator_count"=>
     {"election_ident"=>edinfo['election']['ident'],
       "jurisdiction_ident"=>jdinfo['ident'],
@@ -397,7 +397,7 @@ def tabulator_new(jdinfo, edinfo)
                       "counter_count_list"=>[]}}
 end
 
-def tabulator_update(tc, cc)
+def tabulator_update_counter_count(tc, cc)
   fid = cc['counter_count']['audit_trail']['file_ident']
   at = tc['tabulator_count']['audit_trail']
   (at['provenance'] ? at['provenance'].push(fid.to_s) : at['provenance'] = [fid])
@@ -422,7 +422,7 @@ def tabulator_spreadsheet
   str
 end
 
-def tabulator_dump_data(datum = false)
+def tabulator_dump(datum = false)
   print YAML::dump(datum),"\n" if datum
   print "Dumping Data Structures\n"
   $unique_ids.sort.each do |k, v|
