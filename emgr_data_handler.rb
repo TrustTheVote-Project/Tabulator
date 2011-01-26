@@ -71,24 +71,32 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
     juris = tedh.is_emgr_file?(jurifile,'Jurisdiction',['districts','precincts',
                                                    'district_sets','splits'])
     quest = tedh.is_emgr_file?(quesfile,'Questions',['questions'])
+    jurisdiction_definition =
+      {"jurisdiction_definition"=>
+      {"ident"=>"JURISDICTION_1",
+        "district_list"=>juris['districts'],
+        "precinct_list"=>juris['precincts']}}
+    file = "EMGR_JD.yml"
+    label = "Jurisdiction Definition"
+    print "Writing YAML #{label} file: #{file}\n"
+    File.open(file, 'w') { |outfile| YAML::dump(jurisdiction_definition, outfile) }
     election_definition =
       {"election_definition"=>
       {"audit_trail"=>{"software"=>"TTV Tabulator v JVC",
           "file_ident"=>"FILE_FOO_1",
           "operator"=>"JVC",
           "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S") },
-        "jurisdiction"=>{"ident"=>"JURISDICTION_1",
-          "display_name"=>"1st Jurisdiction"},
-        "election"=>elecs['elections'][0],
-        "district_list"=>juris['districts'],
-        "precinct_list"=>juris['precincts'],
+        "election"=>{"start_date"=>elecs['elections'][0]["start_date"],
+          "type"=>elecs['elections'][0]["type"],
+          "ident"=>elecs['elections'][0]["ident"],
+          "reporting_group_list"=>[]},
         "expected_count_list"=>[],
         "contest_list"=>elecs['contests'],
         "candidate_list"=>cands['candidates'],
         "question_list"=>(quest.is_a?(Hash) ? quest['questions'] : []),
         "counter_list"=>[]
       }}
-    file = "EMGR_ELECTION_DEFINITION.yml"
+    file = "EMGR_ED.yml"
     label = "Election Definition"
     print "Writing YAML #{label} file: #{file}\n"
     File.open(file, 'w') { |outfile| YAML::dump(election_definition, outfile) }

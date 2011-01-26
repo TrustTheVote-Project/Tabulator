@@ -91,11 +91,6 @@ def tabulator_validate_election_definition(edinfo)
     edinfo['election']['reporting_group_list'].each { |group|
       tab_new_uid_check2('reporting group',group,'Reporting Group') }
   end
-  tab_new_uid_check('jurisdiction',edinfo['jurisdiction'])
-  edinfo['district_list'].each { |x|
-    tab_new_uid_check('district',x,'District (Ignored)') }
-  edinfo['precinct_list'].each { |x|
-    tab_new_uid_check('precinct',x,'Precinct (Ignored)') }
   edinfo['contest_list'].each { |x|
     tab_new_uid_check('contest',x,'Contest (Ignored)') }
   edinfo['candidate_list'].each { |x|
@@ -145,6 +140,14 @@ def tabulator_validate_election_definition(edinfo)
     $question_count_info[qid]['answer_count_list'] = 
       question['answer_list'].collect {|ans| {"answer"=> ans,"count"=> 0}}
   end
+end
+
+def tabulator_validate_jurisdiction_definition(jdinfo)
+  tab_new_uid_check2('jurisdiction',jdinfo['ident'])
+  jdinfo['district_list'].each { |x|
+    tab_new_uid_check('district',x,'District (Ignored)') }
+  jdinfo['precinct_list'].each { |x|
+    tab_new_uid_check('precinct',x,'Precinct (Ignored)') }
 end
 
 def tab_check_precinct_id(pid)
@@ -359,6 +362,7 @@ end
 
 def tabulator_validate_tabulator_count(tc)
   tcval = tc['tabulator_count']
+  tabulator_validate_jurisdiction_definition(tcval['jurisdiction_definition'])
   tabulator_validate_election_definition(tcval['election_definition'])
   election_id = tab_check_uid('TC', 'election', tcval['election_ident'])
   jurisdiction_id = tab_check_uid('TC','jurisdiction', tcval['jurisdiction_ident'])
@@ -376,20 +380,21 @@ def tabulator_validate_tabulator_count(tc)
   tc
 end
 
-def tabulator_new(edinfo)
+def tabulator_new(jdinfo, edinfo)
   {"tabulator_count"=>
     {"election_ident"=>edinfo['election']['ident'],
-      "jurisdiction_ident"=>edinfo['jurisdiction']['ident'],
+      "jurisdiction_ident"=>jdinfo['ident'],
       "audit_trail"=>
       {"software"=>"TTV Tabulator v JVC",
         "file_ident"=>tabulator_count_file(),
         "operator"=>"El Jefe",
         "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S"),
       },
+      "jurisdiction_definition"=>jdinfo,
       "election_definition"=>edinfo,
       "contest_count_list"=>tab_build_contest_counts(),
       "question_count_list"=>tab_build_question_counts(),
-      "counter_count_list"=>[]}}
+                      "counter_count_list"=>[]}}
 end
 
 def tabulator_update(tc, cc)

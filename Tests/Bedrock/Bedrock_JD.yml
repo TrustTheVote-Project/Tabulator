@@ -1,0 +1,19 @@
+---
+jurisdiction_definition:
+  ident: JURISDICTION-BedrockCounty
+  district_list:
+  - ident: DISTRICT-BedrockCounty
+    display_name: Bedrock County
+  - ident: DISTRICT-TownOfBedrock
+    display_name: Town of Bedrock
+  - ident: DISTRICT-MineralDistrict
+    display_name: Mineral District
+  precinct_list:
+  - ident: PRECINCT-001Downtown
+    display_name: Downtown Precinct
+  - ident: PRECINCT-002Quarry
+    display_name: Quarry Precinct
+  - ident: PRECINCT-003Unincorporated
+    display_name: Unincorporated Precinct
+  - ident: PRECINCT-004UnincorporatedQuarry
+    display_name: Unincorporated Quarry Precinct

@@ -6,7 +6,22 @@ tabulator_count:
     file_ident: TAB_FILE_1
     operator: El Jefe
     create_date: 2010-12-03
-  jurisdiction_ident: JURISDICTION_1
+  jurisdiction_definition:
+    ident: JURISDICTION_1
+    district_list:
+    - display_name: District 1
+      ident: DISTRICT_1
+    - display_name: District 2
+      ident: DISTRICT_2
+    - display_name: District 3
+      ident: DISTRICT_3
+    - display_name: District 4
+      ident: DISTRICT_4
+    precinct_list:
+    - display_name: Precinct 1
+      ident: PRECINCT_1
+    - display_name: Precinct 2
+      ident: PRECINCT_2
   election_definition:
     audit_trail: 
       file_ident: FILE_1
@@ -20,31 +35,6 @@ tabulator_count:
       ident: ELECTION_1
       date: 2010-12-10
       reporting_group_list: [Normal, Absentee]
-    jurisdiction:
-      display_name: Jurisdiction 1
-      ident: JURISDICTION_1
-    district_list:
-    - display_name: District 1
-      ident: DISTRICT_1
-    - display_name: District 2
-      ident: DISTRICT_2
-    - display_name: District 3
-      ident: DISTRICT_3
-    - display_name: District 4
-      ident: DISTRICT_4
-    precinct_list:
-    - display_name: Precinct 1
-      ident: PRECINCT_1
-      district_ident_list: [DISTRICT_1, DISTRICT_2]
-      expected_count_list:
-      - {counter_ident: COUNTER_1, count: 1}
-      - {counter_ident: COUNTER_2, count: 2}
-    - display_name: Precinct 2
-      ident: PRECINCT_2
-      district_ident_list: [DISTRICT_3, DISTRICT_4]
-      expected_count_list:
-      - {counter_ident: COUNTER_3, count: 1}
-      - {counter_ident: COUNTER_4, count: 1}
     expected_count_list:
     - counter_ident: COUNTER_1
       precinct_ident_list: [PRECINCT_1]

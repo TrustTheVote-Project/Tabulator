@@ -1,15 +1,11 @@
 --- 
 election_definition: 
-  precinct_list: 
-  - ident: Atomic
   question_list: 
   - ident: Atomic
     question: String
     answer_list: 
     - String
     district_ident: Atomic
-  jurisdiction: 
-    ident: Atomic
   candidate_list: 
   - contest_ident: Atomic
     ident: Atomic
@@ -17,8 +13,6 @@ election_definition:
   - ident: Atomic
   election: 
     ident: Atomic
-  district_list: 
-  - ident: Atomic
   contest_list: 
   - ident: Atomic
     district_ident: Atomic

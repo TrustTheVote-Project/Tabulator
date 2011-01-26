@@ -8,7 +8,6 @@ tabulator_count:
     answer_count_list: 
     - answer: String
       count: Integer
-  jurisdiction_ident: Atomic
   audit_trail: &id002 
     software: String
     "|OPT2|": 
@@ -20,16 +19,12 @@ tabulator_count:
     create_date: Date
     file_ident: Atomic
   election_definition: 
-    precinct_list: 
-    - ident: Atomic
     question_list: 
     - ident: Atomic
       question: String
       answer_list: 
       - String
       district_ident: Atomic
-    jurisdiction: 
-      ident: Atomic
     candidate_list: 
     - contest_ident: Atomic
       ident: Atomic
@@ -37,8 +32,6 @@ tabulator_count:
     - ident: Atomic
     election: 
       ident: Atomic
-    district_list: 
-    - ident: Atomic
     contest_list: 
     - ident: Atomic
       district_ident: Atomic
@@ -70,4 +63,9 @@ tabulator_count:
       reporting_group: String
       precinct_ident: Atomic
       election_ident: Atomic
-  election_ident: Atomic
+  jurisdiction_definition: 
+    precinct_list: 
+    - ident: Atomic
+    ident: Atomic
+    district_list: 
+    - ident: Atomic

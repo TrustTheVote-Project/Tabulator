@@ -15,7 +15,7 @@ def operator_help
   print "       \# print: optional arg prints data structures afterwards\n"
   print "       \#\n"
   print "       \# <FILE>: a YAML file containing ...\n"
-  print "       \#   election definition: syntax checks, validates, installs\n"
+  print "       \#   jurisdiction definition: syntax checks, validates, installs\n"
   print "       \#   counter count: syntax checks, validates, updates tabulator\n"
   print "       \#   tabulator count: syntax checks, validates (not installed)\n\n"
 end
@@ -120,7 +120,7 @@ def op_instantiate_tabulator(cs, printit = true)
       (tc.keys[0] == 'tabulator_count'))
     schema_file = "Schemas/tabulator_count_schema.yml"
     schema = op_read_yaml_file(schema_file)
-    if (cs.check_syntax(schema, tc))
+    if (cs.check_syntax(schema, tc).length == 0)
       tabulator_initaliaze()
       tabulator_validate_tabulator_count(tc)
     else
@@ -150,15 +150,15 @@ def op_check_syntax(cs, file)
       (schema_file = "Schemas/#{type}_schema.yml") &&
       File.exists?(schema_file) &&
       (schema = op_read_yaml_file(schema_file, 'schema')) &&
-      cs.check_syntax(schema, datum))
+      cs.check_syntax(schema, datum).length == 0)
     datum
   end
 end
 
-def operator_file(cs, file)
-  datum = op_check_syntax(cs, file)
+def operator_file(cs, file1, file2)
+  datum = op_check_syntax(cs, file1)
   if (! datum.is_a?(Hash))
-    print "Unexpected contents of tabulator file: #{file}\n"
+    print "Unexpected contents of tabulator file: #{file1}\n"
     exit(1)
   end
   op_state_exit_initial() if (datum.keys[0] == 'counter_count')
@@ -167,11 +167,28 @@ def operator_file(cs, file)
   type = datum.keys[0]
   case type
   when 'election_definition'
-    ed = datum
+    print "\nElection Definition must be preceeded by Jurisdiction Definition\n"
+    exit(1)
+  when 'jurisdiction_definition'
+    jd = datum
     tabulator_initaliaze()
-    tabulator_validate_election_definition(ed['election_definition'])
+    tabulator_validate_jurisdiction_definition(jd['jurisdiction_definition'])
     print ": OK\n\n"
-    tc = tabulator_new(ed['election_definition'])
+    if (file2 == '' || ! File.exists?(file2))
+      print "Jurisdiction file must be followed by Election Definition file: #{file2}\n"
+      exit(1)
+    end
+    datum = op_check_syntax(cs, file2)
+    if (! datum.is_a?(Hash) || datum.keys[0] != "election_definition")
+      print "Unexpected contents of Election Definition file: #{file2}\n"
+      exit(1)
+    end
+    print "Check Syntax: #{datum.keys[0]}: OK\n"
+    print "Validating: #{datum.keys[0]}"
+    ed = datum
+    tabulator_validate_election_definition(ed['election_definition'])
+    tc = tabulator_new(jd['jurisdiction_definition'], ed['election_definition'])
+    print ": OK\n\n"
     op_write_yaml_file(tabulator_count_file(),tc,'Tabulator Count')
   when 'counter_count'
     cc = datum
@@ -205,36 +222,38 @@ end
 begin
   cs = CheckSyntaxYaml.new
   operator_print = false
-  file = ''
+  file1 = ''
+  file2 = ''
   ARGV.each do |arg|
     (arg == 'trace' ? (cs.trace(true)) :
-     (arg == 'print' ? (operator_print = true) : (file = arg)))
+     (arg == 'print' ? (operator_print = true) :
+      (file1 == '' ? (file1 = arg) : (file2 = arg))))
   end
   print "Trace ON\n" if ARGV.include?('trace')
   print "Print ON\n" if operator_print
-  if (file == '' || file == 'help')
+  if (file1 == '' || file1 == 'help')
     operator_data(cs) if operator_print
-    operator_help() unless operator_print and file == ''
+    operator_help() unless operator_print and file1 == ''
     exit(0)
-  elsif (file == 'reset')
+  elsif (file1 == 'reset')
     operator_reset()
     exit(0)
-  elsif (file == 'output')
+  elsif (file1 == 'output')
     operator_data(cs) if operator_print
     operator_output(cs)
     exit(0)
-  elsif (file == 'data')
+  elsif (file1 == 'data')
     operator_data(cs)
     exit(0)
-  elsif (file == 'state')
+  elsif (file1 == 'state')
     operator_data(cs) if operator_print
     operator_state(cs)
     exit(0)
-  elsif (File.exists?(file))
-    operator_file(cs, file)
+  elsif (File.exists?(file1))
+    operator_file(cs, file1, file2)
     operator_data(cs) if operator_print;
   else
-    print "\nERROR, non-existent file: #{file}\n\n"
+    print "\nERROR, non-existent file: #{file1}\n\n"
   end
 rescue UidErr, ShouldntErr
   op_print_warnings() if (ARGV.include?('trace') || operator_print)

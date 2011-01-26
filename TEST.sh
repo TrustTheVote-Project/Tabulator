@@ -14,7 +14,7 @@ test_default ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb Tests/Prototypical/ED.yml 
+    ruby operator.rb Tests/Prototypical/JD.yml Tests/Prototypical/ED.yml 
     exitif
     ruby operator.rb data
     exitif
@@ -46,7 +46,7 @@ test_dc ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb EMGR_ELECTION_DEFINITION.yml
+    ruby operator.rb EMGR_JD.yml EMGR_ED.yml
     exitif
 }
 
@@ -56,7 +56,7 @@ test_va ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb EMGR_ELECTION_DEFINITION.yml
+    ruby operator.rb EMGR_JD.yml EMGR_ED.yml
     exitif
 }
 
@@ -64,7 +64,7 @@ test_bedrock ()
 {
     ruby operator.rb reset
     exitif
-    ruby operator.rb Tests/Bedrock/Bedrock_ED.yml
+    ruby operator.rb Tests/Bedrock/Bedrock_JD.yml Tests/Bedrock/Bedrock_ED.yml
     exitif
     ruby operator.rb Tests/Bedrock/Bedrock_CC1.yml
     exitif

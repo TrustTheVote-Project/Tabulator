@@ -1,56 +1,52 @@
 --- 
 tabulator_count: 
+  jurisdiction_ident: JURISDICTION_1
   question_count_list: 
   - question_ident: QUESTION_2
-    overvote_count: 0
-    undervote_count: 0
+    overvote_count: 5
+    undervote_count: 4
     answer_count_list: 
     - answer: A
-      count: 0
+      count: 10
     - answer: B
-      count: 0
+      count: 55
     - answer: C
-      count: 0
-  jurisdiction_ident: JURISDICTION_1
+      count: 99
   audit_trail: 
     software: TTV Tabulator v JVC
     operator: El Jefe
-    create_date: 2011-01-19 14:07:41
+    provenance: 
+    - FILE_1
+    - FILE_2
+    - FILE_3
     file_ident: TABULATOR_COUNT.yml
+    create_date: 2011-01-26 00:30:11
   election_definition: 
-    precinct_list: 
-    - ident: PRECINCT_1
-      display_name: Precinct 1
-    - ident: PRECINCT_2
-      display_name: Precinct 2
     question_list: 
     - ident: QUESTION_2
       question: Free Beer
+      district_ident: DISTRICT_1
       answer_list: 
       - A
       - B
       - C
-      district_ident: DISTRICT_1
       election_ident: ELECTION_1
-    jurisdiction: 
-      ident: JURISDICTION_1
-      display_name: Jurisdiction 1
     audit_trail: 
       operator: El Jefe
-      create_date: Sometime
       file_ident: FILE_1
+      create_date: Sometime
     candidate_list: 
     - party_display_name: Green
-      contest_ident: CONTEST_1
       ident: CANDIDATE_1
+      contest_ident: CONTEST_1
       display_name: Candidate 1
     - party_display_name: Green
-      contest_ident: CONTEST_1
       ident: CANDIDATE_2
+      contest_ident: CONTEST_1
       display_name: Candidate 2
     - party_display_name: Brown
-      contest_ident: CONTEST_3
       ident: CANDIDATE_3
+      contest_ident: CONTEST_3
       display_name: Candidate 3
     counter_list: 
     - ident: COUNTER_1
@@ -61,19 +57,10 @@ tabulator_count:
       start_date: 2010-12-10
       type: GENERAL
       ident: ELECTION_1
+      display_name: Election 1
       reporting_group_list: 
       - Normal
       - Absentee
-      display_name: Election 1
-    district_list: 
-    - ident: DISTRICT_1
-      display_name: District 1
-    - ident: DISTRICT_2
-      display_name: District 2
-    - ident: DISTRICT_3
-      display_name: District 3
-    - ident: DISTRICT_4
-      display_name: District 4
     contest_list: 
     - ident: CONTEST_1
       display_name: Contest 1
@@ -83,38 +70,125 @@ tabulator_count:
       display_name: Contest 3
       district_ident: DISTRICT_1
       election_ident: ELECTION_1
-    precount_list: 
-    - ident: PRECINCT_1
-      district_ident_list: 
-      - DISTRICT_1
-      - DISTRICT_2
-      expected_count_list: 
-      - counter_ident: COUNTER_1
-        count: 1
-    - ident: PRECINCT_2
-      district_ident_list: 
-      - DISTRICT_3
-      - DISTRICT_4
-      expected_count_list: 
-      - counter_ident: COUNTER_2
-        count: 1
+    expected_count_list: 
+    - precinct_ident_list: 
+      - PRECINCT_1
+      counter_ident: COUNTER_1
+      reporting_group: Normal
+    - precinct_ident_list: 
+      - PRECINCT_2
+      counter_ident: COUNTER_2
+      reporting_group: Normal
+    - precinct_ident_list: 
+      - PRECINCT_2
+      counter_ident: COUNTER_2
+      reporting_group: Absentee
   contest_count_list: 
-  - candidate_count_list: 
+  - overvote_count: 2
+    candidate_count_list: 
     - candidate_ident: CANDIDATE_1
-      count: 0
+      count: 7
     - candidate_ident: CANDIDATE_2
-      count: 0
-    overvote_count: 0
+      count: 9
     contest_ident: CONTEST_1
-    undervote_count: 0
-    writein_count: 0
-  - candidate_count_list: 
+    undervote_count: 1
+    writein_count: 3
+  - overvote_count: 20
+    candidate_count_list: 
     - candidate_ident: CANDIDATE_3
-      count: 0
-    overvote_count: 0
+      count: 19
     contest_ident: CONTEST_3
-    undervote_count: 0
-    writein_count: 0
-  counter_count_list: []
-
+    undervote_count: 10
+    writein_count: 30
   election_ident: ELECTION_1
+  jurisdiction_definition: 
+    precinct_list: 
+    - ident: PRECINCT_1
+      display_name: Precinct 1
+    - ident: PRECINCT_2
+      display_name: Precinct 2
+    ident: JURISDICTION_1
+    district_list: 
+    - ident: DISTRICT_1
+      display_name: District 1
+    - ident: DISTRICT_2
+      display_name: District 2
+    - ident: DISTRICT_3
+      display_name: District 3
+    - ident: DISTRICT_4
+      display_name: District 4
+  counter_count_list: 
+  - counter_count: 
+      question_count_list: []
+
+      jurisdiction_ident: JURISDICTION_1
+      cast_ballot_count: 99
+      audit_trail: 
+        software: GNU
+        operator: El Jefe
+        create_date: 2010-12-03
+        file_ident: FILE_1
+      counter_ident: COUNTER_1
+      contest_count_list: 
+      - candidate_count_list: 
+        - candidate_name: Candidate 1
+          candidate_ident: CANDIDATE_1
+          count: 7
+        - candidate_name: Candidate 2
+          candidate_ident: CANDIDATE_2
+          count: 9
+        overvote_count: 2
+        contest_ident: CONTEST_1
+        undervote_count: 1
+        writein_count: 3
+      precinct_ident: PRECINCT_1
+      reporting_group: Normal
+      election_ident: ELECTION_1
+  - counter_count: 
+      jurisdiction_ident: JURISDICTION_1
+      question_count_list: 
+      - question_ident: QUESTION_2
+        overvote_count: 5
+        undervote_count: 4
+        answer_count_list: 
+        - answer: A
+          count: 10
+        - answer: B
+          count: 55
+        - answer: C
+          count: 99
+      audit_trail: 
+        software: GNU
+        operator: El Jefe
+        file_ident: FILE_2
+        create_date: 2010-12-03
+      cast_ballot_count: 99
+      counter_ident: COUNTER_2
+      reporting_group: Absentee
+      precinct_ident: PRECINCT_2
+      contest_count_list: []
+
+      election_ident: ELECTION_1
+  - counter_count: 
+      question_count_list: []
+
+      jurisdiction_ident: JURISDICTION_1
+      cast_ballot_count: 99
+      audit_trail: 
+        software: GNU
+        operator: El Jefe
+        create_date: 2010-12-03
+        file_ident: FILE_3
+      counter_ident: COUNTER_2
+      contest_count_list: 
+      - overvote_count: 20
+        candidate_count_list: 
+        - candidate_name: Candidate 3
+          candidate_ident: CANDIDATE_3
+          count: 19
+        contest_ident: CONTEST_3
+        undervote_count: 10
+        writein_count: 30
+      precinct_ident: PRECINCT_2
+      reporting_group: Normal
+      election_ident: ELECTION_1

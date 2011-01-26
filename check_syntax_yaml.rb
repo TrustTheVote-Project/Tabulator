@@ -22,29 +22,34 @@
 
 require "yaml"
 
+# CheckSyntaxYaml
+#
+# This is the Yaml Syntax Checker for the Tabulator, which checks the syntax
+# of TTV Common Data Format (CDF) datasets provided as input to the Tabulator.
+
 class CheckSyntaxYaml
 
-# TRACE_DEFAULT is an Integer constant (300) that holds the default setting
-# for character-limited printing while tracing output.
+# TRACE_DEFAULT is an <i>Integer</i> constant (300) that holds the default
+# setting for character-limited printing while tracing output.
 
   TRACE_DEFAULT = 300
 
   attr_accessor :errors
 
-# check_syntax
+# Arguments:
+# * <i>schema</i>: (<i>Arbitrary</i>) schema to syntax-check against
+# * <i>datum</i>:  (<i>Arbitrary</i>) datum being checked
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output (optional, default 300 characters)
 #
-# * <i>schema</i>: [type Arbitrary] schema to syntax-check against
-# * <i>datum</i>:  [type Arbitrary] datum being checked
-# * <i>trace</i>:  [type Integer] limits tracing of output (optional, default 300 characters)
-#
-# Returns: Boolean
+# Returns: <i>errors</i> <i>Array</i> 
 #
 # The function check_syntax is the primary entry point into the
 # CheckSyntaxYaml class.  It first sets the error code stack to empty.  It
 # then checks the validity of the <i>schema</i>, and if invalid, generates a
-# syntax error and returns <i>false</i>.  Finally, it initializes the data
-# inspection depth to 0 and returns the result of syntax-checking the
-# <i>datum</i> against the <i>schema</i>.
+# syntax error and returns the error code stack [-1].  Finally, it initializes
+# the data inspection depth to 0, checks the syntax of the <i>datum</i>
+# against the <i>schema</i>, and returns the resulting error code stack, which
+# will be empty if the check succeeds, non-empty if it fails.
 #
 # The optional <i>trace</i> value limits tracing of output, and is consumed by
 # the functions check_syntax_trace, check_syntax_error, and
@@ -56,26 +61,27 @@ class CheckSyntaxYaml
 
   def check_syntax(schema, datum, validate = true, trace = TRACE_DEFAULT)
     self.errors = []
-    unless (!validate || schema_is_valid?(schema))
-      return check_syntax_error(-1, schema, datum, trace)
+    if (validate && !schema_is_valid?(schema))
+      check_syntax_error(-1, schema, datum, trace)
+    else
+      check_syntax_internal(schema, datum, 0, trace)
     end
-    check_syntax_internal(schema, datum, 0, trace)
+    self.errors
   end
 
-# check_syntax_internal
-#
-# * <i>schema</i>: [type Arbitrary] schema
-# * <i>datum</i>:  [type Arbitrary] datum
-# * <i>depth</i>:  [type Integer] current data inspection depth
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Arguments:
+# * <i>schema</i>: (<i>Arbitrary</i>) schema
+# * <i>datum</i>:  (<i>Arbitrary</i>) datum
+# * <i>depth</i>:  (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 # 
-# Returns: Boolean
+# Returns: <i>Boolean</i>
 #
 # The function check_syntax_internal is the internal top-level version of
 # check_syntax (which is never called internally), and performs the actual
-# recursive syntax-checking.  If the <i>schema</i> is a String,
+# recursive syntax-checking.  If the <i>schema</i> is a <i>String</i>,
 # check_syntax_string checks the syntax.  Otherwise, the <i>schema</i> must be
-# an Array or a Hash, and likewise for the <i>datum</i>, so either
+# an <i>Array</i> or a <i>Hash</i>, and likewise for the <i>datum</i>, so either
 # check_syntax_array or check_syntax_hash checks the syntax.
 
   private
@@ -97,21 +103,20 @@ class CheckSyntaxYaml
     end
   end
   
-# check_syntax_string
+# Arguments:
+# * <i>schema</i>: (<i>String</i>) schema
+# * <i>datum</i>:  (<i>Arbitrary</i>) datum
+# * <i>depth</i>:  (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>schema</i>: [type String] schema
-# * <i>datum</i>:  [type Arbitrary] datum
-# * <i>depth</i>:  [type Integer] current data inspection depth
-# * <i>trace</i>:  [type Integer] limits tracing of output
-#
-# Returns: Boolean
+# Returns: <i>Boolean</i>
 #
 # The valid strings that may appear in a <i>schema</i> are as follows:
 # * "Any":     matches any <i>datum</i>
-# * "String":  matches any <i>datum</i> of type String or Date
-# * "Integer": matches any <i>datum</i> of type Integer
-# * "Date":    matches any <i>datum</i> of type String or Date
-# * "Atomic":  matches any <i>datum</i> of type String, Integer, or Date
+# * "String":  matches any <i>datum</i> of type <i>String</i> or <i>Date</i>
+# * "Integer": matches any <i>datum</i> of type <i>Integer</i>
+# * "Date":    matches any <i>datum</i> of type <i>String</i> or <i>Date</i>
+# * "Atomic":  matches any <i>datum</i> of type <i>String</i>, <i>Integer</i>, or <i>Date</i>
 #
 # All other schema strings are invalid and result in a syntax error, which may
 # indicate the presence of an internal error, in that the schema being used is
@@ -135,17 +140,16 @@ class CheckSyntaxYaml
          check_syntax_error(1, schema, datum, trace))))))
   end
   
-# check_syntax_array
+# Arguments:
+# * <i>index</i>:  (<i>Integer</i>) index of <i>datum</i> <i>Array</i> element being examined
+# * <i>schema</i>: (<i>Arbitrary</i>) schema
+# * <i>datum</i>:  (<i>Array</i>) datum
+# * <i>depth</i>:  (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>index</i>:  [type Integer] index of <i>datum</i> Array element being examined
-# * <i>schema</i>: [type Arbitrary] schema
-# * <i>datum</i>:  [type Array] datum
-# * <i>depth</i>:  [type Integer] current data inspection depth
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean</i>
 #
-# Returns: Boolean
-#
-# Recursively check all elements in the Array <i>datum</i> to ensure they
+# Recursively check all elements in the <i>Array</i> <i>datum</i> to ensure they
 # match the <i>schema</i>.  Under our syntax-checking regime, for each
 # individual data array, all array elements must have the same type and match
 # the same schema.
@@ -157,19 +161,18 @@ class CheckSyntaxYaml
      ((datum.length == index+1) || check_syntax_array(index+1, schema, datum, depth, trace)))
   end
   
-# check_syntax_hash
+# Arguments:
+# * <i>index</i>:  (<i>Integer</i>) index into <i>keys</i> <i>Array</i>
+# * <i>keys</i>:   (<i>Array</i>) of all keys for <i>Hash</i> <i>schema</i>
+# * <i>schema</i>: (<i>Hash</i>) schema
+# * <i>datum</i>:  (<i>Hash</i>) datum
+# * <i>depth</i>:  (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>index</i>:  [type Integer] index into <i>keys</i> Array
-# * <i>keys</i>:   [type Array] of all keys for Hash <i>schema</i>
-# * <i>schema</i>: [type Hash] schema
-# * <i>datum</i>:  [type Hash] datum
-# * <i>depth</i>:  [type Integer] current data inspection depth
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean</i>
 #
-# Returns: Boolean
-#
-# Recursively check all of the <i>keys</i> in the Hash <i>schema</i>, to ensure
-# there is a match for each in the Hash <i>datum</i>.
+# Recursively check all of the <i>keys</i> in the <i>Hash</i> <i>schema</i>, to ensure
+# there is a match for each in the <i>Hash</i> <i>datum</i>.
 
   def check_syntax_hash(index, keys, schema, datum, depth, trace)
     check_syntax_trace("check_syntax_hash#{index}", schema, datum, depth, trace)
@@ -177,35 +180,34 @@ class CheckSyntaxYaml
      ((keys.length == 0) || check_syntax_hash(index+1, keys, schema, datum, depth, trace)))
   end
   
-# check_syntax_hash_key
+# Arguments:
+# * <i>key</i>:    (<i>Atomic</i>) key for syntax-checking <i>Hash</i> <i>datum</i>
+# * <i>schema</i>: (<i>Hash</i>) schema
+# * <i>datum</i>:  (<i>Hash</i>) datum
+# * <i>depth</i>:  (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>key</i>:    [type Arbitrary (but should be String)] key for syntax-checking Hash <i>datum</i>
-# * <i>schema</i>: [type Hash] schema
-# * <i>datum</i>:  [type Hash] datum
-# * <i>depth</i>:  [type Integer] current data inspection depth
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean</i>
 #
-# Returns: Boolean
-#
-# There are three types of Hash schemas, all of whose keys must be of type
-# String.  Two reserved types of strings are used to represent special cases
-# when matching Hash keys:
-# * strings matching "|OPT.*|", for optional Hash keys, and
-# * strings matching "|ALT.*|", for alternative Hash keys.  
+# There are three types of <i>Hash</i> schemas, all of whose keys must be of type
+# <i>String</i>.  Two reserved types of strings are used to represent special cases
+# when matching <i>Hash</i> keys:
+# * strings matching "|OPT.*|", for optional <i>Hash</i> keys, and
+# * strings matching "|ALT.*|", for alternative <i>Hash</i> keys.  
 # The reason for not just using either "|OPT|" or "|ALT|" is that there may be
-# requirements for more than one such match within a single Hash schema, and
-# Hash keys must be unique, so one may use "|OPT1|" and "|OPT2|", for
+# requirements for more than one such match within a single <i>Hash</i> schema, and
+# <i>Hash</i> keys must be unique, so one may use "|OPT1|" and "|OPT2|", for
 # instance, to disambiguate them.
 #
-# For OPT(ional)-keyed Hash schemas, the corresponding value in the schema is
-# a single-keyed Hash that may or may not appear in the datum, but if it does,
+# For OPT(ional)-keyed <i>Hash</i> schemas, the corresponding value in the schema is
+# a single-keyed <i>Hash</i> that may or may not appear in the datum, but if it does,
 # must match.
 #
-# For ALT(ernative)-keyed Hash schemas, the corresponding value in the schema
-# is a dual-keyed Hash, one of whose keys and values must appear in the datum,
+# For ALT(ernative)-keyed <i>Hash</i> schemas, the corresponding value in the schema
+# is a dual-keyed <i>Hash</i>, one of whose keys and values must appear in the datum,
 # and both of which may not.
 #
-# For all other Hash schemas, the Hash key must appear in the datum and the
+# For all other <i>Hash</i> schemas, the <i>Hash</i> key must appear in the datum and the
 # corresponding value must match.
 
   def check_syntax_hash_key(key, schema, datum, depth, trace)
@@ -232,13 +234,12 @@ class CheckSyntaxYaml
         check_syntax_error(10, schema, datum, trace, key)))))
   end
   
-# check_syntax_trace
-#
-# * <i>context</i>: [type String] holds the calling context
-# * <i>schema</i>:  [type Arbitrary] schema
-# * <i>datum</i>:   [type Arbitrary] datum
-# * <i>depth</i>:   [type Integer] current data inspection depth
-# * <i>trace</i>:   [type Integer] limits tracing of output
+# Arguments:
+# * <i>context</i>: (<i>String</i>) holds the calling context
+# * <i>schema</i>:  (<i>Arbitrary</i>) schema
+# * <i>datum</i>:   (<i>Arbitrary</i>) datum
+# * <i>depth</i>:   (<i>Integer</i>) current data inspection depth
+# * <i>trace</i>:   (<i>Integer</i>) limits tracing of output
 # 
 # Returns: N/A
 #
@@ -254,13 +255,12 @@ class CheckSyntaxYaml
     print "   datum: #{datum.inspect[0 .. trace.abs]}\n"
   end
 
-# check_syntax_error
-#
-# * <i>errcode</i>: [type Integer] error code
-# * <i>schema</i>:  [type Arbitrary] schema
-# * <i>datum</i>:   [type Arbitrary] datum
-# * <i>trace</i>:   [type Integer] limits tracing of output
-# * <i>extra</i>:   [type String] extra error-printing information (optional, default '')
+# Arguments:
+# * <i>errcode</i>: (<i>Integer</i>) error code
+# * <i>schema</i>:  (<i>Arbitrary</i>) schema
+# * <i>datum</i>:   (<i>Arbitrary</i>) datum
+# * <i>trace</i>:   (<i>Integer</i>) limits tracing of output
+# * <i>extra</i>:   (<i>String</i>) extra error-printing information (optional, default '')
 # 
 # Returns: <i>false</i>
 # 
@@ -321,22 +321,21 @@ class CheckSyntaxYaml
     false
   end
 
-# schema_is_valid?
+# Arguments:
+# * <i>schema</i>: (<i>Arbitrary</i>) schema
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output (optional, default 300 characters)
 #
-# * <i>schema</i>: [type Arbitrary] schema
-# * <i>trace</i>:  [type Integer] limits tracing of output (optional, default 300 characters)
+# Returns: <i>Boolean</i>
 #
-# Returns: Boolean
+# A <i>schema</i> is a data structure comprised of Strings, Arrays, Hashes,
+# and combinations thereof, and nothing else.  The function schema_is_valid?
+# returns <i>true</i> only when the <i>schema</i> has a valid format.
 #
-# A <i>schema</i> is a data structure comprised of Strings, Arrays, Hashes, and
-# combinations thereof, and nothing else.  The function schema_is_valid? returns
-# <i>true</i> only when the <i>schema</i> has a valid format.
-#
-# If the schema is a String, it must be one of (Integer, String, Date, Atomic,
-# Any).  If the schema is an Array, schema_is_valid_array? is called to
-# perform the validity check. If the schema is a Hash, schema_is_valid_hash?
-# is called to perform the validity check. No other types of schemas are
-# valid.
+# If the schema is a <i>String</i>, it must be one of (Integer, String, Date,
+# Atomic, Any).  If the schema is an <i>Array</i>, schema_is_valid_array? is called
+# to perform the validity check. If the schema is a <i>Hash</i>,
+# schema_is_valid_hash?  is called to perform the validity check. No other
+# types of schemas are valid.
 
   public
   def schema_is_valid?(schema, trace = TRACE_DEFAULT)
@@ -351,17 +350,16 @@ class CheckSyntaxYaml
        schema_not_valid(schema, "Schema type #{schema.class} invalid", trace))))
   end    
 
-# schema_is_valid_array?
+# Arguments:
+# * <i>schema</i>: (<i>Array</i>) schema
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>schema</i>: [type Array] schema
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean<i>
 #
-# Returns: Boolean
-#
-# A <i>schema</i> of type Array is valid only if it has one element and that
-# element is a valid schema.  This provision limits the type of acceptable
-# data arrays to those whose elements all have the same type and match the
-# same schema.
+# A <i>schema</i> of type <i>Array</i> is valid only if it has one element and
+# that element is a valid schema.  This provision limits the type of
+# acceptable data arrays to those whose elements all have the same type and
+# match the same schema.
 
   private
   def schema_is_valid_array?(schema, trace)
@@ -371,14 +369,13 @@ class CheckSyntaxYaml
      schema_not_valid(schema, "Schema array not of length 1", trace))
   end
   
-# schema_is_valid_hash?
+# Arguments:
+# * <i>schema</i>: (<i>Hash</i>) schema
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>schema</i>: [type Hash] schema
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean<i>
 #
-# Returns: Boolean
-#
-# A <i>schema</i> of type Hash is valid only each of its <i>key,value</i>
+# A <i>schema</i> of type <i>Hash</i> is valid only each of its <i>key,value</i>
 # pairs is valid. 
 
   def schema_is_valid_hash?(schema, trace)
@@ -389,24 +386,23 @@ class CheckSyntaxYaml
     true
   end
   
-# schema_is_valid_key_value?
+# Arguments:
+# * <i>key</i>:   (<i>Arbitrary</i>) <i>Hash</i> key
+# * <i>value</i>: (<i>Arbitrary</i>) <i>Hash</i> value
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output
 #
-# * <i>key</i>:   [type Arbitrary] Hash key
-# * <i>value</i>: [type Arbitrary] Hash value
-# * <i>trace</i>:  [type Integer] limits tracing of output
+# Returns: <i>Boolean</i>
 #
-# Returns: Boolean
-#
-# A Hash <i>key,value</i> pair is valid if the <i>key</i> is a String and the
+# A <i>Hash</i> <i>key,value</i> pair is valid if the <i>key</i> is a <i>String</i> and the
 # value is a valid schema.  But there are two special types of keys, as
 # documented under check_syntax_hash_key:
-# * keys matching "|OPT.*|", in which case the value must be a single-keyed Hash (the option), and
-# * keys matching "|ALT.*|", in which case the value must be a dual-keyed Hash (the alternatives).
+# * keys matching "|OPT.*|", in which case the value must be a single-keyed <i>Hash</i> (the option), and
+# * keys matching "|ALT.*|", in which case the value must be a dual-keyed <i>Hash</i> (the alternatives).
 #
-# OPT(ional) schema keys permit schemas to match data with an optional Hash key.
+# OPT(ional) schema keys permit schemas to match data with an optional <i>Hash</i> key.
 #
 # ALT(ernative) schema keys permit schemas to match data with one or another
-# alternative Hash keys, but not both.
+# alternative <i>Hash</i> keys, but not both.
 
   def schema_is_valid_key_value?(key, value, trace)
     schema_is_valid_trace("schema_is_valid_key_value?", value, trace, key)
@@ -423,11 +419,10 @@ class CheckSyntaxYaml
      schema_not_valid(key, "Schema key not of type String", trace))
   end
   
-# schema_not_valid
-#
-# * <i>schema</i>:  [type Arbitrary] schema
-# * <i>message</i>: [type String] error message
-# * <i>trace</i>:   [type Integer] limits tracing of output
+# Arguments:
+# * <i>schema</i>:  (<i>Arbitrary</i>) schema
+# * <i>message</i>: (<i>String</i>) error message
+# * <i>trace</i>:   (<i>Integer</i>) limits tracing of output
 #
 # Returns: <i>false</i>
 #
@@ -438,25 +433,25 @@ class CheckSyntaxYaml
     false
   end
   
-# schema_is_valid_trace
-#
-# * <i>context</i>: [type String] holds the calling context
-# * <i>schema</i>:  [type Arbitrary] schema
-# * <i>trace</i>:   [type Integer] limits tracing of output
-# * <i>key</i>:     [type Hash] key (optional, default '')
+# Arguments:
+# * <i>context</i>: (<i>String</i>) holds the calling context
+# * <i>schema</i>:  (<i>Arbitrary</i>) schema
+# * <i>trace</i>:   (<i>Integer</i>) limits tracing of output
+# * <i>key</i>:     (<i>Hash</i>) key (optional, default '')
 # 
 # Returns: N/A
 #
 # Operates only when the <i>trace</i> limit is negative, by printing the
-# calling <i>context</i>, the optional Hash <i>key</i>, and the <i>schema</i>
-# (whose printout is character-limited to <i>trace.abs</i> characters).
+# calling <i>context</i>, the optional <i>Hash</i> <i>key</i>, and the
+# <i>schema</i> (whose printout is character-limited to <i>trace.abs</i>
+# characters).
 
   def schema_is_valid_trace(context, schema, trace, key = '')
     return unless trace < 0
     if (key == '')
       print "#{context}: #{schema.inspect[0 .. trace.abs]}\n"
     else
-      print "#{context}: #{key.inspect} #{schema.inspect[0 .. trace.abs]}\n"
+      print "#{context}: #{key.to_s} #{schema.inspect[0 .. trace.abs]}\n"
     end
   end
 
