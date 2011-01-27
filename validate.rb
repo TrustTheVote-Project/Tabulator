@@ -40,6 +40,11 @@ class TabulatorValidate
                "reporting group", "contest", "candidate", "question",
                "counter", "file"]
 
+# A temprorary measure for warning (instead of generating errors) about
+# inconsistencies in the DC Nov 2010 test data sets.
+
+  WARN = true
+
 # <i>Hash</i> with <i>Key</i>: from UID_TYPES, <i>Value</i>: <i>Array</i> of
 # UIDs for that type; holds all the unique identifiers (UIDs), keyed by UID
 # type
@@ -70,7 +75,7 @@ class TabulatorValidate
 
   attr_accessor :warnings
 
-# Initializes state by calling re_initialize.
+# Initializes by calling re_initialize.
 
   def initialize 
     re_initialize
@@ -80,8 +85,8 @@ class TabulatorValidate
 # 
 # Returns: N/A
 #
-# (Re)Initializes the state of all attributes, each set to empty for its
-# particular type (zero for Integers).
+# (Re)Initializes all attributes, each set to empty for its particular type
+# (zero for Integers).
 
   private
   def re_initialize
@@ -298,7 +303,7 @@ class TabulatorValidate
 
   def validate_districts(districts)
     districts.each { |district|
-      uid_valid?("district", district["ident"]) }
+      uid_valid?("district", district["ident"], WARN) }
   end
   
 # Arguments:
@@ -591,18 +596,20 @@ class TabulatorValidate
 #
 # A Counter Count is valid iff:
 # 1. the Counter UID exists,
-# 2. the Election UID exists (matches the only such UID),
-# 3. the Jurisdiction UID exists (matches the only such UID),
-# 4. the Precinct UID exists,
-# 5. the Reporting Group exists,
-# 6. the Contest Counts are valid, and
-# 7. the Question Counts are valid.
+# 2. the Audit File UID is unique (not a duplicate),
+# 3. the Election UID exists (matches the only such UID),
+# 4. the Jurisdiction UID exists (matches the only such UID),
+# 5. the Precinct UID exists,
+# 6. the Reporting Group exists,
+# 7. the Contest Counts are valid, and
+# 8. the Question Counts are valid.
 
   def validate_counter_count(counter_count)
     errors_reset()
     cid = counter_count["counter_ident"].to_s
     error2("Counter Count has invalid Counter", cid) unless
       uid_exists?("counter", cid)
+    uid_valid?("file", counter_count['audit_trail']['file_ident'])
     eid = counter_count["election_ident"].to_s
     error2("Counter Count has invalid Election", eid) unless
       uid_exists?("election", eid)
@@ -627,7 +634,8 @@ class TabulatorValidate
 #
 # Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
 #
-# Re-initializes and determines if the Tabulator Count is valid, iff:
+# This methods expects to be called only in an initial state.  A Tabulator
+# Count is valid iff:  
 # 1. the Jurisdiction Definition is valid (this begins the initialization of the Tabulator, by initializing the <i>unique_ids</i> for Jurisdiction, Precincts and Districts),
 # 2. the Election Definition is valid (this completes the initialization of the Tabulator, by initializing the remaining <i>unique_ids</i> and the <i>expected_counts</i> attributes),
 # 3. the Election UID exists (matches the only such UID),
@@ -636,7 +644,6 @@ class TabulatorValidate
 # 6. all Question Counts are valid (this initializes the <i>question_counts</i> attribute).
 
   def validate_tabulator_count(tabulator_count)
-    re_initialize()
     errors_reset()
     error("Tabulator Count has invalid Jurisdiction Definition") unless 
       validate_jurisdiction_definition(tabulator_count["jurisdiction_definition"])

@@ -24,6 +24,9 @@ require "yaml"
 require "check_syntax_yaml"
 require "test/unit"
 
+# The CheckSyntaxYamlTest class provides Unit Testing for the CheckSyntaxYaml
+# class.
+
 class CheckSyntaxYamlTest < Test::Unit::TestCase
 
 # Define schemas for all known TTV CDF dataset types recognized by the

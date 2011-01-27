@@ -22,10 +22,9 @@
 
 require "yaml"
 
-# CheckSyntaxYaml
-#
-# This is the Yaml Syntax Checker for the Tabulator, which checks the syntax
-# of TTV Common Data Format (CDF) datasets provided as input to the Tabulator.
+# The CheckSyntaxYaml class provides a Yaml Syntax Checker for the Tabulator,
+# which checks the syntax of TTV Common Data Format (CDF) datasets provided as
+# input to the Tabulator.
 
 class CheckSyntaxYaml
 
