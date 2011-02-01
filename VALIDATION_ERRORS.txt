@@ -1,10 +1,10 @@
-grep -e "error(" -e "def " -e "warning(" validate.rb >> ERRORS.txt
+grep -e "error(" -e "def " -e "warning(" validate.rb >> VALIDATION_ERRORS.txt
 
+Duplicate:    duplicated in a list, should appear alone
+Improper:     improper because exists, but does not belong (Candidate/Answer)
+Missing:      should appear in a list, but does not
 Non-Existent: does not exist, but should
-Non-Unique:   already exists, is a duplicate declaration
-Duplicate:    appears more than once in a list, but should not
-Improper:     exists, but does not belong to its count (candidate or answer)
-Missing:      should be present in list, but is not
+Non-Unique:   not unique, already exists (previously encountered/declared)
 
   def dups 
   def initialize(jurisdiction_definition = false, election_definition = false,
@@ -16,13 +16,16 @@ Missing:      should be present in list, but is not
   def uid_exists?(type, uid)
   def uids_exist?(type)
   def uid_add(type, uid)
+
   def new_tabulator_count(jurisdiction_definition, election_definition, file)
+
   def validate_jurisdiction_definition(jurisdiction_definition)
   def validate_precincts(precincts)
         error("Non-Unique Precinct UID", pid)
   def validate_districts(districts)
           warning("Non-Unique (Ignored) District UID", did) # temporary, JVC
           error("Non-Unique District UID", did)
+
   def validate_election_definition(election_definition)
   def validate_election(election)
   def validate_reporting_groups(reporting_groups)
@@ -47,6 +50,7 @@ Missing:      should be present in list, but is not
       warning("Missing Counter UIDs", diff_cids, "from Expected Counts")
       warning("Missing Reporting Groups", diff_rgs, "from Expected Counts")
       warning("Missing Precinct UIDs", diff_pids, "from Expected Counts")
+
   def validate_counter_count(counter_count)
       error("Non-Existent Counter UID", cid, "in Counter Count")
       warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
@@ -73,6 +77,8 @@ Missing:      should be present in list, but is not
   def counts_missing_update(cid, rg, pid)
       warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
       error("Non-Unique Counter UID, Reporting Group, and Precinct UID", cidrgpid, "in Counter Count")
+
+
   def validate_tabulator_count(tabulator_count)
     error("Non-Existent Election UID", eid, "in Tabulator Count") unless
     error("Non-Existent Jurisdiction UID", jid, "in Tabulator Count") unless
