@@ -8,8 +8,8 @@ counter_count:
  election_ident: ELECTION-2May2010
  jurisdiction_ident: JURISDICTION-BedrockCounty
  precinct_ident: PRECINCT-002Quarry
- reporting_group: PollingPlaceCast
- counter_ident: COUNTER-PCOS2
+ reporting_group: PollingPlaceProvisional
+ counter_ident: COUNTER-CCOS1
  cast_ballot_count: 27
  contest_count_list:
  - contest_ident: CONTEST-Mayor

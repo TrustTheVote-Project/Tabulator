@@ -28,8 +28,8 @@ require "yaml"
 
 class CheckSyntaxYaml
 
-# TRACE_DEFAULT is an <i>Integer</i> constant (300) that holds the default
-# setting for character-limited printing while tracing output.
+# <tt><b>TRACE_DEFAULT</b></tt> is an <i>Integer</i> constant (300) that holds
+# the default setting for character-limited printing while tracing output.
 
   TRACE_DEFAULT = 300
 
@@ -40,7 +40,7 @@ class CheckSyntaxYaml
 # * <i>datum</i>:  (<i>Arbitrary</i>) datum being checked
 # * <i>trace</i>:  (<i>Integer</i>) limits tracing of output (optional, default 300 characters)
 #
-# Returns: <i>errors</i> <i>Array</i> 
+# Returns: <tt><b>errors</b></tt> <i>Array</i> 
 #
 # The function check_syntax is the primary entry point into the
 # CheckSyntaxYaml class.  It first sets the error code stack to empty.  It
@@ -264,15 +264,15 @@ class CheckSyntaxYaml
 # Returns: <i>false</i>
 # 
 # Called when a syntax error is discovered.  Pushes the <i>errcode</i> onto
-# the <i>errors</i> error code stack, prints a SYNTAX ERROR message
+# the <tt><b>errors</b></tt> error code stack, prints a SYNTAX ERROR message
 # (potentially utilizing the optional <i>extra</i> argument), and then prints
 # the values of the mismatched <i>schema</i> and <i>data</i> items (printout
 # is character-limited to <i>trace.abs</i> characters per item).
 #
 # When a syntax error is discovered, error codes are stacked onto
-# <i>errors</i>, via repeated calls to check_syntax_error, as the syntax
-# checker recursively unwinds.  Error stacking permits the testing of other
-# than 1st-level errors, e.g., 2nd-level, 3rd-level, etc.
+# <tt><b>errors</b></tt>, via repeated calls to check_syntax_error, as the
+# syntax checker recursively unwinds.  Error stacking permits the testing of
+# other than 1st-level errors, e.g., 2nd-level, 3rd-level, etc.
 
   def check_syntax_error(errcode, schema, datum, trace, extra = '')
     self.errors.push(errcode)

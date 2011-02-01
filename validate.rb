@@ -23,14 +23,24 @@
 require "yaml"
 require "check_syntax_yaml"
 
-# The TabulatorValidate class is used to validate the datasets that are
-# imported into the Tabulator.  During the validation of either a Jurisdiction
-# Definition or an Election Definition, it performs these additional
-# operations:
+module Enumerable 
+  def dups 
+    inject({}) {|h,v| h[v]=h[v].to_i+1; h}.reject{|k,v| v==1}.keys
+  end # collects the duplicate elements in an Enumerable type object
+end
+
+# The TabulatorValidate class is used to validate the data sets that are
+# imported into the Tabulator.
+#
+# During the validation of a paired Jurisdiction Definition and Election
+# Definition, it performs these additional operations:
 # 1. Saves the names of all unique identifiers (UIDs)
-# 2. Saves the Expected Counts information
-# 3. Constructs and saves zero-initialized Contest Counts for each Contest
-# 4. Constructs and saves zero-initialized Question Counts for each Question
+# 3. Constructs zero-initialized Contest Counts for each Contest
+# 4. Constructs zero-initialized Question Counts for each Question
+# 5. Constructs a data structure that holds the Missing Expected Counts
+#
+# During the successful validation of a Counter Count, the final action is to
+# update the Missing Counts data structure.
 
 class TabulatorValidate
 
@@ -40,32 +50,10 @@ class TabulatorValidate
                "reporting group", "contest", "candidate", "question",
                "counter", "file"]
 
-# A temprorary measure for warning (instead of generating errors) about
+# A temporary measure for warning (instead of generating errors) about
 # inconsistencies in the DC Nov 2010 test data sets.
 
   WARN = true
-
-# <i>Hash</i> with <i>Key</i>: from UID_TYPES, <i>Value</i>: <i>Array</i> of
-# UIDs for that type; holds all the unique identifiers (UIDs), keyed by UID
-# type
-
-  attr_accessor :unique_ids
-
-# <i>Hash</i> with <i>Key</i>: Contest UID, <i>Value</i>: Contest Count; holds
-# all the Contest Counts, keyed by Contest UID
-
-  attr_accessor :contest_counts
-
-# <i>Hash</i> with <i>Key</i>: Question UID, <i>Value</i>: Question Count;
-# holds all the Question Counts, keyed by Question UID
-
-  attr_accessor :question_counts
-
-# <i>Hash</i> with <i>Key</i>: Counter UID, <i>Value</i>: {<i>Hash</i> with
-# <i>Key</i>: Reporting Group, <i>Value</i>: <i>Array</i> of Precinct UIDs};
-# holds all the Expected Counts, keyed by Counter UID and then Reporting Group
-
-  attr_accessor :expected_counts
 
 # <i>Array</i>, stack of error messages
 
@@ -75,26 +63,115 @@ class TabulatorValidate
 
   attr_accessor :warnings
 
-# Initializes by calling re_initialize.
+# <i>Hash</i> with <i>Key</i>: from <tt><b>UID_TYPES</b></tt>, <i>Value</i>:
+# <i>Array</i> of  UIDs for that type; holds all the unique identifiers
+# (UIDs), keyed by UID type
 
-  def initialize 
-    re_initialize
+  attr_accessor :uids
+
+# <i>Hash</i> with <i>Key</i>: Contest UID, <i>Value</i>: Contest Count; holds
+# all the Contest Counts, keyed by Contest UID
+
+  attr_accessor :counts_contests
+
+# <i>Hash</i> with <i>Key</i>: Question UID, <i>Value</i>: Question Count;
+# holds all the Question Counts, keyed by Question UID
+
+  attr_accessor :counts_questions
+
+# <i>Hash</i> with <i>Keys</i>: "total" (<i>Integer</i> number of individually
+# expected counts); "missing" <i>Array</i> of missing counts, each sub-array
+# of which contains [Counter UID, Reporting Group, Precinct UID]; and
+# "expected" (expected counts, <i>Hash</i> with <i>Key</i>: Counter UID,
+# <i>Value</i>: <i>Hash</i> with <i>Key</i>: Reporting Group, <i>Value</i>:
+# <i>Hash</i> with <i>Key</i>: Precinct UID, <i>Value</i>: <i>Boolean</i>,
+# <i>true</i> iff this particular count has been processed)
+
+  attr_accessor :counts_missing
+
+# <i>Hash</i> with <i>Key</i>: "tabulator_count", <i>Value</i>: Tabulator
+# Count information; holds the Tabulator Count data set currently in effect.
+
+  attr_accessor :tabulator_count
+
+# Arguments:
+# * <i>jurisdiction_definition</i>: (<i>Hash</i>) Jurisdiction Definition (optional)
+# * <i>election_definition</i>: (<i>Hash</i>) Election Definition (optional)
+# * <i>file</i>: (<i>String</i>) File name for new Tabulator Count (optional)
+# * <i>tabulator_count</i>: (<i>Hash</i>) Tabulator Count (optional)
+# 
+# Returns: N/A
+#
+# Initializes all attributes, each set to empty for its particular type (zero
+# for Integers), and then finishes by instantiating a Tabulator Count.  One
+# set of arguments must be provided, either a Jurisdiction Definition,
+# Election Definition, and File Name as the 1st, 2nd, and 3rd args, or a
+# Tabulator Count as the 4th arg.
+#
+# If a Jurisdiction Definition, Election Definition, and File Name are
+# provided, they are validated and used to construct a new Tabulator Count,
+# which puts the Tabulator into its initial state, ready to accept counting
+# data.
+#
+# If a Tabulator Count is provided, it is validated, which puts the Tabulator
+# either into an initial state, or into a state where some votes have been
+# counted, depending whether or not Counter Counts appear within the Tabulator
+# Count.
+
+  def initialize(jurisdiction_definition = false, election_definition = false,
+                 file = false, tabulator_count = false)
+    self.uids = Hash.new { |h,k| h[k] = [] }
+    self.counts_contests = Hash.new { |h,k| h[k] = {} }
+    self.counts_questions = Hash.new { |h,k| h[k] = {} }
+    self.counts_missing =
+      {"total"=>0, "missing"=>[], "expected"=>Hash.new { |h,k| h[k] = {} }}
+    self.errors = []
+    self.warnings = []
+    if (jurisdiction_definition)
+      if (jurisdiction_definition.is_a?(Hash) &&
+          jurisdiction_definition.keys.include?("jurisdiction_definition"))
+        if (election_definition.is_a?(Hash) &&
+            election_definition.keys.include?("election_definition"))
+          self.tabulator_count =
+            new_tabulator_count(jurisdiction_definition, election_definition, file)
+        else
+          shouldnt("Only an Election Definition may be the 3rd arg to Tabulator.new") 
+        end
+      else
+        shouldnt("Only a Jurisdiction Definition may be the 2nd arg to Tabulator.new")
+      end
+    elsif (tabulator_count)
+      if (tabulator_count.is_a?(Hash) &&
+          tabulator_count.keys.include?("tabulator_count"))
+        self.tabulator_count = tabulator_count
+        validate_tabulator_count(tabulator_count)
+      else
+        shouldnt("Only a Tabulator Count may be the 1st arg to Tabulator.new")
+      end
+    else
+      shouldnt("Either a Tabulator Count or a Jurisdiction/Election Definition" +
+               "must be passed to Tabulator.new")
+    end
   end
 
 # No Arguments
 # 
-# Returns: N/A
+# Returns: <i>Array</i>
 #
-# (Re)Initializes all attributes, each set to empty for its particular type
-# (zero for Integers).
+# Returns the <tt><b>errors</b></tt> message stack.
 
-  private
-  def re_initialize
-    self.unique_ids = Hash.new { |h,k| h[k] = [] }
-    self.contest_counts = Hash.new { |h,k| h[k] = {} }
-    self.question_counts = Hash.new { |h,k| h[k] = {} }
-    self.expected_counts = Hash.new { |h,k| h[k] = [] }
-    errors_reset = []
+  def validation_errors()
+    self.errors
+  end
+
+# No Arguments
+# 
+# Returns: <i>Array</i>
+#
+# Returns the <tt><b>warnings</b></tt> message stack.
+
+  def validation_warnings()
+    self.warnings
   end
 
 # Arguments:
@@ -105,165 +182,228 @@ class TabulatorValidate
 # Prints a FATAL ERROR message and exits. For internal problems only. Should
 # never be called. 
 
+  private
   def shouldnt(message)
     print("** FATAL ERROR ** #{message}\n")
+    $stdout.flush
     exit(1)
-  end
-
-# Arguments:
-# * <i>message</i>: (<i>String</i>) message
-#
-# Returns: N/A
-#
-# Prints the ERROR message and pushes it onto the <i>errors</i> stack.
-
-  def error(message)
-    print("** ERROR ** #{message}\n")
-    self.errors.push(message)
-    exit(1)
-  end
-
-# Arguments:
-# * <i>message</i>: (<i>String</i>) message
-# * <i>value</i>:   (<i>Arbitrary</i>) value to include after the message
-#
-# Returns: N/A
-#
-# Passes the following message to error: <i>message (value)</i>
-
-  def error2(message, value)
-    error("#{message} (#{value.to_s})")
   end
 
 # Arguments:
 # * <i>message1</i>: (<i>String</i>) 1st message
 # * <i>value1</i>:   (<i>Arbitrary</i>) value for 1st message
-# * <i>message2</i>: (<i>String</i>) 2nd message
-# * <i>value2</i>:   (<i>Arbitrary</i>) value for  2nd message
+# * <i>message2</i>: (<i>String</i>) 2nd message (optional)
+# * <i>value2</i>:   (<i>Arbitrary</i>) value for 2nd message (optional)
+# * <i>message3</i>: (<i>String</i>) 3rd message (optional)
 #
-# Returns: N/A
+# Returns: <i>false</i>
 #
-# Passes the following message to error: <i>message1 (value1) message2
-# (value2)</i> 
+# Prints the following ERROR message (with the optional bits left out):
+# <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
+# message onto the <tt><b>errors</b></tt> stack.
 
-  def error4(message1, value1, message2, value2)
-    error("#{message1} (#{value1.to_s}) #{message2} (#{value2.to_s})")
-  end
-
-# No Arguments
-# 
-# Returns: N/A
-#
-# Resets the <i>errors</i> and <i>warnings</i> stacks to their initial state
-# (empty).
-
-  def errors_reset()
-    self.errors = []
-    self.warnings = []
-  end
-
-# No Arguments
-# 
-# Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
-#
-# Returns an Array of the <i>errors</i> and <i>warnings</i> stacks
-
-  def errors_return()
-    if (self.errors.length > 0)
-      exit(1)
-    end
-    [self.errors, self.warnings]
+  def error(message1, value1, message2 = "", value2 = "", message3 = "")
+    message = "#{message1} (#{value1.to_s})" +
+      (message2 == "" ? "" : " #{message2}") +
+      (value2 == "" ? "" : " (#{value2.to_s})") +
+      (message3 == "" ? "" : " #{message3}")
+    print("\n** ERROR ** #{message}\n\n")
+    $stdout.flush
+    self.errors.push(message)
+    false
   end
 
 # Arguments:
-# * <i>message</i>: (<i>String</i>) message
+# * <i>message1</i>: (<i>String</i>) 1st message
+# * <i>value1</i>:   (<i>Arbitrary</i>) value for st message
+# * <i>message2</i>: (<i>String</i>) 2nd message
+# * <i>value2</i>:   (<i>Arbitrary</i>) value for 2nd message (optional)
+# * <i>message3</i>: (<i>String</i>) 3rd message (optional)
 #
-# Returns: N/A
+# Returns: <i>false</i>
 #
-# Prints the WARNING message and pushes it onto the warnings stack.
+# Prints the following WARNING message (with the optional bits left out):
+# <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
+# message onto the <tt><b>warnings</b></tt> stack.
 
-  def warning(message)
+  def warning(message1, value1, message2 = "", value2 = "", message3 = "")
+    message = "#{message1} (#{value1.to_s})" +
+      (message2 == "" ? "" : " #{message2}") +
+      (value2 == "" ? "" : " (#{value2.to_s})") +
+      (message3 == "" ? "" : " #{message3}")
     print("** WARNING ** #{message}\n")
+    $stdout.flush
     self.warnings.push(message)
     false
   end
 
-# Arguments: 
-# * <i>message</i>: (<i>String</i>) message
-# * <i>value</i>:   (<i>Arbitrary</i>) value for message
+# Arguments:
+# * <i>type</i>: (<i>String</i>) type of UID, one of <tt><b>UID_TYPES</b></tt>
+# * <i>uid</i>:  (<i>Atomic</i>) UID name
+#
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> if a UID named <i>uid</i>, of the specified <i>type</i>,
+# already exists. (UIDs are always cast to type <i>String</i> before being
+# processed.)
+
+  def uid_exists?(type, uid)
+    shouldnt("Invalid UID type: #{type}") unless UID_TYPES.include?(type)
+    uid = uid.to_s
+    self.uids[type].include?(uid)
+  end
+
+# Arguments:
+# * <i>type</i>: (<i>String</i>) type of UID, one of <tt><b>UID_TYPES</b></tt>
+#
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> if one or more UIDs of the specified <i>type</i> already
+# exist.
+
+  def uids_exist?(type)
+    shouldnt("Invalid UID type: #{type}") unless UID_TYPES.include?(type)
+    return (self.uids.keys.include?(type) && self.uids[type].keys.length > 0)
+  end
+
+# Arguments:
+# * <i>type</i>: (<i>String</i>) type of UID, one of <tt><b>UID_TYPES</b></tt>
+# * <i>uid</i>:  (<i>Atomic</i>) UID
 #
 # Returns: N/A
 #
-# Passes the following message to warning: message (value)
-
-  def warning2(message, value)
-    warning("#{message} (#{value.to_s})")
-  end
-
-# Arguments:
-# * <i>type</i>: (<i>String</i>) type of UID
-# * <i>uid</i>:  (<i>Atomic</i>) UID name
-#
-# Returns: <i>Boolean</i>
-#
-# Returns <i>true</i> if a UID of the specified <i>type</i> already
-# exists. (UIDs are always cast to type <i>String</i> before being processed.)
-
-  def uid_exists?(type, uid)
-    shouldnt("Invalid Unique ID type: #{type}") unless UID_TYPES.include?(type)
-    uid = uid.to_s
-    self.unique_ids[type].include?(uid)
-  end
-    
-# Arguments:
-# * <i>type</i>: (<i>String</i>) type of UID
-# * <i>uid</i>:  (<i>Atomic</i>) UID name
-# * <i>warn</i>: (<i>Boolean</i>) indicates whether to produce a warning or error if the UID already exists
-#
-# Returns: <i>Boolean</i>
-#
-# If a UID of the specified <i>type</i> does not already exists, it is added
-# to its UIDs list, and we return <i>true</i>.  If the UID already exists,
-# then either an error message (<i>warn</i> is <i>false</i>) or a warning
-# message is generated (<i>warn</i> is <i>true</i>), and <i>false</i> is
-# returned. (UIDs are always cast to type <i>String</i> before being
-# processed.)
-
-  def uid_valid?(type, uid, warn = false)
-    shouldnt("Invalid Unique ID type: #{type}") unless UID_TYPES.include?(type)
-    uid = uid.to_s
-    if (uid_exists?(type, uid))
-      if (warn)
-        warning("Duplicate #{type.capitalize} Unique ID: #{uid} (Ignored)")
-      else
-        error("Duplicate #{type.capitalize} Unique ID: #{uid}")
-      end
-    else
-      self.unique_ids[type].push(uid)
-      true
-    end
-  end
-
-# Arguments:
-# * <i>type</i>: (<i>String</i>) type of UID
-# * <i>uid</i>:  (<i>Atomic</i>) UID name
-#
-# Returns: <i>Boolean</i>
-#
-# If a UID of the specified <i>type</i> does not already exists, it is added
-# to its UIDs list, and we return <i>true</i>.  Otherwise, an error message is
-# generated, and <i>false</i> is returned. (UIDs are always cast to type
+# The UID is added to its associated UIDs list. (UIDs are always cast to type
 # <i>String</i> before being processed.)
 
-  def uid_singleton?(type, uid)
-    shouldnt("Invalid Unique ID type: #{type}") unless UID_TYPES.include?(type)
+  def uid_add(type, uid)
+    shouldnt("Invalid UID type: #{type}") unless UID_TYPES.include?(type)
     uid = uid.to_s
-    if (!self.unique_ids.keys.include?(type) || (self.unique_ids[type].length == 0))
-        self.unique_ids[type] = [uid]
-        true
+    shouldnt("Pre-existing UID: #{uid}") if self.uids[type].include?(uid)
+    self.uids[type].push(uid)
+  end
+
+# Arguments:
+# * <i>jurisdiction_definition</i>: (<i>Hash</i>) Jurisdiction Definition
+# * <i>election_definition</i>: (<i>Hash</i>) Election Definition
+# * <i>file</i>: (<i>String</i>) File name for new Tabulator Count
+#
+# Returns: <i>Hash</i>
+#
+# Returns an initial Tabulator Count constructed from the information provided
+# by the Jurisdiction Definition, Election Definition, and File.  Uses the
+# side effects of the validation of the Jurisdiction and Election Definitions
+# (the initialization of the <tt><b>counts_contests</b></tt> and
+# <tt><b>counts_questions</b></tt> attributes) to create and insert
+# zero-initialized Contest and Question Counts into the Tabulator Count, and
+# sets its Counter Count to the empty array.
+
+  def new_tabulator_count(jurisdiction_definition, election_definition, file)
+    jdinfo = jurisdiction_definition["jurisdiction_definition"]
+    validate_jurisdiction_definition(jdinfo)
+    edinfo = election_definition["election_definition"]
+    validate_election_definition(edinfo)
+    self.tabulator_count = 
+     {"tabulator_count"=>
+      {"election_ident"=>edinfo["election"]["ident"],
+        "jurisdiction_ident"=>jdinfo["ident"],
+        "audit_trail"=>
+        {"software"=>"TTV Tabulator v Jeff Cook",
+          "file_ident"=>file,
+          "operator"=>"El Jefe",
+          "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S"),
+        },
+        "jurisdiction_definition"=>jdinfo,
+        "election_definition"=>edinfo,
+        "contest_count_list"=>self.counts_contests.keys.collect { |k|
+          self.counts_contests[k] },
+        "question_count_list"=>self.counts_questions.keys.collect { |k|
+          self.counts_questions[k] },
+        "counter_count_list"=>[]}}
+  end
+
+# Arguments:
+# * <i>jurisdiction_definition</i>: (<i>Hash</i>) Jurisdiction Definition object
+#
+# Returns: N/A
+#
+# A Jurisdiction Definition is valid iff: 
+# 1. the Districts are valid, and
+# 2. the Precincts are valid.
+#
+# If the Jurisdiction UID is not unique and solo, then there is a serious
+# internal error, as this method should only be called in an initial state.
+
+  def validate_jurisdiction_definition(jurisdiction_definition)
+    if (uids_exist?("jurisdiction"))
+      jids = self.uids["jurisdiction"].keys.inspect.gsub(/\"/,"")
+      shouldnt("Pre-existing Jurisdiction UIDs, should be none: #{jids}")
     else
-      error("#{type.capitalize} Unique IDs already exist: #{uid}")
+      uid_add("jurisdiction", jurisdiction_definition["ident"])
     end
+    validate_precincts(jurisdiction_definition["precinct_list"])
+    validate_districts(jurisdiction_definition["district_list"])
+  end
+
+# Arguments:
+# * <i>precincts</i>: (<i>Array</i>) of Precinct objects
+#
+# Returns: N/A
+#
+# The Precincts are valid iff:
+# 1. each Precinct UID is unique (there are no duplicates).
+
+  def validate_precincts(precincts)
+    precincts.each do |precinct|
+      if (uid_exists?("precinct", pid = precinct["ident"].to_s))
+        error("Non-Unique Precinct UID", pid)
+      else
+        uid_add("precinct", pid)
+      end
+    end
+  end
+  
+# Arguments:
+# * <i>districts</i>: (<i>Array</i>) of District objects
+#
+# Returns: N/A
+#
+# The Districts are valid iff:
+# 1. each District UID is unique (there are no duplicates).
+
+  def validate_districts(districts)
+    districts.each do |district|
+      if (uid_exists?("district", did = district["ident"].to_s))
+        if (WARN)
+          warning("Non-Unique (Ignored) District UID", did) # temporary, JVC
+        else
+          error("Non-Unique District UID", did)
+        end
+      else 
+        uid_add("district", did)
+      end
+    end
+  end
+  
+# Arguments:
+# * <i>election_definition</i>: (<i>Hash</i>) Election Definition object
+#
+# Returns: N/A
+#
+# An Election Definition is valid iff: 
+# 1. the Election is valid,
+# 2. the Contests are valid,
+# 3. the Candidates are valid,
+# 4. the Questions are valid,
+# 5. the Counters are valid, and
+# 6. the Expected Counts are valid.
+
+  def validate_election_definition(election_definition)
+    validate_election(election_definition["election"])
+    validate_contests(election_definition["contest_list"])
+    validate_candidates(election_definition["candidate_list"])
+    validate_questions(election_definition["question_list"])
+    validate_counters(election_definition["counter_list"])
+    validate_expected_counts(election_definition["expected_count_list"])
   end
 
 # Arguments:
@@ -272,11 +412,19 @@ class TabulatorValidate
 # Returns: N/A
 #
 # An Election is valid iff:
-# 1. its UID is a singleton (it is the only Election UID, and thus unique), and 
-# 2. its Reporting Groups are valid.
+# 1. its Reporting Groups are valid.
+#
+# If the Election UID is not unique and solo, then there is a serious
+# internal error, as this method should only be called in an initial state.
+
 
   def validate_election(election)
-    uid_singleton?("election", election["ident"])
+    if (uids_exist?("election"))
+      eids = self.uids["election"].keys.inspect.gsub(/\"/,"")
+      shouldnt("Pre-existing Election UIDs, should be none: #{eids}")
+    else
+      uid_add("election", election["ident"])
+    end
     validate_reporting_groups(election["reporting_group_list"])
   end
 
@@ -289,36 +437,15 @@ class TabulatorValidate
 # 1. they are all unique (there are no duplicate group names).
 
   def validate_reporting_groups(reporting_groups)
-    reporting_groups.each { |rgid|
-      uid_valid?("reporting group", rgid) }
+    reporting_groups.each do |rg|
+      if (uid_exists?("reporting group", rg))
+        error("Duplicate Reporting Group", rg)
+      else
+        uid_add("reporting group", rg)
+      end
+    end
   end
 
-# Arguments:
-# * <i>districts</i>: (<i>Array</i>) of District objects
-#
-# Returns: N/A
-#
-# The Districts are valid iff:
-# 1. each District UID is unique (there are no duplicates).
-
-  def validate_districts(districts)
-    districts.each { |district|
-      uid_valid?("district", district["ident"], WARN) }
-  end
-  
-# Arguments:
-# * <i>precincts</i>: (<i>Array</i>) of Precinct objects
-#
-# Returns: N/A
-#
-# The Precincts are valid iff:
-# 1. each Precinct UID is unique (there are no duplicates).
-
-  def validate_precincts(precincts)
-    precincts.each { |precinct|
-      uid_valid?("precinct", precinct["ident"]) }
-  end
-  
 # Arguments:
 # * <i>contests</i>: (<i>Array</i>) of Contest objects
 #
@@ -326,20 +453,25 @@ class TabulatorValidate
 #
 # The Contests are valid iff:
 # 1. each Contest UID is unique (there are no duplicates), and 
-# 2. each Contest's District UID exists (was previously encountered by validate_districts and listed as a valid District UID). 
-# This method also initializes the <i>contest_counts</i> attribute, by, for
-# each Contest, using the Contest UID as a key under which to hash a
+# 2. each Contest"s District UID exists (validate_districts added it to the set of  District UIDs). 
+# This method also initializes the <tt><b>counts_contests</b></tt> attribute,
+# by, for each Contest, using the Contest UID as a key under which to hash a
 # zero-initialized Contest Count object for that Contest.
 
   def validate_contests(contests)
-    contests.each { |contest|
-      uid_valid?("contest", contest["ident"]) }
+    contests.each do |contest|
+      if (uid_exists?("contest", conid = contest["ident"].to_s))
+        error("Non-Unique Contest UID", conid)
+      else
+        uid_add("contest", conid)
+      end
+    end
     contests.each do |contest|
       conid = contest["ident"].to_s
       did = contest["district_ident"].to_s
-      error4("Non-existent Contest", conid, "District", did) unless
+      error("Non-Existent District UID", did, "in Contest UID", conid) unless
         uid_exists?("district", did)
-      self.contest_counts[conid] = {"contest_ident"=>conid,
+      self.counts_contests[conid] = {"contest_ident"=>conid,
         "overvote_count"=>0,
         "undervote_count"=>0,
         "writein_count"=>0,
@@ -354,20 +486,26 @@ class TabulatorValidate
 #
 # The Candidates are valid iff:
 # 1. each Candidate UID is unique (there are no duplicates), and 
-# 2. each Candidate's Contest UID exists (was previously encountered by validate_contests and listed as a valid Contest UID).  
-# This method also completes the initialization of the <i>contest_counts</i>
-# attribute, by, for each Candidate, adding a zero-initialized Candidate Count
-# object to its corresponding Contest Count object.
+# 2. each Candidate"s Contest UID exists (validate_contests added it to the set of Contest UIDs). 
+# This method also completes the initialization of the
+# <tt><b>counts_contests</b></tt> attribute, by, for each Candidate, adding a
+# zero-initialized Candidate Count object to its corresponding Contest Count
+# object. 
 
   def validate_candidates(candidates)
-    candidates.each { |candidate|
-      uid_valid?("candidate", candidate["ident"]) }
+    candidates.each do |candidate|
+      if (uid_exists?("candidate", canid = candidate["ident"].to_s))
+        error("Non-Unique Candidate UID", canid)
+      else
+        uid_add("candidate", canid)
+      end
+    end
     candidates.each do |candidate|
       canid = candidate["ident"].to_s
       conid = candidate["contest_ident"].to_s
-      error4("Non-existent Candidate", canid, "Contest", conid) unless
+      error("Non-Existent Contest UID", conid, "for Candidate UID", canid) unless
         uid_exists?("contest", conid)
-      self.contest_counts[conid]["candidate_count_list"].
+      self.counts_contests[conid]["candidate_count_list"].
         push({"candidate_ident"=>canid, "count"=>0})
     end
   end
@@ -379,24 +517,31 @@ class TabulatorValidate
 #
 # The Questions are valid iff:
 # 1. each Question UID is unique (there are no duplicates),
-# 2. each Question's District UID exists (was previously encountered by validate_districts and listed as a valid District UID), and
-# 3. no answers are duplicated.
-# This method also initializes the <i>question_counts</i> attribute, by, for
-# each Question, using its Question UID as a key under which to hash a
-# zero-initialized Question Count object for that Question. 
-
+# 2. each Question"s District UID exists (validate_districts added it to the set of  District UIDs), and
+# 3. no Answers are duplicated.
+# This method also initializes the <tt><b>counts_questions</b></tt> attribute,
+# by, for each Question, using its Question UID as a key under which to hash a 
+# zero-initialized Question Count object for the Question. 
+  
   def validate_questions(questions)
-    questions.each { |question|
-      uid_valid?("question", question["ident"]) }
+    questions.each do |question|
+      if (uid_exists?("question", qid = question["ident"].to_s))
+        error("Non-Unique Question UID", qid)
+      else
+        uid_add("question", qid)
+      end
+    end
     questions.each do |question|
       qid = question["ident"].to_s
       did = question["district_ident"].to_s
-      error4("Non-existent Question", qid, "District", did) unless
+      error("Non-Existent District UID", did, "for Question UID", qid) unless
         uid_exists?("district", did)
       answers = question["answer_list"].collect {|answer| answer.to_s}
-      error4("Duplicate Answers", answers, "for Question", qid) unless
-        answers.length == answers.uniq.length
-      self.question_counts[qid] = {"question_ident"=>qid,
+      unless (answers.length == answers.uniq.length)
+        ansdups = answers.dups.inspect.gsub(/\"/,"")
+        error("Duplicate Answers", ansdups, "for Question UID", qid)
+      end
+      self.counts_questions[qid] = {"question_ident"=>qid,
         "overvote_count"=>0,
         "undervote_count"=>0,
         "answer_count_list"=>answers.collect {|ans| {"answer"=> ans,
@@ -413,8 +558,13 @@ class TabulatorValidate
 # 1. each Counter UID is unique (there are no duplicates).
 
   def validate_counters(counters)
-    counters.each { |counter|
-      uid_valid?("counter", counter["ident"]) }
+    counters.each do |counter|
+      if (uid_exists?("counter", counid = counter["ident"].to_s))
+        error("Non-Unique Counter UID", counid)
+      else
+        uid_add("counter", counid)
+      end
+    end
   end
   
 # Arguments:
@@ -424,51 +574,153 @@ class TabulatorValidate
 #
 # The Expected Counts are valid iff:
 # 1. each Counter UID exists,
-# 2. each Precinct UID exists, and
-# 3. all Reporting Groups exist.
-# This method also initializes the <i>expected_counts</i> attribute.
+# 2. each Reporting Group exists, and
+# 3. each Precinct UID exists.
+#
+# Warnings are generated unless all Counters, Reporting Groups, and Precincts
+# are mentioned in the Expected Counts.
+#
+# This method also initializes the <tt><b>counts_missing</b></tt> attribute.
 
   def validate_expected_counts(expected_counts)
+    exp_cids = []
+    exp_rgs = []
+    exp_pids = []
     expected_counts.each do |ecount|
       cid = ecount["counter_ident"].to_s
-      warning("Expected Count has invalid Counter: #{cid}") unless
-        uid_exists?("counter", cid)
-      rgid = ecount["reporting_group"].to_s
-      warning("Expected Count #{cid} has invalid Reporting Group: #{rgid}") unless
-        uid_exists?("reporting group",rgid)
-      ecount["precinct_ident_list"].each do |pid|
-        warning("Expected Count #{cid} has invalid Precinct: #{pid}") unless
-          uid_exists?("precinct", pid)
-        if (self.expected_counts[cid].is_a?(Hash))
-          self.expected_counts[cid][rgid] = ecount["precinct_ident_list"]
+      rg = ecount["reporting_group"].to_s
+      if (!uid_exists?("counter", cid))
+        error("Non-Existent Counter UID", cid, "in Expected Count")
+        error("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count") unless
+          uid_exists?("reporting group",rg)
+      else
+        exp_cids.push(cid) unless exp_cids.include?(cid)
+        if (!uid_exists?("reporting group",rg))
+          error("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count")
         else
-          self.expected_counts[cid] = {rgid=>ecount["precinct_ident_list"]}
+          exp_rgs.push(rg) unless exp_rgs.include?(rg)
+          ecount["precinct_ident_list"].each do |pid|
+            pid = pid.to_s
+            exp_pids.push(pid) unless exp_pids.include?(pid)
+            if (!uid_exists?("precinct", pid))
+              error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count")
+            else
+              if (self.counts_missing["expected"][cid].is_a?(Hash))
+                if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
+                  self.counts_missing["expected"][cid][rg][pid] = false
+                else
+                  self.counts_missing["expected"][cid][rg] = {pid=>false}
+                end
+              else
+                self.counts_missing["expected"][cid] = {rg=>{pid=>false}}
+              end
+              self.counts_missing["total"] += 1
+              self.counts_missing["missing"].push([cid, rg, pid])
+            end
+          end
         end
       end
     end
+    unless (self.uids["counter"].length == exp_cids.length)
+      diff_cids = (self.uids["counter"] - exp_cids).inspect.gsub(/\"/,"")
+      warning("Missing Counter UIDs", diff_cids, "from Expected Counts")
+    end
+    unless (self.uids["reporting group"].length == exp_rgs.length)
+      diff_rgs = (self.uids["reporting group"] - exp_rgs).inspect.gsub(/\"/,"")
+      warning("Missing Reporting Groups", diff_rgs, "from Expected Counts")
+    end
+    unless (self.uids["precinct"].length == exp_pids.length)
+      diff_pids = (self.uids["precinct"] - exp_pids).inspect.gsub(/\"/,"")
+      warning("Missing Precinct UIDs", diff_pids, "from Expected Counts")
+    end
   end
-  
+
 # Arguments:
-# * <i>contest_counts</i>: (<i>Array</i>) of Contest Count objects
+# * <i>counter_count</i>: (<i>Hash</i>) Counter Count object
+#
+# Returns: N/A
+#
+# A Counter Count is valid iff:
+# 1. the Counter UID exists,
+# 2. the Audit File UID is unique (not a duplicate),
+# 3. the Election UID exists (matches the only such UID),
+# 4. the Jurisdiction UID exists (matches the only such UID),
+# 5. the Precinct UID exists,
+# 6. the Contest Counts are valid, and
+# 7. the Question Counts are valid.
+#
+# A Warning is generated if the Reporting Group is not recognized.
+#
+# If the Counter Count is valid, the final act of this method is to update the
+# <tt><b>counts_missing</b></tt> attribute to reflect the presence of this new
+# count.
+
+  public
+  def validate_counter_count(counter_count)
+    update_counts = true
+    ccinfo = counter_count["counter_count"]
+    cid = ccinfo["counter_ident"].to_s
+    unless (uid_exists?("counter", cid))
+      update_counts = false
+      error("Non-Existent Counter UID", cid, "in Counter Count")
+    end
+    rg = ccinfo["reporting_group"].to_s
+    unless (uid_exists?("reporting group", rg))
+      update_counts = false
+      warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
+    end
+    if (uid_exists?("file", fid = ccinfo["audit_trail"]["file_ident"]))
+      error("Non-Unique File UID", fid)
+    else
+      uid_add("file", fid)
+    end
+    eid = ccinfo["election_ident"].to_s
+    error("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
+      uid_exists?("election", eid)
+    jid = ccinfo["jurisdiction_ident"].to_s
+    error("Non-Existent Jurisdiction UID", jid, "for Counter UID", cid, "in Counter Count") unless 
+      uid_exists?("jurisdiction", jid) 
+    pid = ccinfo["precinct_ident"].to_s
+    if (uid_exists?("precinct", pid))
+      validate_contest_counts(ccinfo["contest_count_list"])
+      validate_question_counts(ccinfo["question_count_list"])
+    else
+      update_counts = false
+      error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
+    end
+    update_counts = false if validation_errors().length > 0
+    counts_missing_update(cid, rg, pid) if update_counts
+  end
+
+# Arguments:
+# * <i>counts_contests</i>: (<i>Array</i>) of Contest Count objects
 #
 # Returns: N/A
 #
 # The Contest Counts are valid iff, for each Contest Count:
 # 1. the Contest UID exists,
-# 2. the Contest UID is not duplicated (does not appear in a previously validated Contest Count), and
-# 3. all Candidate Counts are valid.
+# 2. the Contest UID is not duplicated (does not appear in a previously validated Contest Count),
+# 3. all Candidate Counts are valid, and
+# 4. all Contests appear in the Contest Count.
 
+  private
   def validate_contest_counts(contest_counts)
+    all_conids = self.counts_contests.keys
     conids = []
     contest_counts.each do |contest_count|
-      error2("Contest Count has invalid Contest", conid) unless
-        uid_exists?("contest", conid = contest_count["contest_ident"].to_s)
+      conid = contest_count["contest_ident"].to_s
+      error("Non-Existent Contest UID", conid, "in Contest Count") unless
+        uid_exists?("contest", conid)
       if (conids.include?(conid))
-        error2("Contest Count has duplicate Contest", conid)
+        error("Duplicate Contest UID", conid, "in Contest Count")
       else
         conids.push(conid)
       end
       validate_candidate_counts(contest_count["candidate_count_list"], conid)
+    end
+    if (conids.length != all_conids.length)
+      condiff = (all_conids - conids).inspect.gsub(/\"/,"")
+      error("Missing Contest UIDs", condiff, "in Contest Counts")
     end
   end
 
@@ -479,193 +731,164 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Candidate Counts are valid iff:
-# 1. each Candidate belongs in the Contest specified by the Contest UID, 
-# 2. no Candidates are duplicated, and 
-# 3. no Candidates are missing from the Contest.
+# 1. each Candidate UID exists,
+# 2. each Candidate belongs to the Contest,
+# 3. no Candidate is duplicated, and 
+# 4. no Candidates are missing from the Contest.
 
   def validate_candidate_counts(candidate_counts, conid)
-    all_canids = self.contest_counts[conid]["candidate_count_list"].
+    all_canids = self.counts_contests[conid]["candidate_count_list"].
       collect {|canc| canc["candidate_ident"].to_s}
     canids = []
     candidate_counts.each do |cancount|
-      error2("Candidate Count has invalid Candidate", canid) unless
-        uid_exists?("candidate",canid = cancount["candidate_ident"].to_s)
+      canid = cancount["candidate_ident"].to_s
+      error("Non-Existent Candidate UID", canid, "for Contest UID", conid, "in Contest Count") unless
+        uid_exists?("candidate", canid)
+      error("Improper Candidate UID", canid, "for Contest UID", conid, "in Contest Count") unless
+        all_canids.include?(canid)
       if (canids.include?(canid))
-        error4("Duplicate Contest Count", conid, "Candidate", canid)
+        error("Duplicate Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
       else
         canids.push(canid)
       end
-      error4("Improper Contest Count", conid, "Candidate", canid) unless
-        all_canids.include?(canid)
     end
     if (canids.length != all_canids.length)
       candiff = (all_canids - canids).inspect.gsub(/\"/,"")
-      error4("Contest Count", conid, "missing Candidates", candiff)
+      error("Missing Candidate UIDs", candiff, "for Contest UID", conid, "in Contest Count")
     end
   end
 
 # Arguments:
-# * <i>question_counts</i>: (<i>Array</i>) of Question Count objects
+# * <i>counts_questions</i>: (<i>Array</i>) of Question Count objects
 #
 # Returns: N/A
 #
 # The Question Counts are valid iff, for each Question Count:
 # 1. the Question UID exists,
-# 2. the Question UID is not duplicated (does not appear in a previously validated Question Count),
-# 3. the Anwers all belong to the Question corresponding to the Question UID,
-# 4. no Answer is duplicated, and 
-# 5. there are no Answers missing from the Question.
+# 2. the Question is not duplicated (does not appear in a previously validated Question Count),
+# 3. no Answer is duplicated within a Question Count,
+# 4. each Answer belongs to its Question Count,
+# 5. there are no Answers missing from a Question Count, and
+# 6. there are no Questions missing from the Question Counts.
 
   def validate_question_counts(question_counts)
+    all_qids = self.counts_questions.keys
     qids = []
     question_counts.each do |question_count|
-      error2("Invalid Question Count", qid) unless
-        uid_exists?("question",qid = question_count["question_ident"].to_s)
+      qid = question_count["question_ident"].to_s
+      error("Non-Existent Question UID", qid, "in Question Count") unless
+        uid_exists?("question", qid)
       if (qids.include?(qid))    
-        error2("Duplicate Question Count", qid)
+        error("Duplicate Question UID", qid, "in Question Count")
       else
         qids.push(qid)
       end
-      all_answers = self.question_counts[qid]["answer_count_list"].
+      all_answers = self.counts_questions[qid]["answer_count_list"].
         collect {|anscount| anscount["answer"].to_s}
       answers = []
       question_count["answer_count_list"].each do |anscount|
-        error4("Duplicate Question Count", qid, "Answer", answer) if
-          answers.include?(answer = anscount["answer"].to_s)
+        answer = anscount["answer"].to_s
         if (all_answers.include?(answer))
-          answers.push(answer)
+          if (answers.include?(answer))
+            error("Duplicate Answer", answer, "for Question UID", qid, "in Question Count")
+          else
+            answers.push(answer)
+          end
         else
-          error4("Improper Question Count", qid, "Answer", answer)
+          error("Improper Answer", answer, "for Question UID", qid, "in Question Count")
         end
       end
       if (answers.length != all_answers.length)
         ansdiff = (all_answers - answers).inspect.gsub(/\"/,"")
-        error4("Question Count", qid, "missing Answers", ansdiff)
+        error("Missing Answers", ansdiff, "for Question UID", qid, "in Question Count")
       end
     end
+    if (qids.length != all_qids.length)
+      qdiff = (all_qids - qids).inspect.gsub(/\"/,"")
+      error("Missing Question UIDs", qdiff, "in Question Counts")
+    end
   end
 
 # Arguments:
-# * <i>jurisdiction_definition</i>: (<i>Hash</i>) Jurisdiction Definition object
+# * <i>cid</i>: (<i>String</i>) Counter UID
+# * <i>rg</i>:  (<i>String</i>) Reporting Group name
+# * <i>pid</i>: (<i>String</i>) Precinct UID
 #
-# Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
+# Returns: N/A
 #
-# A Jurisdiction Definition is valid iff: 
-# 2. the Jurisdiction UID is a singleton (it is the only Jurisdiction UID, and thus unique), 
-# 3. the Districts are valid, and
-# 4. the Precincts are valid.
+# The <tt><b>counts_missing</b></tt> attribute is updated using the
+# information from the previously validated Counter Count, provided the count
+# was expected.
 
-  public
-  def validate_jurisdiction_definition(jurisdiction_definition)
-    errors_reset()
-    uid_singleton?("jurisdiction", jurisdiction_definition["ident"])
-    validate_precincts(jurisdiction_definition["precinct_list"])
-    validate_districts(jurisdiction_definition["district_list"])
-    errors_return()
+  def counts_missing_update(cid, rg, pid)
+    expected = self.counts_missing["expected"]
+    if (! expected.keys.include?(cid))
+      shouldnt("Non-Existent Counter UID (#{cid}) in Counter Count")
+    elsif (! (expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
+      warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
+    elsif (! (expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
+      shouldnt("Non-Existent Precinct UID (#{pid}) for Counter UID (#{cid}) in Counter Count")
+    elsif (expected[cid][rg][pid] == false)
+      self.counts_missing["expected"][cid][rg][pid] = true
+      self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
+        ((cid == cid0) && (rg == rg0) && (pid == pid0)) }
+    else
+      cidrgpid = "[#{cid}, #{rg}, #{pid}]"
+      error("Non-Unique Counter UID, Reporting Group, and Precinct UID", cidrgpid, "in Counter Count")
+    end
   end
 
 # Arguments:
-# * <i>election_definition</i>: (<i>Hash</i>) Election Definition object
+# * <i>tabulator_count</i>: (<i>Hash</i>) Tabulator Count object
 #
-# Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
+# Returns: N/A
 #
-# An Election Definition is valid iff: 
-# 1. the Election is valid,
-# 5. the Contests are valid,
-# 6. the Candidates are valid,
-# 7. the Questions are valid,
-# 8. the Counters are valid, and
-# 9. the Expected Counts are valid.
-
-  public
-  def validate_election_definition(election_definition)
-    errors_reset()
-    validate_election(election_definition["election"])
-    validate_contests(election_definition["contest_list"])
-    validate_candidates(election_definition["candidate_list"])
-    validate_questions(election_definition["question_list"])
-    validate_counters(election_definition["counter_list"])
-    validate_expected_counts(election_definition["expected_count_list"])
-    errors_return()
-  end
-
-# Arguments:
-# * <i>counter_count</i>: (<i>Hash</i>) Counter Count object
-#
-# Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
-#
-# A Counter Count is valid iff:
-# 1. the Counter UID exists,
-# 2. the Audit File UID is unique (not a duplicate),
+# This methods expects to be called only when the Tabulator is in its initial
+# state.  A Tabulator Count is valid iff:
+# 1. the Jurisdiction Definition is valid (this begins the initialization of the Tabulator, by initializing the <tt><b>uids</b></tt> for Jurisdiction, Precincts and Districts),
+# 2. the Election Definition is valid (this completes the initialization of the Tabulator, by initializing the remaining <tt><b>uids</b></tt> and the <tt><b>counts_contests</b></tt>, <tt><b>counts_questions</b></tt>, and <tt><b>counts_missing</b></tt> attributes),
 # 3. the Election UID exists (matches the only such UID),
 # 4. the Jurisdiction UID exists (matches the only such UID),
-# 5. the Precinct UID exists,
-# 6. the Reporting Group exists,
-# 7. the Contest Counts are valid, and
-# 8. the Question Counts are valid.
-
-  def validate_counter_count(counter_count)
-    errors_reset()
-    cid = counter_count["counter_ident"].to_s
-    error2("Counter Count has invalid Counter", cid) unless
-      uid_exists?("counter", cid)
-    uid_valid?("file", counter_count['audit_trail']['file_ident'])
-    eid = counter_count["election_ident"].to_s
-    error2("Counter Count has invalid Election", eid) unless
-      uid_exists?("election", eid)
-    jid = counter_count["jurisdiction_ident"].to_s
-    error2("Counter Count has invalid Jurisdiction", jid) unless
-      uid_exists?("jurisdiction", jid)
-    pid = counter_count["precinct_ident"].to_s
-    error2("Counter Count has invalid Precinct", pid) unless
-      uid_exists?("precinct", pid)
-    rgid = counter_count["reporting_group"].to_s
-    warning2("Counter Count has invalid Reporting Group", rgid) unless
-      uid_exists?("reporting group", rgid)
-    error2("Invalid Contest Counts for Counter Count", cid) unless
-      validate_contest_counts(counter_count["contest_count_list"])
-    error2("Invalid Question Counts for Counter Count", cid) unless
-      validate_question_counts(counter_count["question_count_list"])
-    errors_return()
-  end
-
-# Arguments:
-# * <i>tabulator_counts</i>: (<i>Hash</i>) Tabulator Count object
+# 5. all Contest Counts are valid (this finalizes the <tt><b>counts_contests</b></tt> attribute), and
+# 6. all Question Counts are valid (this finalizes the <tt><b>counts_questions</b></tt> attribute).
+# 7. all Counter Counts are valid (this finalizes the <tt><b>counts_missing</b></tt> attribute).
 #
-# Returns: <i>Array</i> of <i>errors</i>, <i>warnings</i>
-#
-# This methods expects to be called only in an initial state.  A Tabulator
-# Count is valid iff:  
-# 1. the Jurisdiction Definition is valid (this begins the initialization of the Tabulator, by initializing the <i>unique_ids</i> for Jurisdiction, Precincts and Districts),
-# 2. the Election Definition is valid (this completes the initialization of the Tabulator, by initializing the remaining <i>unique_ids</i> and the <i>expected_counts</i> attributes),
-# 3. the Election UID exists (matches the only such UID),
-# 4. the Jurisdiction UID exists (matches the only such UID),
-# 5. all Contest Counts are valid (this initializes the <i>contest_counts</i> attribute), and
-# 6. all Question Counts are valid (this initializes the <i>question_counts</i> attribute).
+# An invalid Tabulator Count could imply the presence of a serious and fatal
+# internal error in the Tabulator, as all Tabulator Counts are validated
+# before being output.
 
   def validate_tabulator_count(tabulator_count)
-    errors_reset()
-    error("Tabulator Count has invalid Jurisdiction Definition") unless 
-      validate_jurisdiction_definition(tabulator_count["jurisdiction_definition"])
-    error("Tabulator Count has invalid Election Definition") unless 
-      validate_election_definition(tabulator_count["election_definition"])
-    eid = tabulator_count["election_ident"].to_s
-    error2("Tabulator Count has invalid Election ID", eid) unless
+    self.tabulator_count = tabulator_count
+    tcinfo = tabulator_count["tabulator_count"]
+    validate_jurisdiction_definition(tcinfo["jurisdiction_definition"])
+    validate_election_definition(tcinfo["election_definition"])
+    eid = tcinfo["election_ident"].to_s
+    error("Non-Existent Election UID", eid, "in Tabulator Count") unless
       uid_exists?("election", eid)
-    jid = tabulator_count["jurisdiction_ident"].to_s
-    error2("Tabulator Count has invalid Jurisdiction ID", jid) unless
+    jid = tcinfo["jurisdiction_ident"].to_s
+    error("Non-Existent Jurisdiction UID", jid, "in Tabulator Count") unless
       uid_exists?("jurisdiction", jid)
-    error("Tabulator Count has invalid Contest Counts") unless 
-      validate_contest_counts(tabulator_count["contest_count_list"])
-    error("Tabulator Count has invalid Question Counts") unless 
-      validate_question_counts(tabulator_count["question_count_list"])
-    tabulator_count["contest_count_list"].each do |contest_count|
-      self.contest_counts[contest_count["contest_ident"]] = contest_count
+    validate_contest_counts(tcinfo["contest_count_list"])
+    validate_question_counts(tcinfo["question_count_list"])
+    tcinfo["contest_count_list"].each do |contest_count|
+      self.counts_contests[contest_count["contest_ident"]] = contest_count
     end
-    tabulator_count["question_count_list"].each do |question_count|
-      self.question_counts[question_count["question_ident"]] = question_count
+    tcinfo["question_count_list"].each do |question_count|
+      self.counts_questions[question_count["question_ident"]] = question_count
     end
-    errors_return()
+    validate_counter_counts(tcinfo["counter_count_list"])
   end
 
+# Arguments:
+# * <i>counter_counts</i>: (<i>Array</i>) of Counter Count objects
+#
+# Returns: N/A
+#
+# The Counter Counts are valid iff each Counter Count is valid.
+
+  def validate_counter_counts(counter_counts)
+    counter_counts.each { |counter_count|
+      validate_counter_count(counter_count) }
+  end
+  
 end

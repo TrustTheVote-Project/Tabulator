@@ -8,30 +8,37 @@ then
 fi
 }
 
+test_all ()
+{
+    test_syntax
+    test_default
+    test_bedrock
+    test_va
+    test_dc
+    echo -e "\n** ALL TABULATOR TESTS SUCCESSFUL **\n"
+    exit
+}
+
 test_default ()
 {
-    ruby operator.rb
-    exitif
-    ruby operator.rb reset
-    exitif
     ruby operator.rb Tests/Prototypical/JD.yml Tests/Prototypical/ED.yml 
     exitif
-    ruby operator.rb data
-    exitif
+    #ruby operator.rb data
+    #exitif
     ruby operator.rb Tests/Prototypical/CC1.yml
     exitif
-    ruby operator.rb state
-    exitif
+    #ruby operator.rb state
+    #exitif
     ruby operator.rb Tests/Prototypical/CC2.yml
     exitif
-    ruby operator.rb state
-    exitif
-    ruby operator.rb data
-    exitif
+    #ruby operator.rb state
+    #exitif
+    #ruby operator.rb data
+    #exitif
     ruby operator.rb Tests/Prototypical/CC3.yml
     exitif
-    ruby operator.rb state
-    exitif
+    #ruby operator.rb state
+    #exitif
 }
 
 test_syntax ()
@@ -74,17 +81,16 @@ test_bedrock ()
 
 if [ "$#" -eq 0 ]
 then 
-    test_default
+    test_all
     exit 0
 fi
 case $1 in
 all*)
-    test_syntax
+    test_all
+    exit
+    ;;
+def*)
     test_default
-    test_bedrock
-    test_dc
-    test_va
-    echo -e "\n** ALL TABULATOR TESTS SUCCESSFUL **\n"
     exit
     ;;
 syn*)
@@ -104,6 +110,5 @@ bed*)
     exit
     ;;
 esac
-echo Valid arguments are: \<nothing\>, syntax, bedrock, dc, va, all
+echo Valid arguments are: \<nothing\>, all, syntax, default, bedrock, dc, va
 exit 1
-
