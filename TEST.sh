@@ -8,6 +8,39 @@ then
 fi
 }
 
+test_val ()
+{
+    ruby operator.rb Tests/Validation/JD_ERROR_2.yml Tests/Validation/ED.yml
+    exitif
+    ruby operator.rb Tests/Validation/JD.yml Tests/Validation/ED_ERROR_12.yml
+    exitif
+    ruby operator.rb Tests/Validation/JD.yml Tests/Validation/ED_WARN_1.yml
+    exitif
+    ruby operator.rb Tests/Validation/JD.yml Tests/Validation/ED_WARN_4.yml
+    exitif
+    ruby operator.rb Tests/Validation/JD.yml Tests/Validation/ED.yml 
+    exitif
+    ruby operator.rb Tests/Validation/CC1_ERROR_4.yml    
+    exitif
+    ruby operator.rb Tests/Validation/CC1_WARN_1.yml    
+    exitif
+    ruby operator.rb Tests/Validation/JD.yml Tests/Validation/ED.yml
+    exitif
+    ruby operator.rb Tests/Validation/CC1.yml
+    exitif
+    ruby operator.rb Tests/Validation/CC2_ERROR_1.yml    
+    exitif
+    ruby operator.rb Tests/Validation/CC2.yml
+    exitif
+    ruby operator.rb Tests/Validation/CC3_ERROR_13.yml
+    exitif
+    ruby operator.rb Tests/Validation/CC3.yml
+    exitif
+    ruby operator.rb Tests/Validation/CC4_ERROR_1.yml
+    exitif
+    exit
+}
+
 test_all ()
 {
     test_syntax
@@ -87,6 +120,10 @@ fi
 case $1 in
 all*)
     test_all
+    exit
+    ;;
+val*)
+    test_val
     exit
     ;;
 def*)

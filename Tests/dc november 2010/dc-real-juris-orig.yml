@@ -2,599 +2,2903 @@
 body: 
   districts: 
   - ident: dist-FEDERAL
+    type: JOHN
     display_name: FEDERAL
   - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 6
   - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
     display_name: DISTRICT OF COLUMBIA
   - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
     display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 6C
+    type: SMD
     display_name: SMD 01-ANC 6C
   - ident: dist-SMD 02-ANC 6C
+    type: SMD
     display_name: SMD 02-ANC 6C
   - ident: dist-SMD 03-ANC 6C
+    type: SMD
     display_name: SMD 03-ANC 6C
   - ident: dist-SMD 09-ANC 6C
+    type: SMD
     display_name: SMD 09-ANC 6C
   - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2A
+    type: SMD
     display_name: SMD 01-ANC 2A
   - ident: dist-SMD 05-ANC 2A
+    type: SMD
     display_name: SMD 05-ANC 2A
   - ident: dist-SMD 06-ANC 2A
+    type: SMD
     display_name: SMD 06-ANC 2A
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 2A
+    type: SMD
     display_name: SMD 03-ANC 2A
   - ident: dist-SMD 04-ANC 2A
+    type: SMD
     display_name: SMD 04-ANC 2A
+  - ident: dist-SMD 05-ANC 2A
+    type: SMD
+    display_name: SMD 05-ANC 2A
+  - ident: dist-SMD 06-ANC 2A
+    type: SMD
+    display_name: SMD 06-ANC 2A
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 2A
+    type: SMD
     display_name: SMD 02-ANC 2A
+  - ident: dist-SMD 03-ANC 2A
+    type: SMD
+    display_name: SMD 03-ANC 2A
+  - ident: dist-SMD 06-ANC 2A
+    type: SMD
+    display_name: SMD 06-ANC 2A
   - ident: dist-SMD 06-ANC 2B
+    type: SMD
     display_name: SMD 06-ANC 2B
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 2E
+    type: SMD
     display_name: SMD 02-ANC 2E
   - ident: dist-SMD 05-ANC 2E
+    type: SMD
     display_name: SMD 05-ANC 2E
   - ident: dist-SMD 06-ANC 2E
+    type: SMD
     display_name: SMD 06-ANC 2E
   - ident: dist-SMD 07-ANC 2E
+    type: SMD
     display_name: SMD 07-ANC 2E
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2E
+    type: SMD
     display_name: SMD 01-ANC 2E
+  - ident: dist-SMD 02-ANC 2E
+    type: SMD
+    display_name: SMD 02-ANC 2E
   - ident: dist-SMD 03-ANC 2E
+    type: SMD
     display_name: SMD 03-ANC 2E
   - ident: dist-SMD 04-ANC 2E
+    type: SMD
     display_name: SMD 04-ANC 2E
+  - ident: dist-SMD 05-ANC 2E
+    type: SMD
+    display_name: SMD 05-ANC 2E
   - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 3D
+    type: SMD
     display_name: SMD 06-ANC 3D
   - ident: dist-SMD 09-ANC 3D
+    type: SMD
     display_name: SMD 09-ANC 3D
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3D
+    type: SMD
     display_name: SMD 01-ANC 3D
   - ident: dist-SMD 04-ANC 3D
+    type: SMD
     display_name: SMD 04-ANC 3D
   - ident: dist-SMD 05-ANC 3D
+    type: SMD
     display_name: SMD 05-ANC 3D
+  - ident: dist-SMD 06-ANC 3D
+    type: SMD
+    display_name: SMD 06-ANC 3D
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3D
+    type: SMD
+    display_name: SMD 01-ANC 3D
   - ident: dist-SMD 02-ANC 3D
+    type: SMD
     display_name: SMD 02-ANC 3D
   - ident: dist-SMD 03-ANC 3D
+    type: SMD
     display_name: SMD 03-ANC 3D
+  - ident: dist-SMD 04-ANC 3D
+    type: SMD
+    display_name: SMD 04-ANC 3D
   - ident: dist-SMD 07-ANC 3D
+    type: SMD
     display_name: SMD 07-ANC 3D
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3D
+    type: SMD
+    display_name: SMD 01-ANC 3D
+  - ident: dist-SMD 02-ANC 3D
+    type: SMD
+    display_name: SMD 02-ANC 3D
   - ident: dist-SMD 04-ANC 3B
+    type: SMD
     display_name: SMD 04-ANC 3B
   - ident: dist-SMD 05-ANC 3E
+    type: SMD
     display_name: SMD 05-ANC 3E
   - ident: dist-SMD 08-ANC 3D
+    type: SMD
     display_name: SMD 08-ANC 3D
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3B
+    type: SMD
     display_name: SMD 01-ANC 3B
   - ident: dist-SMD 02-ANC 3B
+    type: SMD
     display_name: SMD 02-ANC 3B
   - ident: dist-SMD 03-ANC 3B
+    type: SMD
     display_name: SMD 03-ANC 3B
   - ident: dist-SMD 05-ANC 3B
+    type: SMD
     display_name: SMD 05-ANC 3B
   - ident: dist-SMD 08-ANC 3C
+    type: SMD
     display_name: SMD 08-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 3B
+    type: SMD
+    display_name: SMD 02-ANC 3B
   - ident: dist-SMD 07-ANC 3C
+    type: SMD
     display_name: SMD 07-ANC 3C
+  - ident: dist-SMD 08-ANC 3C
+    type: SMD
+    display_name: SMD 08-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2D
+    type: SMD
     display_name: SMD 01-ANC 2D
   - ident: dist-SMD 02-ANC 2D
+    type: SMD
     display_name: SMD 02-ANC 2D
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2B
+    type: SMD
     display_name: SMD 01-ANC 2B
   - ident: dist-SMD 02-ANC 2B
+    type: SMD
     display_name: SMD 02-ANC 2B
+  - ident: dist-SMD 02-ANC 2D
+    type: SMD
+    display_name: SMD 02-ANC 2D
   - ident: dist-SMD 03-ANC 2B
+    type: SMD
     display_name: SMD 03-ANC 2B
+  - ident: dist-SMD 06-ANC 2B
+    type: SMD
+    display_name: SMD 06-ANC 2B
   - ident: dist-SMD 07-ANC 2B
+    type: SMD
     display_name: SMD 07-ANC 2B
   - ident: dist-SMD 08-ANC 2B
+    type: SMD
     display_name: SMD 08-ANC 2B
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 2B
+    type: SMD
+    display_name: SMD 01-ANC 2B
+  - ident: dist-SMD 03-ANC 2B
+    type: SMD
+    display_name: SMD 03-ANC 2B
   - ident: dist-SMD 04-ANC 2B
+    type: SMD
     display_name: SMD 04-ANC 2B
   - ident: dist-SMD 05-ANC 2B
+    type: SMD
     display_name: SMD 05-ANC 2B
+  - ident: dist-SMD 07-ANC 2B
+    type: SMD
+    display_name: SMD 07-ANC 2B
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2F
+    type: SMD
     display_name: SMD 01-ANC 2F
   - ident: dist-SMD 02-ANC 2F
+    type: SMD
+    display_name: SMD 02-ANC 2F
+  - ident: dist-SMD 04-ANC 2B
+    type: SMD
+    display_name: SMD 04-ANC 2B
+  - ident: dist-SMD 05-ANC 2B
+    type: SMD
+    display_name: SMD 05-ANC 2B
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 2B
+    type: SMD
+    display_name: SMD 02-ANC 2B
+  - ident: dist-SMD 02-ANC 2F
+    type: SMD
     display_name: SMD 02-ANC 2F
   - ident: dist-SMD 03-ANC 2F
+    type: SMD
     display_name: SMD 03-ANC 2F
   - ident: dist-SMD 04-ANC 2F
+    type: SMD
     display_name: SMD 04-ANC 2F
+  - ident: dist-SMD 05-ANC 2B
+    type: SMD
+    display_name: SMD 05-ANC 2B
   - ident: dist-SMD 05-ANC 2F
+    type: SMD
     display_name: SMD 05-ANC 2F
+  - ident: dist-SMD 06-ANC 2B
+    type: SMD
+    display_name: SMD 06-ANC 2B
   - ident: dist-SMD 06-ANC 2F
+    type: SMD
     display_name: SMD 06-ANC 2F
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 2C
+    type: SMD
     display_name: SMD 01-ANC 2C
   - ident: dist-SMD 02-ANC 2C
+    type: SMD
     display_name: SMD 02-ANC 2C
   - ident: dist-SMD 03-ANC 2C
+    type: SMD
     display_name: SMD 03-ANC 2C
   - ident: dist-SMD 04-ANC 2C
+    type: SMD
     display_name: SMD 04-ANC 2C
+  - ident: dist-SMD 06-ANC 2F
+    type: SMD
+    display_name: SMD 06-ANC 2F
   - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 5C
+    type: SMD
     display_name: SMD 01-ANC 5C
   - ident: dist-SMD 02-ANC 5C
+    type: SMD
     display_name: SMD 02-ANC 5C
   - ident: dist-SMD 03-ANC 5C
+    type: SMD
     display_name: SMD 03-ANC 5C
   - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 1B
+    type: SMD
     display_name: SMD 01-ANC 1B
   - ident: dist-SMD 10-ANC 1B
+    type: SMD
     display_name: SMD 10-ANC 1B
   - ident: dist-SMD 11-ANC 1B
+    type: SMD
     display_name: SMD 11-ANC 1B
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 2C
+    type: SMD
+    display_name: SMD 01-ANC 2C
+  - ident: dist-SMD 02-ANC 2C
+    type: SMD
+    display_name: SMD 02-ANC 2C
+  - ident: dist-SMD 06-ANC 2F
+    type: SMD
+    display_name: SMD 06-ANC 2F
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 1B
+    type: SMD
     display_name: SMD 02-ANC 1B
   - ident: dist-SMD 04-ANC 1B
+    type: SMD
     display_name: SMD 04-ANC 1B
   - ident: dist-SMD 05-ANC 1B
+    type: SMD
     display_name: SMD 05-ANC 1B
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 1B
+    type: SMD
     display_name: SMD 03-ANC 1B
+  - ident: dist-SMD 04-ANC 1B
+    type: SMD
+    display_name: SMD 04-ANC 1B
+  - ident: dist-SMD 05-ANC 1B
+    type: SMD
+    display_name: SMD 05-ANC 1B
   - ident: dist-SMD 06-ANC 1B
+    type: SMD
     display_name: SMD 06-ANC 1B
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 07-ANC 1C
+    type: SMD
     display_name: SMD 07-ANC 1C
   - ident: dist-SMD 08-ANC 1C
+    type: SMD
     display_name: SMD 08-ANC 1C
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 1C
+    type: SMD
     display_name: SMD 01-ANC 1C
   - ident: dist-SMD 02-ANC 1C
+    type: SMD
     display_name: SMD 02-ANC 1C
   - ident: dist-SMD 03-ANC 1C
+    type: SMD
     display_name: SMD 03-ANC 1C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 3C
+    type: SMD
     display_name: SMD 02-ANC 3C
   - ident: dist-SMD 03-ANC 3C
+    type: SMD
     display_name: SMD 03-ANC 3C
+  - ident: dist-SMD 08-ANC 3C
+    type: SMD
+    display_name: SMD 08-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3F
+    type: SMD
     display_name: SMD 01-ANC 3F
   - ident: dist-SMD 05-ANC 3C
+    type: SMD
     display_name: SMD 05-ANC 3C
   - ident: dist-SMD 07-ANC 3F
+    type: SMD
     display_name: SMD 07-ANC 3F
   - ident: dist-SMD 09-ANC 3C
+    type: SMD
     display_name: SMD 09-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3B
+    type: SMD
+    display_name: SMD 01-ANC 3B
+  - ident: dist-SMD 04-ANC 3B
+    type: SMD
+    display_name: SMD 04-ANC 3B
+  - ident: dist-SMD 07-ANC 3C
+    type: SMD
+    display_name: SMD 07-ANC 3C
+  - ident: dist-SMD 08-ANC 3C
+    type: SMD
+    display_name: SMD 08-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3F
+    type: SMD
+    display_name: SMD 01-ANC 3F
+  - ident: dist-SMD 05-ANC 3C
+    type: SMD
+    display_name: SMD 05-ANC 3C
   - ident: dist-SMD 06-ANC 3C
+    type: SMD
     display_name: SMD 06-ANC 3C
+  - ident: dist-SMD 07-ANC 3C
+    type: SMD
+    display_name: SMD 07-ANC 3C
+  - ident: dist-SMD 09-ANC 3C
+    type: SMD
+    display_name: SMD 09-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3E
+    type: SMD
     display_name: SMD 01-ANC 3E
   - ident: dist-SMD 03-ANC 3E
+    type: SMD
     display_name: SMD 03-ANC 3E
+  - ident: dist-SMD 05-ANC 3E
+    type: SMD
+    display_name: SMD 05-ANC 3E
   - ident: dist-SMD 06-ANC 3F
+    type: SMD
     display_name: SMD 06-ANC 3F
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 3E
+    type: SMD
     display_name: SMD 02-ANC 3E
+  - ident: dist-SMD 03-ANC 3E
+    type: SMD
+    display_name: SMD 03-ANC 3E
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 3E
+    type: SMD
     display_name: SMD 04-ANC 3E
+  - ident: dist-SMD 06-ANC 3F
+    type: SMD
+    display_name: SMD 06-ANC 3F
   - ident: dist-SMD 06-ANC 3G
+    type: SMD
     display_name: SMD 06-ANC 3G
   - ident: dist-SMD 07-ANC 3G
+    type: SMD
     display_name: SMD 07-ANC 3G
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3F
+    type: SMD
+    display_name: SMD 01-ANC 3F
   - ident: dist-SMD 02-ANC 3F
+    type: SMD
     display_name: SMD 02-ANC 3F
   - ident: dist-SMD 04-ANC 3F
+    type: SMD
     display_name: SMD 04-ANC 3F
   - ident: dist-SMD 05-ANC 3F
+    type: SMD
     display_name: SMD 05-ANC 3F
+  - ident: dist-SMD 06-ANC 3F
+    type: SMD
+    display_name: SMD 06-ANC 3F
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3C
+    type: SMD
     display_name: SMD 01-ANC 3C
+  - ident: dist-SMD 02-ANC 3F
+    type: SMD
+    display_name: SMD 02-ANC 3F
   - ident: dist-SMD 03-ANC 3F
+    type: SMD
     display_name: SMD 03-ANC 3F
   - ident: dist-SMD 04-ANC 3C
+    type: SMD
     display_name: SMD 04-ANC 3C
+  - ident: dist-SMD 05-ANC 3C
+    type: SMD
+    display_name: SMD 05-ANC 3C
+  - ident: dist-SMD 07-ANC 3F
+    type: SMD
+    display_name: SMD 07-ANC 3F
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 1C
+    type: SMD
     display_name: SMD 04-ANC 1C
   - ident: dist-SMD 05-ANC 1C
+    type: SMD
     display_name: SMD 05-ANC 1C
   - ident: dist-SMD 06-ANC 1C
+    type: SMD
     display_name: SMD 06-ANC 1C
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 1A
+    type: SMD
     display_name: SMD 03-ANC 1A
+  - ident: dist-SMD 05-ANC 1B
+    type: SMD
+    display_name: SMD 05-ANC 1B
   - ident: dist-SMD 07-ANC 1B
+    type: SMD
     display_name: SMD 07-ANC 1B
   - ident: dist-SMD 08-ANC 1B
+    type: SMD
     display_name: SMD 08-ANC 1B
   - ident: dist-SMD 09-ANC 1B
+    type: SMD
     display_name: SMD 09-ANC 1B
   - ident: dist-SMD 11-ANC 1A
+    type: SMD
     display_name: SMD 11-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 1B
+    type: SMD
+    display_name: SMD 01-ANC 1B
+  - ident: dist-SMD 03-ANC 1B
+    type: SMD
+    display_name: SMD 03-ANC 1B
+  - ident: dist-SMD 09-ANC 1B
+    type: SMD
+    display_name: SMD 09-ANC 1B
   - ident: dist-SMD 10-ANC 1A
+    type: SMD
     display_name: SMD 10-ANC 1A
+  - ident: dist-SMD 10-ANC 1B
+    type: SMD
+    display_name: SMD 10-ANC 1B
+  - ident: dist-SMD 11-ANC 1B
+    type: SMD
+    display_name: SMD 11-ANC 1B
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 1A
+    type: SMD
     display_name: SMD 06-ANC 1A
   - ident: dist-SMD 07-ANC 1A
+    type: SMD
     display_name: SMD 07-ANC 1A
   - ident: dist-SMD 09-ANC 1A
+    type: SMD
     display_name: SMD 09-ANC 1A
+  - ident: dist-SMD 10-ANC 1A
+    type: SMD
+    display_name: SMD 10-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 1A
+    type: SMD
+    display_name: SMD 03-ANC 1A
   - ident: dist-SMD 04-ANC 1D
+    type: SMD
     display_name: SMD 04-ANC 1D
   - ident: dist-SMD 05-ANC 1A
+    type: SMD
     display_name: SMD 05-ANC 1A
   - ident: dist-SMD 05-ANC 1D
+    type: SMD
     display_name: SMD 05-ANC 1D
+  - ident: dist-SMD 06-ANC 1A
+    type: SMD
+    display_name: SMD 06-ANC 1A
   - ident: dist-SMD 06-ANC 1D
+    type: SMD
     display_name: SMD 06-ANC 1D
+  - ident: dist-SMD 11-ANC 1A
+    type: SMD
+    display_name: SMD 11-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 1D
+    type: SMD
     display_name: SMD 01-ANC 1D
   - ident: dist-SMD 02-ANC 1D
+    type: SMD
     display_name: SMD 02-ANC 1D
   - ident: dist-SMD 03-ANC 1D
+    type: SMD
     display_name: SMD 03-ANC 1D
+  - ident: dist-SMD 04-ANC 1D
+    type: SMD
+    display_name: SMD 04-ANC 1D
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 1A
+    type: SMD
     display_name: SMD 01-ANC 1A
   - ident: dist-SMD 02-ANC 1A
+    type: SMD
     display_name: SMD 02-ANC 1A
   - ident: dist-SMD 04-ANC 1A
+    type: SMD
     display_name: SMD 04-ANC 1A
+  - ident: dist-SMD 05-ANC 1A
+    type: SMD
+    display_name: SMD 05-ANC 1A
+  - ident: dist-SMD 07-ANC 1A
+    type: SMD
+    display_name: SMD 07-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 1A
+    type: SMD
+    display_name: SMD 04-ANC 1A
+  - ident: dist-SMD 06-ANC 1A
+    type: SMD
+    display_name: SMD 06-ANC 1A
+  - ident: dist-SMD 07-ANC 1A
+    type: SMD
+    display_name: SMD 07-ANC 1A
   - ident: dist-SMD 08-ANC 1A
+    type: SMD
     display_name: SMD 08-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 08-ANC 1A
+    type: SMD
+    display_name: SMD 08-ANC 1A
+  - ident: dist-SMD 09-ANC 1A
+    type: SMD
+    display_name: SMD 09-ANC 1A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 5A
+    type: SMD
     display_name: SMD 01-ANC 5A
   - ident: dist-SMD 07-ANC 5C
+    type: SMD
     display_name: SMD 07-ANC 5C
   - ident: dist-SMD 10-ANC 5C
+    type: SMD
     display_name: SMD 10-ANC 5C
   - ident: dist-SMD 11-ANC 5C
+    type: SMD
     display_name: SMD 11-ANC 5C
   - ident: dist-SMD 12-ANC 5C
+    type: SMD
     display_name: SMD 12-ANC 5C
   - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 07-ANC 4C
+    type: SMD
     display_name: SMD 07-ANC 4C
   - ident: dist-SMD 08-ANC 4C
+    type: SMD
     display_name: SMD 08-ANC 4C
   - ident: dist-SMD 10-ANC 4C
+    type: SMD
     display_name: SMD 10-ANC 4C
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 4D
+    type: SMD
     display_name: SMD 06-ANC 4D
+  - ident: dist-SMD 07-ANC 4C
+    type: SMD
+    display_name: SMD 07-ANC 4C
   - ident: dist-SMD 09-ANC 4C
+    type: SMD
     display_name: SMD 09-ANC 4C
+  - ident: dist-SMD 10-ANC 4C
+    type: SMD
+    display_name: SMD 10-ANC 4C
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 4C
+    type: SMD
     display_name: SMD 04-ANC 4C
   - ident: dist-SMD 05-ANC 4C
+    type: SMD
     display_name: SMD 05-ANC 4C
   - ident: dist-SMD 06-ANC 4C
+    type: SMD
     display_name: SMD 06-ANC 4C
+  - ident: dist-SMD 07-ANC 4C
+    type: SMD
+    display_name: SMD 07-ANC 4C
   - ident: dist-SMD 08-ANC 4A
+    type: SMD
     display_name: SMD 08-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 4C
+    type: SMD
     display_name: SMD 02-ANC 4C
   - ident: dist-SMD 03-ANC 4C
+    type: SMD
     display_name: SMD 03-ANC 4C
+  - ident: dist-SMD 05-ANC 4C
+    type: SMD
+    display_name: SMD 05-ANC 4C
+  - ident: dist-SMD 07-ANC 4C
+    type: SMD
+    display_name: SMD 07-ANC 4C
+  - ident: dist-SMD 08-ANC 4A
+    type: SMD
+    display_name: SMD 08-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 05-ANC 4C
+    type: SMD
+    display_name: SMD 05-ANC 4C
+  - ident: dist-SMD 06-ANC 4C
+    type: SMD
+    display_name: SMD 06-ANC 4C
+  - ident: dist-SMD 08-ANC 4C
+    type: SMD
+    display_name: SMD 08-ANC 4C
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 3G
+    type: SMD
     display_name: SMD 03-ANC 3G
   - ident: dist-SMD 05-ANC 3G
+    type: SMD
     display_name: SMD 05-ANC 3G
+  - ident: dist-SMD 06-ANC 3G
+    type: SMD
+    display_name: SMD 06-ANC 3G
+  - ident: dist-SMD 07-ANC 3G
+    type: SMD
+    display_name: SMD 07-ANC 3G
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 3G
+    type: SMD
     display_name: SMD 01-ANC 3G
   - ident: dist-SMD 02-ANC 3G
+    type: SMD
     display_name: SMD 02-ANC 3G
+  - ident: dist-SMD 03-ANC 3G
+    type: SMD
+    display_name: SMD 03-ANC 3G
   - ident: dist-SMD 04-ANC 3G
+    type: SMD
     display_name: SMD 04-ANC 3G
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 3G
+    type: SMD
+    display_name: SMD 02-ANC 3G
+  - ident: dist-SMD 03-ANC 3G
+    type: SMD
+    display_name: SMD 03-ANC 3G
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 4A
+    type: SMD
     display_name: SMD 06-ANC 4A
   - ident: dist-SMD 07-ANC 4A
+    type: SMD
     display_name: SMD 07-ANC 4A
+  - ident: dist-SMD 08-ANC 4A
+    type: SMD
+    display_name: SMD 08-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 4C
+    type: SMD
     display_name: SMD 01-ANC 4C
+  - ident: dist-SMD 02-ANC 4C
+    type: SMD
+    display_name: SMD 02-ANC 4C
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 4D
+    type: SMD
     display_name: SMD 03-ANC 4D
   - ident: dist-SMD 04-ANC 4D
+    type: SMD
     display_name: SMD 04-ANC 4D
   - ident: dist-SMD 05-ANC 4D
+    type: SMD
     display_name: SMD 05-ANC 4D
+  - ident: dist-SMD 06-ANC 4D
+    type: SMD
+    display_name: SMD 06-ANC 4D
+  - ident: dist-SMD 09-ANC 4C
+    type: SMD
+    display_name: SMD 09-ANC 4C
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 4D
+    type: SMD
     display_name: SMD 01-ANC 4D
   - ident: dist-SMD 02-ANC 4D
+    type: SMD
     display_name: SMD 02-ANC 4D
+  - ident: dist-SMD 03-ANC 4D
+    type: SMD
+    display_name: SMD 03-ANC 4D
+  - ident: dist-SMD 04-ANC 4D
+    type: SMD
+    display_name: SMD 04-ANC 4D
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 4D
+    type: SMD
+    display_name: SMD 02-ANC 4D
+  - ident: dist-SMD 03-ANC 4D
+    type: SMD
+    display_name: SMD 03-ANC 4D
+  - ident: dist-SMD 05-ANC 4D
+    type: SMD
+    display_name: SMD 05-ANC 4D
   - ident: dist-SMD 06-ANC 4B
+    type: SMD
     display_name: SMD 06-ANC 4B
   - ident: dist-SMD 08-ANC 4B
+    type: SMD
     display_name: SMD 08-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 4B
+    type: SMD
     display_name: SMD 04-ANC 4B
   - ident: dist-SMD 05-ANC 4B
+    type: SMD
     display_name: SMD 05-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 4B
+    type: SMD
     display_name: SMD 03-ANC 4B
+  - ident: dist-SMD 04-ANC 4B
+    type: SMD
+    display_name: SMD 04-ANC 4B
+  - ident: dist-SMD 06-ANC 4B
+    type: SMD
+    display_name: SMD 06-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 4A
+    type: SMD
     display_name: SMD 04-ANC 4A
   - ident: dist-SMD 05-ANC 4A
+    type: SMD
     display_name: SMD 05-ANC 4A
+  - ident: dist-SMD 06-ANC 4A
+    type: SMD
+    display_name: SMD 06-ANC 4A
+  - ident: dist-SMD 07-ANC 4A
+    type: SMD
+    display_name: SMD 07-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 4A
+    type: SMD
     display_name: SMD 01-ANC 4A
   - ident: dist-SMD 03-ANC 4A
+    type: SMD
     display_name: SMD 03-ANC 4A
+  - ident: dist-SMD 04-ANC 4A
+    type: SMD
+    display_name: SMD 04-ANC 4A
+  - ident: dist-SMD 07-ANC 4A
+    type: SMD
+    display_name: SMD 07-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 4A
+    type: SMD
+    display_name: SMD 01-ANC 4A
   - ident: dist-SMD 02-ANC 4A
+    type: SMD
     display_name: SMD 02-ANC 4A
+  - ident: dist-SMD 03-ANC 4A
+    type: SMD
+    display_name: SMD 03-ANC 4A
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 4B
+    type: SMD
     display_name: SMD 01-ANC 4B
   - ident: dist-SMD 02-ANC 4B
+    type: SMD
     display_name: SMD 02-ANC 4B
   - ident: dist-SMD 07-ANC 4B
+    type: SMD
     display_name: SMD 07-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 06-ANC 4B
+    type: SMD
+    display_name: SMD 06-ANC 4B
+  - ident: dist-SMD 07-ANC 4B
+    type: SMD
+    display_name: SMD 07-ANC 4B
+  - ident: dist-SMD 08-ANC 4B
+    type: SMD
+    display_name: SMD 08-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 08-ANC 4B
+    type: SMD
+    display_name: SMD 08-ANC 4B
   - ident: dist-SMD 09-ANC 4B
+    type: SMD
     display_name: SMD 09-ANC 4B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 5A
+    type: SMD
+    display_name: SMD 01-ANC 5A
   - ident: dist-SMD 02-ANC 5A
+    type: SMD
     display_name: SMD 02-ANC 5A
   - ident: dist-SMD 03-ANC 5A
+    type: SMD
     display_name: SMD 03-ANC 5A
   - ident: dist-SMD 04-ANC 5A
+    type: SMD
     display_name: SMD 04-ANC 5A
   - ident: dist-SMD 08-ANC 5A
+    type: SMD
     display_name: SMD 08-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 5A
+    type: SMD
+    display_name: SMD 04-ANC 5A
   - ident: dist-SMD 05-ANC 5A
+    type: SMD
     display_name: SMD 05-ANC 5A
+  - ident: dist-SMD 08-ANC 5A
+    type: SMD
+    display_name: SMD 08-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 5A
+    type: SMD
     display_name: SMD 06-ANC 5A
   - ident: dist-SMD 07-ANC 5A
+    type: SMD
     display_name: SMD 07-ANC 5A
+  - ident: dist-SMD 08-ANC 5A
+    type: SMD
+    display_name: SMD 08-ANC 5A
+  - ident: dist-SMD 10-ANC 5C
+    type: SMD
+    display_name: SMD 10-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 09-ANC 5A
+    type: SMD
     display_name: SMD 09-ANC 5A
   - ident: dist-SMD 10-ANC 5A
+    type: SMD
     display_name: SMD 10-ANC 5A
   - ident: dist-SMD 11-ANC 5A
+    type: SMD
     display_name: SMD 11-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 5B
+    type: SMD
     display_name: SMD 04-ANC 5B
+  - ident: dist-SMD 07-ANC 5A
+    type: SMD
+    display_name: SMD 07-ANC 5A
+  - ident: dist-SMD 10-ANC 5A
+    type: SMD
+    display_name: SMD 10-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 5B
+    type: SMD
     display_name: SMD 02-ANC 5B
+  - ident: dist-SMD 04-ANC 5B
+    type: SMD
+    display_name: SMD 04-ANC 5B
   - ident: dist-SMD 09-ANC 5B
+    type: SMD
     display_name: SMD 09-ANC 5B
+  - ident: dist-SMD 10-ANC 5A
+    type: SMD
+    display_name: SMD 10-ANC 5A
+  - ident: dist-SMD 11-ANC 5A
+    type: SMD
+    display_name: SMD 11-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 5B
+    type: SMD
     display_name: SMD 01-ANC 5B
+  - ident: dist-SMD 02-ANC 5B
+    type: SMD
+    display_name: SMD 02-ANC 5B
   - ident: dist-SMD 03-ANC 5B
+    type: SMD
     display_name: SMD 03-ANC 5B
+  - ident: dist-SMD 04-ANC 5B
+    type: SMD
+    display_name: SMD 04-ANC 5B
   - ident: dist-SMD 06-ANC 5B
+    type: SMD
     display_name: SMD 06-ANC 5B
+  - ident: dist-SMD 09-ANC 5B
+    type: SMD
+    display_name: SMD 09-ANC 5B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 5B
+    type: SMD
+    display_name: SMD 04-ANC 5B
+  - ident: dist-SMD 07-ANC 5A
+    type: SMD
+    display_name: SMD 07-ANC 5A
   - ident: dist-SMD 09-ANC 5C
+    type: SMD
     display_name: SMD 09-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 5B
+    type: SMD
+    display_name: SMD 04-ANC 5B
   - ident: dist-SMD 06-ANC 5C
+    type: SMD
     display_name: SMD 06-ANC 5C
+  - ident: dist-SMD 07-ANC 5C
+    type: SMD
+    display_name: SMD 07-ANC 5C
   - ident: dist-SMD 08-ANC 5C
+    type: SMD
     display_name: SMD 08-ANC 5C
+  - ident: dist-SMD 09-ANC 5C
+    type: SMD
+    display_name: SMD 09-ANC 5C
+  - ident: dist-SMD 10-ANC 5C
+    type: SMD
+    display_name: SMD 10-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 5C
+    type: SMD
+    display_name: SMD 02-ANC 5C
+  - ident: dist-SMD 03-ANC 5C
+    type: SMD
+    display_name: SMD 03-ANC 5C
   - ident: dist-SMD 05-ANC 5C
+    type: SMD
     display_name: SMD 05-ANC 5C
+  - ident: dist-SMD 06-ANC 5C
+    type: SMD
+    display_name: SMD 06-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 05-ANC 5B
+    type: SMD
     display_name: SMD 05-ANC 5B
+  - ident: dist-SMD 06-ANC 5B
+    type: SMD
+    display_name: SMD 06-ANC 5B
+  - ident: dist-SMD 09-ANC 5B
+    type: SMD
+    display_name: SMD 09-ANC 5B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 06-ANC 5B
+    type: SMD
+    display_name: SMD 06-ANC 5B
   - ident: dist-SMD 07-ANC 5B
+    type: SMD
     display_name: SMD 07-ANC 5B
   - ident: dist-SMD 08-ANC 5B
+    type: SMD
     display_name: SMD 08-ANC 5B
   - ident: dist-SMD 10-ANC 5B
+    type: SMD
+    display_name: SMD 10-ANC 5B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 05-ANC 5B
+    type: SMD
+    display_name: SMD 05-ANC 5B
+  - ident: dist-SMD 07-ANC 5B
+    type: SMD
+    display_name: SMD 07-ANC 5B
+  - ident: dist-SMD 09-ANC 5B
+    type: SMD
+    display_name: SMD 09-ANC 5B
+  - ident: dist-SMD 10-ANC 5B
+    type: SMD
     display_name: SMD 10-ANC 5B
   - ident: dist-SMD 11-ANC 5B
+    type: SMD
     display_name: SMD 11-ANC 5B
   - ident: dist-SMD 12-ANC 5B
+    type: SMD
+    display_name: SMD 12-ANC 5B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 10-ANC 5B
+    type: SMD
+    display_name: SMD 10-ANC 5B
+  - ident: dist-SMD 11-ANC 5B
+    type: SMD
+    display_name: SMD 11-ANC 5B
+  - ident: dist-SMD 12-ANC 5B
+    type: SMD
     display_name: SMD 12-ANC 5B
   - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 7D
+    type: SMD
     display_name: SMD 01-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 05-ANC 6A
+    type: SMD
     display_name: SMD 05-ANC 6A
   - ident: dist-SMD 06-ANC 6A
+    type: SMD
     display_name: SMD 06-ANC 6A
   - ident: dist-SMD 07-ANC 6A
+    type: SMD
     display_name: SMD 07-ANC 6A
   - ident: dist-SMD 08-ANC 6A
+    type: SMD
     display_name: SMD 08-ANC 6A
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 6A
+    type: SMD
     display_name: SMD 01-ANC 6A
   - ident: dist-SMD 02-ANC 6A
+    type: SMD
     display_name: SMD 02-ANC 6A
   - ident: dist-SMD 03-ANC 6A
+    type: SMD
     display_name: SMD 03-ANC 6A
+  - ident: dist-SMD 06-ANC 6A
+    type: SMD
+    display_name: SMD 06-ANC 6A
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6A
+    type: SMD
+    display_name: SMD 01-ANC 6A
   - ident: dist-SMD 04-ANC 6C
+    type: SMD
     display_name: SMD 04-ANC 6C
   - ident: dist-SMD 05-ANC 6C
+    type: SMD
     display_name: SMD 05-ANC 6C
   - ident: dist-SMD 08-ANC 6C
+    type: SMD
     display_name: SMD 08-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 05-ANC 6C
+    type: SMD
+    display_name: SMD 05-ANC 6C
   - ident: dist-SMD 06-ANC 6C
+    type: SMD
+    display_name: SMD 06-ANC 6C
+  - ident: dist-SMD 08-ANC 6C
+    type: SMD
+    display_name: SMD 08-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 6A
+    type: SMD
+    display_name: SMD 02-ANC 6A
+  - ident: dist-SMD 03-ANC 6A
+    type: SMD
+    display_name: SMD 03-ANC 6A
+  - ident: dist-SMD 05-ANC 6A
+    type: SMD
+    display_name: SMD 05-ANC 6A
+  - ident: dist-SMD 06-ANC 6C
+    type: SMD
     display_name: SMD 06-ANC 6C
   - ident: dist-SMD 07-ANC 6C
+    type: SMD
     display_name: SMD 07-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 6A
+    type: SMD
+    display_name: SMD 03-ANC 6A
   - ident: dist-SMD 04-ANC 6A
+    type: SMD
     display_name: SMD 04-ANC 6A
+  - ident: dist-SMD 05-ANC 6A
+    type: SMD
+    display_name: SMD 05-ANC 6A
+  - ident: dist-SMD 08-ANC 6A
+    type: SMD
+    display_name: SMD 08-ANC 6A
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 6B
+    type: SMD
     display_name: SMD 06-ANC 6B
+  - ident: dist-SMD 08-ANC 6A
+    type: SMD
+    display_name: SMD 08-ANC 6A
   - ident: dist-SMD 08-ANC 6B
+    type: SMD
     display_name: SMD 08-ANC 6B
   - ident: dist-SMD 09-ANC 6B
+    type: SMD
     display_name: SMD 09-ANC 6B
   - ident: dist-SMD 10-ANC 6B
+    type: SMD
     display_name: SMD 10-ANC 6B
   - ident: dist-SMD 11-ANC 6B
+    type: SMD
     display_name: SMD 11-ANC 6B
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 6B
+    type: SMD
     display_name: SMD 04-ANC 6B
   - ident: dist-SMD 05-ANC 6B
+    type: SMD
     display_name: SMD 05-ANC 6B
+  - ident: dist-SMD 06-ANC 6B
+    type: SMD
+    display_name: SMD 06-ANC 6B
+  - ident: dist-SMD 08-ANC 6B
+    type: SMD
+    display_name: SMD 08-ANC 6B
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 6B
+    type: SMD
     display_name: SMD 01-ANC 6B
   - ident: dist-SMD 02-ANC 6B
+    type: SMD
     display_name: SMD 02-ANC 6B
   - ident: dist-SMD 03-ANC 6B
+    type: SMD
     display_name: SMD 03-ANC 6B
+  - ident: dist-SMD 05-ANC 6B
+    type: SMD
+    display_name: SMD 05-ANC 6B
+  - ident: dist-SMD 07-ANC 6C
+    type: SMD
+    display_name: SMD 07-ANC 6C
+  - ident: dist-SMD 08-ANC 6C
+    type: SMD
+    display_name: SMD 08-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 6B
+    type: SMD
+    display_name: SMD 02-ANC 6B
+  - ident: dist-SMD 03-ANC 6B
+    type: SMD
+    display_name: SMD 03-ANC 6B
+  - ident: dist-SMD 04-ANC 6B
+    type: SMD
+    display_name: SMD 04-ANC 6B
   - ident: dist-SMD 07-ANC 6D
+    type: SMD
     display_name: SMD 07-ANC 6D
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 6B
+    type: SMD
+    display_name: SMD 04-ANC 6B
+  - ident: dist-SMD 06-ANC 6B
+    type: SMD
+    display_name: SMD 06-ANC 6B
   - ident: dist-SMD 07-ANC 6B
+    type: SMD
     display_name: SMD 07-ANC 6B
+  - ident: dist-SMD 08-ANC 6B
+    type: SMD
+    display_name: SMD 08-ANC 6B
+  - ident: dist-SMD 09-ANC 6B
+    type: SMD
+    display_name: SMD 09-ANC 6B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 7D
+    type: SMD
     display_name: SMD 02-ANC 7D
   - ident: dist-SMD 03-ANC 7D
+    type: SMD
+    display_name: SMD 03-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 7D
+    type: SMD
     display_name: SMD 03-ANC 7D
   - ident: dist-SMD 04-ANC 7C
+    type: SMD
     display_name: SMD 04-ANC 7C
   - ident: dist-SMD 07-ANC 7C
+    type: SMD
     display_name: SMD 07-ANC 7C
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 7C
+    type: SMD
     display_name: SMD 01-ANC 7C
+  - ident: dist-SMD 03-ANC 7D
+    type: SMD
+    display_name: SMD 03-ANC 7D
+  - ident: dist-SMD 04-ANC 7C
+    type: SMD
+    display_name: SMD 04-ANC 7C
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 7C
+    type: SMD
     display_name: SMD 02-ANC 7C
   - ident: dist-SMD 05-ANC 7C
+    type: SMD
     display_name: SMD 05-ANC 7C
   - ident: dist-SMD 06-ANC 7C
+    type: SMD
     display_name: SMD 06-ANC 7C
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 7C
+    type: SMD
+    display_name: SMD 02-ANC 7C
+  - ident: dist-SMD 05-ANC 7C
+    type: SMD
+    display_name: SMD 05-ANC 7C
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 7C
+    type: SMD
+    display_name: SMD 01-ANC 7C
   - ident: dist-SMD 03-ANC 7C
+    type: SMD
     display_name: SMD 03-ANC 7C
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 7C
+    type: SMD
+    display_name: SMD 01-ANC 7C
+  - ident: dist-SMD 03-ANC 7C
+    type: SMD
+    display_name: SMD 03-ANC 7C
+  - ident: dist-SMD 04-ANC 7C
+    type: SMD
+    display_name: SMD 04-ANC 7C
   - ident: dist-SMD 05-ANC 7D
+    type: SMD
     display_name: SMD 05-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 06-ANC 7D
+    type: SMD
     display_name: SMD 06-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 7D
+    type: SMD
+    display_name: SMD 02-ANC 7D
   - ident: dist-SMD 07-ANC 7D
+    type: SMD
     display_name: SMD 07-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 7D
+    type: SMD
     display_name: SMD 04-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 05-ANC 7D
+    type: SMD
+    display_name: SMD 05-ANC 7D
   - ident: dist-SMD 06-ANC 7A
+    type: SMD
     display_name: SMD 06-ANC 7A
+  - ident: dist-SMD 06-ANC 7D
+    type: SMD
+    display_name: SMD 06-ANC 7D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 7A
+    type: SMD
     display_name: SMD 01-ANC 7A
   - ident: dist-SMD 02-ANC 7A
+    type: SMD
     display_name: SMD 02-ANC 7A
   - ident: dist-SMD 04-ANC 7E
+    type: SMD
     display_name: SMD 04-ANC 7E
   - ident: dist-SMD 05-ANC 7A
+    type: SMD
     display_name: SMD 05-ANC 7A
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 7E
+    type: SMD
     display_name: SMD 03-ANC 7E
+  - ident: dist-SMD 04-ANC 7E
+    type: SMD
+    display_name: SMD 04-ANC 7E
   - ident: dist-SMD 05-ANC 7E
+    type: SMD
     display_name: SMD 05-ANC 7E
   - ident: dist-SMD 06-ANC 7E
+    type: SMD
+    display_name: SMD 06-ANC 7E
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 7E
+    type: SMD
+    display_name: SMD 03-ANC 7E
+  - ident: dist-SMD 06-ANC 7E
+    type: SMD
     display_name: SMD 06-ANC 7E
   - ident: dist-SMD 07-ANC 7E
+    type: SMD
     display_name: SMD 07-ANC 7E
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 7E
+    type: SMD
     display_name: SMD 01-ANC 7E
   - ident: dist-SMD 02-ANC 7E
+    type: SMD
     display_name: SMD 02-ANC 7E
+  - ident: dist-SMD 03-ANC 7E
+    type: SMD
+    display_name: SMD 03-ANC 7E
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 7A
+    type: SMD
     display_name: SMD 04-ANC 7A
+  - ident: dist-SMD 05-ANC 7A
+    type: SMD
+    display_name: SMD 05-ANC 7A
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 7B
+    type: SMD
     display_name: SMD 04-ANC 7B
   - ident: dist-SMD 07-ANC 7B
+    type: SMD
     display_name: SMD 07-ANC 7B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 7B
+    type: SMD
+    display_name: SMD 04-ANC 7B
+  - ident: dist-SMD 07-ANC 7B
+    type: SMD
+    display_name: SMD 07-ANC 7B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 7E
+    type: SMD
+    display_name: SMD 02-ANC 7E
+  - ident: dist-SMD 04-ANC 7B
+    type: SMD
+    display_name: SMD 04-ANC 7B
   - ident: dist-SMD 05-ANC 7B
+    type: SMD
     display_name: SMD 05-ANC 7B
   - ident: dist-SMD 06-ANC 7B
+    type: SMD
     display_name: SMD 06-ANC 7B
+  - ident: dist-SMD 07-ANC 7B
+    type: SMD
+    display_name: SMD 07-ANC 7B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 7B
+    type: SMD
     display_name: SMD 02-ANC 7B
   - ident: dist-SMD 03-ANC 7B
+    type: SMD
     display_name: SMD 03-ANC 7B
   - ident: dist-SMD 07-ANC 7A
+    type: SMD
     display_name: SMD 07-ANC 7A
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 7B
+    type: SMD
     display_name: SMD 01-ANC 7B
+  - ident: dist-SMD 03-ANC 7B
+    type: SMD
+    display_name: SMD 03-ANC 7B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 7B
+    type: SMD
+    display_name: SMD 02-ANC 7B
+  - ident: dist-SMD 04-ANC 7B
+    type: SMD
+    display_name: SMD 04-ANC 7B
+  - ident: dist-SMD 05-ANC 7B
+    type: SMD
+    display_name: SMD 05-ANC 7B
   - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
     display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 8B
+    type: SMD
     display_name: SMD 01-ANC 8B
   - ident: dist-SMD 01-ANC 8C
+    type: SMD
     display_name: SMD 01-ANC 8C
   - ident: dist-SMD 03-ANC 8A
+    type: SMD
     display_name: SMD 03-ANC 8A
   - ident: dist-SMD 04-ANC 8A
+    type: SMD
     display_name: SMD 04-ANC 8A
   - ident: dist-SMD 05-ANC 8A
+    type: SMD
     display_name: SMD 05-ANC 8A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 02-ANC 8B
+    type: SMD
     display_name: SMD 02-ANC 8B
   - ident: dist-SMD 03-ANC 8B
+    type: SMD
     display_name: SMD 03-ANC 8B
   - ident: dist-SMD 04-ANC 8B
+    type: SMD
     display_name: SMD 04-ANC 8B
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 05-ANC 8B
+    type: SMD
     display_name: SMD 05-ANC 8B
   - ident: dist-SMD 06-ANC 8B
+    type: SMD
     display_name: SMD 06-ANC 8B
   - ident: dist-SMD 07-ANC 8B
+    type: SMD
     display_name: SMD 07-ANC 8B
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 8E
+    type: SMD
     display_name: SMD 01-ANC 8E
   - ident: dist-SMD 02-ANC 8E
+    type: SMD
     display_name: SMD 02-ANC 8E
+  - ident: dist-SMD 04-ANC 8B
+    type: SMD
+    display_name: SMD 04-ANC 8B
+  - ident: dist-SMD 07-ANC 8B
+    type: SMD
+    display_name: SMD 07-ANC 8B
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 8B
+    type: SMD
+    display_name: SMD 04-ANC 8B
+  - ident: dist-SMD 05-ANC 8A
+    type: SMD
+    display_name: SMD 05-ANC 8A
   - ident: dist-SMD 06-ANC 8A
+    type: SMD
     display_name: SMD 06-ANC 8A
   - ident: dist-SMD 07-ANC 8A
+    type: SMD
     display_name: SMD 07-ANC 8A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 8C
+    type: SMD
+    display_name: SMD 01-ANC 8C
   - ident: dist-SMD 02-ANC 8C
+    type: SMD
     display_name: SMD 02-ANC 8C
+  - ident: dist-SMD 03-ANC 8A
+    type: SMD
+    display_name: SMD 03-ANC 8A
   - ident: dist-SMD 03-ANC 8C
+    type: SMD
     display_name: SMD 03-ANC 8C
+  - ident: dist-SMD 05-ANC 8A
+    type: SMD
+    display_name: SMD 05-ANC 8A
+  - ident: dist-SMD 06-ANC 8A
+    type: SMD
+    display_name: SMD 06-ANC 8A
+  - ident: dist-SMD 07-ANC 8A
+    type: SMD
+    display_name: SMD 07-ANC 8A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 02-ANC 8E
+    type: SMD
+    display_name: SMD 02-ANC 8E
   - ident: dist-SMD 03-ANC 8E
+    type: SMD
     display_name: SMD 03-ANC 8E
   - ident: dist-SMD 04-ANC 8E
+    type: SMD
     display_name: SMD 04-ANC 8E
   - ident: dist-SMD 05-ANC 8E
+    type: SMD
     display_name: SMD 05-ANC 8E
+  - ident: dist-SMD 07-ANC 8B
+    type: SMD
+    display_name: SMD 07-ANC 8B
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 8E
+    type: SMD
+    display_name: SMD 03-ANC 8E
+  - ident: dist-SMD 04-ANC 8E
+    type: SMD
+    display_name: SMD 04-ANC 8E
   - ident: dist-SMD 06-ANC 8E
+    type: SMD
     display_name: SMD 06-ANC 8E
   - ident: dist-SMD 07-ANC 8E
+    type: SMD
     display_name: SMD 07-ANC 8E
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 8C
+    type: SMD
+    display_name: SMD 03-ANC 8C
   - ident: dist-SMD 04-ANC 8C
+    type: SMD
+    display_name: SMD 04-ANC 8C
+  - ident: dist-SMD 05-ANC 8E
+    type: SMD
+    display_name: SMD 05-ANC 8E
+  - ident: dist-SMD 06-ANC 8E
+    type: SMD
+    display_name: SMD 06-ANC 8E
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 8C
+    type: SMD
+    display_name: SMD 01-ANC 8C
+  - ident: dist-SMD 02-ANC 8C
+    type: SMD
+    display_name: SMD 02-ANC 8C
+  - ident: dist-SMD 03-ANC 8C
+    type: SMD
+    display_name: SMD 03-ANC 8C
+  - ident: dist-SMD 04-ANC 8C
+    type: SMD
     display_name: SMD 04-ANC 8C
   - ident: dist-SMD 05-ANC 8C
+    type: SMD
     display_name: SMD 05-ANC 8C
   - ident: dist-SMD 06-ANC 8C
+    type: SMD
     display_name: SMD 06-ANC 8C
   - ident: dist-SMD 06-ANC 8D
+    type: SMD
     display_name: SMD 06-ANC 8D
   - ident: dist-SMD 07-ANC 8D
+    type: SMD
     display_name: SMD 07-ANC 8D
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 8D
+    type: SMD
     display_name: SMD 03-ANC 8D
+  - ident: dist-SMD 04-ANC 8C
+    type: SMD
+    display_name: SMD 04-ANC 8C
   - ident: dist-SMD 07-ANC 8C
+    type: SMD
     display_name: SMD 07-ANC 8C
+  - ident: dist-SMD 07-ANC 8D
+    type: SMD
+    display_name: SMD 07-ANC 8D
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 8D
+    type: SMD
     display_name: SMD 01-ANC 8D
   - ident: dist-SMD 02-ANC 8D
+    type: SMD
     display_name: SMD 02-ANC 8D
+  - ident: dist-SMD 03-ANC 8D
+    type: SMD
+    display_name: SMD 03-ANC 8D
+  - ident: dist-SMD 07-ANC 8E
+    type: SMD
+    display_name: SMD 07-ANC 8E
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 8D
+    type: SMD
     display_name: SMD 04-ANC 8D
   - ident: dist-SMD 05-ANC 8D
+    type: SMD
     display_name: SMD 05-ANC 8D
+  - ident: dist-SMD 06-ANC 8D
+    type: SMD
+    display_name: SMD 06-ANC 8D
+  - ident: dist-SMD 07-ANC 8D
+    type: SMD
+    display_name: SMD 07-ANC 8D
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 6D
+    type: SMD
     display_name: SMD 03-ANC 6D
   - ident: dist-SMD 04-ANC 6D
+    type: SMD
     display_name: SMD 04-ANC 6D
   - ident: dist-SMD 05-ANC 6D
+    type: SMD
     display_name: SMD 05-ANC 6D
   - ident: dist-SMD 06-ANC 6D
+    type: SMD
     display_name: SMD 06-ANC 6D
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 6D
+    type: SMD
     display_name: SMD 01-ANC 6D
   - ident: dist-SMD 02-ANC 6D
+    type: SMD
     display_name: SMD 02-ANC 6D
+  - ident: dist-SMD 03-ANC 6D
+    type: SMD
+    display_name: SMD 03-ANC 6D
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6D
+    type: SMD
+    display_name: SMD 01-ANC 6D
+  - ident: dist-SMD 02-ANC 6D
+    type: SMD
+    display_name: SMD 02-ANC 6D
+  - ident: dist-SMD 03-ANC 2C
+    type: SMD
+    display_name: SMD 03-ANC 2C
+  - ident: dist-SMD 03-ANC 2F
+    type: SMD
+    display_name: SMD 03-ANC 2F
+  - ident: dist-SMD 04-ANC 2C
+    type: SMD
+    display_name: SMD 04-ANC 2C
+  - ident: dist-SMD 05-ANC 2A
+    type: SMD
+    display_name: SMD 05-ANC 2A
+  - ident: dist-SMD 05-ANC 6D
+    type: SMD
+    display_name: SMD 05-ANC 6D
+  - ident: dist-SMD 06-ANC 2F
+    type: SMD
+    display_name: SMD 06-ANC 2F
+  - ident: dist-SMD 09-ANC 6C
+    type: SMD
+    display_name: SMD 09-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6B
+    type: SMD
+    display_name: SMD 01-ANC 6B
+  - ident: dist-SMD 01-ANC 6C
+    type: SMD
+    display_name: SMD 01-ANC 6C
+  - ident: dist-SMD 07-ANC 6C
+    type: SMD
+    display_name: SMD 07-ANC 6C
+  - ident: dist-SMD 08-ANC 6C
+    type: SMD
+    display_name: SMD 08-ANC 6C
+  - ident: dist-SMD 09-ANC 6C
+    type: SMD
+    display_name: SMD 09-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 04-ANC 6B
+    type: SMD
+    display_name: SMD 04-ANC 6B
+  - ident: dist-SMD 07-ANC 6D
+    type: SMD
+    display_name: SMD 07-ANC 6D
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 03-ANC 7A
+    type: SMD
     display_name: SMD 03-ANC 7A
+  - ident: dist-SMD 04-ANC 7A
+    type: SMD
+    display_name: SMD 04-ANC 7A
+  - ident: dist-SMD 07-ANC 7A
+    type: SMD
+    display_name: SMD 07-ANC 7A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 01-ANC 8A
+    type: SMD
     display_name: SMD 01-ANC 8A
   - ident: dist-SMD 02-ANC 8A
+    type: SMD
     display_name: SMD 02-ANC 8A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 8B
+    type: SMD
+    display_name: SMD 01-ANC 8B
+  - ident: dist-SMD 02-ANC 8B
+    type: SMD
+    display_name: SMD 02-ANC 8B
+  - ident: dist-SMD 03-ANC 8B
+    type: SMD
+    display_name: SMD 03-ANC 8B
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 04-ANC 5C
+    type: SMD
     display_name: SMD 04-ANC 5C
+  - ident: dist-SMD 07-ANC 5C
+    type: SMD
+    display_name: SMD 07-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 3C
+    type: SMD
+    display_name: SMD 01-ANC 3C
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 1B
+    type: SMD
+    display_name: SMD 01-ANC 1B
+  - ident: dist-SMD 02-ANC 1B
+    type: SMD
+    display_name: SMD 02-ANC 1B
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 03-ANC 3F
+    type: SMD
+    display_name: SMD 03-ANC 3F
+  - ident: dist-SMD 03-ANC 3G
+    type: SMD
+    display_name: SMD 03-ANC 3G
+  - ident: dist-SMD 04-ANC 3F
+    type: SMD
+    display_name: SMD 04-ANC 3F
+  - ident: dist-SMD 05-ANC 3F
+    type: SMD
+    display_name: SMD 05-ANC 3F
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
   - ident: dist-SMD 12-ANC 5A
+    type: SMD
     display_name: SMD 12-ANC 5A
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 8A
+    type: SMD
+    display_name: SMD 01-ANC 8A
+  - ident: dist-SMD 02-ANC 8A
+    type: SMD
+    display_name: SMD 02-ANC 8A
+  - ident: dist-SMD 03-ANC 8A
+    type: SMD
+    display_name: SMD 03-ANC 8A
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 2B
+    type: SMD
+    display_name: SMD 01-ANC 2B
+  - ident: dist-SMD 03-ANC 2B
+    type: SMD
+    display_name: SMD 03-ANC 2B
+  - ident: dist-SMD 08-ANC 2B
+    type: SMD
+    display_name: SMD 08-ANC 2B
   - ident: dist-SMD 09-ANC 2B
+    type: SMD
     display_name: SMD 09-ANC 2B
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6D
+    type: SMD
+    display_name: SMD 01-ANC 6D
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    type: WARD
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    type: CITYWI
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    type: COND
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6C
+    type: SMD
+    display_name: SMD 01-ANC 6C
+  - ident: dist-SMD 08-ANC 6C
+    type: SMD
+    display_name: SMD 08-ANC 6C
+  - ident: dist-SMD 09-ANC 6C
+    type: SMD
+    display_name: SMD 09-ANC 6C
   district_sets: 
   - ident: ds-1-SMD 01-ANC 6C
     district_list:

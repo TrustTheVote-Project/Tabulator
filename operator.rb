@@ -9,18 +9,21 @@ def operator_help
   print "\nCommands:\n\n"
   print "  ruby operator.rb          \# same as help\n"
   print "  ruby operator.rb help     \# print help info\n"
-  print "  ruby operator.rb reset    \# reset tabulator\n"
+  print "  ruby operator.rb reset    \# reset Tabulator\n"
   print "  ruby operator.rb output   \# print CSV voting results\n"
-  print "  ruby operator.rb data     \# print tabulator data structures\n"
-  print "  ruby operator.rb state    \# print tabulator state\n\n"
-  print "  ruby operator.rb [trace] [print] <FILE>\n\n"
+  print "  ruby operator.rb data     \# print Tabulator data structures\n"
+  print "  ruby operator.rb state    \# print Tabulator state\n\n"
+  print "  ruby operator.rb [trace] [print] <FILE1> [<FILE2>]\n\n"
   print "       \# trace: optional arg turns on debug tracing\n"
   print "       \# print: optional arg prints data structures afterwards\n"
   print "       \#\n"
-  print "       \# <FILE>: a YAML file containing ...\n"
-  print "       \#   jurisdiction definition: syntax checks, validates, installs\n"
+  print "       \# <FILE1>: a YAML file containing ...\n"
   print "       \#   counter count: syntax checks, validates, updates tabulator\n"
-  print "       \#   tabulator count: syntax checks, validates (not installed)\n\n"
+  print "       \#   tabulator count: syntax checks, validates\n"
+  print "       \#\n"
+  print "       \# <FILE1> <FILE2>: two YAML files containing ...\n"
+  print "       \#   jurisdiction definition: syntax checks, validates, installs\n"
+  print "       \#   election definition: syntax checks, validates, installs\n\n"
 end
 
 def operator_reset
@@ -38,12 +41,16 @@ def operator_reset
     File.delete(csvfile)
     once = true
   end
-  (once ? print("\n") : print(" Nothing To Do\n\n"))
+  if (once)
+    print "\n"
+  else
+    print " Nothing To Do\n\n"
+  end
 end
 
-def operator_output()
+def operator_output(trace = false)
   op_exit_initial()
-  tab = op_instantiate_tabulator()
+  tab = op_instantiate_tabulator(true, trace)
   tc = tab.tabulator_count
   lines = tab.spreadsheet_for_tabulator()
   print "\nCSV Output:\n\n"
@@ -53,18 +60,18 @@ def operator_output()
   outfile.close()
 end
 
-def operator_data()
+def operator_data(trace = false)
   op_exit_initial()
-  tab = op_instantiate_tabulator()
+  tab = op_instantiate_tabulator(true, trace)
   tc = tab.tabulator_count
   tab.dump_tabulator_data(tc)
   tab
 end
 
-def operator_state(printit = false)
+def operator_state(printit = false, trace = false)
   print "\nChecking Tabulator State\n"
   op_exit_initial()
-  tab = op_instantiate_tabulator()
+  tab = op_instantiate_tabulator(true, trace)
   tc = tab.tabulator_count
   op_print_state(tab, tc, printit)
 end
@@ -92,7 +99,7 @@ def op_exit_initial()
   end
 end
 
-def op_instantiate_tabulator(printit = true)
+def op_instantiate_tabulator(printit = true, trace = false)
   print "Instantiating Tabulator (Check Syntax, Validate)\n" if printit
   tcfile = TABULATOR_COUNT_FILE
   tc = op_read_yaml_file(tcfile)
@@ -100,7 +107,8 @@ def op_instantiate_tabulator(printit = true)
       (tc.keys[0] == "tabulator_count"))
     schema_file = "Schemas/tabulator_count_schema.yml"
     schema = op_read_yaml_file(schema_file)
-    if (CheckSyntaxYaml.new.check_syntax(schema, tc, true).length == 0)
+    trace = (trace ? -300 : 300)
+    if (CheckSyntaxYaml.new.check_syntax(schema, tc, true, trace).length == 0)
       tab = Tabulator.new(false, false, false, tc)
     else
       print "** FATAL ERROR ** Syntax check failure on Tabulator Count file #{tcfile}\n"
@@ -131,20 +139,21 @@ def op_write_yaml_file(file, datum, label = "")
   File.open(file, "w") { |outfile| YAML::dump(datum, outfile) }
 end
 
-def op_check_syntax(file)
+def op_check_syntax(file, trace = false)
+  trace = (trace ? -300 : 300)
   if ((datum = op_read_yaml_file(file, "data")) &&
       (datum.is_a?(Hash) && (datum.keys.length == 1)) &&
       (type = datum.keys[0]) && 
       (schema_file = "Schemas/#{type}_schema.yml") &&
       File.exists?(schema_file) &&
       (schema = op_read_yaml_file(schema_file, "schema")) &&
-      CheckSyntaxYaml.new.check_syntax(schema, datum).length == 0)
+      CheckSyntaxYaml.new.check_syntax(schema, datum, true, trace).length == 0)
     datum
   end
 end
 
-def operator_file(file1, file2)
-  datum = op_check_syntax(file1)
+def operator_file(file1, file2, trace = false)
+  datum = op_check_syntax(file1, trace)
   if (! datum.is_a?(Hash))
     print "Unexpected contents of tabulator file: #{file1}\n"
     exit(1)
@@ -162,28 +171,25 @@ def operator_file(file1, file2)
       print "Jurisdiction file must be followed by Election Definition file: #{file2}\n"
       exit(1)
     end
-    datum = op_check_syntax(file2)
+    datum = op_check_syntax(file2, trace)
     ed = datum
     if (! datum.is_a?(Hash) || datum.keys[0] != "election_definition")
       print "Unexpected contents of Election Definition file: #{file2}\n"
       exit(1)
     end
     print "Check Syntax: #{datum.keys[0]}: OK\n"
-    print "Validating: Jurisdiction Definition\n"
-    print "Validating: Election Definition\n"
+    print "Validating: Jurisdiction Definition and Election Definition\n"
     tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
     tc = tab.tabulator_count
     errors = tab.validation_errors()
     if (errors.length == 0)
-      print "Jurisdiction Definition OK\n\n"
-      print "Election Definition OK\n\n"
+      print "Jurisdiction and Election Definitions OK\n\n"
       op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count")
-    else
-      op_print_errs()
     end
+    op_print_errs(tab, true)
   when "counter_count"
     cc = datum
-    tab = op_instantiate_tabulator(false)
+    tab = op_instantiate_tabulator(false, trace)
     tc = tab.tabulator_count
     print "Validating: Counter Count\n"
     tab.validate_counter_count(cc)
@@ -193,9 +199,8 @@ def operator_file(file1, file2)
       tc = tab.update_tabulator_count(tc, cc)
       op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count")
       op_print_state(tab, tc, false)
-    else
-      op_print_errs(tab)
     end
+    op_print_errs(tab, true)
   when "tabulator_count"
     tc = datum
     print "Validating: Tabulator Count\n"
@@ -203,9 +208,8 @@ def operator_file(file1, file2)
     errors = tab.validation_errors()
     if (errors.length == 0)
       print "Tabulator Count OK\n\n"
-    else
-      op_print_errs(tab)
     end
+    op_print_errs(tab, true)
   else
     print "Unknown tabulator file type: #{type}\n"
   end
@@ -214,18 +218,20 @@ end
 def op_print_errs(tab, short = false)
   errors = tab.validation_errors()
   if (errors.length > 0)
-    print "There were #{errors.length} ERRORS!\n"
-    errors.each { |text| print "  ",text,"\n" } unless short
+    print "\nThere were ERRORS! (#{errors.length})\n"
+    errors.each { |text| print "** ERROR ** ",text,"\n" }
   else
-    print "There were NO ERRORS!\n"
+    print "There were NO ERRORS!\n" unless short
   end
   warnings = tab.validation_warnings()
   if (warnings.length > 0)
-    print "There were #{warnings.length} WARNINGS!\n"
-    warnings.each { |text| print "  ",text,"\n" } unless short
+    print "\n" if (errors.length == 0)
+    print "There were WARNINGS! (#{warnings.length})\n"
+    warnings.each { |text| print "** WARNING ** ",text,"\n" }
   else
-    print "There were NO WARNINGS!\n"
+    print "There were NO WARNINGS!\n" unless short
   end
+  print "\n" if ((errors.length > 0) || (warnings.length > 0))
 end  
 
 begin
@@ -242,25 +248,29 @@ begin
   print "Trace ON\n" if operator_trace
   print "Print ON\n" if operator_print
   if (file1 == "" || file1 == "help")
-    operator_data() if operator_print
+    operator_data(operator_trace) if operator_print
     operator_help() unless operator_print and file1 == ""
     exit(0)
   elsif (file1 == "reset")
     operator_reset()
     exit(0)
   elsif (file1 == "output")
-    operator_data() if operator_print
-    operator_output()
+    if (operator_print)
+      operator_data(operator_trace)
+      operator_output()
+    else
+      operator_output(operator_trace)
+    end
     exit(0)
   elsif (file1 == "data")
-    operator_data()
+    operator_data(operator_trace)
     exit(0)
   elsif (file1 == "state")
-    operator_state(true)
+    operator_state(true, operator_trace)
     exit(0)
   elsif (File.exists?(file1))
-    operator_file(file1, file2)
-    operator_data() if operator_print;
+    operator_file(file1, file2, operator_trace)
+    operator_data(operator_trace) if operator_print;
   else
     print "\nERROR, non-existent file: #{file1}\n\n"
   end

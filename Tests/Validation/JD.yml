@@ -1,0 +1,17 @@
+---
+jurisdiction_definition:
+  ident: JURISDICTION_1
+  district_list:
+  - display_name: District 1
+    ident: DISTRICT_1
+  - display_name: District 2
+    ident: DISTRICT_2
+  - display_name: District 3
+    ident: DISTRICT_3
+  - display_name: District 4
+    ident: DISTRICT_4
+  precinct_list:
+  - display_name: Precinct 1
+    ident: PRECINCT_1
+  - display_name: Precinct 2
+    ident: PRECINCT_2

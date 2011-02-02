@@ -1,0 +1,47 @@
+---
+election_definition:
+  audit_trail: 
+    file_ident: FILE_1
+    create_date: Sometime
+    operator: El Jefe
+  election:
+    display_name: Election 1
+    ident: ELECTION_1
+    start_date: 2010-12-10
+    type: GENERAL
+    reporting_group_list: [Normal, Absentee]
+  expected_count_list: []
+
+  counter_list:
+  - display_name: Counter 1
+    ident: COUNTER_1
+  - display_name: Counter 2
+    ident: COUNTER_2
+  contest_list:
+  - display_name: Contest 1
+    ident: CONTEST_1
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+  - display_name: Contest 3
+    ident: CONTEST_3
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+  candidate_list:
+  - display_name: Candidate 1
+    ident: CANDIDATE_1
+    contest_ident: CONTEST_1
+    party_display_name: Green
+  - display_name: Candidate 2
+    ident: CANDIDATE_2
+    contest_ident: CONTEST_1
+    party_display_name: Green
+  - display_name: Candidate 3
+    ident: CANDIDATE_3
+    contest_ident: CONTEST_3
+    party_display_name: Brown
+  question_list:
+  - ident: QUESTION_2
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+    question: Free Beer
+    answer_list: [A, B, C]

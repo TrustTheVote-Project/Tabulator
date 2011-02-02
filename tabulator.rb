@@ -280,11 +280,19 @@ class Tabulator < TabulatorValidate
     end
     count = self.counts_missing["missing"].length
     total = self.counts_missing["total"]
-    print "  Expected Counts #{count} #{total} (Counter ID, Reporting Group ID, Precinct IDs):\n"
+    print "  Expected Counts #{total} (Counter ID, Reporting Group, Precinct IDs):\n"
     self.counts_missing["expected"].keys.sort.each do |cid|
       self.counts_missing["expected"][cid].keys.sort.each do |rg|
         pids = self.counts_missing["expected"][cid][rg].keys
         print "    #{cid} #{rg} #{pids.inspect.gsub(/\"/,"")}\n"
+      end
+    end
+    print "  Missing Counts #{count} (Counter ID, Reporting Group, Precinct ID):\n"
+    if (count == 0)
+      print "    None Missing\n"
+    else
+      self.counts_missing["missing"].each do |cid, rg, pid|
+          print "    #{cid} #{rg} #{pid}\n"
       end
     end
     print "  Contest Info:\n"
