@@ -77,3 +77,5 @@ counter_count:
       count: 10
     - answer: Bar
       count: 55
+    - answer: Doo
+      count: 44

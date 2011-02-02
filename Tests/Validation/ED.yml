@@ -79,4 +79,4 @@ election_definition:
     district_ident: DISTRICT_1
     election_ident: ELECTION_1
     question: Free Beer
-    answer_list: [Foo, Bar]
+    answer_list: [Foo, Bar, Doo]

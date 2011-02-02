@@ -75,4 +75,4 @@ election_definition:
     district_ident: DISTRICT_21
     election_ident: ELECTION_1
     question: Free Beer
-    answer_list: [A, B, C, A]
+    answer_list: [A, B, C, A, C, C]

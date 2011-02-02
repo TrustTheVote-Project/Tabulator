@@ -69,7 +69,7 @@ def operator_data(trace = false)
 end
 
 def operator_state(printit = false, trace = false)
-  print "\nChecking Tabulator State\n"
+  print "\nChecking Tabulator State\n\n"
   op_exit_initial()
   tab = op_instantiate_tabulator(true, trace)
   tc = tab.tabulator_count
@@ -83,13 +83,14 @@ def op_print_state(tab, tc, printit)
     exit(1)
   end
   state = mystate[0]
-  print "\nTabulator State: #{state}\n\n"
+  print "Tabulator State: #{state}\n"
   if (printit && state =~ /^ACCUM/)
     print "Missing Counts:\n"
     missing = mystate[1]
     missing.each { |cid, rg, pid|
-      print "  Counter: #{cid}, Precinct: #{pid}, Reporting Group: #{rg}\n"}
+      print "  Counter: #{cid}, Precinct: #{pid}, Reporting Group: #{rg}\n" }
   end
+  print "\n"
 end  
 
 def op_exit_initial()
@@ -100,7 +101,7 @@ def op_exit_initial()
 end
 
 def op_instantiate_tabulator(printit = true, trace = false)
-  print "Instantiating Tabulator (Check Syntax, Validate)\n" if printit
+  print "Instantiating Tabulator:"
   tcfile = TABULATOR_COUNT_FILE
   tc = op_read_yaml_file(tcfile)
   if (tc.is_a?(Hash) && (tc.keys.length == 1) &&
@@ -111,31 +112,31 @@ def op_instantiate_tabulator(printit = true, trace = false)
     if (CheckSyntaxYaml.new.check_syntax(schema, tc, true, trace).length == 0)
       tab = Tabulator.new(false, false, false, tc)
     else
-      print "** FATAL ERROR ** Syntax check failure on Tabulator Count file #{tcfile}\n"
+      print "\n** FATAL ERROR ** Syntax check failure on Tabulator Count file #{tcfile}\n"
       exit(1)
     end
   else
-    print "** FATAL ERROR ** Invalid Tabulator Count file #{tcfile}, must RESET\n"
+    print "\n** FATAL ERROR ** Invalid Tabulator Count file #{tcfile}, must RESET\n"
     exit(1)
   end
   errors = tab.validation_errors()
   if (errors.length == 0)
-    print "Tabulator Instantiated OK\n"
+    print " OK\n"
   else
-    print "** FATAL ERROR ** Instantiating Tabulator from Tabulator Count file\n"
+    print "\n** FATAL ERROR ** Instantiating Tabulator from Tabulator Count file\n"
     op_print_errs(tab)
     exit(1)
   end
   tab
 end
 
-def op_read_yaml_file(file, label = "")
-  print "Reading YAML #{label} file: #{file}\n" if label != ""
+def op_read_yaml_file(file, label = "", trace = false)
+  print "Reading #{label} file: #{file}\n" if (label != "" && trace)
   File.open(file) { |infile| YAML::load(infile) }
 end
 
-def op_write_yaml_file(file, datum, label = "")
-  print "Writing YAML #{label} file: #{file}\n" if label != ""
+def op_write_yaml_file(file, datum, label = "", trace = false)
+  print "Writing #{label} file: #{file}\n" if (label != "" && trace)
   File.open(file, "w") { |outfile| YAML::dump(datum, outfile) }
 end
 
@@ -149,17 +150,28 @@ def op_check_syntax(file, trace = false)
       (schema = op_read_yaml_file(schema_file, "schema")) &&
       CheckSyntaxYaml.new.check_syntax(schema, datum, true, trace).length == 0)
     datum
+  else
+    false
   end
+end
+
+def op_print_check_syntax(type, file = "")
+  trans = {"jurisdiction_definition"=>"Jurisdiction Definition",
+    "election_definition"=>"Election Definition",
+    "counter_count"=>"Counter Count",
+    "tabulator_count"=>"Tabulator Count"}
+  type = trans[type] if (trans.keys.include?(type))
+  print "Check Syntax of #{type} (#{file}): OK\n"
 end
 
 def operator_file(file1, file2, trace = false)
   datum = op_check_syntax(file1, trace)
-  if (! datum.is_a?(Hash))
-    print "Unexpected contents of tabulator file: #{file1}\n"
+  unless (datum)
+    print "Unexpected contents of file: #{file1}\n"
     exit(1)
   end
   op_exit_initial() if (datum.keys[0] == "counter_count")
-  print "Check Syntax: #{datum.keys[0]}: OK\n"
+  op_print_check_syntax(datum.keys[0], file1)
   type = datum.keys[0]
   case type
   when "election_definition"
@@ -177,27 +189,27 @@ def operator_file(file1, file2, trace = false)
       print "Unexpected contents of Election Definition file: #{file2}\n"
       exit(1)
     end
-    print "Check Syntax: #{datum.keys[0]}: OK\n"
-    print "Validating: Jurisdiction Definition and Election Definition\n"
+    op_print_check_syntax(datum.keys[0], file2)
+    print "Validating Jurisdiction Definition and Election Definitions:"
     tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
     tc = tab.tabulator_count
     errors = tab.validation_errors()
     if (errors.length == 0)
-      print "Jurisdiction and Election Definitions OK\n\n"
-      op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count")
+      print " OK\n"
+      op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count", true)
     end
     op_print_errs(tab, true)
   when "counter_count"
     cc = datum
     tab = op_instantiate_tabulator(false, trace)
     tc = tab.tabulator_count
-    print "Validating: Counter Count\n"
+    print "Validating Counter Count:"
     tab.validate_counter_count(cc)
     errors = tab.validation_errors()
     if (tab.validation_errors().length == 0)
-      print "Counter Count OK\n\n"
+      print " OK\n"
       tc = tab.update_tabulator_count(tc, cc)
-      op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count")
+      op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count",true)
       op_print_state(tab, tc, false)
     end
     op_print_errs(tab, true)
@@ -218,7 +230,7 @@ end
 def op_print_errs(tab, short = false)
   errors = tab.validation_errors()
   if (errors.length > 0)
-    print "\nThere were ERRORS! (#{errors.length})\n"
+    print "\n\nThere were ERRORS! (#{errors.length})\n"
     errors.each { |text| print "** ERROR ** ",text,"\n" }
   else
     print "There were NO ERRORS!\n" unless short
