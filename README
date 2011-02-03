@@ -10,6 +10,12 @@ operator.rb
 tabulator.rb
 - The Tabulator
 
+tabulator_test.rb
+- Ruby Unit Tests for the Tabulator
+
+validate.rb
+- The Validator for Tabulator input data sets
+
 check_syntax_yaml.rb
 - YAML Syntax Checker for TTV Common Data Format (CDF) datasets
 
@@ -19,16 +25,19 @@ check_syntax_yaml_test.rb
 emgr_data_handler.rb
 - Converts two real EMGR datasets into an Election Definition in preparation
   for syntax checking and validation by the Tabulator
-- Writes the file EMGR_ELECTION_DEFINITION.yml
+- Writes the files EMGR_JD.yml and EMGR_ED.yml
 
 ################
 # Bash Scripts #
 ################
 
-TESTS.sh
-- Valid arguments are: <nothing>, syntax, bedrock, dc, va, all
-- <nothing>: run the built-in tests of a prototypical Election Definition and
-             three Counter Counts, achieving the Tabulator DONE state
+TEST.sh
+- Valid arguments are: <nothing>, default, tab, syntax, bedrock, dc, va, all
+- <nothing>: run all of the tests
+- default: run the default built-in tests of a prototypical Jurisdiction
+           Definition, Election Definition, and three Counter Counts,
+	   achieving the Tabulator DONE state 
+- tab: run all of the Tabulator validation tests
 - syntax: run all of the Tabulator syntax tests
 - bedrock: run John's Bedrock tests, with only partial counts
 - dc: convert the DC November 2010 datasets into an Election Definition and
@@ -54,4 +63,4 @@ Tests/
 
 -----------------
 Author: Jeff Cook
-Date: 14 Jan 2011
+Date: 2 Feb 2011
