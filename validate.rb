@@ -383,7 +383,8 @@ class TabulatorValidate
 # 2. the Contests are valid,
 # 3. the Candidates are valid,
 # 4. the Questions are valid,
-# 5. the Counters are valid, and
+# 5. the Counters are valid,
+# 6. the Reporting Groups are valid (if present, warning otherwise), and
 # 6. the Expected Counts are valid (if present, warning otherwise).
 
   def validate_election_definition(election_definition)
@@ -392,6 +393,11 @@ class TabulatorValidate
     validate_candidates(election_definition["candidate_list"])
     validate_questions(election_definition["question_list"])
     validate_counters(election_definition["counter_list"])
+    if (0 == election_definition["reporting_group_list"].length)
+      warning("Missing ALL Reporting Groups, None Present")
+    else
+      validate_reporting_groups(election_definition["reporting_group_list"])
+    end
     if (0 == election_definition["expected_count_list"].length)
       warning("Missing ALL Expected Counts, None Present")
     else
@@ -405,7 +411,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # An Election is valid iff:
-# 1. its Reporting Groups are valid.
+# 1. the Election UID is unique and no other such are present.
 #
 # If the Election UID is not unique and solo, then there is a serious internal
 # error, as this method should only be called when in an initial state.
@@ -415,25 +421,6 @@ class TabulatorValidate
       shouldnt("Pre-existing Election UIDs", self.uids["election"].keys.inspect)
     else
       uid_add("election", election["ident"])
-    end
-    validate_reporting_groups(election["reporting_group_list"])
-  end
-
-# Arguments:
-# * <i>reporting_groups</i>: (<i>Array</i>) of Reporting Group objects
-#
-# Returns: N/A
-#
-# The Reporting Groups are valid iff:
-# 1. they are all unique (there are no duplicate group names).
-
-  def validate_reporting_groups(reporting_groups)
-    reporting_groups.each do |rg|
-      if (uid_exists?("reporting group", rg))
-        error("Duplicate Reporting Group", rg)
-      else
-        uid_add("reporting group", rg)
-      end
     end
   end
 
@@ -560,6 +547,24 @@ class TabulatorValidate
     end
   end
   
+# Arguments:
+# * <i>reporting_groups</i>: (<i>Array</i>) of Reporting Group objects
+#
+# Returns: N/A
+#
+# The Reporting Groups are valid iff:
+# 1. they are all unique (there are no duplicate group names).
+
+  def validate_reporting_groups(reporting_groups)
+    reporting_groups.each do |rg|
+      if (uid_exists?("reporting group", rg))
+        error("Duplicate Reporting Group", rg)
+      else
+        uid_add("reporting group", rg)
+      end
+    end
+  end
+
 # Arguments:
 # * <i>expected_counts</i>: (<i>Array</i>) of Expected Count objects
 #

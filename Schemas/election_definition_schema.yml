@@ -13,6 +13,8 @@ election_definition:
   - ident: Atomic
   election: 
     ident: Atomic
+  reporting_group_list: 
+  - String
   contest_list: 
   - ident: Atomic
     district_ident: Atomic

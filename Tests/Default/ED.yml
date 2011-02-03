@@ -4,12 +4,12 @@ election_definition:
     file_ident: FILE_1
     create_date: Sometime
     operator: El Jefe
+  reporting_group_list: [Normal, Absentee]
   election:
     display_name: Election 1
     ident: ELECTION_1
     start_date: 2010-12-10
     type: GENERAL
-    reporting_group_list: [Normal, Absentee]
   expected_count_list:
   - counter_ident: COUNTER_1
     precinct_ident_list: [PRECINCT_1]

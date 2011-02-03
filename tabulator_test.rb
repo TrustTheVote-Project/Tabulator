@@ -37,8 +37,7 @@ class TabulatorTest < Test::Unit::TestCase
                 "Non-Unique District UID (DISTRICT_3)"]
 
   ED_ERROR_12 =
-    ["Duplicate Reporting Group (Absentee)",
-     "Non-Unique Contest UID (CONTEST_1)",
+    ["Non-Unique Contest UID (CONTEST_1)",
      "Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3)",
      "Non-Unique Candidate UID (CANDIDATE_1)",
      "Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2)",
@@ -46,11 +45,14 @@ class TabulatorTest < Test::Unit::TestCase
      "Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2)",
      "Duplicate Answers (A, C) for Question UID (QUESTION_2)",
      "Non-Unique Counter UID (COUNTER_1)",
+     "Duplicate Reporting Group (Absentee)",
      "Non-Existent Counter UID (COUNTER_11) in Expected Count",
      "Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count",
      "Non-Existent Precinct UID (PRECINCT_22) for Counter UID (COUNTER_2) in Expected Count"]
 
-  ED_WARN_1 = ["Missing ALL Expected Counts, None Present"]
+  ED_WARN_2 =
+    ["Missing ALL Reporting Groups, None Present",
+     "Missing ALL Expected Counts, None Present"]
 
   ED_WARN_4 =
     ["Duplicate Expected Count (COUNTER_1, Normal, PRECINCT_1)",
@@ -98,7 +100,7 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_1.yml", [], ED_WARN_1)
+    tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_counter_count(trace, "CC1_ERROR_4.yml", CC1_ERROR_4, [])

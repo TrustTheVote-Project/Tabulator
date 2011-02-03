@@ -9,7 +9,7 @@ election_definition:
     ident: ELECTION-2May2010
     display_name: Bedrock Special Mayoral Election
     date: 2 May 2010
-    reporting_group_list: [PollingPlaceCast, PollingPlaceProvisional, Absentee]
+  reporting_group_list: [PollingPlaceCast, PollingPlaceProvisional, Absentee]
   jurisdiction:
     ident: JURISDICTION-BedrockCounty
     display_name: Bedrock County

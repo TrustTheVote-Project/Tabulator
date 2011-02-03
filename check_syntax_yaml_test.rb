@@ -99,6 +99,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_counter_info = {"ident"=>"Atomic"}
     schema_election_definition_info = 
       {"election"=>{"ident"=>"Atomic"},
+      "reporting_group_list"=>["String"],
       "expected_count_list"=>[schema_expected_count_info],
       "contest_list"=>[schema_contest_info],
       "candidate_list"=>[schema_candidate_info],
