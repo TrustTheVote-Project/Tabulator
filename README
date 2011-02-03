@@ -34,7 +34,7 @@ emgr_data_handler.rb
 TEST.sh
 - Valid arguments are: <nothing>, default, tab, syntax, bedrock, dc, va, all
 - <nothing>: run all of the tests
-- default: run the default built-in tests of a prototypical Jurisdiction
+- default: run the default tests using a prototypical Jurisdiction
            Definition, Election Definition, and three Counter Counts,
 	   achieving the Tabulator DONE state 
 - tab: run all of the Tabulator validation tests
