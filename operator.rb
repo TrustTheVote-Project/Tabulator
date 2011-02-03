@@ -170,7 +170,8 @@ def op_check_syntax(file, trace = false)
   end
 end
 
-def op_print_check_syntax(type, file = "")
+def op_print_check_syntax(type, file)
+  file = op_prepend(file)
   trans = {"jurisdiction_definition"=>"Jurisdiction Definition",
     "election_definition"=>"Election Definition",
     "counter_count"=>"Counter Count",
