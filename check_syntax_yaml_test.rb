@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 # OSDV Tabulator - YAML Syntax Checker Unit Tests
 # Author: Jeff Cook
 # Date: 1/20/2011
@@ -21,8 +23,8 @@
 # Contributors: Jeff Cook
 
 require "yaml"
-require "check_syntax_yaml"
 require "test/unit"
+require "check_syntax_yaml"
 
 # The CheckSyntaxYamlTest class provides Unit Testing for the CheckSyntaxYaml
 # class.

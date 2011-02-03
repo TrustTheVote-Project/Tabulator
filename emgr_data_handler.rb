@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 require "yaml"
 
 # This is a temporary class used to process some test datasets from the DC and

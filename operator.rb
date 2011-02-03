@@ -1,9 +1,16 @@
+#!/usr/bin/ruby
+
+$LOAD_PATH << './Tabulator'
+
 require "yaml"
 require "check_syntax_yaml"
 require "tabulator"
 
-TABULATOR_COUNT_FILE = "TABULATOR_COUNT.yml"
-TABULATOR_CSV_FILE = "TABULATOR_COUNT.csv"
+TABULATOR_COUNT_FILE = (File.directory?('Tabulator') ? 'Tabulator/' : '') +
+  "TABULATOR_COUNT.yml"
+                        
+TABULATOR_CSV_FILE = (File.directory?('Tabulator') ? 'Tabulator/' : '') +
+  "TABULATOR_COUNT.csv"
 
 def operator_help
   print "\nCommands:\n\n"
@@ -131,21 +138,29 @@ def op_instantiate_tabulator(printit = true, trace = false)
 end
 
 def op_read_yaml_file(file, label = "", trace = false)
+  file = op_prepend(file)
   print "Reading #{label} file: #{file}\n" if (label != "" && trace)
   File.open(file) { |infile| YAML::load(infile) }
 end
 
 def op_write_yaml_file(file, datum, label = "", trace = false)
+  file = op_prepend(file)
   print "Writing #{label} file: #{file}\n" if (label != "" && trace)
   File.open(file, "w") { |outfile| YAML::dump(datum, outfile) }
 end
 
+def op_prepend(file)
+  ((File.directory?('Tabulator') && (! (file =~ /^Tabulator/))) ?
+   'Tabulator/' : '') + file
+end
+
 def op_check_syntax(file, trace = false)
   trace = (trace ? -300 : 300)
+  file = op_prepend(file)
   if ((datum = op_read_yaml_file(file, "data")) &&
       (datum.is_a?(Hash) && (datum.keys.length == 1)) &&
       (type = datum.keys[0]) && 
-      (schema_file = "Schemas/#{type}_schema.yml") &&
+      (schema_file = op_prepend("Schemas/#{type}_schema.yml")) &&
       File.exists?(schema_file) &&
       (schema = op_read_yaml_file(schema_file, "schema")) &&
       CheckSyntaxYaml.new.check_syntax(schema, datum, true, trace).length == 0)
@@ -179,7 +194,7 @@ def operator_file(file1, file2, trace = false)
     exit(1)
   when "jurisdiction_definition"
     jd = datum
-    if (file2 == "" || ! File.exists?(file2))
+    if (file2 == "" || ! File.exists?(op_prepend(file2)))
       print "Jurisdiction file must be followed by Election Definition file: #{file2}\n"
       exit(1)
     end
@@ -280,7 +295,7 @@ begin
   elsif (file1 == "state")
     operator_state(true, operator_trace)
     exit(0)
-  elsif (File.exists?(file1))
+  elsif (File.exists?(op_prepend(file1)))
     operator_file(file1, file2, operator_trace)
     operator_data(operator_trace) if operator_print;
   else

@@ -8,7 +8,7 @@ then
 fi
 }
 
-test_val ()
+test_tab ()
 {
     ruby tabulator_test.rb
     exitif
@@ -95,8 +95,8 @@ all*)
     test_all
     exit
     ;;
-val*)
-    test_val
+tab*)
+    test_tab
     exit
     ;;
 def*)
@@ -120,5 +120,5 @@ bed*)
     exit
     ;;
 esac
-echo Valid arguments are: \<nothing\>, all, syntax, default, bedrock, dc, va
+echo Valid arguments are: \<nothing\>, all, syntax, tab, default, bedrock, dc, va
 exit 1

@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 # OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
@@ -19,8 +21,6 @@
 # All Rights Reserved.
 
 # Contributors: Jeff Cook
-
-require "yaml"
 
 # The CheckSyntaxYaml class provides a Yaml Syntax Checker for the Tabulator,
 # which checks the syntax of TTV Common Data Format (CDF) datasets provided as

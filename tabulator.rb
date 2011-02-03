@@ -1,4 +1,6 @@
-# OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
+#!/usr/bin/ruby
+
+# OSDV Tabulator - TTV Tabulator
 # Author: Jeff Cook
 # Date: 1/20/2011
 #
@@ -20,8 +22,6 @@
 
 # Contributors: Jeff Cook
 
-require "yaml"
-require "check_syntax_yaml"
 require "validate"
 
 # The Tabulator class inherits the capabilities of the TabulatorValidate

@@ -1,4 +1,6 @@
-# OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
+#!/usr/bin/ruby
+
+# OSDV Tabulator - TTV Tabulator Validation of Election Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
 #
@@ -19,9 +21,6 @@
 # All Rights Reserved.
 
 # Contributors: Jeff Cook
-
-require "yaml"
-require "check_syntax_yaml"
 
 module Enumerable 
   def dups 
