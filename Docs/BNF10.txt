@@ -115,6 +115,10 @@
                          }
                      }
 
+#################
+# Contest Count #
+#################
+
 <ContestCount> ::= { contest_ident:        <UniqueID>
                      undervote_count:      Integer
                      overvote_count:       Integer
@@ -122,16 +126,20 @@
                      candidate_count_list: <CandidateCount>+
                      }
 
+<CandidateCount> ::= { candidate_ident: <UniqueID>
+                     [ candidate_name:  String ]
+                       count:           Integer
+                       }
+
+##################
+# Question Count #
+##################
+
 <QuestionCount> ::= { question_ident:    <UniqueID>
                       undervote_count:   Integer
                       overvote_count:    Integer
                       answer_count_list: <AnswerCount>+
                       }
-
-<CandidateCount> ::= { candidate_ident: <UniqueID>
-                     [ candidate_name:  String ]
-                       count:           Integer
-                       }
 
 <AnswerCount> ::= { answer: String
                     count:  Integer  

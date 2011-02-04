@@ -1,11 +1,14 @@
 grep -e "error(" -e "def " -e "warning(" validate.rb >> VALIDATION_ERRORS.txt
 
+ERROR/WARNING prefixes:
+
 Duplicate:    duplicated in a list, should appear alone
 Improper:     improper because exists, but does not belong (Candidate/Answer)
 Missing:      should appear in a list, but does not
 Non-Existent: does not exist, but should
 Non-Unique:   not unique, already exists (previously encountered/declared)
-Unexpected:   not expected, but not invalid (Counter/Precinct in Counter Count)
+Unexpected:   not expected, but not invalid (Counter/Reporting Group/Precinct
+              in Counter Count)
 
   def dups 
   def initialize(jurisdiction_definition = false, election_definition = false,
@@ -18,11 +21,15 @@ Unexpected:   not expected, but not invalid (Counter/Precinct in Counter Count)
   def uids_exist?(type)
   def uid_add(type, uid)
   def new_tabulator_count(jurisdiction_definition, election_definition, file)
+
+
   def validate_jurisdiction_definition(jurisdiction_definition)
   def validate_precincts(precincts)
         error("Non-Unique Precinct UID", pid)
   def validate_districts(districts)
         error("Non-Unique District UID", did)
+
+
   def validate_election_definition(election_definition)
       warning("Missing ALL Reporting Groups, None Present")
       warning("Missing ALL Expected Counts, None Present")
@@ -49,6 +56,8 @@ Unexpected:   not expected, but not invalid (Counter/Precinct in Counter Count)
         warning("Missing Counter UIDs", diff_cids, "from Expected Counts")
         warning("Missing Reporting Groups", diff_rgs, "from Expected Counts")
         warning("Missing Precinct UIDs", diff_pids, "from Expected Counts")
+
+
   def validate_counter_count(counter_count)
     error("Non-Existent Counter UID", cid, "in Counter Count") unless
     warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count") unless
@@ -77,5 +86,7 @@ Unexpected:   not expected, but not invalid (Counter/Precinct in Counter Count)
         warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
             warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
       error("Duplicate Counter Count Identity Information", cidrgpid)
+
+
   def validate_tabulator_count(tabulator_count)
   def validate_counter_counts(counter_counts)
