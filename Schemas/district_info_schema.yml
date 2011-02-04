@@ -1,2 +1,6 @@
 --- 
+"|OPT2|": 
+  type: String
+"|OPT1|": 
+  display_name: String
 ident: Atomic

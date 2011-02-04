@@ -1,7 +1,13 @@
 --- 
 jurisdiction_definition: 
   precinct_list: 
-  - ident: Atomic
+  - "|OPT|": 
+      display_name: String
+    ident: Atomic
   ident: Atomic
   district_list: 
-  - ident: Atomic
+  - "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      display_name: String
+    ident: Atomic

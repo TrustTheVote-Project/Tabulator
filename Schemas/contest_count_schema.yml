@@ -1,6 +1,8 @@
 --- 
 candidate_count_list: 
 - candidate_ident: Atomic
+  "|OPT|": 
+    candidate_name: String
   count: Integer
 overvote_count: Integer
 "|OPT|": 

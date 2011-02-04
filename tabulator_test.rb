@@ -68,6 +68,10 @@ class TabulatorTest < Test::Unit::TestCase
 
   CC1_WARN_1 = ["Non-Existent Reporting Group (Unknown) for Counter UID (COUNTER_1) in Counter Count"]
 
+  CC1_WARN_3 = ["Unexpected Counter UID (COUNTER_1) in Counter Count",
+                "Unexpected Reporting Group (Normal) for Counter UID (COUNTER_1) in Counter Count",
+                "Unexpected Precinct UID (PRECINCT_1) for Counter UID (COUNTER_1) in Counter Count"]
+
   CC2_ERROR_1 = ["Non-Unique File UID (FILE_1)"]
 
   CC3_ERROR_13 =
@@ -110,8 +114,10 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_test_counter_count(trace, "CC2_ERROR_1.yml", CC2_ERROR_1, [])
     tabulator_test_counter_count(trace, "CC2.yml", [], [])
     tabulator_test_counter_count(trace, "CC3_ERROR_13.yml", CC3_ERROR_13, [])
-    tabulator_test_counter_count(trace, "CC3.yml", [], [], true)
+    tabulator_test_counter_count(trace, "CC3.yml", [], [], false, true)
     tabulator_test_counter_count(trace, "CC4_ERROR_1.yml", CC4_ERROR_1, [])
+    tabulator_test_new_tabulator(trace, "JD.yml", "ED_CC1_WARN_2.yml", [], [], true)
+    tabulator_test_counter_count(trace, "CC1_WARN_3.yml", [], CC1_WARN_3, true)
   end
 
 # Arguments:
@@ -146,6 +152,7 @@ class TabulatorTest < Test::Unit::TestCase
 # * <i>ed_file</i>:  (<i>String</i>) name of file holding Election Definition
 # * <i>errors</i>:   (<i>Array</i>) of expected error messages
 # * <i>warnings</i>: (<i>Array</i>) of expected warning messages
+# * <i>igwarn</i>:   (<i>Boolean</i>) whether to ignore warnings (optional)
 #
 # Returns: N/A
 #
@@ -153,7 +160,7 @@ class TabulatorTest < Test::Unit::TestCase
 # Election Definition.  The proper number of <i>errors</i> and <i>warnings</i> should
 # appear, and they should match exactly, content-wise.
 
-  def tabulator_test_new_tabulator(trace, jd_file, ed_file, errors, warnings)
+  def tabulator_test_new_tabulator(trace, jd_file, ed_file, errors, warnings, igwarn = false)
     exit(1) unless errors.is_a?(Array) && warnings.is_a?(Array)
     print "\nGenerating New Tabulator from Files: #{jd_file} #{ed_file}\n"
     jd = tabulator_test_check_syntax(trace, "jurisdiction_definition", jd_file)
@@ -164,7 +171,7 @@ class TabulatorTest < Test::Unit::TestCase
       tabulator_test_write_tabulator_file(tc)
     end
     taberrs = tabulator_test_errors(tab.validation_errors(), errors)
-    tabwarns = tabulator_test_warnings(tab.validation_warnings(), warnings)
+    tabwarns = tabulator_test_warnings(tab.validation_warnings(igwarn), warnings) 
     print "New Tabulator with #{taberrs.to_s} ERRORS and #{tabwarns.to_s} WARNINGS\n"
     tabulator_print_errors_warnings(tab)
   end
@@ -271,6 +278,7 @@ class TabulatorTest < Test::Unit::TestCase
 # * <i>cc_file</i>:  (<i>String</i>) name of file holding Counter Count
 # * <i>errors</i>:   (<i>Array</i>) of expected error messages
 # * <i>warnings</i>: (<i>Array</i>) of expected warning messages
+# * <i>igwarn</i>:   (<i>Boolean</i>) ignore Tabulator instantiation warnings (optional)
 # * <i>done</i>:     (<i>Boolean</i>) check for Tabulator DONE state afterwards (optional)
 #
 # Returns: N/A
@@ -279,9 +287,9 @@ class TabulatorTest < Test::Unit::TestCase
 # Tabulator.  The proper number of <i>errors</i> and <i>warnings</i> should
 # appear, and they should match exactly, content-wise.
 
-  def tabulator_test_counter_count(trace, cc_file, errors, warnings, done = false)
+  def tabulator_test_counter_count(trace, cc_file, errors, warnings, igwarn = false, done = false)
     exit(1) unless errors.is_a?(Array) && warnings.is_a?(Array)
-    tab = tabulator_test_instantiate_tabulator(trace)
+    tab = tabulator_test_instantiate_tabulator(trace, igwarn)
     print "\nTabulator Accumulating New Counter Count from File: #{cc_file}\n"
     cc = tabulator_test_check_syntax(trace, "counter_count", cc_file)
     tc = tab.tabulator_count
@@ -304,14 +312,15 @@ class TabulatorTest < Test::Unit::TestCase
   end
   
 # Arguments:
-# * <i>trace</i>: (<i>Integer</i>) limits tracing of output for the syntax checker
+# * <i>trace</i>:  (<i>Integer</i>) limits tracing of output for the syntax checker
+# * <i>igwarn</i>: (<i>Boolean</i>) ignore Tabulator instatiation warnings (optional)
 #
 # Returns: N/A
 #
 # Tests the instantiation of a new Tabulator from the contents of the
 # <tt><b>TABULATOR_COUNT_FILE</b></tt>. There should be no errors or warnings.
 
-  def tabulator_test_instantiate_tabulator(trace)
+  def tabulator_test_instantiate_tabulator(trace, igwarn = false)
     tc_file = TABULATOR_COUNT_FILE
     print "\nInstantiating Tabulator from File: #{tc_file}\n"
     tc = tabulator_test_check_syntax(trace, "tabulator_count", tc_file, false)
@@ -320,7 +329,7 @@ class TabulatorTest < Test::Unit::TestCase
     assert(0 == taberrs,
            "Expected NO Validation Errors, Received: #{taberrs.to_s}" +
            tabulator_messages_generate(tab.validation_errors(), ERRHEAD))
-    tabwarns = tab.validation_warnings().length
+    tabwarns = tab.validation_warnings(igwarn).length
     assert(0 == tabwarns,
            "Expected NO Validation Warnings, Received: #{tabwarns.to_s}" +
            tabulator_messages_generate(tab.validation_warnings(), WARHEAD))

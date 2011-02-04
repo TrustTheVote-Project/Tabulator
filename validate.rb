@@ -158,13 +158,15 @@ class TabulatorValidate
     self.errors
   end
 
-# No Arguments
+# Arguments:
+# * <i>reset</i>: (<i>Boolean</i>) indicates whether to reset the <tt><b>warnings</b></tt> stack (optional)
 # 
 # Returns: <i>Array</i>
 #
-# Returns the <tt><b>warnings</b></tt> message stack.
+# Returns the <tt><b>warnings</b></tt> message stack, but resets it to empty first if <i>reset</i> is <i>true</i>
 
-  def validation_warnings()
+  def validation_warnings(reset = false)
+    self.warnings = [] if reset
     self.warnings
   end
 
@@ -179,7 +181,7 @@ class TabulatorValidate
   private
   def shouldnt(message1, value1 = "")
     message = "#{message1}" +
-      (value1 == "" ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
+      (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
     print("** FATAL ERROR ** #{message}\n")
     $stdout.flush
     exit(1)
@@ -822,13 +824,30 @@ class TabulatorValidate
 
   def counts_missing_update(cid, rg, pid)
     expected = self.counts_missing["expected"]
+    goahead = true
     if (! expected.keys.include?(cid))
-      shouldnt("Counter Count has unexpected Counter UID", cid)
-    elsif (! (expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
-      # already made this warning in validate_counter_count
-    elsif (! (expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
-      shouldnt("Counter Count for #{cid} has unexpected Precinct UID", pid)
-    elsif (expected[cid][rg][pid] == false)
+      goahead = false
+      if (uid_exists?("counter", cid))
+        warning("Unexpected Counter UID", cid, "in Counter Count")
+      else 
+        shouldnt("Counter Count has invalid Counter UID", cid)
+      end
+    end
+    if (! (expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
+      goahead = false
+      if (uid_exists?("reporting group", rg))
+        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
+        if (! (expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
+          if (uid_exists?("precinct", pid))
+            warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
+          else 
+            shouldnt("Counter Count for #{cid} has invalid Precinct UID", pid)
+          end
+        end
+      end
+    end
+    return unless goahead
+    if (expected[cid][rg][pid] == false)
       self.counts_missing["expected"][cid][rg][pid] = true
       self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
         ((cid == cid0) && (rg == rg0) && (pid == pid0)) }

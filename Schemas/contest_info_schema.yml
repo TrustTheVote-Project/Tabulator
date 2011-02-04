@@ -1,3 +1,5 @@
 --- 
+"|OPT|": 
+  display_name: String
 ident: Atomic
 district_ident: Atomic

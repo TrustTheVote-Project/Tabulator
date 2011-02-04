@@ -1,6 +1,7 @@
 --- 
 tabulator_count: 
   election_ident: ELECTION_1
+  jurisdiction_ident: JURISDICTION_1
   audit_trail: 
     software: GNU
     file_ident: TAB_FILE_1
@@ -27,6 +28,7 @@ tabulator_count:
       file_ident: FILE_1
       create_date: 2010-12-01
       operator: El Jefe
+      software: TTV Tabulator Test
     ballot_list:
     - ident: BALLOT_1
     - ident: BALLOT_2
@@ -34,7 +36,7 @@ tabulator_count:
       display_name: Election 1
       ident: ELECTION_1
       date: 2010-12-10
-      reporting_group_list: [Normal, Absentee]
+    reporting_group_list: [Normal, Absentee]
     expected_count_list:
     - counter_ident: COUNTER_1
       precinct_ident_list: [PRECINCT_1]

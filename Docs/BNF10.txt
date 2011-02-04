@@ -1,0 +1,155 @@
+#################################
+## BNF for Tabulator Data Sets ##
+#################################
+
+# The pseudo-terminals are: String & Integer
+
+###################
+# Unique ID (UID) #
+###################
+
+<UniqueID> ::= String |
+               Integer
+
+###########################
+# Jurisdiction Definition #
+###########################
+
+<JurisdictionDefinition> ::= { jurisdiction_definition: 
+                                 <JurisdictionDefinitionInfo>
+                                 }
+
+<JurisdictionDefinitionInfo> ::= { ident:         <UniqueID>
+                                   district_list: <District>+
+                                   precinct_list: <Precinct>+
+                                   }
+
+<District> ::= { ident:        <UniqueID>
+               [ display_name: String ]
+               [ type:         String ]
+                 }
+
+<Precinct> ::= { ident:        <UniqueID>
+               [ display_name: String ]
+                 }
+
+#######################
+# Election Definition #
+#######################
+
+<ElectionDefinition> ::= { election_definition: 
+                             <ElectionDefinitionInfo>
+                             }
+
+<ElectionDefinitionInfo> ::= { election:             <ElectionInfo>
+                               contest_list:         <Contest>*
+                               candidate_list:       <Candidate>*
+                               question_list:        <Question>*
+                               counter_list:         <Counter>+
+                               reporting_group_list: String*
+                               expected_count_list:  <ExpectedCount>*
+                               audit_trail:          <AuditTrailInfo>
+                               }
+
+<ElectionInfo> ::= { ident:        <UniqueID> 
+                   [ display_name: String ]
+                   [ start_date:   String ]
+                   [ type:         String ]
+                     }
+
+<Contest> ::= { ident:          <UniqueID>
+              [ display_name:   String ]
+                district_ident: <UniqueID>
+                }
+
+<Candidate> ::= { ident:              <UniqueID>
+                [ display_name:       String ]
+                  contest_ident:      <UniqueID>
+                [ party_display_name: String  ]
+                [ position:           Integer ]
+                  }
+
+<Question> ::= { ident:          <UniqueID>
+               [ display_name:   String ]
+                 district_ident: <UniqueID>
+                 question:       String
+                 answer_list:    String+
+                 }
+
+<Counter> ::= { ident:        <UniqueID>
+              [ display_name: String ]
+                }
+
+<ExpectedCount> ::= { counter_ident:       <UniqueID>
+                      precinct_ident_list: <UniqueID>+
+                      reporting_group:     String
+                      }
+
+<AuditTrail> ::= { audit_trail: <AuditTrailInfo>
+                   }
+
+<AuditTrailInfo> ::= { file_ident:     <UniqueID>
+                       create_date:    String
+                       operator:       String
+                       software:       String
+                     [ schema_version: String ]
+                     [ type:           String ]
+                     [ hardware:       String ]
+                     [ provenance:     <UniqueID>* ]
+                       }
+
+#################
+# Counter Count #
+#################
+
+<CounterCount> ::= { counter_count:
+                       { jurisdiction_ident:  <UniqueID>
+                         election_ident:      <UniqueID>
+                         counter_ident:       <UniqueID>
+                         reporting_group:     String
+                         precinct_ident:      <UniqueID>
+                       [ cast_ballot_count:   Integer ]
+                         contest_count_list:  <ContestCount>*
+                         question_count_list: <QuestionCount>*
+                         audit_trail:         <AuditTrailInfo>
+                         }
+                     }
+
+<ContestCount> ::= { contest_ident:        <UniqueID>
+                     undervote_count:      Integer
+                     overvote_count:       Integer
+                   [ writein_count:        Integer ]
+                     candidate_count_list: <CandidateCount>+
+                     }
+
+<QuestionCount> ::= { question_ident:    <UniqueID>
+                      undervote_count:   Integer
+                      overvote_count:    Integer
+                      answer_count_list: <AnswerCount>+
+                      }
+
+<CandidateCount> ::= { candidate_ident: <UniqueID>
+                     [ candidate_name:  String ]
+                       count:           Integer
+                       }
+
+<AnswerCount> ::= { answer: String
+                    count:  Integer  
+                    }
+
+###################
+# Tabulator Count #
+###################
+
+<TabulatorCount> ::= 
+    { tabulator_count:
+        { jurisdiction_ident:      <UniqueID>
+          election_ident:          <UniqueID>
+          jurisdiction_definition: <JurisdictionDefinitionInfo>
+          election_definition:     <ElectionDefinitionInfo>
+          contest_count_list:      <ContestCount>*
+          question_count_list:     <QuestionCount>*
+          counter_count_list:      <CounterCount>+
+          audit_trail:             <AuditTrailInfo>
+          }
+      }

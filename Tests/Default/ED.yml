@@ -4,6 +4,7 @@ election_definition:
     file_ident: FILE_1
     create_date: Sometime
     operator: El Jefe
+    software: TTV Tabulator Test
   reporting_group_list: [Normal, Absentee]
   election:
     display_name: Election 1

@@ -10,30 +10,14 @@ election_definition:
     display_name: Bedrock Special Mayoral Election
     date: 2 May 2010
   reporting_group_list: [PollingPlaceCast, PollingPlaceProvisional, Absentee]
-  jurisdiction:
-    ident: JURISDICTION-BedrockCounty
-    display_name: Bedrock County
-  district_list:
-  - ident: DISTRICT-BedrockCounty
-    display_name: Bedrock County
-  - ident: DISTRICT-TownOfBedrock
-    display_name: Town of Bedrock
-  - ident: DISTRICT-MineralDistrict
-    display_name: Mineral District
-  precinct_list:
-  - ident: PRECINCT-001Downtown
-    display_name: Downtown Precinct
-  - ident: PRECINCT-002Quarry
-    display_name: Quarry Precinct
-  - ident: PRECINCT-003Unincorporated
-    display_name: Unincorporated Precinct
-  - ident: PRECINCT-004UnincorporatedQuarry
-    display_name: Unincorporated Quarry Precinct
   expected_count_list:
+  - counter_ident: COUNTER-CCOS1
+    precinct_ident_list: [PRECINCT-002Quarry]
+    reporting_group: PollingPlaceProvisional
   - counter_ident: COUNTER-PCOS1
     precinct_ident_list: [PRECINCT-001Downtown]
     reporting_group: PollingPlaceCast
-  - counter_ident: COUNTER-CCOS1
+  - counter_ident: COUNTER-PCOS2
     precinct_ident_list: [PRECINCT-002Quarry]
     reporting_group: PollingPlaceProvisional
   - counter_ident: COUNTER-PCOS3
@@ -52,7 +36,7 @@ election_definition:
   - ident: COUNTER-PCOS4
     display_name: Precinct Counter 4
   - ident: COUNTER-CCOS1
-    display_name: The Only Central Counter We Have, And It Wasn't Cheap!
+    display_name: The Only Central Counter We Have!
   contest_list:
   - ident: CONTEST-Mayor
     display_name: Mayor of Town of Bedrock
@@ -81,20 +65,3 @@ election_definition:
     answer_list:
     - "IN FAVOR OF usage fee"
     - "AGAINST usage fee"
-  ballot_list:
-  - ident: BALLOT-Precinct1
-    display_name: Precinct 1 Ballot
-    precinct_ident: PRECINCT-001Downtown
-    contest_ident_list: [CONTEST-Mayor, CONTEST-MeasureA]
-  - ident: BALLOT-Precinct2
-    display_name: Precinct 2 Ballot
-    precinct_ident: PRECINCT-002Quarry
-    contest_ident_list: [CONTEST-Mayor, CONTEST-QuarryCommissioner3, CONTEST-MeasureA]
-  - ident: BALLOT-Precinct3
-    display_name: Precinct 3 Ballot
-    precinct_ident: PRECINCT-003Unincorporated
-    contest_ident_list: [CONTEST-MeasureA]
-  - ident: BALLOT-Precinct4
-    display_name: Precinct 4 Ballot
-    precinct_ident: PRECINCT-004UnincorporatedQuarry
-    contest_ident_list: [CONTEST-QuarryCommissioner3, CONTEST-MeasureA]

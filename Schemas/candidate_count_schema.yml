@@ -1,3 +1,5 @@
 --- 
 candidate_ident: Atomic
+"|OPT|": 
+  candidate_name: String
 count: Integer

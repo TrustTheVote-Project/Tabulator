@@ -112,10 +112,9 @@ class CheckSyntaxYaml
 #
 # The valid strings that may appear in a <i>schema</i> are as follows:
 # * "Any":     matches any <i>datum</i>
-# * "String":  matches any <i>datum</i> of type <i>String</i> or <i>Date</i>
+# * "String":  matches any <i>datum</i> of type <i>String</i>, <i>Date</i> or <i>Time</i>
 # * "Integer": matches any <i>datum</i> of type <i>Integer</i>
-# * "Date":    matches any <i>datum</i> of type <i>String</i> or <i>Date</i>
-# * "Atomic":  matches any <i>datum</i> of type <i>String</i>, <i>Integer</i>, or <i>Date</i>
+# * "Atomic":  matches any <i>datum</i> of type <i>String</i>, <i>Integer</i>, or <i>Date</i> or <i>Time</i>
 #
 # All other schema strings are invalid and result in a syntax error, which may
 # indicate the presence of an internal error, in that the schema being used is
@@ -125,18 +124,16 @@ class CheckSyntaxYaml
     check_syntax_trace('check_syntax_string', schema, datum, depth, trace)
     ((schema == datum) || (schema == "Any") ||
      ((schema == "String") ?
-      ((datum.is_a?(String) || datum.is_a?(Date)) ||
+      ((datum.is_a?(String) || datum.is_a?(Date) || datum.is_a?(Time)) ||
        check_syntax_error(2, schema, datum, trace)) :
       ((schema == "Integer") ?
        (datum.is_a?(Integer) ||
         check_syntax_error(3, schema, datum, trace)) :
-       ((schema == "Date") ?
-        ((datum.is_a?(String) || datum.is_a?(Date)) ||
-         check_syntax_error(4, schema, datum, trace)) :
-        ((schema == "Atomic") ?
-         ((datum.is_a?(String) || datum.is_a?(Integer) || datum.is_a?(Date)) ||
-          check_syntax_error(5, schema, datum, trace)) :
-         check_syntax_error(1, schema, datum, trace))))))
+       ((schema == "Atomic") ?
+        ((datum.is_a?(String) || datum.is_a?(Integer) ||
+          datum.is_a?(Date) || datum.is_a?(Time)) ||
+         check_syntax_error(5, schema, datum, trace)) :
+        check_syntax_error(1, schema, datum, trace)))))
   end
   
 # Arguments:
@@ -285,11 +282,11 @@ class CheckSyntaxYaml
     when 1
       print "Schema string \'#{schema}\' not handled"
     when 2
-      print "Datum not a String"
+      print "Datum not a String: #{datum.class}"
     when 3
       print "Datum not an Integer"
     when 4
-      print "Datum not a Date"
+      print "Datum not a Date - Error Deprecated, Should not Happen!"
     when 5
       print "Datum not Atomic"
     when 6
@@ -330,9 +327,9 @@ class CheckSyntaxYaml
 # and combinations thereof, and nothing else.  The function schema_is_valid?
 # returns <i>true</i> only when the <i>schema</i> has a valid format.
 #
-# If the schema is a <i>String</i>, it must be one of (Integer, String, Date,
-# Atomic, Any).  If the schema is an <i>Array</i>, schema_is_valid_array? is called
-# to perform the validity check. If the schema is a <i>Hash</i>,
+# If the schema is a <i>String</i>, it must be one of (Integer, String,
+# Atomic, Any).  If the schema is an <i>Array</i>, schema_is_valid_array? is
+# called to perform the validity check. If the schema is a <i>Hash</i>,
 # schema_is_valid_hash?  is called to perform the validity check. No other
 # types of schemas are valid.
 
@@ -340,7 +337,7 @@ class CheckSyntaxYaml
   def schema_is_valid?(schema, trace = TRACE_DEFAULT)
     schema_is_valid_trace("schema_is_valid?", schema, trace)
     ((schema.is_a?(String)) ?
-     (["Integer", "String", "Date", "Atomic", "Any"].include?(schema) ||
+     (["Integer", "String", "Atomic", "Any"].include?(schema) ||
       schema_not_valid(schema, "Schema string not recognized", trace)) :
      ((schema.is_a?(Array)) ?
       schema_is_valid_array?(schema, trace) :

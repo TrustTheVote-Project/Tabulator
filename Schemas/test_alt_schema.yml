@@ -1,5 +1,5 @@
 --- 
 "|ALT|": 
-  foo: Date
-  bar: Date
+  foo: String
+  bar: String
 test_alt: String

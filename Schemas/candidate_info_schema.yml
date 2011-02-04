@@ -1,3 +1,9 @@
 --- 
+"|OPT3|": 
+  position: Integer
+"|OPT2|": 
+  party_display_name: String
+"|OPT1|": 
+  display_name: String
 contest_ident: Atomic
 ident: Atomic

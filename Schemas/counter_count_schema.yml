@@ -8,27 +8,34 @@ counter_count:
     - answer: String
       count: Integer
   jurisdiction_ident: Atomic
-  cast_ballot_count: Integer
   audit_trail: 
+    "|OPT3|": 
+      hardware: String
     software: String
     "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      schema_version: String
+    operator: String
+    create_date: String
+    file_ident: Atomic
+    "|OPT4|": 
       provenance: 
       - String
-    "|OPT1|": 
-      hardware: String
-    operator: String
-    create_date: Date
-    file_ident: Atomic
+  "|OPT|": 
+    cast_ballot_count: Integer
   counter_ident: Atomic
   contest_count_list: 
   - candidate_count_list: 
     - candidate_ident: Atomic
+      "|OPT|": 
+        candidate_name: String
       count: Integer
     overvote_count: Integer
     "|OPT|": 
       writein_count: Integer
     contest_ident: Atomic
     undervote_count: Integer
-  reporting_group: String
   precinct_ident: Atomic
+  reporting_group: String
   election_ident: Atomic

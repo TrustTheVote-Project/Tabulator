@@ -72,9 +72,12 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_invalid_hash_key = {100=>"Foobar"}
     schema_test_opt = {"test_opt"=>"String", "|OPT|"=>{"foo"=>"Integer"}}
     schema_test_alt =
-      {"test_alt"=>"String","|ALT|"=>{"foo"=>"Date", "bar"=>"Date"}}
-    schema_district_info = {"ident"=>"Atomic"}
-    schema_precinct_info = {"ident"=>"Atomic"}
+      {"test_alt"=>"String","|ALT|"=>{"foo"=>"String", "bar"=>"String"}}
+    schema_district_info = {"ident"=>"Atomic",
+      "|OPT1|"=>{"display_name"=>"String"},
+      "|OPT2|"=>{"type"=>"String"}}
+    schema_precinct_info = {"ident"=>"Atomic",
+      "|OPT|"=>{"display_name"=>"String"}}
     schema_jurisdiction_definition_info =
       {"ident"=>"Atomic",
       "district_list"=>[schema_district_info],
@@ -87,27 +90,49 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "reporting_group"=>"String"}
     schema_contest_info =
       {"ident"=>"Atomic",
+      "|OPT|"=>{"display_name"=>"String"},
       "district_ident"=>"Atomic"}
     schema_candidate_info =
       {"ident"=>"Atomic",
+      "|OPT1|"=>{"display_name"=>"String"},
+      "|OPT2|"=>{"party_display_name"=>"String"},
+      "|OPT3|"=>{"position"=>"Integer"},
       "contest_ident"=>"Atomic"}
     schema_question_info =
       {"ident"=>"Atomic",
+      "|OPT|"=>{"display_name"=>"String"},
       "district_ident"=>"Atomic",
       "question"=>"String",
       "answer_list"=>["String"]}
-    schema_counter_info = {"ident"=>"Atomic"}
+    schema_counter_info = {"ident"=>"Atomic",
+      "|OPT|"=>{"display_name"=>"String"}}
+    schema_election_info = {"ident"=>"Atomic",
+      "|OPT1|"=>{"display_name"=>"String"},
+      "|OPT2|"=>{"start_date"=>"String"},
+      "|OPT3|"=>{"type"=>"String"}}
+    schema_audit_trail_info =
+      {"file_ident"=>"Atomic",
+      "create_date"=>"String",
+      "operator"=>"String",
+      "software"=>"String",
+      "|OPT1|"=>{"schema_version"=>"String"},
+      "|OPT2|"=>{"type"=>"String"},
+      "|OPT3|"=>{"hardware"=>"String"},
+      "|OPT4|"=>{"provenance"=>["String"]}}
     schema_election_definition_info = 
-      {"election"=>{"ident"=>"Atomic"},
-      "reporting_group_list"=>["String"],
-      "expected_count_list"=>[schema_expected_count_info],
+      {"election"=>schema_election_info,
       "contest_list"=>[schema_contest_info],
       "candidate_list"=>[schema_candidate_info],
       "question_list"=>[schema_question_info],
-      "counter_list"=>[schema_counter_info]}
+      "counter_list"=>[schema_counter_info],
+      "reporting_group_list"=>["String"],
+      "expected_count_list"=>[schema_expected_count_info],
+      "audit_trail"=>schema_audit_trail_info}
     schema_election_definition =
       {"election_definition"=>schema_election_definition_info}
-    schema_candidate_count = {"candidate_ident"=>"Atomic","count"=>"Integer"}
+    schema_candidate_count = {"candidate_ident"=>"Atomic",
+      "|OPT|"=>{"candidate_name"=>"String"},
+      "count"=>"Integer"}
     schema_contest_count =
       {"contest_ident"=>"Atomic",
       "undervote_count"=>"Integer",
@@ -120,33 +145,28 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "undervote_count"=>"Integer",
       "overvote_count"=>"Integer",
       "answer_count_list"=>[schema_answer_count]}
-    schema_audit_trail_info =
-      {"file_ident"=>"Atomic",
-      "create_date"=>"Date",
-      "operator"=>"String",
-      "software"=>"String",
-      "|OPT1|"=>{"hardware"=>"String"},
-      "|OPT2|"=>{"provenance"=>["String"]}}
     schema_audit_trail = {"audit_trail"=>schema_audit_trail_info}
     schema_counter_count =
       {"counter_count"=>
-      {"audit_trail"=>schema_audit_trail_info,
-        "election_ident"=>"Atomic",
+      {"election_ident"=>"Atomic",
         "jurisdiction_ident"=>"Atomic",
-        "precinct_ident"=>"Atomic",
-        "reporting_group"=>"String",
         "counter_ident"=>"Atomic",
-        "cast_ballot_count"=>"Integer",
+        "reporting_group"=>"String",
+        "precinct_ident"=>"Atomic",
+        "|OPT|"=>{"cast_ballot_count"=>"Integer"},
         "contest_count_list"=>[schema_contest_count],
-        "question_count_list"=>[schema_question_count]}}
+        "question_count_list"=>[schema_question_count],
+        "audit_trail"=>schema_audit_trail_info}}
     schema_tabulator_count =
       {"tabulator_count"=>
-      {"audit_trail"=>schema_audit_trail_info,
+      {"jurisdiction_ident"=>"Atomic",
+        "election_ident"=>"Atomic",
         "jurisdiction_definition"=>schema_jurisdiction_definition_info,
         "election_definition"=>schema_election_definition_info,
-        "counter_count_list"=>[schema_counter_count],
         "contest_count_list"=>[schema_contest_count],
-        "question_count_list"=>[schema_question_count]}}
+        "question_count_list"=>[schema_question_count],
+        "counter_count_list"=>[schema_counter_count],
+        "audit_trail"=>schema_audit_trail_info}}
     schema_setup(trace, "unknown_type", schema_unknown_type, false)
     schema_setup(trace, "unknown_string", schema_unknown_string, false)
     schema_setup(trace, "invalid_hash_key", schema_invalid_hash_key, false)
@@ -188,7 +208,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_syntax_error(trace, "unknown_string", false, 1)
     schema_test_syntax_error(trace, "question_info", true, 2)
     schema_test_syntax_error(trace, "test_opt", true, 3)
-    schema_test_syntax_error(trace, "test_alt", true, 4)
+    #schema_test_syntax_error(trace, "test_alt", true, 4)
     schema_test_syntax_error(trace, "district_info", true, 5)
     schema_test_syntax_error(trace, "expected_count_info", true, 6)
     schema_test_syntax_error(trace, "audit_trail", true, 7)
@@ -198,7 +218,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_syntax_error(trace, "test_opt", true, 3, 11)
     schema_test_syntax_error(trace, "test_opt", true, 3, 11, 12)
     schema_test_syntax_error(trace, "test_alt", true, 13)
-    schema_test_syntax_error(trace, "test_alt", true, 4, 11, 14)
+    schema_test_syntax_error(trace, "test_alt", true, 2, 11, 14)
     schema_test_syntax_error(trace, "test_alt", true, 15)
     schema_test_syntax(trace, "test_opt")
     schema_test_syntax(trace, "test_alt")

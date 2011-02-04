@@ -1,39 +1,65 @@
 --- 
 tabulator_count: 
   question_count_list: 
-  - &id001 
+  - &id002 
     question_ident: Atomic
     overvote_count: Integer
     undervote_count: Integer
     answer_count_list: 
     - answer: String
       count: Integer
-  audit_trail: &id002 
+  jurisdiction_ident: Atomic
+  audit_trail: &id001 
+    "|OPT3|": 
+      hardware: String
     software: String
     "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      schema_version: String
+    operator: String
+    create_date: String
+    file_ident: Atomic
+    "|OPT4|": 
       provenance: 
       - String
-    "|OPT1|": 
-      hardware: String
-    operator: String
-    create_date: Date
-    file_ident: Atomic
   election_definition: 
     question_list: 
-    - ident: Atomic
+    - "|OPT|": 
+        display_name: String
+      ident: Atomic
       question: String
       answer_list: 
       - String
       district_ident: Atomic
+    audit_trail: *id001
     candidate_list: 
-    - contest_ident: Atomic
+    - "|OPT3|": 
+        position: Integer
+      "|OPT2|": 
+        party_display_name: String
+      "|OPT1|": 
+        display_name: String
+      contest_ident: Atomic
       ident: Atomic
     counter_list: 
-    - ident: Atomic
-    election: 
+    - "|OPT|": 
+        display_name: String
       ident: Atomic
+    election: 
+      "|OPT3|": 
+        type: String
+      "|OPT2|": 
+        start_date: String
+      "|OPT1|": 
+        display_name: String
+      ident: Atomic
+    reporting_group_list: 
+    - String
     contest_list: 
-    - ident: Atomic
+    - "|OPT|": 
+        display_name: String
+      ident: Atomic
       district_ident: Atomic
     expected_count_list: 
     - precinct_ident_list: 
@@ -44,6 +70,8 @@ tabulator_count:
   - &id003 
     candidate_count_list: 
     - candidate_ident: Atomic
+      "|OPT|": 
+        candidate_name: String
       count: Integer
     overvote_count: Integer
     "|OPT|": 
@@ -53,19 +81,27 @@ tabulator_count:
   counter_count_list: 
   - counter_count: 
       question_count_list: 
-      - *id001
+      - *id002
       jurisdiction_ident: Atomic
-      cast_ballot_count: Integer
-      audit_trail: *id002
+      audit_trail: *id001
+      "|OPT|": 
+        cast_ballot_count: Integer
       counter_ident: Atomic
       contest_count_list: 
       - *id003
-      reporting_group: String
       precinct_ident: Atomic
+      reporting_group: String
       election_ident: Atomic
   jurisdiction_definition: 
     precinct_list: 
-    - ident: Atomic
+    - "|OPT|": 
+        display_name: String
+      ident: Atomic
     ident: Atomic
     district_list: 
-    - ident: Atomic
+    - "|OPT2|": 
+        type: String
+      "|OPT1|": 
+        display_name: String
+      ident: Atomic
+  election_ident: Atomic
