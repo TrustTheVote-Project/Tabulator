@@ -129,10 +129,10 @@ class TabulatorValidate
           self.tabulator_count =
             new_tabulator_count(jurisdiction_definition, election_definition, file)
         else
-          shouldnt("Only an Election Definition may be the 3rd arg to Tabulator.new") 
+          shouldnt("Only an Election Definition may be the 2nd arg to Tabulator.new") 
         end
       else
-        shouldnt("Only a Jurisdiction Definition may be the 2nd arg to Tabulator.new")
+        shouldnt("Only a Jurisdiction Definition may be the 1st arg to Tabulator.new")
       end
     elsif (tabulator_count)
       if (tabulator_count.is_a?(Hash) &&
@@ -140,7 +140,7 @@ class TabulatorValidate
         self.tabulator_count = tabulator_count
         validate_tabulator_count(tabulator_count)
       else
-        shouldnt("Only a Tabulator Count may be the 1st arg to Tabulator.new")
+        shouldnt("Only a Tabulator Count may be the 4th arg to Tabulator.new")
       end
     else
       shouldnt("Either a Tabulator Count or a Jurisdiction/Election Definition" +
