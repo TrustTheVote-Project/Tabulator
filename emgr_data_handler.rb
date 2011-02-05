@@ -83,7 +83,7 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
         "precinct_list"=>juris['precincts']}}
     file = "EMGR_JD.yml"
     label = "Jurisdiction Definition"
-    print "Writing YAML #{label} file: #{file}\n"
+    print "Writing YAML #{label}: #{file}\n"
     File.open(file, 'w') { |outfile| YAML::dump(jurisdiction_definition, outfile) }
     election_definition =
       {"election_definition"=>
@@ -103,7 +103,7 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
       }}
     file = "EMGR_ED.yml"
     label = "Election Definition"
-    print "Writing YAML #{label} file: #{file}\n"
+    print "Writing YAML #{label}: #{file}\n"
     File.open(file, 'w') { |outfile| YAML::dump(election_definition, outfile) }
   end
 

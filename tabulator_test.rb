@@ -346,7 +346,7 @@ class TabulatorTest < Test::Unit::TestCase
 # the file read operation succeeds.
 
   def tabulator_test_read_file(file, label)
-    print "Reading #{label} File: #{file}\n"
+    print "Reading #{label}: #{file}\n"
     assert(schema = File.open(file) { |infile| YAML::load(infile) },
            "Error Reading from #{label} File: #{file}")
     schema
@@ -362,7 +362,7 @@ class TabulatorTest < Test::Unit::TestCase
 
   def tabulator_test_write_tabulator_file(tc)
     file = TABULATOR_COUNT_FILE
-    print "Writing Tabulator Count file: #{file}\n"
+    print "Writing Tabulator Count: #{file}\n"
     assert(File.open(file, "w") { |outfile| YAML::dump(tc, outfile) },
            "Error Writing to File: #{file}")
   end

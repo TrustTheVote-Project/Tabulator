@@ -250,7 +250,7 @@ class Tabulator < TabulatorValidate
     notfirst = false
     contest_votes = self.counts_contests.collect do |k, v|
       header = (notfirst ? ["","","",""] :
-                notfirst = ["CONTEST", "undervote","overvote","writein"]) +
+                notfirst = ["CONTEST", "undervote","overvote","write-in"]) +
         v["candidate_count_list"].collect { |cc| cc["candidate_ident"] }
       data = [k, v["undervote_count"],v["overvote_count"],
               (self.counts_contests[k]["type"] == "contest" ? v["writein"] : 0 )] +
@@ -266,7 +266,7 @@ class Tabulator < TabulatorValidate
         v["answer_count_list"].collect { |ac| ac["count"] }
       header * "," + "\n" + data * ","
     end
-    (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n"
+    (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n\n"
   end
 
 # Arguments:

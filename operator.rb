@@ -16,42 +16,45 @@ TABULATOR_CSV_FILE = (File.directory?('Tabulator') ? 'Tabulator/' : '') +
 
 def operator_help
   help_string = "
+Note: [DEBUG] indicates a temporary/prototype command option.
+
 Commands:
 
   ruby operator.rb              # same as help
-  ruby operator.rb help         # print command help info
+  ruby operator.rb help         # print command help information
   ruby operator.rb reset        # reset Tabulator to INITIAL state
-  ruby operator.rb [trace] ...  # optionally turns on tracing, for debugging
-  ruby operator.rb data         # print Tabulator data structures, for debugging
+  ruby operator.rb [trace] ...  # [DEBUG] optionally turn on tracing
+  ruby operator.rb data         # [DEBUG] print internal data structures
   ruby operator.rb spreadsheet  # print CSV spreadsheet with voting results
   ruby operator.rb state        # print Tabulator state, either INITIAL,
-                                    ACCUMULATING, or DONE; if ACCUMULATING,
-                                    print the missing counts
+                                    ACCUMULATING, or DONE
 
-  ruby operator.rb <JurisdictionDefinitionFile> <ElectionDefinitionFile>
+  ruby operator.rb <Jurisdiction_Definition_File> <Election_Definition_File>
 
-       # The two files must hold, respectively, a Jurisdiction Definition and
-       # an Election Definition (both written in YAML).  Each is checked for
-       # proper syntax and then validated by the Tabulator, after which a
-       # zero-initialized Tabulator Count is constructed and saved.  This
-       # command moves the Tabulator state from INITIAL to ACCUMULATING.
+       # The two files must contain, respectively, a Jurisdiction Definition
+       # and an Election Definition.  Each is checked for proper syntax and
+       # then validated, after which a zero-initialized Tabulator Count is
+       # constructed and saved to file.  This command moves the state of the
+       # Tabulator from INITIAL to ACCUMULATING.
 
-  ruby operator.rb <TabulatorCountFile>
+  ruby operator.rb <Counter_Count_File>
 
-       # The (YAML) file holds a Tabulator Count.  It is checked for proper
-       # syntax and validated.  This command essentially checks the
-       # consistency of the current Tabulator state.
+       # The file contains a Counter Count, rejected if the state of the
+       # Tabulator is INITIAL.  First the Tabulator is re-instantiated using
+       # the current Tabulator Count file.  Then the Counter Count is checked
+       # for proper syntax, validated, and incorporated into the Tabulator
+       # Count, which is saved to file.  This command allows the Tabulator to
+       # accumulate votes.  The Tabulator remains in the ACCUMULATING state if
+       # expected counts are missing.  But when the last expected count is
+       # processed, the Tabulator enters the DONE state.
 
-  ruby operator.rb <CounterCountFile>
+  ruby operator.rb <Tabulator_Count_File>
 
-       # The (YAML) file holds a Counter Count, which is rejected if the
-       # Tabulator is in the INITIAL state.  First the Tabulator is
-       # re-instantiated from the contents of the current Tabulator Count
-       # file. The Counter Count is checked for proper syntax, validated, and
-       # then incorporated into the Tabulator Count, which is saved.  This
-       # command allows the Tabulator to accumulate votes, and when the last
-       # count is processed, the Tabulator enters the DONE state.  If counts
-       # are still missing, the Tabulator remains in the ACCUMULATING state.
+       # [DEBUG] The file contains a Tabulator Count.  It is checked for
+       # proper syntax and validated.  This command is informational only and
+       # is used to check the consistency of the current Tabulator Count file.
+
+The file #{TABULATOR_COUNT_FILE} holds the current Tabulator Count data set.
 
 "
   print help_string
@@ -64,12 +67,12 @@ def operator_reset
   print "\nTabulator RESET..."
   once = false
   if (File.exists?(TABULATOR_COUNT_FILE))
-    print " Deleting Tabulator Count file: #{TABULATOR_COUNT_FILE}\n"
+    print " Deleting Tabulator Count: #{TABULATOR_COUNT_FILE}\n"
     File.delete(TABULATOR_COUNT_FILE)
     once = true
   end
   if (File.exists?(TABULATOR_CSV_FILE))
-    print "  Deleting Tabulator CSV file: #{TABULATOR_CSV_FILE}\n"
+    print "  Deleting Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n"
     File.delete(TABULATOR_CSV_FILE)
     once = true
   end
@@ -82,8 +85,8 @@ end
 # the contents of the Tabulator internal data structures.
 
 def operator_data(trace = false)
-  op_exit_if_initial_state("data")
-  tab = op_instantiate_tabulator(true, trace)
+  ops_exit_if_initial_state("data")
+  tab = ops_instantiate_tabulator(true, trace)
   tc = tab.tabulator_count
   tab.tabulator_dump_data()
   tab
@@ -94,14 +97,15 @@ end
 # TABULATOR_COUNT_FILE).
 
 def operator_spreadsheet(trace = false)
-  op_exit_if_initial_state("spreadsheet")
-  tab = op_instantiate_tabulator(true, trace)
+  ops_exit_if_initial_state("spreadsheet")
+  tab = ops_instantiate_tabulator(true, trace)
   lines = tab.tabulator_spreadsheet()
-  print "\nCSV Spreadsheet:\n\n"
-  print lines
+  print "Writing Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n"
   outfile = File.open(TABULATOR_CSV_FILE, "w")
   outfile.puts lines
   outfile.close()
+  print "\nSpreadsheet Data (CSV Format):\n\n"
+  print lines
 end
 
 # Prints the current Tabulator state, by re-instantiating the Tabulator
@@ -109,11 +113,11 @@ end
 # its state.
 
 def operator_state(tab = false, tc = false, printit = false, trace = false)
-  op_exit_if_initial_state("")
-  tab = op_instantiate_tabulator(true, trace) unless tab
+  ops_exit_if_initial_state("")
+  tab = ops_instantiate_tabulator(true, trace) unless tab
   tc = tab.tabulator_count unless tc
   mystate = tab.tabulator_state(tc)
-  op_die_error("Tabulator State Not Array: #{mystate.inspect}", true) unless
+  ops_die_error("Tabulator State Not Array: #{mystate.inspect}", true) unless
     mystate.is_a?(Array)
   state = mystate[0]
   print "Tabulator State: #{state}\n"
@@ -128,39 +132,39 @@ end
 # Process the file(s) that were provided as arguments.
 
 def operator_file(file1, file2, trace = false)
-  file1 = op_prepend_path(file1)
-  op_die_error("Non-existent file: #{file1}") unless File.exists?(file1)
-  datum = op_check_syntax(file1, trace)
-  op_die_error("Invalid contents of file: #{file1}") unless datum
-  op_exit_if_initial_state("Counter Count Accumulation") if (datum.keys[0] == "counter_count")
-  op_print_check_syntax(datum.keys[0], file1)
+  file1 = ops_prepend_path(file1)
+  ops_die_error("Non-existent file: #{file1}") unless File.exists?(file1)
+  datum = ops_check_syntax(file1, trace)
+  ops_die_error("Invalid contents of file: #{file1}") unless datum
+  ops_exit_if_initial_state("Counter Count Accumulation") if (datum.keys[0] == "counter_count")
+  ops_print_check_syntax(datum.keys[0], file1)
   type = datum.keys[0]
   case type
   when "election_definition"
-    op_die_error("Election Definition must be second argument, not first")
+    ops_die_error("Election Definition must be second argument, not first")
   when "jurisdiction_definition"
     jd = datum
-    file2 = op_prepend_path(file2)
-    op_die_error("Election Definition file name not provided") if file2 == ""
-    op_die_error("Election Definition file non-existent: #{file2}") unless 
+    file2 = ops_prepend_path(file2)
+    ops_die_error("Election Definition file name not provided") if file2 == ""
+    ops_die_error("Election Definition file non-existent: #{file2}") unless 
       File.exists?(file2)
-    datum = op_check_syntax(file2, trace)
+    datum = ops_check_syntax(file2, trace)
     ed = datum
-    op_die_error("Invalid contents of Election Definition file: #{file2}") if
+    ops_die_error("Invalid contents of Election Definition file: #{file2}") if
       (! datum.is_a?(Hash) || datum.keys[0] != "election_definition")
-    op_print_check_syntax(datum.keys[0], file2)
+    ops_print_check_syntax(datum.keys[0], file2)
     print "Validating Jurisdiction and Election Definitions:"
     tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
     tc = tab.tabulator_count
     errors = tab.validation_errors()
     if (errors.length == 0)
       print " OK\n"
-      op_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
+      ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
     end
-    op_print_errs(tab, true)
+    ops_print_errs(tab, true)
   when "counter_count"
     cc = datum
-    tab = op_instantiate_tabulator(false, trace)
+    tab = ops_instantiate_tabulator(false, trace)
     tc = tab.tabulator_count
     print "Validating Counter Count:"
     tab.validate_counter_count(cc)
@@ -168,10 +172,10 @@ def operator_file(file1, file2, trace = false)
     if (tab.validation_errors().length == 0)
       print " OK\n"
       tc = tab.update_tabulator_count(tc, cc)
-      op_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count",true)
+      ops_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count",true)
       operator_state(tab, tc, false, trace)
     end
-    op_print_errs(tab, true)
+    ops_print_errs(tab, true)
   when "tabulator_count"
     tc = datum
     print "Validating: Tabulator Count\n"
@@ -180,7 +184,7 @@ def operator_file(file1, file2, trace = false)
     if (errors.length == 0)
       print "Tabulator Count OK\n\n"
     end
-    op_print_errs(tab, true)
+    ops_print_errs(tab, true)
   else
     print "Unknown tabulator file type: #{type}\n"
   end
@@ -190,7 +194,7 @@ end
 # use by commands that are meaningless in this state, such as "data" or
 # "spreadsheet".
 
-def op_exit_if_initial_state(command = "")
+def ops_exit_if_initial_state(command = "")
   if (!File.exists?(TABULATOR_COUNT_FILE))
     print "Tabulator State: INITIAL (Waiting for Jurisdiction and Election Definitions)\n"
     print "Command Ignored: #{command}\n\n" unless command == ""
@@ -202,44 +206,44 @@ end
 # TABULATOR_COUNT_FILE.  Any error during this process is FATAL.  Returns the
 # resulting Tabulator object.
 
-def op_instantiate_tabulator(printit = true, trace = false)
+def ops_instantiate_tabulator(printit = true, trace = false)
   print "Instantiating Tabulator:"
   tcfile = TABULATOR_COUNT_FILE
-  tc = op_read_yaml_file(tcfile)
+  tc = ops_read_yaml_file(tcfile)
   if (tc.is_a?(Hash) && (tc.keys.length == 1) &&
       (tc.keys[0] == "tabulator_count"))
     schema_file = "Schemas/tabulator_count_schema.yml"
-    schema = op_read_yaml_file(schema_file)
+    schema = ops_read_yaml_file(schema_file)
     trace = (trace ? -300 : 300)
     if (CheckSyntaxYaml.new.check_syntax(schema, tc, true, trace).length == 0)
       tab = Tabulator.new(false, false, false, tc)
     else
-      op_die_error("Syntax Check Failure on #{tcfile}", true)
+      ops_die_error("Syntax Check Failure on #{tcfile}", true)
     end
   else
-    op_die_error("Invalid Contents of #{tcfile}, Must Reset", true)
+    ops_die_error("Invalid Contents of #{tcfile}, Must Reset", true)
   end
   if (tab.validation_errors().length == 0)
     print " OK\n"
   else
-    op_die_error("Errors Instantiating Tabulator from #{tcfile}", true, tab)
+    ops_die_error("Errors Instantiating Tabulator from #{tcfile}", true, tab)
   end
   tab
 end
 
 # Read a Tabulator data set from a file.
 
-def op_read_yaml_file(file, label = "", trace = false)
-  file = op_prepend_path(file)
-  print "Reading #{label} file: #{file}\n" if (label != "" && trace)
+def ops_read_yaml_file(file, label = "", trace = false)
+  file = ops_prepend_path(file)
+  print "Reading #{label}: #{file}\n" if (label != "" && trace)
   File.open(file) { |infile| YAML::load(infile) }
 end
 
 # Write a Tabulator data set to a file.
 
-def op_write_yaml_file(file, datum, label = "", trace = false)
-  file = op_prepend_path(file)
-  print "Writing #{label} file: #{file}\n\n" if (label != "" && trace)
+def ops_write_yaml_file(file, datum, label = "", trace = false)
+  file = ops_prepend_path(file)
+  print "Writing #{label}: #{file}\n\n" if (label != "" && trace)
   File.open(file, "w") { |outfile| YAML::dump(datum, outfile) }
 end
 
@@ -248,7 +252,7 @@ end
 # prepending "Tabulator/" to file names if the directory contains a Tabulator
 # subdirectory.  FIX THIS...JVC
 
-def op_prepend_path(file)
+def ops_prepend_path(file)
   ((File.directory?('Tabulator') && (! (file =~ /^Tabulator/))) ?
    'Tabulator/' : '') + file
 end
@@ -257,15 +261,15 @@ end
 # contain a hash with a single key, where that key names a Tabulator schema.
 # Either return the contents of the file or <i>false</> if there is an error.
 
-def op_check_syntax(file, trace = false)
+def ops_check_syntax(file, trace = false)
   trace = (trace ? -300 : 300)
-  file = op_prepend_path(file)
-  if ((datum = op_read_yaml_file(file, "data")) &&
+  file = ops_prepend_path(file)
+  if ((datum = ops_read_yaml_file(file, "data")) &&
       (datum.is_a?(Hash) && (datum.keys.length == 1)) &&
       (type = datum.keys[0]) && 
-      (schema_file = op_prepend_path("Schemas/#{type}_schema.yml")) &&
+      (schema_file = ops_prepend_path("Schemas/#{type}_schema.yml")) &&
       File.exists?(schema_file) &&
-      (schema = op_read_yaml_file(schema_file, "schema")) &&
+      (schema = ops_read_yaml_file(schema_file, "schema")) &&
       CheckSyntaxYaml.new.check_syntax(schema, datum, true, trace).length == 0)
     datum
   else
@@ -275,8 +279,8 @@ end
 
 # Prints that a successful syntax check has just occurred.
 
-def op_print_check_syntax(type, file)
-  file = op_prepend_path(file)
+def ops_print_check_syntax(type, file)
+  file = ops_prepend_path(file)
   trans = {"jurisdiction_definition"=>"Jurisdiction Definition",
     "election_definition"=>"Election Definition",
     "counter_count"=>"Counter Count",
@@ -288,19 +292,19 @@ end
 # Prints an error message and dies.  Optionally indicates the error is FATAL,
 # and optionally prints the current set of Tabulator error/warning messages.
 
-def op_die_error(message, fatal = false, tab = false)
+def ops_die_error(message, fatal = false, tab = false)
   if (fatal)
     print "** FATAL ERROR ** #{message}\n"
   else
     print "** ERROR ** #{message}\n"
   end
-  op_print_errs(tab) if tab
+  ops_print_errs(tab) if tab
   exit(1)
 end
 
-# Print any Tabulator error or waning messages.
+# Print any Tabulator error or warning messages.
 
-def op_print_errs(tab, short = false)
+def ops_print_errs(tab, short = false)
   errors = tab.validation_errors()
   if (errors.length > 0)
     print "\n\nThere were ERRORS! (#{errors.length})\n"
@@ -328,7 +332,6 @@ begin
   trace = false
   if (ARGV.length > 1 && ARGV[0] == "trace")
     trace = true
-    print "Tracing ON\n"
     ARGV.shift
   end
   if (ARGV.length == 0)
