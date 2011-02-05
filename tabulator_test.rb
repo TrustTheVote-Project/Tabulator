@@ -304,7 +304,7 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_print_errors_warnings(tab)
     if (done)
       print "Checking to see if Tabulator State is DONE... "
-      doneness = tab.current_tabulator_state(tc)
+      doneness = tab.tabulator_state(tc)
       assert((doneness[0] =~ /^DONE/) && (doneness[1].length == 0),
              "Tabulator State should be DONE but is not:\n#{doneness[0]}\n")
       print "YES!\n"

@@ -44,7 +44,7 @@ class Tabulator < TabulatorValidate
 # * ACCUMULATING: Waiting for more Counter Counts, M Missing
 # * DONE: All M Expected Counter Counts Accumulated
 
-  def current_tabulator_state(tabulator_count)
+  def tabulator_state(tabulator_count)
     if (tabulator_count.is_a?(Hash) &&
         tabulator_count.keys.include?("tabulator_count"))
       missed = self.counts_missing["missing"].length.to_s
@@ -58,7 +58,7 @@ class Tabulator < TabulatorValidate
          self.counts_missing["missing"] ]
       end
     else
-      shouldnt("Invalid Tabulator Count passed to current_tabulator_state")
+      shouldnt("Invalid Tabulator Count passed to tabulator_state")
     end
   end
 
@@ -246,21 +246,27 @@ class Tabulator < TabulatorValidate
 # Prototype implementation only.
 
   public
-  def spreadsheet_for_tabulator()
-    info = self.counts_contests.collect do |k, v|
-      [["CONTEST", "undervote_count","overvote_count","writein_count"] +
-       v["candidate_count_list"].collect { |id| id },
-       [k, v["undervote_count"],v["overvote_count"],
-        (self.counts_contests[k]["type"] == "contest" ? v["writein_count"] : 0 )] +
-       v["candidate_count_list"].collect { |id| v[id] }]
+  def tabulator_spreadsheet()
+    notfirst = false
+    contest_votes = self.counts_contests.collect do |k, v|
+      header = (notfirst ? ["","","",""] :
+                notfirst = ["CONTEST", "undervote","overvote","writein"]) +
+        v["candidate_count_list"].collect { |cc| cc["candidate_ident"] }
+      data = [k, v["undervote_count"],v["overvote_count"],
+              (self.counts_contests[k]["type"] == "contest" ? v["writein"] : 0 )] +
+        v["candidate_count_list"].collect { |cc| cc["count"] }
+      header * "," + "\n" + data * ","
     end
-    lastinfo = info.collect do |x|
-      str = ""
-      x[0].each { |y| str = str + y.inspect + "," }; str = str + "\n"
-      x[1].each { |y| str = str + y.inspect + "," }; str = str + "\n"
+    notfirst = false
+    question_votes = self.counts_questions.collect do |k, v|
+      header = (notfirst ? ["","",""] :
+                notfirst = ["QUESTION", "undervote","overvote"]) +
+        v["answer_count_list"].collect { |ac| ac["answer"] }
+      data = [k, v["undervote_count"],v["overvote_count"]] +
+        v["answer_count_list"].collect { |ac| ac["count"] }
+      header * "," + "\n" + data * ","
     end
-    str = ""; lastinfo.each { |x| str = str + x }
-    str
+    (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n"
   end
 
 # Arguments:
@@ -272,7 +278,7 @@ class Tabulator < TabulatorValidate
 # after printing the value of the optional <i>datum</i> provided as an
 # argument.
 
-  def dump_tabulator_data(datum = false)
+  def tabulator_dump_data(datum = false)
     print "Dumping Data Structures\n"
     print YAML::dump(datum),"\n" if datum
     self.uids.sort.each do |k, v|
@@ -295,7 +301,9 @@ class Tabulator < TabulatorValidate
           print "    #{cid} #{rg} #{pid}\n"
       end
     end
-    print "  Contest Info:\n"
+    print "  Contest Info:"
+    print " NONE" if (self.counts_contests.keys.length == 0)
+    print "\n"
     self.counts_contests.keys.sort.each do |k|
       v = self.counts_contests[k]
       print "    #{k}:\n"
@@ -306,7 +314,9 @@ class Tabulator < TabulatorValidate
         print "      #{item["candidate_ident"]} = #{item["count"]}\n"
       end
     end
-    print "  Question Info:\n"
+    print "  Question Info:"
+    print " NONE" if (self.counts_questions.keys.length == 0)
+    print "\n"
     self.counts_questions.keys.sort.each do |k|
       v = self.counts_questions[k]
       print "    #{k}:\n"

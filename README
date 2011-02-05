@@ -14,7 +14,7 @@ tabulator_test.rb
 - Ruby Unit Tests for the Tabulator
 
 validate.rb
-- The Validator for Tabulator input data sets
+- The Validator for Tabulator data sets
 
 check_syntax_yaml.rb
 - YAML Syntax Checker for TTV Common Data Format (CDF) datasets

@@ -202,7 +202,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # schemas, especially those with optional Hash keys, have multiple test
 # variations.
 
-  def test_syntax_checker
+  def test_check_syntax
     trace = 300          # In case we need to trace, for debugging these tests
     schema_test_syntax_error(trace, "unknown_type", false, 0)
     schema_test_syntax_error(trace, "unknown_string", false, 1)
