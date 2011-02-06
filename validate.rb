@@ -856,10 +856,9 @@ class TabulatorValidate
       self.counts_missing["expected"][cid][rg][pid] = true
       self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
         ((cid == cid0) && (rg == rg0) && (pid == pid0)) }
-      unfinished = []
-      self.counts_missing["missing"].each {|cid0, rg0, pid0|
-        unfinished.push(pid0) unless unfinished.include?(pid0) }
-      self.counts_missing["finished"] = self.counts_missing["precincts"] - unfinished
+      self.counts_missing["finished"] =
+        self.counts_missing["precincts"].select { |pid|
+        self.counts_missing["missing"].all? {|cid0, rg0, pid0| (pid != pid0)}}
     else
       cidrgpid = "[#{cid}, #{rg}, #{pid}]"
       error("Duplicate Counter Count", cidrgpid, "Input to Tabulator")
