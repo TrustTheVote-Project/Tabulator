@@ -39,9 +39,12 @@ class Tabulator < TabulatorValidate
 # Returns an <i>Array</i> whose 1st element is a message string indicating the
 # current state of the Tabulator, and whose 2nd element is an <i>Array</i> of
 # the Expected Counts that are still missing (let's say there are M of them).
-# There are three possible Tabulator states:
-# * INITIAL: Waiting for first Counter Count, M Missing
-# * ACCUMULATING: Waiting for more Counter Counts, M Missing
+# There are four possible Tabulator states, only the last three of which the
+# Tabulator is capable of reporting (the Tabulator is in the EMPTY state
+# before it is instantiated):
+# * EMPTY: Waiting for Jurisdiction and Election Definitions
+# * INITIAL: Waiting for 1st Counter Count, M Missing
+# * ACCUMULATING: Waiting for Counter Counts, M Missing
 # * DONE: All M Expected Counter Counts Accumulated
 
   def tabulator_state(tabulator_count)
@@ -49,13 +52,16 @@ class Tabulator < TabulatorValidate
         tabulator_count.keys.include?("tabulator_count"))
       missed = self.counts_missing["missing"].length.to_s
       total = self.counts_missing["total"].to_s
+      count = (total == 1 ? "1 Expected Count" :
+               "#{total.to_s} Expected Counts")
       if (0 == tabulator_count["tabulator_count"]["counter_count_list"].length)
-        ["INITIAL (Waiting for first Counter Count, #{missed} Missing)", []]
+        ["INITIAL (Waiting for 1st of #{count})", [], []]
       elsif (missed == "0")
-        ["DONE! (All #{total} Expected Counter Counts Accumulated)", []]
+        ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], []]
       else
-        ["ACCUMULATING (Waiting for more Counter Counts, #{missed} Missing)",
-         self.counts_missing["missing"] ]
+        ["ACCUMULATING (#{missed} Missing from #{count})",
+         self.counts_missing["missing"],
+         self.counts_missing["finished"]]
       end
     else
       shouldnt("Invalid Tabulator Count passed to tabulator_state")
@@ -270,57 +276,64 @@ class Tabulator < TabulatorValidate
   end
 
 # Arguments:
-# * <i>datum</i>: (<i>Arbitrary</i>), arbitrary datum whose value is dumped 
+# * <i>tc</i>: (<i>Hash</i>) Tabulator Count (optional)
 #
 # Returns: N/A
 #
-# For debugging only.  Prints the values of all of the Tabulator attributes,
-# after printing the value of the optional <i>datum</i> provided as an
-# argument.
+# Prints the values of all of the Tabulator attributes, after printing the
+# value of the optional Tabulator Count <i>tc</i> provided as an argument.
 
-  def tabulator_dump_data(datum = false)
-    print "Dumping Data Structures\n"
-    print YAML::dump(datum),"\n" if datum
+  def tabulator_data(tc = false)
+    print "Tabulator Count:\n" if tc
+    print YAML::dump(tc),"\n" if tc
+    print "Tabulator Data Summary:\n" if tc
     self.uids.sort.each do |k, v|
-      print "  ",k.capitalize," IDs: ",v.inspect.gsub(/\"/,""),"\n"
+      name = (k =~ /^report/ ? "Reporting Groups (" : k.capitalize + " UIDs (")
+      print "  ",name,v.length.to_s,"): ",v.inspect.gsub(/\"/,""),"\n"
     end
     count = self.counts_missing["missing"].length
     total = self.counts_missing["total"]
-    print "  Expected Counts #{total} (Counter ID, Reporting Group, Precinct IDs):\n"
+    print "  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
     self.counts_missing["expected"].keys.sort.each do |cid|
       self.counts_missing["expected"][cid].keys.sort.each do |rg|
         pids = self.counts_missing["expected"][cid][rg].keys
-        print "    #{cid} #{rg} #{pids.inspect.gsub(/\"/,"")}\n"
+        print "    #{cid}, #{rg}, #{pids.inspect.gsub(/\"/,"")}\n"
       end
     end
-    print "  Missing Counts #{count} (Counter ID, Reporting Group, Precinct ID):\n"
     if (count == 0)
-      print "    None Missing\n"
+      print "  Missing Counts (NONE)\n"
     else
+      print "  Missing Counts (#{count}): Counter UID, Precinct UID, Reporting Group\n"
       self.counts_missing["missing"].each do |cid, rg, pid|
-          print "    #{cid} #{rg} #{pid}\n"
+        print "    #{cid}, #{pid}, #{rg}\n"
       end
     end
-    print "  Contest Info:"
-    print " NONE" if (self.counts_contests.keys.length == 0)
-    print "\n"
+    if (self.counts_contests.keys.length == 0)
+      print "  Contests (NONE)\n"
+    else
+      print "  Contests (",self.counts_contests.keys.length.to_s,"):"
+      print " Contest UID: overvote, undervote, write-in, Candidate UIDs\n"
+    end
     self.counts_contests.keys.sort.each do |k|
       v = self.counts_contests[k]
-      print "    #{k}:\n"
-      print "      overvote = #{v["overvote_count"]}, "
+      print "    #{k}: "
+      print "overvote = #{v["overvote_count"]}, "
       print "undervote = #{v["undervote_count"]}, "
       print "writeins = #{v["writein_count"]}\n"
       v["candidate_count_list"].each do |item|
         print "      #{item["candidate_ident"]} = #{item["count"]}\n"
       end
     end
-    print "  Question Info:"
-    print " NONE" if (self.counts_questions.keys.length == 0)
-    print "\n"
+    if (self.counts_questions.keys.length == 0)
+      print "  Questions (NONE)\n"
+    else
+      print "  Questions (",self.counts_questions.keys.length.to_s,"):"
+      print " Question UID: overvote, undervote, Answers\n"
+    end
     self.counts_questions.keys.sort.each do |k|
       v = self.counts_questions[k]
-      print "    #{k}:\n"
-      print "      overvote = #{v["overvote_count"]}, "
+      print "    #{k}: "
+      print "overvote = #{v["overvote_count"]}, "
       print "undervote = #{v["undervote_count"]}\n"
       v["answer_count_list"].each do |item|
         print "      #{item["answer"]} = #{item["count"]}\n"

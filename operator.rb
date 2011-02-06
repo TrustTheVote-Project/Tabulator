@@ -14,57 +14,87 @@ TABULATOR_CSV_FILE = (File.directory?('Tabulator') ? 'Tabulator/' : '') +
 
 # Prints command-line help information.
 
-def operator_help
-  help_string = "
+def operator_help(detail = false)
+  help_string_d1 ="
 Note: [DEBUG] indicates a temporary/prototype command option.
 
+File holding Tabulator Count data set: #{TABULATOR_COUNT_FILE}
+"
+  help_string_1 = "
 Commands:
 
-  ruby operator.rb              # same as help
-  ruby operator.rb help         # print command help information
-  ruby operator.rb reset        # reset Tabulator to INITIAL state
-  ruby operator.rb [trace] ...  # [DEBUG] optionally turn on tracing
-  ruby operator.rb data         # [DEBUG] print internal data structures
-  ruby operator.rb spreadsheet  # print CSV spreadsheet with voting results
-  ruby operator.rb state        # print Tabulator state, either INITIAL,
-                                    ACCUMULATING, or DONE
+  ruby operator.rb       # basic command help information
+  ruby operator.rb help  # detailed command help information
+  ruby operator.rb reset # reset Tabulator to EMPTY state"
+  help_string_d2 = "
+  ruby operator.rb [trace] ...  # [DEBUG] optionally turn on tracing"
+  help_string_2 = "
+  ruby operator.rb data  # print Tabulator data
+  ruby operator.rb state # print Tabulator state: EMPTY, INITIAL,
+                                 ACCUMULATING, or DONE  
+  ruby operator.rb total # print Tabulator state, any missing counts,
+                                 and voting results (CSV file)
 
-  ruby operator.rb <Jurisdiction_Definition_File> <Election_Definition_File>
+  ruby operator.rb load <Jurisdiction_Def_File> <Election_Def_File>
+"
+  help_string_d3 = "
+     # The two files must contain, respectively, a Jurisdiction Definition
+     # and an Election Definition.  Each is checked for proper syntax and
+     # then validated, after which a zero-initialized Tabulator Count is
+     # constructed and saved to file.  This command moves the state of the
+     # Tabulator from EMPTY to INITIAL.
+"
 
-       # The two files must contain, respectively, a Jurisdiction Definition
-       # and an Election Definition.  Each is checked for proper syntax and
-       # then validated, after which a zero-initialized Tabulator Count is
-       # constructed and saved to file.  This command moves the state of the
-       # Tabulator from INITIAL to ACCUMULATING.
-
-  ruby operator.rb <Counter_Count_File>
-
-       # The file contains a Counter Count, rejected if the state of the
-       # Tabulator is INITIAL.  First the Tabulator is re-instantiated using
-       # the current Tabulator Count file.  Then the Counter Count is checked
-       # for proper syntax, validated, and incorporated into the Tabulator
-       # Count, which is saved to file.  This command allows the Tabulator to
-       # accumulate votes.  The Tabulator remains in the ACCUMULATING state if
-       # expected counts are missing.  But when the last expected count is
-       # processed, the Tabulator enters the DONE state.
-
-  ruby operator.rb <Tabulator_Count_File>
-
-       # [DEBUG] The file contains a Tabulator Count.  It is checked for
-       # proper syntax and validated.  This command is informational only and
-       # is used to check the consistency of the current Tabulator Count file.
-
-The file #{TABULATOR_COUNT_FILE} holds the current Tabulator Count data set.
+  help_string_u3 = "
+     # Process two Jurisdiction and Election Definition files to activate the
+     # Tabulator, moving its state from EMPTY to INITIAL.
+"
+  help_string_4 = "
+  ruby operator.rb add <Counter_Count_File>
+"
+  help_string_d5 = "
+     # The file contains a Counter Count, rejected if the state of the
+     # Tabulator is EMPTY.  First the Tabulator is re-instantiated using the
+     # current Tabulator Count file.  Then the Counter Count is checked for
+     # proper syntax, validated, and incorporated into the Tabulator Count,
+     # which is saved to file.  This command allows the Tabulator to
+     # accumulate votes, and enter the ACCUMULATING state.  The Tabulator
+     # remains in the ACCUMULATING state if expected counts are missing.  But
+     # when the last expected count is processed, the Tabulator enters the
+     # DONE state.
+"
+  help_string_u5 = "
+     # Process a Counter Count file to accumulate votes. If this is the last
+     # expected count, the Tabulator moves into the DONE state, otherwise it
+     # stays in the ACCUMULATING state.
 
 "
-  print help_string
+  help_string_d6 = "
+  ruby operator.rb check <Tabulator_Count_File>
+
+     # [DEBUG] The file contains a Tabulator Count.  It is checked for
+     # proper syntax and validated.  This command is informational only and
+     # is used to check the consistency of the current Tabulator Count file.
+
+"
+  print help_string_d1 if detail
+  print help_string_1
+  print help_string_d2 if detail
+  print help_string_2
+  print help_string_d3 if detail
+  print help_string_u3 unless detail
+  print help_string_4
+  print help_string_d5 if detail
+  print help_string_u5 unless detail
+  print help_string_d6 if detail
+
 end
 
-# Resets the Tabulator state to INITIAL, by deleting all Tabulator Count
+# Resets the Tabulator state to EMPTY, by deleting all Tabulator Count
 # files.
 
 def operator_reset
-  print "\nTabulator RESET..."
+  print "\nTabulator reset to EMPTY state..."
   once = false
   if (File.exists?(TABULATOR_COUNT_FILE))
     print " Deleting Tabulator Count: #{TABULATOR_COUNT_FILE}\n"
@@ -84,11 +114,12 @@ end
 # from the TABULATOR_COUNT_FILE, printing the file contents, and then dumping
 # the contents of the Tabulator internal data structures.
 
-def operator_data(trace = false)
-  ops_exit_if_initial_state("data")
-  tab = ops_instantiate_tabulator(true, trace)
+def operator_data(trace = false, tab = false)
+  tcdump = (tab ? false : true)
+  ops_exit_if_empty_state("data") unless tab
+  tab = ops_instantiate_tabulator(true, trace) unless tab
   tc = tab.tabulator_count
-  tab.tabulator_dump_data()
+  tab.tabulator_data((tcdump ? tc : false))
   tab
 end
 
@@ -96,16 +127,20 @@ end
 # the current set of voting results held by the Tabulator (stored in its
 # TABULATOR_COUNT_FILE).
 
-def operator_spreadsheet(trace = false)
-  ops_exit_if_initial_state("spreadsheet")
+def operator_total(trace = false)
+  ops_exit_if_empty_state()
   tab = ops_instantiate_tabulator(true, trace)
-  lines = tab.tabulator_spreadsheet()
-  print "Writing Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n"
-  outfile = File.open(TABULATOR_CSV_FILE, "w")
-  outfile.puts lines
-  outfile.close()
-  print "\nSpreadsheet Data (CSV Format):\n\n"
-  print lines
+  tc = tab.tabulator_count
+  state = operator_state(tab, tc, true, trace)
+  if (state == "ACCUMULATING" || state == "DONE")
+    lines = tab.tabulator_spreadsheet()
+    print "\nWriting Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n"
+    outfile = File.open(TABULATOR_CSV_FILE, "w")
+    outfile.puts lines
+    outfile.close()
+    print "\nSpreadsheet Data (CSV Format):\n\n"
+    print lines
+  end
 end
 
 # Prints the current Tabulator state, by re-instantiating the Tabulator
@@ -113,90 +148,120 @@ end
 # its state.
 
 def operator_state(tab = false, tc = false, printit = false, trace = false)
-  ops_exit_if_initial_state("")
+  ops_exit_if_empty_state("")
   tab = ops_instantiate_tabulator(true, trace) unless tab
   tc = tab.tabulator_count unless tc
   mystate = tab.tabulator_state(tc)
   ops_die_error("Tabulator State Not Array: #{mystate.inspect}", true) unless
     mystate.is_a?(Array)
-  state = mystate[0]
-  print "Tabulator State: #{state}\n"
-  if (printit && state =~ /^ACCUM/)
-    print "Missing Counts:\n"
+  state = mystate[0].split(/ /)[0]
+  print "Tabulator State: #{mystate[0]}\n"
+  if (printit && (state == "ACCUMULATING"))
+    print "Missing Counts: Counter UID, Precinct UID, Reporting Group\n"
     missing = mystate[1]
-    missing.each { |cid, rg, pid|
-      print "  Counter: #{cid}, Precinct: #{pid}, Reporting Group: #{rg}\n" }
+    missing.each { |cid, rg, pid| print("  #{cid}, #{pid}, #{rg}\n") }
+    print "Precincts Finished Reporting: "
+    if (mystate[2].length == 0) 
+      print "NONE\n"
+    else
+      print "#{mystate[2].inspect.gsub(/[\"\[\]]/,"")}\n"
+    end
   end
-end  
+  print "\n"
+  state
+end
 
-# Process the file(s) that were provided as arguments.
+# Load the Jurisdiction and Election Definition files into the Tabulator.
 
-def operator_file(file1, file2, trace = false)
+def operator_load_files(file1, file2, trace = false)
+  unless (ops_empty_state?())
+    ops_die_error("Command \"load\" ignored, non-EMPTY state, must reset first")
+  end
   file1 = ops_prepend_path(file1)
-  ops_die_error("Non-existent file: #{file1}") unless File.exists?(file1)
+  ops_die_error("Non-existent Jurisdiction Definition file: #{file1}") unless
+    File.exists?(file1)
   datum = ops_check_syntax(file1, trace)
-  ops_die_error("Invalid contents of file: #{file1}") unless datum
-  ops_exit_if_initial_state("Counter Count Accumulation") if (datum.keys[0] == "counter_count")
+  ops_die_error("Invalid contents of Jurisdiction Definition file: #{file1}") unless datum
   ops_print_check_syntax(datum.keys[0], file1)
   type = datum.keys[0]
-  case type
-  when "election_definition"
-    ops_die_error("Election Definition must be second argument, not first")
-  when "jurisdiction_definition"
-    jd = datum
-    file2 = ops_prepend_path(file2)
-    ops_die_error("Election Definition file name not provided") if file2 == ""
-    ops_die_error("Election Definition file non-existent: #{file2}") unless 
-      File.exists?(file2)
-    datum = ops_check_syntax(file2, trace)
-    ed = datum
-    ops_die_error("Invalid contents of Election Definition file: #{file2}") if
-      (! datum.is_a?(Hash) || datum.keys[0] != "election_definition")
-    ops_print_check_syntax(datum.keys[0], file2)
-    print "Validating Jurisdiction and Election Definitions:"
-    tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
-    tc = tab.tabulator_count
-    errors = tab.validation_errors()
-    if (errors.length == 0)
-      print " OK\n"
-      ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
-    end
-    ops_print_errs(tab, true)
-  when "counter_count"
+  jd = datum
+  file2 = ops_prepend_path(file2)
+  ops_die_error("Election Definition file name not provided") if file2 == ""
+  ops_die_error("Election Definition file non-existent: #{file2}") unless 
+    File.exists?(file2)
+  datum = ops_check_syntax(file2, trace)
+  ed = datum
+  ops_die_error("Invalid contents of Election Definition file: #{file2}") if
+    (! datum.is_a?(Hash) || datum.keys[0] != "election_definition")
+  ops_print_check_syntax(datum.keys[0], file2)
+  tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
+  tc = tab.tabulator_count
+  errors = tab.validation_errors()
+  if (errors.length == 0)
+    print "Validating Jurisdiction and Election Definitions: OK\n"
+    ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
+    print "\n"
+    operator_data(trace, tab)
+  end
+  ops_print_errs(tab, true)
+end
+
+# Add the contents of a Counter Count file to the Tabulator state.
+
+def operator_add_file(file1, trace = false)
+  ops_exit_if_empty_state("add")
+  file1 = ops_prepend_path(file1)
+  ops_die_error("Non-existent Counter Count file: #{file1}") unless
+    File.exists?(file1)
+  datum = ops_check_syntax(file1, trace)
+  ops_die_error("Invalid contents of Counter Count file: #{file1}") unless datum
+  ops_print_check_syntax(datum.keys[0], file1)
+  type = datum.keys[0]
     cc = datum
     tab = ops_instantiate_tabulator(false, trace)
     tc = tab.tabulator_count
-    print "Validating Counter Count:"
     tab.validate_counter_count(cc)
     errors = tab.validation_errors()
     if (tab.validation_errors().length == 0)
-      print " OK\n"
+      print "Validating Counter Count: OK\n"
       tc = tab.update_tabulator_count(tc, cc)
-      ops_write_yaml_file(TABULATOR_COUNT_FILE,tc,"Tabulator Count",true)
+      ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
       operator_state(tab, tc, false, trace)
     end
     ops_print_errs(tab, true)
-  when "tabulator_count"
-    tc = datum
-    print "Validating: Tabulator Count\n"
-    tab = Tabulator.new(false, false, false, tc)
-    errors = tab.validation_errors()
-    if (errors.length == 0)
-      print "Tabulator Count OK\n\n"
-    end
-    ops_print_errs(tab, true)
-  else
-    print "Unknown tabulator file type: #{type}\n"
-  end
 end
 
-# If the Tabulator is in its INITIAL state, prints that fact and exits. For
-# use by commands that are meaningless in this state, such as "data" or
-# "spreadsheet".
+# Check the validity of a Tabulator Count file.
 
-def ops_exit_if_initial_state(command = "")
-  if (!File.exists?(TABULATOR_COUNT_FILE))
-    print "Tabulator State: INITIAL (Waiting for Jurisdiction and Election Definitions)\n"
+def operator_check_file(file1, trace = false)
+  file1 = ops_prepend_path(file1)
+  ops_die_error("Non-existent file: #{file1}") unless File.exists?(file1)
+  datum = ops_check_syntax(file1, trace)
+  ops_die_error("Invalid contents of Tabulator Count file: #{file1}") unless
+    datum
+  ops_print_check_syntax(datum.keys[0], file1)
+  tc = datum
+  tab = Tabulator.new(false, false, false, tc)
+  errors = tab.validation_errors()
+  if (errors.length == 0)
+    print "Validating Tabulator Count: OK\n"
+    operator_state(tab, tc, false, trace)
+  end
+  ops_print_errs(tab, true)
+end
+
+# Returns <i>true</i> when the Tabulator state is EMPTY
+
+def ops_empty_state?()
+  ! File.exists?(TABULATOR_COUNT_FILE)
+end
+  
+# If the Tabulator state is EMPTY, prints that fact and exits. For use by
+# commands that are meaningless in this state: add, total, data
+
+def ops_exit_if_empty_state(command = "")
+  if (ops_empty_state?())
+    print "Tabulator State: EMPTY (Waiting for Jurisdiction and Election Definitions)\n"
     print "Command Ignored: #{command}\n\n" unless command == ""
     exit(0)
   end
@@ -207,7 +272,7 @@ end
 # resulting Tabulator object.
 
 def ops_instantiate_tabulator(printit = true, trace = false)
-  print "Instantiating Tabulator:"
+  #print "Instantiating Tabulator:"
   tcfile = TABULATOR_COUNT_FILE
   tc = ops_read_yaml_file(tcfile)
   if (tc.is_a?(Hash) && (tc.keys.length == 1) &&
@@ -224,7 +289,7 @@ def ops_instantiate_tabulator(printit = true, trace = false)
     ops_die_error("Invalid Contents of #{tcfile}, Must Reset", true)
   end
   if (tab.validation_errors().length == 0)
-    print " OK\n"
+    #print " OK\n"
   else
     ops_die_error("Errors Instantiating Tabulator from #{tcfile}", true, tab)
   end
@@ -243,7 +308,7 @@ end
 
 def ops_write_yaml_file(file, datum, label = "", trace = false)
   file = ops_prepend_path(file)
-  print "Writing #{label}: #{file}\n\n" if (label != "" && trace)
+  print "Writing #{label}: #{file}\n" if (label != "" && trace)
   File.open(file, "w") { |outfile| YAML::dump(datum, outfile) }
 end
 
@@ -307,7 +372,7 @@ end
 def ops_print_errs(tab, short = false)
   errors = tab.validation_errors()
   if (errors.length > 0)
-    print "\n\nThere were ERRORS! (#{errors.length})\n"
+    print "\n\nThere were ERRORS! (#{errors.length})\n" unless short
     errors.each { |text| print "** ERROR ** ",text,"\n" }
   else
     print "There were NO ERRORS!\n" unless short
@@ -315,7 +380,7 @@ def ops_print_errs(tab, short = false)
   warnings = tab.validation_warnings()
   if (warnings.length > 0)
     print "\n" if (errors.length == 0) and !short
-    print "There were WARNINGS! (#{warnings.length})\n"
+    print "There were WARNINGS! (#{warnings.length})\n" unless short
     warnings.each { |text| print "** WARNING ** ",text,"\n" }
   else
     print "There were NO WARNINGS!\n" unless short
@@ -329,6 +394,11 @@ end
 #            or: ruby operator.rb help
 
 begin
+  test = false
+  if (ARGV.length > 1 && ARGV[0] == "test")
+    test = true
+    ARGV.shift
+  end
   trace = false
   if (ARGV.length > 1 && ARGV[0] == "trace")
     trace = true
@@ -339,17 +409,34 @@ begin
   else 
     case ARGV[0]
     when "help"
-      operator_help()
+      operator_help(true)
     when "reset"
       operator_reset()
-    when "spreadsheet"
-      operator_spreadsheet(trace)
+    when "total"
+      operator_total(trace)
     when "data"
       operator_data(trace)
     when "state"
       operator_state(false, false, true, trace)
+    when "load"
+      operator_load_files((ARGV.length > 1 ? ARGV[1] : ""),
+                          (ARGV.length > 2 ? ARGV[2] : ""), trace)
+      unless (test)
+        print "** ATTENTION ** ATTENTION **\n\n"
+        print "Carefully examine the data above, then confirm approval to continue [y/n]: "
+        answer = STDIN.gets.chomp
+        if (answer =~ /^[Yy]/)
+          print "Tabulator Initialized.\n"
+        else
+          operator_reset()
+        end
+      end
+    when "add"
+      operator_add_file((ARGV.length > 1 ? ARGV[1] : ""), trace)
+    when "check"
+      operator_check_file((ARGV.length > 1 ? ARGV[1] : ""), trace)
     else
-      operator_file(ARGV[0], (ARGV.length > 1 ? ARGV[1] : ""), trace)
+      ops_die_error("Invalid Tabulator Command: #{ARGV[0]}")
     end
   end
 end

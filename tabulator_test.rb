@@ -33,29 +33,29 @@ class TabulatorTest < Test::Unit::TestCase
 
   TABULATOR_COUNT_FILE = "TABULATOR_COUNT.yml"
 
-  JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_2)",
-                "Non-Unique District UID (DISTRICT_3)"]
+  JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_2) in Jurisdiction Definition",
+                "Non-Unique District UID (DISTRICT_3) in Jurisdiction Definition"]
 
   ED_ERROR_12 =
-    ["Non-Unique Contest UID (CONTEST_1)",
-     "Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3)",
-     "Non-Unique Candidate UID (CANDIDATE_1)",
-     "Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2)",
-     "Non-Unique Question UID (QUESTION_1)",
-     "Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2)",
-     "Duplicate Answers (A, C) for Question UID (QUESTION_2)",
-     "Non-Unique Counter UID (COUNTER_1)",
-     "Duplicate Reporting Group (Absentee)",
+    ["Non-Unique Contest UID (CONTEST_1) in Election Definition",
+     "Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3) in Election Definition",
+     "Non-Unique Candidate UID (CANDIDATE_1) in Election Definition",
+     "Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2) in Election Definition",
+     "Non-Unique Question UID (QUESTION_1) in Election Definition",
+     "Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2) in Question",
+     "Duplicate Answers (A, C) for Question UID (QUESTION_2) in Question",
+     "Non-Unique Counter UID (COUNTER_1) in Election Definition",
+     "Duplicate Reporting Group (Absentee) in Election Definition",
      "Non-Existent Counter UID (COUNTER_11) in Expected Count",
      "Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count",
      "Non-Existent Precinct UID (PRECINCT_22) for Counter UID (COUNTER_2) in Expected Count"]
 
   ED_WARN_2 =
-    ["Missing ALL Reporting Groups, None Present",
-     "Missing ALL Expected Counts, None Present"]
+    ["Missing ALL Reporting Groups, None Present in Election Definition",
+     "Missing ALL Expected Counts, None Present in Election Definition"]
 
   ED_WARN_4 =
-    ["Duplicate Expected Count (COUNTER_1, Normal, PRECINCT_1)",
+    ["Duplicate Expected Count (COUNTER_1, Normal, PRECINCT_1) in Election Definition",
      "Missing Counter UIDs (COUNTER_2) from Expected Counts",
      "Missing Reporting Groups (Absentee) from Expected Counts",
      "Missing Precinct UIDs (PRECINCT_2) from Expected Counts"]
@@ -72,7 +72,7 @@ class TabulatorTest < Test::Unit::TestCase
                 "Unexpected Reporting Group (Normal) for Counter UID (COUNTER_1) in Counter Count",
                 "Unexpected Precinct UID (PRECINCT_1) for Counter UID (COUNTER_1) in Counter Count"]
 
-  CC2_ERROR_1 = ["Non-Unique File UID (FILE_1)"]
+  CC2_ERROR_1 = ["Non-Unique File UID (FILE_1) in Counter Count"]
 
   CC3_ERROR_13 =
     ["Non-Existent Contest UID (CONTEST_33) in Contest Count",
@@ -90,7 +90,7 @@ class TabulatorTest < Test::Unit::TestCase
      "Missing Question UIDs (QUESTION_1) in Question Counts"]
 
   CC4_ERROR_1 =
-    ["Duplicate Counter Count Identity Information (COUNTER_2, Normal, PRECINCT_2)"]
+    ["Duplicate Counter Count (COUNTER_2, Normal, PRECINCT_2) Input to Tabulator"]
 
   ERRHEAD = "** ERROR **"
   WARHEAD = "** WARNING **"
