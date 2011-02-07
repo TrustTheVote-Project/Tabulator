@@ -81,8 +81,8 @@ class Tabulator < TabulatorValidate
 # Count.
 
   def update_tabulator_count(tabulator_count, counter_count)
-    fid = counter_count["counter_count"]["audit_trail"]["file_ident"].to_s
-    at = tabulator_count["tabulator_count"]["audit_trail"]
+    fid = counter_count["counter_count"]["audit_header"]["file_ident"].to_s
+    at = tabulator_count["tabulator_count"]["audit_header"]
     if (at.keys.include?("provenance"))
       at["provenance"].push(fid)
     else
@@ -287,9 +287,16 @@ class Tabulator < TabulatorValidate
     print "Tabulator Count:\n" if tc
     print YAML::dump(tc),"\n" if tc
     print "Tabulator Data Summary:\n" if tc
-    self.uids.sort.each do |k, v|
-      name = (k =~ /^report/ ? "Reporting Groups (" : k.capitalize + " UIDs (")
-      print "  ",name,v.length.to_s,"): ",v.inspect.gsub(/\"/,""),"\n"
+    print "  Jurisdiction UID: #{uids['jurisdiction'][0]}\n"
+    print "  Election UID: #{uids['election'][0]}\n"
+    ['district','precinct','contest','candidate','question','counter',
+     'file','reporting group'].each do |k|
+      length = self.uids[k].length.to_s
+      uids = self.uids[k].sort
+      type = (k =~ /^report/ ? "Reporting Groups" : "#{k.capitalize} UIDs")
+      prefix = "  #{type} (#{length}): "
+      print prefix
+      pp_uids(uids, prefix.length, prefix.length, 78)
     end
     count = self.counts_missing["missing"].length
     total = self.counts_missing["total"]
@@ -340,6 +347,20 @@ class Tabulator < TabulatorValidate
       end
     end
     print "\n"
+  end
+
+  private
+  def pp_uids(uids, start, curr, fill)
+    return print("\n") if (uids.length == 0)
+    uid = uids.shift
+    print (uid = uid + (uids.length == 0 ? "" : ", "))
+    curr += uid.length
+    if ((uids.length > 0) && (fill <= (curr + uids[0].length)))
+      print "\n"
+      start.times { |x| print(" ") }
+      curr = start
+    end
+    pp_uids(uids, start, curr, fill)
   end
 
 end

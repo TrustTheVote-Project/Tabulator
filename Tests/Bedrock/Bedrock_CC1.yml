@@ -1,6 +1,6 @@
 ---
 counter_count:
- audit_trail:
+ audit_header:
    create_date: "2010-05-02T11:00:03-04:00"
    operator: Bambam Rubble
    software: TTV Precinct Counter 0.1 JAN-1-2010

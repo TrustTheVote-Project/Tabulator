@@ -1,8 +1,7 @@
 --- 
-audit_trail: 
+audit_header: 
   software: GNU
   file_ident: FILE_1
   operator: El Jefe
   create_date: 2010-12-03
-  hardware: PDP-11
-
+  provenance: [FILE_11, FILE_12]

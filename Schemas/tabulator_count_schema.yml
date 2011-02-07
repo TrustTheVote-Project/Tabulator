@@ -9,21 +9,8 @@ tabulator_count:
     - answer: String
       count: Integer
   jurisdiction_ident: Atomic
-  audit_trail: &id001 
-    "|OPT3|": 
-      hardware: String
-    software: String
-    "|OPT2|": 
-      type: String
-    "|OPT1|": 
-      schema_version: String
-    operator: String
-    create_date: String
-    file_ident: Atomic
-    "|OPT4|": 
-      provenance: 
-      - String
   election_definition: 
+    jurisdiction_ident: Atomic
     question_list: 
     - "|OPT|": 
         display_name: String
@@ -32,7 +19,6 @@ tabulator_count:
       answer_list: 
       - String
       district_ident: Atomic
-    audit_trail: *id001
     candidate_list: 
     - "|OPT3|": 
         position: Integer
@@ -61,6 +47,20 @@ tabulator_count:
         display_name: String
       ident: Atomic
       district_ident: Atomic
+    audit_header: &id001 
+      "|OPT3|": 
+        hardware: String
+      software: String
+      "|OPT2|": 
+        type: String
+      "|OPT1|": 
+        schema_version: String
+      operator: String
+      create_date: String
+      file_ident: Atomic
+      "|OPT4|": 
+        provenance: 
+        - String
     expected_count_list: 
     - precinct_ident_list: 
       - Atomic
@@ -78,12 +78,12 @@ tabulator_count:
       writein_count: Integer
     contest_ident: Atomic
     undervote_count: Integer
+  audit_header: *id001
   counter_count_list: 
   - counter_count: 
       question_count_list: 
       - *id002
       jurisdiction_ident: Atomic
-      audit_trail: *id001
       "|OPT|": 
         cast_ballot_count: Integer
       counter_ident: Atomic
@@ -91,6 +91,7 @@ tabulator_count:
       - *id003
       precinct_ident: Atomic
       reporting_group: String
+      audit_header: *id001
       election_ident: Atomic
   jurisdiction_definition: 
     precinct_list: 
@@ -104,4 +105,5 @@ tabulator_count:
       "|OPT1|": 
         display_name: String
       ident: Atomic
+    audit_header: *id001
   election_ident: Atomic

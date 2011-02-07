@@ -53,14 +53,14 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # * question_count: Question Count schema
 # * candidate_count: Candidate Count schema
 # * contest_count: Contest Count schema
-# * audit_trail: Audit Trail schema
+# * audit_header: Audit Header schema
 # * counter_count: Counter Count schema
 # * tabulator_count: Tabulator Count schema
 #
 # The following schemas are defined but not processed, because they are
 # subsumed by a higher-level schemas:
 # * election_definition_info: subsumed by Election Definition schema
-# * audit_trail_info: subsumed by Audit Trail schema
+# * audit_header_info: subsumed by Audit Header schema
 #
 # NOTE from JVC: I don't know if it is appropriate to put the schema file
 # generation process inside of this testing facility.
@@ -78,10 +78,20 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "|OPT2|"=>{"type"=>"String"}}
     schema_precinct_info = {"ident"=>"Atomic",
       "|OPT|"=>{"display_name"=>"String"}}
+    schema_audit_header_info =
+      {"file_ident"=>"Atomic",
+      "create_date"=>"String",
+      "operator"=>"String",
+      "software"=>"String",
+      "|OPT1|"=>{"schema_version"=>"String"},
+      "|OPT2|"=>{"type"=>"String"},
+      "|OPT3|"=>{"hardware"=>"String"},
+      "|OPT4|"=>{"provenance"=>["String"]}}
     schema_jurisdiction_definition_info =
       {"ident"=>"Atomic",
       "district_list"=>[schema_district_info],
-      "precinct_list"=>[schema_precinct_info]}
+      "precinct_list"=>[schema_precinct_info],
+      "audit_header"=>schema_audit_header_info}
     schema_jurisdiction_definition =
       {"jurisdiction_definition"=>schema_jurisdiction_definition_info}
     schema_expected_count_info =
@@ -110,24 +120,16 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "|OPT1|"=>{"display_name"=>"String"},
       "|OPT2|"=>{"start_date"=>"String"},
       "|OPT3|"=>{"type"=>"String"}}
-    schema_audit_trail_info =
-      {"file_ident"=>"Atomic",
-      "create_date"=>"String",
-      "operator"=>"String",
-      "software"=>"String",
-      "|OPT1|"=>{"schema_version"=>"String"},
-      "|OPT2|"=>{"type"=>"String"},
-      "|OPT3|"=>{"hardware"=>"String"},
-      "|OPT4|"=>{"provenance"=>["String"]}}
     schema_election_definition_info = 
       {"election"=>schema_election_info,
+      "jurisdiction_ident"=>"Atomic",
       "contest_list"=>[schema_contest_info],
       "candidate_list"=>[schema_candidate_info],
       "question_list"=>[schema_question_info],
       "counter_list"=>[schema_counter_info],
       "reporting_group_list"=>["String"],
       "expected_count_list"=>[schema_expected_count_info],
-      "audit_trail"=>schema_audit_trail_info}
+      "audit_header"=>schema_audit_header_info}
     schema_election_definition =
       {"election_definition"=>schema_election_definition_info}
     schema_candidate_count = {"candidate_ident"=>"Atomic",
@@ -145,7 +147,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "undervote_count"=>"Integer",
       "overvote_count"=>"Integer",
       "answer_count_list"=>[schema_answer_count]}
-    schema_audit_trail = {"audit_trail"=>schema_audit_trail_info}
+    schema_audit_header = {"audit_header"=>schema_audit_header_info}
     schema_counter_count =
       {"counter_count"=>
       {"election_ident"=>"Atomic",
@@ -156,7 +158,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
         "|OPT|"=>{"cast_ballot_count"=>"Integer"},
         "contest_count_list"=>[schema_contest_count],
         "question_count_list"=>[schema_question_count],
-        "audit_trail"=>schema_audit_trail_info}}
+        "audit_header"=>schema_audit_header_info}}
     schema_tabulator_count =
       {"tabulator_count"=>
       {"jurisdiction_ident"=>"Atomic",
@@ -166,7 +168,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
         "contest_count_list"=>[schema_contest_count],
         "question_count_list"=>[schema_question_count],
         "counter_count_list"=>[schema_counter_count],
-        "audit_trail"=>schema_audit_trail_info}}
+        "audit_header"=>schema_audit_header_info}}
     schema_setup(trace, "unknown_type", schema_unknown_type, false)
     schema_setup(trace, "unknown_string", schema_unknown_string, false)
     schema_setup(trace, "invalid_hash_key", schema_invalid_hash_key, false)
@@ -186,7 +188,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_setup(trace, "question_count", schema_question_count)
     schema_setup(trace, "candidate_count", schema_candidate_count)
     schema_setup(trace, "contest_count", schema_contest_count)
-    schema_setup(trace, "audit_trail", schema_audit_trail)
+    schema_setup(trace, "audit_header", schema_audit_header)
     schema_setup(trace, "counter_count", schema_counter_count)
     schema_setup(trace, "tabulator_count", schema_tabulator_count)
     print "Schemas OK.\n\n"
@@ -211,7 +213,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     #schema_test_syntax_error(trace, "test_alt", true, 4)
     schema_test_syntax_error(trace, "district_info", true, 5)
     schema_test_syntax_error(trace, "expected_count_info", true, 6)
-    schema_test_syntax_error(trace, "audit_trail", true, 7)
+    schema_test_syntax_error(trace, "audit_header", true, 7)
     schema_test_syntax_error(trace, "question_info", true, 2, 8)
     schema_test_syntax_error(trace, "invalid_hash_key", false, 9)
     schema_test_syntax_error(trace, "contest_info", true, 10)
@@ -235,11 +237,11 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_test_syntax(trace, "question_count")
     schema_test_syntax(trace, "candidate_count")
     schema_test_syntax(trace, "contest_count")
-    schema_test_syntax(trace, "audit_trail")
-    schema_test_syntax(trace, "audit_trail", "_hardware")
-    schema_test_syntax(trace, "audit_trail", "_provenance")
-    schema_test_syntax(trace, "audit_trail", "_nil_provenance")
-    schema_test_syntax(trace, "audit_trail", "_all")
+    schema_test_syntax(trace, "audit_header")
+    schema_test_syntax(trace, "audit_header", "_hardware")
+    schema_test_syntax(trace, "audit_header", "_provenance")
+    schema_test_syntax(trace, "audit_header", "_nil_provenance")
+    schema_test_syntax(trace, "audit_header", "_all")
     schema_test_syntax(trace, "counter_count")
     schema_test_syntax(trace, "tabulator_count")
   end

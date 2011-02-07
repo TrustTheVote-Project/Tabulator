@@ -1,5 +1,6 @@
 --- 
 election_definition: 
+  jurisdiction_ident: Atomic
   question_list: 
   - "|OPT|": 
       display_name: String
@@ -8,20 +9,6 @@ election_definition:
     answer_list: 
     - String
     district_ident: Atomic
-  audit_trail: 
-    "|OPT3|": 
-      hardware: String
-    software: String
-    "|OPT2|": 
-      type: String
-    "|OPT1|": 
-      schema_version: String
-    operator: String
-    create_date: String
-    file_ident: Atomic
-    "|OPT4|": 
-      provenance: 
-      - String
   candidate_list: 
   - "|OPT3|": 
       position: Integer
@@ -50,6 +37,20 @@ election_definition:
       display_name: String
     ident: Atomic
     district_ident: Atomic
+  audit_header: 
+    "|OPT3|": 
+      hardware: String
+    software: String
+    "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      schema_version: String
+    operator: String
+    create_date: String
+    file_ident: Atomic
+    "|OPT4|": 
+      provenance: 
+      - String
   expected_count_list: 
   - precinct_ident_list: 
     - Atomic

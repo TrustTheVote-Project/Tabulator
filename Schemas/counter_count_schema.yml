@@ -8,20 +8,6 @@ counter_count:
     - answer: String
       count: Integer
   jurisdiction_ident: Atomic
-  audit_trail: 
-    "|OPT3|": 
-      hardware: String
-    software: String
-    "|OPT2|": 
-      type: String
-    "|OPT1|": 
-      schema_version: String
-    operator: String
-    create_date: String
-    file_ident: Atomic
-    "|OPT4|": 
-      provenance: 
-      - String
   "|OPT|": 
     cast_ballot_count: Integer
   counter_ident: Atomic
@@ -38,4 +24,18 @@ counter_count:
     undervote_count: Integer
   precinct_ident: Atomic
   reporting_group: String
+  audit_header: 
+    "|OPT3|": 
+      hardware: String
+    software: String
+    "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      schema_version: String
+    operator: String
+    create_date: String
+    file_ident: Atomic
+    "|OPT4|": 
+      provenance: 
+      - String
   election_ident: Atomic

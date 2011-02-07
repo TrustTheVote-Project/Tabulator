@@ -1,10 +1,11 @@
 ---
 election_definition:
-  audit_trail:
+  audit_header:
     create_date: 2010-04-02T11:00:03-04:00
     operator: Gregory Granite
     software: TTV Election Management System 0.1 JAN-1-2010
     file_ident: 9F023408009B11DF924800163E3DE33F
+  jurisdiction_ident: JURISDICTION-BedrockCounty
   election:
     ident: ELECTION-2May2010
     display_name: Bedrock Special Mayoral Election

@@ -36,8 +36,9 @@ class TabulatorTest < Test::Unit::TestCase
   JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_2) in Jurisdiction Definition",
                 "Non-Unique District UID (DISTRICT_3) in Jurisdiction Definition"]
 
-  ED_ERROR_12 =
-    ["Non-Unique Contest UID (CONTEST_1) in Election Definition",
+  ED_ERROR_13 =
+    ["Non-Existent Jurisdiction UID (JURISDICTION_11) in Election Definition",
+     "Non-Unique Contest UID (CONTEST_1) in Election Definition",
      "Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3) in Election Definition",
      "Non-Unique Candidate UID (CANDIDATE_1) in Election Definition",
      "Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2) in Election Definition",
@@ -103,7 +104,7 @@ class TabulatorTest < Test::Unit::TestCase
     trace = 300          # In case we need to trace, for debugging these tests
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, [])
+    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])

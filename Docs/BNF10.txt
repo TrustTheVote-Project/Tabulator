@@ -11,6 +11,23 @@
 <UniqueID> ::= String |
                Integer
 
+################
+# Audit Header #
+################
+
+<AuditHeader> ::= { audit_header: <AuditHeaderInfo>
+                   }
+
+<AuditHeaderInfo> ::= { file_ident:     <UniqueID>
+                       create_date:    String
+                       operator:       String
+                       software:       String
+                     [ schema_version: String ]
+                     [ type:           String ]
+                     [ hardware:       String ]
+                     [ provenance:     <UniqueID>* ]
+                       }
+
 ###########################
 # Jurisdiction Definition #
 ###########################
@@ -22,6 +39,7 @@
 <JurisdictionDefinitionInfo> ::= { ident:         <UniqueID>
                                    district_list: <District>+
                                    precinct_list: <Precinct>+
+                                   audit_header:  <AuditHeaderInfo>
                                    }
 
 <District> ::= { ident:        <UniqueID>
@@ -48,7 +66,7 @@
                                counter_list:         <Counter>+
                                reporting_group_list: String*
                                expected_count_list:  <ExpectedCount>*
-                               audit_trail:          <AuditTrailInfo>
+                               audit_header:         <AuditHeaderInfo>
                                }
 
 <ElectionInfo> ::= { ident:        <UniqueID> 
@@ -85,19 +103,6 @@
                       reporting_group:     String
                       }
 
-<AuditTrail> ::= { audit_trail: <AuditTrailInfo>
-                   }
-
-<AuditTrailInfo> ::= { file_ident:     <UniqueID>
-                       create_date:    String
-                       operator:       String
-                       software:       String
-                     [ schema_version: String ]
-                     [ type:           String ]
-                     [ hardware:       String ]
-                     [ provenance:     <UniqueID>* ]
-                       }
-
 #################
 # Counter Count #
 #################
@@ -108,10 +113,10 @@
                          counter_ident:       <UniqueID>
                          reporting_group:     String
                          precinct_ident:      <UniqueID>
-                       [ cast_ballot_count:   Integer ]
+                         cast_ballot_count:   Integer
                          contest_count_list:  <ContestCount>*
                          question_count_list: <QuestionCount>*
-                         audit_trail:         <AuditTrailInfo>
+                         audit_header:        <AuditHeaderInfo>
                          }
                      }
 
@@ -158,6 +163,6 @@
           contest_count_list:      <ContestCount>*
           question_count_list:     <QuestionCount>*
           counter_count_list:      <CounterCount>+
-          audit_trail:             <AuditTrailInfo>
+          audit_header:            <AuditHeaderInfo>
           }
       }

@@ -3,7 +3,7 @@ counter_count:
   counter_ident: COUNTER_11
   reporting_group: Normal
   election_ident: ELECTION_11
-  audit_trail: 
+  audit_header: 
     software: GNU
     file_ident: FILE_1
     operator: El Jefe

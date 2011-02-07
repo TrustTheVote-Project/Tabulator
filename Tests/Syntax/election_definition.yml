@@ -1,13 +1,14 @@
 ---
 election_definition:
-  audit_trail: 
-    file_ident: FILE_1
+  audit_header: 
+    file_ident: ED_1
     create_date: Sometime
     operator: El Jefe
     software: TTV Tabulator Test
   ballot_list:
   - ident: BALLOT_1
   - ident: BALLOT_2
+  jurisdiction_ident: JURISDICTION_1
   election:
     display_name: Election 1
     ident: ELECTION_1

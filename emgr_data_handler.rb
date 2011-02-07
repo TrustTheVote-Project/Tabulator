@@ -80,20 +80,25 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
       {"jurisdiction_definition"=>
       {"ident"=>"JURISDICTION_1",
         "district_list"=>juris['districts'],
-        "precinct_list"=>juris['precincts']}}
+        "precinct_list"=>juris['precincts'],
+        "audit_header"=>{"software"=>"TTV Tabulator v El Jefe",
+          "file_ident"=>"ED_1",
+          "operator"=>"El Jefe",
+          "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S") }}}
     file = "EMGR_JD.yml"
     label = "Jurisdiction Definition"
     print "Writing YAML #{label}: #{file}\n"
     File.open(file, 'w') { |outfile| YAML::dump(jurisdiction_definition, outfile) }
     election_definition =
       {"election_definition"=>
-      {"audit_trail"=>{"software"=>"TTV Tabulator v El Jefe",
-          "file_ident"=>"FILE_FOO_1",
+      {"audit_header"=>{"software"=>"TTV Tabulator v El Jefe",
+          "file_ident"=>"ED_1",
           "operator"=>"El Jefe",
           "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S") },
         "election"=>{"start_date"=>elecs['elections'][0]["start_date"],
           "type"=>elecs['elections'][0]["type"],
           "ident"=>elecs['elections'][0]["ident"]},
+        "jurisdiction_ident"=>"JURISDICTION_1",
         "reporting_group_list"=>[],
         "expected_count_list"=>[],
         "contest_list"=>elecs['contests'],

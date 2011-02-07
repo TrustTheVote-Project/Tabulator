@@ -1,7 +1,7 @@
 --- 
 counter_count: 
   election_ident: ELECTION_1
-  audit_trail: 
+  audit_header: 
     software: GNU
     file_ident: FILE_1
     operator: El Jefe

@@ -11,3 +11,17 @@ jurisdiction_definition:
     "|OPT1|": 
       display_name: String
     ident: Atomic
+  audit_header: 
+    "|OPT3|": 
+      hardware: String
+    software: String
+    "|OPT2|": 
+      type: String
+    "|OPT1|": 
+      schema_version: String
+    operator: String
+    create_date: String
+    file_ident: Atomic
+    "|OPT4|": 
+      provenance: 
+      - String

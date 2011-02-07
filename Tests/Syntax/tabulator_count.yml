@@ -2,7 +2,7 @@
 tabulator_count: 
   election_ident: ELECTION_1
   jurisdiction_ident: JURISDICTION_1
-  audit_trail: 
+  audit_header: 
     software: GNU
     file_ident: TAB_FILE_1
     operator: El Jefe
@@ -23,15 +23,21 @@ tabulator_count:
       ident: PRECINCT_1
     - display_name: Precinct 2
       ident: PRECINCT_2
+    audit_header: 
+      file_ident: JD_1
+      create_date: Sometime
+      operator: El Jefe
+      software: TTV Tabulator Test
   election_definition:
-    audit_trail: 
-      file_ident: FILE_1
+    audit_header: 
+      file_ident: ED_1
       create_date: 2010-12-01
       operator: El Jefe
       software: TTV Tabulator Test
     ballot_list:
     - ident: BALLOT_1
     - ident: BALLOT_2
+    jurisdiction_ident: JURISDICTION_1
     election:
       display_name: Election 1
       ident: ELECTION_1

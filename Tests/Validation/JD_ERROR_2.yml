@@ -19,3 +19,8 @@ jurisdiction_definition:
     ident: PRECINCT_2
   - display_name: Precinct 2
     ident: PRECINCT_2
+  audit_header: 
+    file_ident: JD_1
+    create_date: Sometime
+    operator: El Jefe
+    software: TTV Tabulator Test

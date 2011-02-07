@@ -2,6 +2,14 @@
 tabulator_count: 
   jurisdiction_ident: JURISDICTION_1
   question_count_list: 
+  - question_ident: QUESTION_1
+    overvote_count: 5
+    undervote_count: 4
+    answer_count_list: 
+    - answer: Yay
+      count: 10
+    - answer: Nay
+      count: 55
   - question_ident: QUESTION_2
     overvote_count: 5
     undervote_count: 4
@@ -12,17 +20,34 @@ tabulator_count:
       count: 55
     - answer: C
       count: 99
-  audit_trail: 
-    software: TTV Tabulator v JVC
-    operator: El Jefe
-    provenance: 
-    - FILE_1
-    - FILE_2
-    - FILE_3
-    file_ident: TABULATOR_COUNT.yml
-    create_date: 2011-01-26 00:30:11
+  - question_ident: QUESTION_3
+    overvote_count: 5
+    undervote_count: 4
+    answer_count_list: 
+    - answer: Slop
+      count: 10
+    - answer: Glop
+      count: 55
+  - question_ident: QUESTION_4
+    overvote_count: 5
+    undervote_count: 4
+    answer_count_list: 
+    - answer: Foo
+      count: 10
+    - answer: Bar
+      count: 55
+    - answer: Doo
+      count: 44
   election_definition: 
+    jurisdiction_ident: JURISDICTION_1
     question_list: 
+    - ident: QUESTION_1
+      question: Free Beer
+      district_ident: DISTRICT_1
+      answer_list: 
+      - Yay
+      - Nay
+      election_ident: ELECTION_1
     - ident: QUESTION_2
       question: Free Beer
       district_ident: DISTRICT_1
@@ -31,10 +56,21 @@ tabulator_count:
       - B
       - C
       election_ident: ELECTION_1
-    audit_trail: 
-      operator: El Jefe
-      file_ident: FILE_1
-      create_date: Sometime
+    - ident: QUESTION_3
+      question: Free Beer
+      district_ident: DISTRICT_1
+      answer_list: 
+      - Slop
+      - Glop
+      election_ident: ELECTION_1
+    - ident: QUESTION_4
+      question: Free Beer
+      district_ident: DISTRICT_1
+      answer_list: 
+      - Foo
+      - Bar
+      - Doo
+      election_ident: ELECTION_1
     candidate_list: 
     - party_display_name: Green
       ident: CANDIDATE_1
@@ -48,6 +84,14 @@ tabulator_count:
       ident: CANDIDATE_3
       contest_ident: CONTEST_3
       display_name: Candidate 3
+    - party_display_name: Brown
+      ident: CANDIDATE_4
+      contest_ident: CONTEST_2
+      display_name: Candidate 4
+    - party_display_name: Brown
+      ident: CANDIDATE_5
+      contest_ident: CONTEST_2
+      display_name: Candidate 5
     counter_list: 
     - ident: COUNTER_1
       display_name: Counter 1
@@ -58,23 +102,28 @@ tabulator_count:
       type: GENERAL
       ident: ELECTION_1
       display_name: Election 1
-      reporting_group_list: 
-      - Normal
-      - Absentee
+    reporting_group_list: 
+    - Normal
+    - Absentee
     contest_list: 
     - ident: CONTEST_1
       display_name: Contest 1
+      district_ident: DISTRICT_1
+      election_ident: ELECTION_1
+    - ident: CONTEST_2
+      display_name: Contest 2
       district_ident: DISTRICT_1
       election_ident: ELECTION_1
     - ident: CONTEST_3
       display_name: Contest 3
       district_ident: DISTRICT_1
       election_ident: ELECTION_1
+    audit_header: 
+      software: TTV Tabulator Test
+      operator: El Jefe
+      file_ident: FILE_1
+      create_date: Sometime
     expected_count_list: 
-    - precinct_ident_list: 
-      - PRECINCT_1
-      counter_ident: COUNTER_1
-      reporting_group: Normal
     - precinct_ident_list: 
       - PRECINCT_2
       counter_ident: COUNTER_2
@@ -86,6 +135,22 @@ tabulator_count:
   contest_count_list: 
   - overvote_count: 2
     candidate_count_list: 
+    - candidate_ident: CANDIDATE_4
+      count: 7
+    - candidate_ident: CANDIDATE_5
+      count: 9
+    contest_ident: CONTEST_2
+    undervote_count: 1
+    writein_count: 3
+  - overvote_count: 2
+    candidate_count_list: 
+    - candidate_ident: CANDIDATE_3
+      count: 9
+    contest_ident: CONTEST_3
+    undervote_count: 1
+    writein_count: 3
+  - overvote_count: 2
+    candidate_count_list: 
     - candidate_ident: CANDIDATE_1
       count: 7
     - candidate_ident: CANDIDATE_2
@@ -93,14 +158,14 @@ tabulator_count:
     contest_ident: CONTEST_1
     undervote_count: 1
     writein_count: 3
-  - overvote_count: 20
-    candidate_count_list: 
-    - candidate_ident: CANDIDATE_3
-      count: 19
-    contest_ident: CONTEST_3
-    undervote_count: 10
-    writein_count: 30
   election_ident: ELECTION_1
+  audit_header: 
+    software: TTV Tabulator v Jeff Cook
+    operator: El Jefe
+    provenance: 
+    - FILE_1
+    file_ident: TABULATOR_COUNT.yml
+    create_date: 2011-02-06 19:12:55
   jurisdiction_definition: 
     precinct_list: 
     - ident: PRECINCT_1
@@ -117,17 +182,52 @@ tabulator_count:
       display_name: District 3
     - ident: DISTRICT_4
       display_name: District 4
+    audit_header: 
+      software: TTV Tabulator Test
+      operator: El Jefe
+      file_ident: JD_1
+      create_date: Sometime
   counter_count_list: 
   - counter_count: 
-      question_count_list: []
-
+      question_count_list: 
+      - question_ident: QUESTION_1
+        overvote_count: 5
+        undervote_count: 4
+        answer_count_list: 
+        - answer: Yay
+          count: 10
+        - answer: Nay
+          count: 55
+      - question_ident: QUESTION_2
+        overvote_count: 5
+        undervote_count: 4
+        answer_count_list: 
+        - answer: A
+          count: 10
+        - answer: B
+          count: 55
+        - answer: C
+          count: 99
+      - question_ident: QUESTION_3
+        overvote_count: 5
+        undervote_count: 4
+        answer_count_list: 
+        - answer: Slop
+          count: 10
+        - answer: Glop
+          count: 55
+      - question_ident: QUESTION_4
+        overvote_count: 5
+        undervote_count: 4
+        answer_count_list: 
+        - answer: Foo
+          count: 10
+        - answer: Bar
+          count: 55
+        - answer: Doo
+          count: 44
       jurisdiction_ident: JURISDICTION_1
       cast_ballot_count: 99
-      audit_trail: 
-        software: GNU
-        operator: El Jefe
-        create_date: 2010-12-03
-        file_ident: FILE_1
       counter_ident: COUNTER_1
       contest_count_list: 
       - candidate_count_list: 
@@ -141,54 +241,30 @@ tabulator_count:
         contest_ident: CONTEST_1
         undervote_count: 1
         writein_count: 3
-      precinct_ident: PRECINCT_1
-      reporting_group: Normal
-      election_ident: ELECTION_1
-  - counter_count: 
-      jurisdiction_ident: JURISDICTION_1
-      question_count_list: 
-      - question_ident: QUESTION_2
-        overvote_count: 5
-        undervote_count: 4
-        answer_count_list: 
-        - answer: A
-          count: 10
-        - answer: B
-          count: 55
-        - answer: C
-          count: 99
-      audit_trail: 
-        software: GNU
-        operator: El Jefe
-        file_ident: FILE_2
-        create_date: 2010-12-03
-      cast_ballot_count: 99
-      counter_ident: COUNTER_2
-      reporting_group: Absentee
-      precinct_ident: PRECINCT_2
-      contest_count_list: []
-
-      election_ident: ELECTION_1
-  - counter_count: 
-      question_count_list: []
-
-      jurisdiction_ident: JURISDICTION_1
-      cast_ballot_count: 99
-      audit_trail: 
-        software: GNU
-        operator: El Jefe
-        create_date: 2010-12-03
-        file_ident: FILE_3
-      counter_ident: COUNTER_2
-      contest_count_list: 
-      - overvote_count: 20
+      - candidate_count_list: 
+        - candidate_name: Candidate 4
+          candidate_ident: CANDIDATE_4
+          count: 7
+        - candidate_name: Candidate 5
+          candidate_ident: CANDIDATE_5
+          count: 9
+        overvote_count: 2
+        contest_ident: CONTEST_2
+        undervote_count: 1
+        writein_count: 3
+      - overvote_count: 2
         candidate_count_list: 
         - candidate_name: Candidate 3
           candidate_ident: CANDIDATE_3
-          count: 19
+          count: 9
         contest_ident: CONTEST_3
-        undervote_count: 10
-        writein_count: 30
-      precinct_ident: PRECINCT_2
+        undervote_count: 1
+        writein_count: 3
+      precinct_ident: PRECINCT_1
       reporting_group: Normal
+      audit_header: 
+        software: GNU
+        operator: El Jefe
+        create_date: 2010-12-03
+        file_ident: FILE_1
       election_ident: ELECTION_1

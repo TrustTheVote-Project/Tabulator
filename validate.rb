@@ -304,7 +304,7 @@ class TabulatorValidate
      {"tabulator_count"=>
       {"election_ident"=>edinfo["election"]["ident"],
         "jurisdiction_ident"=>jdinfo["ident"],
-        "audit_trail"=>
+        "audit_header"=>
         {"software"=>"TTV Tabulator v Jeff Cook",
           "file_ident"=>file,
           "operator"=>"El Jefe",
@@ -392,6 +392,9 @@ class TabulatorValidate
 # 6. the Expected Counts are valid (if present, warning otherwise).
 
   def validate_election_definition(election_definition)
+    jid = election_definition["jurisdiction_ident"].to_s
+    error("Non-Existent Jurisdiction UID", jid, "in Election Definition") unless 
+      uid_exists?("jurisdiction", jid) 
     validate_election(election_definition["election"])
     validate_contests(election_definition["contest_list"])
     validate_candidates(election_definition["candidate_list"])
@@ -682,7 +685,7 @@ class TabulatorValidate
     eid = ccinfo["election_ident"].to_s
     error("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
       uid_exists?("election", eid)
-    if (uid_exists?("file", fid = ccinfo["audit_trail"]["file_ident"]))
+    if (uid_exists?("file", fid = ccinfo["audit_header"]["file_ident"]))
       error("Non-Unique File UID", fid, "in Counter Count")
     else
       uid_add("file", fid)

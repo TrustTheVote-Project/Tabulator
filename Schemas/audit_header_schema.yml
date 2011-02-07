@@ -1,5 +1,5 @@
 --- 
-audit_trail: 
+audit_header: 
   "|OPT3|": 
     hardware: String
   software: String
