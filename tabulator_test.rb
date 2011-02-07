@@ -189,11 +189,10 @@ class TabulatorTest < Test::Unit::TestCase
   def tabulator_test_errors(received, expected)
     assert(expected.length == received.length,
            tabulator_messages_unsame(received, expected, "Error", ERRHEAD))
-    i = 0
-    received.each do |message|
-      assert(message == expected[i],
-             "Unexpected Error: #{message}\n        Expected: #{expected[i]}")
-      i += 1
+    received.each_index do |i|
+      assert(received[i] == expected[i],
+             "Unexpected Error: #{received[i]}\n" +
+             "        Expected: #{expected[i]}")
     end
     expected.length 
   end
@@ -210,11 +209,10 @@ class TabulatorTest < Test::Unit::TestCase
   def tabulator_test_warnings(received, expected)
     assert(expected.length == received.length,
            tabulator_messages_unsame(received, expected, "Warning", WARHEAD))
-    i = 0
-    received.each do |message|
-      assert(message == expected[i],
-             "Unexpected Warning: #{message}\n          Expected: #{expected[i]}")
-      i += 1
+    received.each_index do |i|
+      assert(received[i] == expected[i],
+             "Unexpected Warning: #{received[i]}\n" +
+             "          Expected: #{expected[i]}")
     end
     expected.length 
   end
