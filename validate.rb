@@ -150,13 +150,14 @@ class TabulatorValidate
     end
   end
 
-# No Arguments
+# * <i>reset</i>: (<i>Boolean</i>) indicates whether to reset the <tt><b>errors</b></tt> stack (optional)
 # 
 # Returns: <i>Array</i>
 #
-# Returns the <tt><b>errors</b></tt> message stack.
+# Returns the <tt><b>errors</b></tt> message stack, but resets it to empty first if <i>reset</i> is <i>true</i>
 
-  def validation_errors()
+  def validation_errors(reset = false)
+    self.errors = [] if reset
     self.errors
   end
 
@@ -173,7 +174,8 @@ class TabulatorValidate
   end
 
 # Arguments:
-# * <i>message</i>: (<i>String</i>) message
+# * <i>message1</i>: (<i>String</i>) message
+# * <i>value1</i>:  (<i>Arbitrary</i>) value for message1 (optional)
 #
 # Returns: N/A
 #
@@ -186,6 +188,7 @@ class TabulatorValidate
       (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
     print("** FATAL ERROR ** #{message}\n")
     $stdout.flush
+    raise Foo # For debugging so we can see where the error came from
     exit(1)
   end
 
@@ -248,7 +251,8 @@ class TabulatorValidate
   def uid_exists?(type, uid)
     shouldnt("Invalid UID type", type) unless UID_TYPES.include?(type)
     uid = uid.to_s
-    self.uids[type].include?(uid)
+    value = self.uids[type].include?(uid)
+    value
   end
 
 # Arguments:
@@ -376,9 +380,47 @@ class TabulatorValidate
       end
     end
   end
+
+# Arguments:
+# * <i>object</i>:  (<i>Hash</i>) Election Definition or Counter Count
+# * <i>name</i>:    (<i>String</i>) proper name of object above
+# * <i>errwarn</i>: (<i>Boolean</i>) indicates whether to check existing errors and warnings (when <i>true</i>) or insert them into the object 
+#
+# Returns: N/A
+#
+# If <i>errwarn</i> is <i>true</i>, check to ensure that the errors and
+# warnings stored in the object match exactly the current errors and warnings
+# of the Tabulator.  They should match exactly, because these were the errors
+# and warnings generated last time this object was processed (we are
+# re-instantiating the Tabulator). If they do not match, we have a fatal
+# internal error, because this should never happen.  If <i>errwarn</i> is
+# <i>false</i>, this is the first time this object has been processed by the
+# Tabulator, so store any errors and warnings inside the object, for later
+# consistency checking.
+
+  def validate_errors_warnings (object, name, errwarn)
+    if (errwarn)
+      if (object['error_list'] == validation_errors())
+        if (object['warning_list'] == validation_warnings())
+          validation_errors(true)
+          validation_warnings(true)
+        else
+          shouldnt("Warnings mismatch in #{name}")
+        end
+      elsif (object['warning_list'] == validation_warnings())
+        shouldnt("Errors mismatch in #{name}")
+      else
+        shouldnt("Errors and Warnings mismatch in #{name}")
+      end
+    else
+      object['error_list']= validation_errors()
+      object['warning_list']= validation_warnings()
+    end
+  end
   
 # Arguments:
 # * <i>election_definition</i>: (<i>Hash</i>) Election Definition object
+# * <i>errwarn</i>: (<i>Boolean</i>) (see validate_errors_warnings)
 #
 # Returns: N/A
 #
@@ -391,7 +433,7 @@ class TabulatorValidate
 # 6. the Reporting Groups are valid (if present, warning otherwise), and
 # 6. the Expected Counts are valid (if present, warning otherwise).
 
-  def validate_election_definition(election_definition)
+  def validate_election_definition(election_definition, errwarn = false)
     jid = election_definition["jurisdiction_ident"].to_s
     error("Non-Existent Jurisdiction UID", jid, "in Election Definition") unless 
       uid_exists?("jurisdiction", jid) 
@@ -410,6 +452,7 @@ class TabulatorValidate
     else
       validate_expected_counts(election_definition["expected_count_list"])
     end
+    validate_errors_warnings(election_definition, "Election Definition", errwarn)
   end
 
 # Arguments:
@@ -649,6 +692,7 @@ class TabulatorValidate
 
 # Arguments:
 # * <i>counter_count</i>: (<i>Hash</i>) Counter Count object
+# * <i>errwarn</i>: (<i>Boolean</i>) (see validate_errors_warnings)
 #
 # Returns: N/A
 #
@@ -668,7 +712,7 @@ class TabulatorValidate
 # count.
 
   public
-  def validate_counter_count(counter_count)
+  def validate_counter_count(counter_count, errwarn = false)
     ccinfo = counter_count["counter_count"]
     cid = ccinfo["counter_ident"].to_s
     error("Non-Existent Counter UID", cid, "in Counter Count") unless
@@ -690,11 +734,10 @@ class TabulatorValidate
     else
       uid_add("file", fid)
     end
-    if (validation_errors().length == 0)
-      validate_contest_counts(ccinfo["contest_count_list"])
-      validate_question_counts(ccinfo["question_count_list"])
-    end
+    validate_contest_counts(ccinfo["contest_count_list"])
+    validate_question_counts(ccinfo["question_count_list"])
     counts_missing_update(cid, rg, pid) if (validation_errors().length == 0)
+    validate_errors_warnings(counter_count, "Counter Count", errwarn)
   end
 
 # Arguments:
@@ -828,7 +871,7 @@ class TabulatorValidate
 # count was expected. The
 # <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> attribute is set to
 # <i>false</i> and the corresponding sub-array ([cid, rg, pid]) in
-# <tt><b>counts_missing['missing'] is deleted.
+# <tt><b>counts_missing['missing']</b></tt> is deleted.
 
   def counts_missing_update(cid, rg, pid)
     expected = self.counts_missing["expected"]
@@ -888,10 +931,11 @@ class TabulatorValidate
 # before being output.
 
   def validate_tabulator_count(tabulator_count)
+    errwarn = true
     self.tabulator_count = tabulator_count
     tcinfo = tabulator_count["tabulator_count"]
     validate_jurisdiction_definition(tcinfo["jurisdiction_definition"])
-    validate_election_definition(tcinfo["election_definition"])
+    validate_election_definition(tcinfo["election_definition"], errwarn)
     eid = tcinfo["election_ident"].to_s
     shouldnt("Non-Existent Election UID (#{eid}) in Tabulator Count") unless
       uid_exists?("election", eid)
@@ -906,19 +950,20 @@ class TabulatorValidate
     tcinfo["question_count_list"].each do |question_count|
       self.counts_questions[question_count["question_ident"]] = question_count
     end
-    validate_counter_counts(tcinfo["counter_count_list"])
+    validate_counter_counts(tcinfo["counter_count_list"], errwarn)
   end
 
 # Arguments:
 # * <i>counter_counts</i>: (<i>Array</i>) of Counter Count objects
+# * <i>errwarn</i>: (<i>Boolean</i>) (see validate_errors_warnings)
 #
 # Returns: N/A
 #
 # The Counter Counts are valid iff each Counter Count is valid.
 
-  def validate_counter_counts(counter_counts)
+  def validate_counter_counts(counter_counts, errwarn = false)
     counter_counts.each { |counter_count|
-      validate_counter_count(counter_count) }
+      validate_counter_count(counter_count, errwarn) }
   end
   
 end

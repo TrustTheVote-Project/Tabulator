@@ -91,7 +91,9 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       {"ident"=>"Atomic",
       "district_list"=>[schema_district_info],
       "precinct_list"=>[schema_precinct_info],
-      "audit_header"=>schema_audit_header_info}
+      "audit_header"=>schema_audit_header_info,
+      "|OPT1|"=>{"error_list"=>["String"]},
+      "|OPT2|"=>{"warning_list"=>["String"]}}
     schema_jurisdiction_definition =
       {"jurisdiction_definition"=>schema_jurisdiction_definition_info}
     schema_expected_count_info =
@@ -129,7 +131,9 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "counter_list"=>[schema_counter_info],
       "reporting_group_list"=>["String"],
       "expected_count_list"=>[schema_expected_count_info],
-      "audit_header"=>schema_audit_header_info}
+      "audit_header"=>schema_audit_header_info,
+      "|OPT1|"=>{"error_list"=>["String"]},
+      "|OPT2|"=>{"warning_list"=>["String"]}}
     schema_election_definition =
       {"election_definition"=>schema_election_definition_info}
     schema_candidate_count = {"candidate_ident"=>"Atomic",
@@ -158,7 +162,9 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
         "|OPT|"=>{"cast_ballot_count"=>"Integer"},
         "contest_count_list"=>[schema_contest_count],
         "question_count_list"=>[schema_question_count],
-        "audit_header"=>schema_audit_header_info}}
+        "audit_header"=>schema_audit_header_info},
+      "|OPT1|"=>{"error_list"=>["String"]},
+      "|OPT2|"=>{"warning_list"=>["String"]}}
     schema_tabulator_count =
       {"tabulator_count"=>
       {"jurisdiction_ident"=>"Atomic",

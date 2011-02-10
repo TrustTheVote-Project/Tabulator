@@ -70,11 +70,12 @@ Commands:
 
 "
   help_string_d6 = "
-  ruby operator.rb check <Tabulator_Count_File>
+  ruby operator.rb check [<Tabulator_Count_File>]
 
-     # [DEBUG] The file contains a Tabulator Count.  It is checked for
-     # proper syntax and validated.  This command is informational only and
-     # is used to check the consistency of the current Tabulator Count file.
+     # [DEBUG] The file contains a Tabulator Count (TABULATOR_COUNT_FILE is
+     # used if the file is not specified).  It is checked for proper syntax
+     # and validated.  This command is informational only and is used to check
+     # the consistency of the current Tabulator Count file.
 
 "
   print help_string_d1 if detail
@@ -217,29 +218,32 @@ def operator_add_file(file1, trace = false)
   ops_die_error("Invalid contents of Counter Count file: #{file1}") unless datum
   ops_print_check_syntax(datum.keys[0], file1)
   type = datum.keys[0]
-    cc = datum
-    tab = ops_instantiate_tabulator(false, trace)
-    tc = tab.tabulator_count
-    tab.validate_counter_count(cc)
-    errors = tab.validation_errors()
-    if (tab.validation_errors().length == 0)
-      print "Validating Counter Count: OK\n"
-      tc = tab.update_tabulator_count(tc, cc)
-      ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
-      operator_state(tab, tc, false, trace)
-    end
-    ops_print_errs(tab, true)
+  cc = datum
+  tab = ops_instantiate_tabulator(false, trace)
+  tc = tab.tabulator_count
+  tab.validate_counter_count(cc)
+  tc = tab.update_tabulator_count(tc, cc)
+  errors = tab.validation_errors()
+  if (tab.validation_errors().length == 0)
+    print "Validating Counter Count: OK\n"
+  else
+    print "Validating Counter Count: NOT OK, DATA NOT INCORPORATED\n"
+  end
+  ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
+  operator_state(tab, tc, false, trace)
+  ops_print_errs(tab, true)
 end
 
 # Check the validity of a Tabulator Count file.
 
-def operator_check_file(file1, trace = false)
-  file1 = ops_prepend_path(file1)
-  ops_die_error("Non-existent file: #{file1}") unless File.exists?(file1)
-  datum = ops_check_syntax(file1, trace)
-  ops_die_error("Invalid contents of Tabulator Count file: #{file1}") unless
+def operator_check_file(file, trace = false)
+  file = TABULATOR_COUNT_FILE if file == ""
+  file = ops_prepend_path(file)
+  ops_die_error("Non-existent file: #{file}") unless File.exists?(file)
+  datum = ops_check_syntax(file, trace)
+  ops_die_error("Invalid contents of Tabulator Count file: #{file}") unless
     datum
-  ops_print_check_syntax(datum.keys[0], file1)
+  print "Check Syntax of Tabulator Count (#{file}): OK\n"
   tc = datum
   tab = Tabulator.new(false, false, false, tc)
   errors = tab.validation_errors()

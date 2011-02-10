@@ -4,6 +4,12 @@ jurisdiction_definition:
   - "|OPT|": 
       display_name: String
     ident: Atomic
+  "|OPT2|": 
+    warning_list: 
+    - String
+  "|OPT1|": 
+    error_list: 
+    - String
   ident: Atomic
   district_list: 
   - "|OPT2|": 

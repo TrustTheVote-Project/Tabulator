@@ -88,7 +88,7 @@ class Tabulator < TabulatorValidate
     else
       at["provenance"] = [fid]
     end
-    votes_gather(counter_count)
+    votes_gather(counter_count) unless counter_count['error_list'].length > 0
     tabulator_count["tabulator_count"]["counter_count_list"].push(counter_count)
     tabulator_count
   end
@@ -294,17 +294,25 @@ class Tabulator < TabulatorValidate
       length = self.uids[k].length.to_s
       uids = self.uids[k].sort
       type = (k =~ /^report/ ? "Reporting Groups" : "#{k.capitalize} UIDs")
-      prefix = "  #{type} (#{length}): "
-      print prefix
-      pp_uids(uids, prefix.length, prefix.length, 78)
+      if (uids.length == 0)
+        prefix = "  #{type} (NONE)\n"
+      else
+        prefix = "  #{type} (#{uids.length.to_s}): "
+        print prefix
+        pp_uids(uids, prefix.length, prefix.length, 78)
+      end
     end
     count = self.counts_missing["missing"].length
     total = self.counts_missing["total"]
-    print "  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
-    self.counts_missing["expected"].keys.sort.each do |cid|
-      self.counts_missing["expected"][cid].keys.sort.each do |rg|
-        pids = self.counts_missing["expected"][cid][rg].keys
-        print "    #{cid}, #{rg}, #{pids.inspect.gsub(/\"/,"")}\n"
+    if (total == 0)
+      print "  Expected Counts (NONE)\n"
+    else
+      print "  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
+      self.counts_missing["expected"].keys.sort.each do |cid|
+        self.counts_missing["expected"][cid].keys.sort.each do |rg|
+          pids = self.counts_missing["expected"][cid][rg].keys
+          print "    #{cid}, #{rg}, #{pids.inspect.gsub(/\"/,"")}\n"
+        end
       end
     end
     if (count == 0)

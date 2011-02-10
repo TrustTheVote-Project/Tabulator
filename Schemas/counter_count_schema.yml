@@ -1,4 +1,7 @@
 --- 
+"|OPT2|": 
+  warning_list: 
+  - String
 counter_count: 
   question_count_list: 
   - question_ident: Atomic
@@ -39,3 +42,6 @@ counter_count:
       provenance: 
       - String
   election_ident: Atomic
+"|OPT1|": 
+  error_list: 
+  - String

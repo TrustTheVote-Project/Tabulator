@@ -11,6 +11,9 @@ tabulator_count:
   jurisdiction_ident: Atomic
   election_definition: 
     jurisdiction_ident: Atomic
+    "|OPT2|": 
+      warning_list: 
+      - String
     question_list: 
     - "|OPT|": 
         display_name: String
@@ -19,6 +22,9 @@ tabulator_count:
       answer_list: 
       - String
       district_ident: Atomic
+    "|OPT1|": 
+      error_list: 
+      - String
     candidate_list: 
     - "|OPT3|": 
         position: Integer
@@ -80,7 +86,10 @@ tabulator_count:
     undervote_count: Integer
   audit_header: *id001
   counter_count_list: 
-  - counter_count: 
+  - "|OPT2|": 
+      warning_list: 
+      - String
+    counter_count: 
       question_count_list: 
       - *id002
       jurisdiction_ident: Atomic
@@ -93,11 +102,20 @@ tabulator_count:
       reporting_group: String
       audit_header: *id001
       election_ident: Atomic
+    "|OPT1|": 
+      error_list: 
+      - String
   jurisdiction_definition: 
     precinct_list: 
     - "|OPT|": 
         display_name: String
       ident: Atomic
+    "|OPT2|": 
+      warning_list: 
+      - String
+    "|OPT1|": 
+      error_list: 
+      - String
     ident: Atomic
     district_list: 
     - "|OPT2|": 

@@ -286,7 +286,7 @@ class CheckSyntaxYaml
     when 3
       print "Datum not an Integer"
     when 4
-      print "Datum not a Date - Error Deprecated, Should not Happen!"
+      print "Datum not a Date - Error Deprecated, Should Not Happen!"
     when 5
       print "Datum not Atomic"
     when 6

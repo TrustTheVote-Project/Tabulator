@@ -1,6 +1,9 @@
 --- 
 election_definition: 
   jurisdiction_ident: Atomic
+  "|OPT2|": 
+    warning_list: 
+    - String
   question_list: 
   - "|OPT|": 
       display_name: String
@@ -9,6 +12,9 @@ election_definition:
     answer_list: 
     - String
     district_ident: Atomic
+  "|OPT1|": 
+    error_list: 
+    - String
   candidate_list: 
   - "|OPT3|": 
       position: Integer

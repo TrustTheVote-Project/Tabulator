@@ -12,17 +12,6 @@ counter_count:
   jurisdiction_ident: JURISDICTION_11
   precinct_ident: PRECINCT_11
   contest_count_list: 
-  - contest_ident: CONTEST_11
-    undervote_count: 1
-    overvote_count: 2
-    writein_count: 3
-    candidate_count_list:
-    - candidate_name: Candidate 1
-      candidate_ident: CANDIDATE_1
-      count: 7
-    - candidate_name: Candidate 2
-      candidate_ident: CANDIDATE_2
-      count: 9
   - contest_ident: CONTEST_1
     undervote_count: 1
     overvote_count: 2
@@ -34,16 +23,16 @@ counter_count:
     - candidate_name: Candidate 2
       candidate_ident: CANDIDATE_2
       count: 9
-  - contest_ident: CONTEST_1
+  - contest_ident: CONTEST_2
     undervote_count: 1
     overvote_count: 2
     writein_count: 3
     candidate_count_list:
-    - candidate_name: Candidate 1
-      candidate_ident: CANDIDATE_1
+    - candidate_name: Candidate 4
+      candidate_ident: CANDIDATE_4
       count: 7
-    - candidate_name: Candidate 2
-      candidate_ident: CANDIDATE_2
+    - candidate_name: Candidate 5
+      candidate_ident: CANDIDATE_5
       count: 9
   - contest_ident: CONTEST_3
     candidate_count_list:
@@ -54,16 +43,14 @@ counter_count:
     overvote_count: 2
     writein_count: 3
   question_count_list: 
-  - question_ident: QUESTION_22
+  - question_ident: QUESTION_1
     undervote_count: 4
     overvote_count: 5
     answer_count_list: 
-    - answer: A
+    - answer: Yay
       count: 10
-    - answer: B
+    - answer: Nay
       count: 55
-    - answer: C
-      count: 99
   - question_ident: QUESTION_2
     undervote_count: 4
     overvote_count: 5
@@ -74,13 +61,21 @@ counter_count:
       count: 55
     - answer: C
       count: 99
-  - question_ident: QUESTION_2
+  - question_ident: QUESTION_3
     undervote_count: 4
     overvote_count: 5
     answer_count_list: 
-    - answer: A
+    - answer: Slop
       count: 10
-    - answer: B
+    - answer: Glop
       count: 55
-    - answer: C
-      count: 99
+  - question_ident: QUESTION_4
+    undervote_count: 4
+    overvote_count: 5
+    answer_count_list: 
+    - answer: Foo
+      count: 10
+    - answer: Bar
+      count: 55
+    - answer: Doo
+      count: 44
