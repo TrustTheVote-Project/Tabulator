@@ -319,7 +319,8 @@ class TabulatorValidate
           self.counts_contests[k] },
         "question_count_list"=>self.counts_questions.keys.collect { |k|
           self.counts_questions[k] },
-        "counter_count_list"=>[]}}
+        "counter_count_list"=>[],
+        "state"=>"INITIAL"}}
   end
 
 # Arguments:
@@ -405,7 +406,7 @@ class TabulatorValidate
           validation_errors(true)
           validation_warnings(true)
         else
-          shouldnt("Warnings mismatch in #{name}")
+          shouldnt("Warnings mismatch in #{name} 1) #{validation_warnings().inspect}")
         end
       elsif (object['warning_list'] == validation_warnings())
         shouldnt("Errors mismatch in #{name}")
@@ -497,8 +498,8 @@ class TabulatorValidate
     contests.each do |contest|
       conid = contest["ident"].to_s
       did = contest["district_ident"].to_s
-      error("Non-Existent District UID", did, "in Contest UID", conid,
-            "in Election Definition") unless uid_exists?("district", did)
+      error("Non-Existent District UID", did, "in Contest UID", conid, "in Election Definition") unless
+        uid_exists?("district", did)
       self.counts_contests[conid] = {"contest_ident"=>conid,
         "overvote_count"=>0,
         "undervote_count"=>0,
@@ -535,8 +536,7 @@ class TabulatorValidate
         self.counts_contests[conid]["candidate_count_list"].
           push({"candidate_ident"=>canid, "count"=>0})
       else 
-        error("Non-Existent Contest UID", conid, "for Candidate UID", canid,
-              "in Election Definition")
+        error("Non-Existent Contest UID", conid, "for Candidate UID", canid, "in Election Definition")
       end
     end
   end
@@ -656,8 +656,7 @@ class TabulatorValidate
           if (self.counts_missing["expected"][cid].is_a?(Hash))
             if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
               if (self.counts_missing["expected"][cid][rg].keys.include?(pid))
-                cidrgpid = "[#{cid}, #{rg}, #{pid}]"
-                warning("Duplicate Expected Count", cidrgpid, "in Election Definition")
+                warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition")
               else
                 self.counts_missing["expected"][cid][rg][pid] = false
               end
@@ -866,14 +865,21 @@ class TabulatorValidate
 #
 # Returns: N/A
 #
-# The <tt><b>counts_missing</b></tt> attribute is updated using the
+# First, the Tabulator state is set to ACCUMULATING if it is currently
+# INITIAL. The <tt><b>counts_missing</b></tt> attribute is updated using the
 # information from the (previously validated) Counter Count, provided the
 # count was expected. The
 # <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> attribute is set to
 # <i>false</i> and the corresponding sub-array ([cid, rg, pid]) in
-# <tt><b>counts_missing['missing']</b></tt> is deleted.
+# <tt><b>counts_missing['missing']</b></tt> is deleted.  If expected counts
+# were defined and this was the last missing count, then the Tabulator state
+# is set to DONE.
 
   def counts_missing_update(cid, rg, pid)
+    self.tabulator_count['tabulator_count']['state'] = 'ACCUMULATING' if
+      self.tabulator_count['tabulator_count']['state'] == 'INITIAL'
+    warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
+      (self.tabulator_count['tabulator_count']['state'] == 'DONE')
     expected = self.counts_missing["expected"]
     goahead = true
     if (! expected.keys.include?(cid))
@@ -905,9 +911,11 @@ class TabulatorValidate
       self.counts_missing["finished"] =
         self.counts_missing["precincts"].select { |pid|
         self.counts_missing["missing"].all? {|cid0, rg0, pid0| (pid != pid0)}}
+      self.tabulator_count['tabulator_count']['state'] = 'DONE' if
+        ((self.counts_missing["expected"].keys.length > 0) &&
+         (self.counts_missing["missing"].length == 0))
     else
-      cidrgpid = "[#{cid}, #{rg}, #{pid}]"
-      error("Duplicate Counter Count", cidrgpid, "Input to Tabulator")
+      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
     end
   end
 
@@ -931,6 +939,8 @@ class TabulatorValidate
 # before being output.
 
   def validate_tabulator_count(tabulator_count)
+    state = tabulator_count["tabulator_count"]['state']
+    tabulator_count["tabulator_count"]['state'] = 'INITIAL'
     errwarn = true
     self.tabulator_count = tabulator_count
     tcinfo = tabulator_count["tabulator_count"]
@@ -951,6 +961,9 @@ class TabulatorValidate
       self.counts_questions[question_count["question_ident"]] = question_count
     end
     validate_counter_counts(tcinfo["counter_count_list"], errwarn)
+    endstate = tabulator_count["tabulator_count"]['state']
+    shouldnt("Tabulator end state invalid (#{endstate}) expecting: #{state}") if
+      (endstate != state)
   end
 
 # Arguments:

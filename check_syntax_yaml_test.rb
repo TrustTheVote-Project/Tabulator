@@ -174,7 +174,8 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
         "contest_count_list"=>[schema_contest_count],
         "question_count_list"=>[schema_question_count],
         "counter_count_list"=>[schema_counter_count],
-        "audit_header"=>schema_audit_header_info}}
+        "audit_header"=>schema_audit_header_info,
+        "state"=>"String"}}
     schema_setup(trace, "unknown_type", schema_unknown_type, false)
     schema_setup(trace, "unknown_string", schema_unknown_string, false)
     schema_setup(trace, "invalid_hash_key", schema_invalid_hash_key, false)

@@ -69,9 +69,9 @@ class TabulatorTest < Test::Unit::TestCase
 
   CC1_WARN_1 = ["Non-Existent Reporting Group (Unknown) for Counter UID (COUNTER_1) in Counter Count"]
 
-  CC1_WARN_3 = ["Unexpected Counter UID (COUNTER_1) in Counter Count",
-                "Unexpected Reporting Group (Normal) for Counter UID (COUNTER_1) in Counter Count",
-                "Unexpected Precinct UID (PRECINCT_1) for Counter UID (COUNTER_1) in Counter Count"]
+  CC1_WARN_3 = ["Unexpected Counter UID (COUNTER_2) in Counter Count",
+                "Unexpected Reporting Group (Absentee) for Counter UID (COUNTER_2) in Counter Count",
+                "Unexpected Precinct UID (PRECINCT_1) for Counter UID (COUNTER_2) in Counter Count"]
 
   CC2_ERROR_1 = ["Non-Unique File UID (FILE_1) in Counter Count"]
 
@@ -90,12 +90,10 @@ class TabulatorTest < Test::Unit::TestCase
      "Missing Answers (Bar, Doo) for Question UID (QUESTION_4) in Question Count",
      "Missing Question UIDs (QUESTION_1) in Question Counts"]
 
-  ED_CC1_WARN_2 =
-    ["Missing Counter UIDs (COUNTER_1) from Expected Counts",
-     "Missing Precinct UIDs (PRECINCT_1) from Expected Counts"]
-
   CC4_ERROR_1 =
     ["Duplicate Counter Count (COUNTER_2, Normal, PRECINCT_2) Input to Tabulator"]
+  CC4_WARN_1 =
+    ["Unexpected Counter Count (COUNTER_2, Normal, PRECINCT_2) After Tabulator DONE"]
 
   ERRHEAD = "** ERROR **"
   WARHEAD = "** WARNING **"
@@ -111,6 +109,7 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
+    tabulator_test_counter_count(trace, "CC1_WARN_3.yml", [], CC1_WARN_3)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_counter_count(trace, "CC1_ERROR_4.yml", CC1_ERROR_4, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
@@ -124,9 +123,7 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_test_counter_count(trace, "CC1.yml", [], [])
     tabulator_test_counter_count(trace, "CC2.yml", [], [])
     tabulator_test_counter_count(trace, "CC3.yml", [], [], true)
-    tabulator_test_counter_count(trace, "CC4_ERROR_1.yml", CC4_ERROR_1, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_CC1_WARN_2.yml", [], ED_CC1_WARN_2)
-    tabulator_test_counter_count(trace, "CC1_WARN_3.yml", [], CC1_WARN_3)
+    tabulator_test_counter_count(trace, "CC4_ERROR_1.yml", CC4_ERROR_1, CC4_WARN_1)
   end
 
 # Arguments:

@@ -84,6 +84,7 @@ tabulator_count:
       writein_count: Integer
     contest_ident: Atomic
     undervote_count: Integer
+  state: String
   audit_header: *id001
   counter_count_list: 
   - "|OPT2|": 

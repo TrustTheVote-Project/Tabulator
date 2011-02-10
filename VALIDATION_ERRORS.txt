@@ -12,7 +12,7 @@ Unexpected:   not expected, but not invalid (Counter/Reporting Group/Precinct
 
   def dups 
   def initialize(jurisdiction_definition = false, election_definition = false,
-  def validation_errors()
+  def validation_errors(reset = false)
   def validation_warnings(reset = false)
   def shouldnt(message1, value1 = "")
   def error (message1, value1 = "", message2 = "", value2 = "", message3 = "")
@@ -22,49 +22,48 @@ Unexpected:   not expected, but not invalid (Counter/Reporting Group/Precinct
   def uid_add(type, uid)
   def new_tabulator_count(jurisdiction_definition, election_definition, file)
 
-
   def validate_jurisdiction_definition(jurisdiction_definition)
   def validate_precincts(precincts)
-        error("Non-Unique Precinct UID", pid)
+        error("Non-Unique Precinct UID", pid, "in Jurisdiction Definition")
   def validate_districts(districts)
-        error("Non-Unique District UID", did)
+        error("Non-Unique District UID", did, "in Jurisdiction Definition")
+  def validate_errors_warnings (object, name, errwarn)
 
-
-  def validate_election_definition(election_definition)
-      warning("Missing ALL Reporting Groups, None Present")
-      warning("Missing ALL Expected Counts, None Present")
+  def validate_election_definition(election_definition, errwarn = false)
+    error("Non-Existent Jurisdiction UID", jid, "in Election Definition") unless 
+      warning("Missing ALL Reporting Groups, None Present in Election Definition")
+      warning("Missing ALL Expected Counts, None Present in Election Definition")
   def validate_election(election)
   def validate_contests(contests)
-        error("Non-Unique Contest UID", conid)
-      error("Non-Existent District UID", did, "in Contest UID", conid) unless
+        error("Non-Unique Contest UID", conid, "in Election Definition")
+      error("Non-Existent District UID", did, "in Contest UID", conid, "in Election Definition") unless
   def validate_candidates(candidates)
-        error("Non-Unique Candidate UID", canid)
-        error("Non-Existent Contest UID", conid, "for Candidate UID", canid)
+        error("Non-Unique Candidate UID", canid, "in Election Definition")
+        error("Non-Existent Contest UID", conid, "for Candidate UID", canid, "in Election Definition")
   def validate_questions(questions)
-        error("Non-Unique Question UID", qid)
-      error("Non-Existent District UID", did, "for Question UID", qid) unless
-        error("Duplicate Answers", ansdups, "for Question UID", qid)
+        error("Non-Unique Question UID", qid, "in Election Definition")
+      error("Non-Existent District UID", did, "for Question UID", qid, "in Question") unless
+        error("Duplicate Answers", ansdups, "for Question UID", qid, "in Question")
   def validate_counters(counters)
-        error("Non-Unique Counter UID", counid)
+        error("Non-Unique Counter UID", counid, "in Election Definition")
   def validate_reporting_groups(reporting_groups)
-        error("Duplicate Reporting Group", rg)
+        error("Duplicate Reporting Group", rg, "in Election Definition")
   def validate_expected_counts(expected_counts)
       error("Non-Existent Counter UID", cid, "in Expected Count") unless
       error("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count") unless
         error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count") unless
-                warning("Duplicate Expected Count", cidrgpid)
+                warning("Duplicate Expected Count", cidrgpid, "in Election Definition")
         warning("Missing Counter UIDs", diff_cids, "from Expected Counts")
         warning("Missing Reporting Groups", diff_rgs, "from Expected Counts")
         warning("Missing Precinct UIDs", diff_pids, "from Expected Counts")
 
-
-  def validate_counter_count(counter_count)
+  def validate_counter_count(counter_count, errwarn = false)
     error("Non-Existent Counter UID", cid, "in Counter Count") unless
     warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count") unless
     error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Counter Count") unless
     error("Non-Existent Jurisdiction UID", jid, "for Counter UID", cid, "in Counter Count") unless 
     error("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
-      error("Non-Unique File UID", fid)
+      error("Non-Unique File UID", fid, "in Counter Count")
   def validate_contest_counts(contest_counts)
         error("Non-Existent Contest UID", conid, "in Contest Count")
         error("Duplicate Contest UID", conid, "in Contest Count")
@@ -82,11 +81,11 @@ Unexpected:   not expected, but not invalid (Counter/Reporting Group/Precinct
           error("Missing Answers", ansdiff, "for Question UID", qid, "in Question Count")
       error("Missing Question UIDs", qdiff, "in Question Counts")
   def counts_missing_update(cid, rg, pid)
+    warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
         warning("Unexpected Counter UID", cid, "in Counter Count")
         warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
             warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
-      error("Duplicate Counter Count Identity Information", cidrgpid)
-
+      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
 
   def validate_tabulator_count(tabulator_count)
-  def validate_counter_counts(counter_counts)
+  def validate_counter_counts(counter_counts, errwarn = false)

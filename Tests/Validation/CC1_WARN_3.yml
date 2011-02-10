@@ -1,7 +1,7 @@
 --- 
 counter_count: 
-  counter_ident: COUNTER_1
-  reporting_group: Normal
+  counter_ident: COUNTER_2
+  reporting_group: Absentee
   election_ident: ELECTION_1
   audit_header: 
     software: GNU
@@ -23,17 +23,6 @@ counter_count:
     - candidate_name: Candidate 2
       candidate_ident: CANDIDATE_2
       count: 9
-  - contest_ident: CONTEST_2
-    undervote_count: 1
-    overvote_count: 2
-    writein_count: 3
-    candidate_count_list:
-    - candidate_name: Candidate 4
-      candidate_ident: CANDIDATE_4
-      count: 7
-    - candidate_name: Candidate 5
-      candidate_ident: CANDIDATE_5
-      count: 9
   - contest_ident: CONTEST_3
     candidate_count_list:
     - candidate_name: Candidate 3
@@ -43,14 +32,6 @@ counter_count:
     overvote_count: 2
     writein_count: 3
   question_count_list: 
-  - question_ident: QUESTION_1
-    undervote_count: 4
-    overvote_count: 5
-    answer_count_list: 
-    - answer: Yay
-      count: 10
-    - answer: Nay
-      count: 55
   - question_ident: QUESTION_2
     undervote_count: 4
     overvote_count: 5
@@ -61,21 +42,3 @@ counter_count:
       count: 55
     - answer: C
       count: 99
-  - question_ident: QUESTION_3
-    undervote_count: 4
-    overvote_count: 5
-    answer_count_list: 
-    - answer: Slop
-      count: 10
-    - answer: Glop
-      count: 55
-  - question_ident: QUESTION_4
-    undervote_count: 4
-    overvote_count: 5
-    answer_count_list: 
-    - answer: Foo
-      count: 10
-    - answer: Bar
-      count: 55
-    - answer: Doo
-      count: 44

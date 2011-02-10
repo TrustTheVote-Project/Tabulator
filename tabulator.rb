@@ -50,21 +50,24 @@ class Tabulator < TabulatorValidate
   def tabulator_state(tabulator_count)
     if (tabulator_count.is_a?(Hash) &&
         tabulator_count.keys.include?("tabulator_count"))
+      state = tabulator_count["tabulator_count"]["state"]
       missed = self.counts_missing["missing"].length.to_s
       total = self.counts_missing["total"].to_s
       count = (total == 1 ? "1 Expected Count" :
                "#{total.to_s} Expected Counts")
-      if (0 == tabulator_count["tabulator_count"]["counter_count_list"].length)
+      if (state == 'INITIAL')
         ["INITIAL (Waiting for 1st of #{count})", [], []]
-      elsif (missed == "0")
+      elsif (state == 'DONE')
         ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], []]
-      else
+      elsif (state == 'ACCUMULATING')
         ["ACCUMULATING (#{missed} Missing from #{count})",
          self.counts_missing["missing"],
          self.counts_missing["finished"]]
+      else
+        shouldnt("Invalid Tabulator State: #{state.to_s}")
       end
     else
-      shouldnt("Invalid Tabulator Count passed to tabulator_state")
+      shouldnt("Invalid Tabulator Count: #{tabulator_count.inspect}")
     end
   end
 

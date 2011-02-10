@@ -2,6 +2,7 @@
 tabulator_count: 
   election_ident: ELECTION_1
   jurisdiction_ident: JURISDICTION_1
+  state: ACCUMULATING
   audit_header: 
     software: GNU
     file_ident: TAB_FILE_1
