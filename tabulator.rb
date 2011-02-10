@@ -302,6 +302,10 @@ class Tabulator < TabulatorValidate
       else
         prefix = "  #{type} (#{uids.length.to_s}): "
         print prefix
+        if (uids.length > 10)
+          prefix = "    "
+          print "\n#{prefix}"
+        end
         pp_uids(uids, prefix.length, prefix.length, 78)
       end
     end
