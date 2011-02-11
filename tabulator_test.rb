@@ -303,10 +303,9 @@ class TabulatorTest < Test::Unit::TestCase
     tab = tabulator_test_instantiate_tabulator(trace)
     print "\nTabulator Accumulating New Counter Count from File: #{cc_file}\n"
     cc = tabulator_test_check_syntax(trace, "counter_count", cc_file)
-    tc = tab.tabulator_count
     tab.validate_counter_count(cc)
-    tc = tab.update_tabulator_count(tc, cc)
-    tabulator_test_write_tabulator_file(tc)
+    tab.update_tabulator_count(cc)
+    tabulator_test_write_tabulator_file(tab.tabulator_count)
     taberrs = tabulator_test_errors(tab.validation_errors(), errors)
     tabwarns = tabulator_test_warnings(tab.validation_warnings(), warnings)
     if (tab.validation_errors().length == 0)
@@ -318,7 +317,7 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_print_errors_warnings(tab)
     if (done)
       print "Checking to see if Tabulator State is DONE... "
-      doneness = tab.tabulator_state(tc)
+      doneness = tab.tabulator_state
       assert((doneness[0] =~ /^DONE/) && (doneness[1].length == 0),
              "Tabulator State should be DONE but is not:\n#{doneness[0]}\n")
       print "YES!\n"

@@ -47,27 +47,22 @@ class Tabulator < TabulatorValidate
 # * ACCUMULATING: Waiting for Counter Counts, M Missing
 # * DONE: All M Expected Counter Counts Accumulated
 
-  def tabulator_state(tabulator_count)
-    if (tabulator_count.is_a?(Hash) &&
-        tabulator_count.keys.include?("tabulator_count"))
-      state = tabulator_count["tabulator_count"]["state"]
-      missed = self.counts_missing["missing"].length.to_s
-      total = self.counts_missing["total"].to_s
-      count = (total == 1 ? "1 Expected Count" :
-               "#{total.to_s} Expected Counts")
-      if (state == 'INITIAL')
-        ["INITIAL (Waiting for 1st of #{count})", [], []]
-      elsif (state == 'DONE')
-        ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], []]
-      elsif (state == 'ACCUMULATING')
-        ["ACCUMULATING (#{missed} Missing from #{count})",
-         self.counts_missing["missing"],
-         self.counts_missing["finished"]]
-      else
-        shouldnt("Invalid Tabulator State: #{state.to_s}")
-      end
+  def tabulator_state()
+    state = self.tabulator_count["tabulator_count"]["state"]
+    missed = self.counts_missing["missing"].length.to_s
+    total = self.counts_missing["total"].to_s
+    count = (total == 1 ? "1 Expected Count" : "#{total.to_s} Expected Counts")
+    case state
+    when "INITIAL"
+      ["INITIAL (Waiting for 1st of #{count})", [], []]
+    when "DONE"
+      ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], []]
+    when "ACCUMULATING"
+      ["ACCUMULATING (#{missed} Missing from #{count})",
+       self.counts_missing["missing"],
+       self.counts_missing["finished"]]
     else
-      shouldnt("Invalid Tabulator Count: #{tabulator_count.inspect}")
+      shouldnt("Invalid Tabulator State: #{state.to_s}")
     end
   end
 
@@ -83,17 +78,17 @@ class Tabulator < TabulatorValidate
 # Counter Counts held by the Tabulator, and returns the resulting Tabulator
 # Count.
 
-  def update_tabulator_count(tabulator_count, counter_count)
+  def update_tabulator_count(counter_count)
     fid = counter_count["counter_count"]["audit_header"]["file_ident"].to_s
-    at = tabulator_count["tabulator_count"]["audit_header"]
+    tc = self.tabulator_count["tabulator_count"]
+    at = tc["audit_header"]
     if (at.keys.include?("provenance"))
       at["provenance"].push(fid)
     else
       at["provenance"] = [fid]
     end
     votes_gather(counter_count) unless counter_count['error_list'].length > 0
-    tabulator_count["tabulator_count"]["counter_count_list"].push(counter_count)
-    tabulator_count
+    tc["counter_count_list"].push(counter_count)
   end
 
 # Arguments:
@@ -279,17 +274,18 @@ class Tabulator < TabulatorValidate
   end
 
 # Arguments:
-# * <i>tc</i>: (<i>Hash</i>) Tabulator Count (optional)
+# * <i>print</i>: (<i>Boolean</i>) whether to print the Tabulator Count (optional)
 #
 # Returns: N/A
 #
-# Prints the values of all of the Tabulator attributes, after printing the
-# value of the optional Tabulator Count <i>tc</i> provided as an argument.
+# Prints the value of the current Tabulator Count if <i>print</i> is
+# <i>true</i>.  Prints the values of all of the Tabulator attributes (internal
+# data structures).
 
-  def tabulator_data(tc = false)
-    print "Tabulator Count:\n" if tc
-    print YAML::dump(tc),"\n" if tc
-    print "Tabulator Data Summary:\n" if tc
+  def tabulator_data(print = false)
+    print "Tabulator Count:\n" if print
+    print YAML::dump(self.tabulator_count),"\n" if print
+    print "Tabulator Data Summary:\n"
     print "  Jurisdiction UID: #{uids['jurisdiction'][0]}\n"
     print "  Election UID: #{uids['election'][0]}\n"
     ['district','precinct','contest','candidate','question','counter',

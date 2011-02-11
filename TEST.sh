@@ -34,16 +34,19 @@ test_default ()
     #exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
+    echo " "
     #ruby operator.rb state
     #exitif
     ruby operator.rb add Tests/Default/CC2.yml
     exitif
+    echo " "
     #ruby operator.rb state
     #exitif
     #ruby operator.rb data
     #exitif
     ruby operator.rb add Tests/Default/CC3.yml
     exitif
+    echo " "
     #ruby operator.rb state
     #exitif
 }
@@ -109,8 +112,10 @@ test_bedrock ()
     exitif
     ruby operator.rb add Tests/Bedrock/Bedrock_CC1.yml
     exitif
+    echo " "
     ruby operator.rb state
     exitif
+    echo " "
 }
 
 if [ "$#" -eq 0 ]

@@ -163,6 +163,16 @@ class TabulatorValidate
     self.errors
   end
 
+# No Arguments
+# 
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> iff the <tt><b>errors</b></tt> message stack is non-empty.
+
+  def validation_errors?()
+    self.errors.length > 0
+  end
+
 # Arguments:
 # * <i>reset</i>: (<i>Boolean</i>) indicates whether to reset the <tt><b>warnings</b></tt> stack (optional)
 # 
@@ -175,17 +185,6 @@ class TabulatorValidate
     self.warnings
   end
 
-# No Arguments
-# 
-# Returns: <i>Boolean</i>
-#
-# Returns <i>true</i> iff the <tt><b>errors</b></tt> message stack is empty.
-
-  private
-  def validation_errors_empty()
-    self.errors.length == 0
-  end
-
 # Arguments:
 # * <i>message1</i>: (<i>String</i>) message
 # * <i>value1</i>:  (<i>Arbitrary</i>) value for message1 (optional)
@@ -195,6 +194,7 @@ class TabulatorValidate
 # Prints a FATAL ERROR message and exits. For internal problems only. Should
 # never be called. 
 
+  private
   def shouldnt(message1, value1 = "")
     message = "#{message1}" +
       (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
@@ -754,8 +754,8 @@ class TabulatorValidate
       uid_exists?("file", fid)
     validate_contest_counts(ccinfo["contest_count_list"])
     validate_question_counts(ccinfo["question_count_list"])
-    update_counts_missing(cid, rg, pid) if validation_errors_empty
-    uid_add("file", fid) if validation_errors_empty
+    update_counts_missing(cid, rg, pid) unless validation_errors?
+    uid_add("file", fid) unless validation_errors?
     validate_errors_warnings(counter_count, "Counter Count", errwarn)
   end
 
