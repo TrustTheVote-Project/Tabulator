@@ -21,7 +21,7 @@ test_all ()
     test_bedrock
     test_va
     test_dc
-    echo -e "!! ALL TABULATOR TESTS SUCCESSFUL !!\n"
+    echo -e "\n!! ALL TABULATOR TESTS SUCCESSFUL !!\n"
     exit
 }
 
