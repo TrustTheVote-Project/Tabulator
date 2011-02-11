@@ -504,7 +504,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Contests are valid iff:
-# 1. each Contest UID is unique (there are no duplicates), and 
+# 1. each Contest UID is uniquely defined, and
 # 2. each Contest"s District UID exists (validate_districts added it to the set of  District UIDs). 
 # This method also initializes the <tt><b>counts_contests</b></tt> attribute,
 # by, for each Contest, using the Contest UID as a key under which to hash a
@@ -543,7 +543,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Candidates are valid iff:
-# 1. each Candidate UID is uniquely declared,
+# 1. each Candidate UID is uniquely defined,
 # 2. each Candidate"s Contest UID exists (validate_contests added it to the set of Contest UIDs). 
 # This method also completes the initialization of the
 # <tt><b>counts_contests</b></tt> attribute, by, for each Candidate, adding a
@@ -582,7 +582,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Questions are valid iff:
-# 1. each Question UID is uniquely declared,
+# 1. each Question UID is uniquely defined,
 # 2. each Question"s District UID exists (validate_districts added it to the set of  District UIDs), and
 # 3. no Answers are duplicated.
 # This method also initializes the <tt><b>counts_questions</b></tt> attribute,
@@ -625,7 +625,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Counters are valid iff:
-# 1. each Counter UID is unique (there are no duplicates).
+# 1. each Counter UID is uniquely defined.
 
   def validate_counters(counters)
     uniq_counters = []
@@ -654,7 +654,7 @@ class TabulatorValidate
   def validate_reporting_groups(reporting_groups)
     reporting_groups.each do |rg|
       if (uid_exists?("reporting group", rg))
-        error("Duplicate Reporting Group", rg, "in Election Definition")
+        warning("Duplicate Reporting Group", rg, "in Election Definition")
       else
         uid_add("reporting group", rg)
       end

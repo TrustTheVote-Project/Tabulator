@@ -39,7 +39,7 @@ class TabulatorTest < Test::Unit::TestCase
   JD_WARN_2 = ["Duplicate Precinct Declaration (PRECINCT_2) in Jurisdiction Definition",
                 "Duplicate District Declaration (DISTRICT_3) in Jurisdiction Definition"]
 
-  ED_ERROR_13 =
+  ED_ERROR_12 =
     ["Non-Existent Jurisdiction UID (JURISDICTION_11) in Election Definition",
      "Non-Unique Contest UID (CONTEST_1) in Election Definition",
      "Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3) in Election Definition",
@@ -49,16 +49,16 @@ class TabulatorTest < Test::Unit::TestCase
      "Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2) in Question",
      "Duplicate Answers (A, C) for Question UID (QUESTION_2) in Question",
      "Non-Unique Counter UID (COUNTER_1) in Election Definition",
-     "Duplicate Reporting Group (Absentee) in Election Definition",
      "Non-Existent Counter UID (COUNTER_11) in Expected Count",
      "Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count",
      "Non-Existent Precinct UID (PRECINCT_22) for Counter UID (COUNTER_2) in Expected Count"]
 
-  ED_WARN_13_4 =
+  ED_WARN_12_5 =
     ["Duplicate Contest Declaration (CONTEST_2) in Election Definition",
      "Duplicate Candidate Declaration (CANDIDATE_3) in Election Definition",
      "Duplicate Question Declaration (QUESTION_1) in Election Definition",
-     "Duplicate Counter Declaration (COUNTER_2) in Election Definition"]
+     "Duplicate Counter Declaration (COUNTER_2) in Election Definition",
+     "Duplicate Reporting Group (Absentee) in Election Definition"]
 
   ED_WARN_2 =
     ["Missing ALL Reporting Groups, None Present in Election Definition",
@@ -117,7 +117,7 @@ class TabulatorTest < Test::Unit::TestCase
     trace = 300          # In case we need to trace, for debugging these tests
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, JD_WARN_2)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, ED_WARN_13_4)
+    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, ED_WARN_12_5)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
     tabulator_test_counter_count(trace, "CC1_WARN_1A.yml", [], CC1_WARN_1A)
