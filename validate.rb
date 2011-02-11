@@ -74,9 +74,11 @@ class TabulatorValidate
   attr_accessor :counts_questions
 
 # <i>Hash</i> with <i>Keys</i>: "total" (<i>Integer</i> number of individually
-# expected counts); "precincts" <i>Array</i> of expected precinct UIDs,
-# "finished" <i>Array</i> of finished precinct UIDs, "missing" <i>Array</i> of
+# expected counts); "precincts" <i>Array</i> of expected precinct UIDs;
+# "finished" <i>Array</i> of finished precinct UIDs; "missing" <i>Array</i> of
 # missing counts, each sub-array of which contains [Counter UID, Reporting
+# Group, Precinct UID]; "accumulated" <i>Array</i> of
+# accumulated counts, each sub-array of which contains [Counter UID, Reporting
 # Group, Precinct UID]; and "expected" (expected counts, <i>Hash</i> with
 # <i>Key</i>: Counter UID, <i>Value</i>: <i>Hash</i> with <i>Key</i>:
 # Reporting Group, <i>Value</i>: <i>Hash</i> with <i>Key</i>: Precinct UID,
@@ -120,7 +122,7 @@ class TabulatorValidate
     self.counts_contests = Hash.new { |h,k| h[k] = {} }
     self.counts_questions = Hash.new { |h,k| h[k] = {} }
     self.counts_missing = {"total"=>0, "precincts"=>[], "finished"=>[], "missing"=>[],
-      "expected"=>Hash.new { |h,k| h[k] = {} }}
+      "accumulated"=>[], "expected"=>Hash.new { |h,k| h[k] = {} }}
     self.errors = []
     self.warnings = []
     if (jurisdiction_definition)
@@ -173,6 +175,17 @@ class TabulatorValidate
     self.warnings
   end
 
+# No Arguments
+# 
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> iff the <tt><b>errors</b></tt> message stack is empty.
+
+  private
+  def validation_errors_empty()
+    self.errors.length == 0
+  end
+
 # Arguments:
 # * <i>message1</i>: (<i>String</i>) message
 # * <i>value1</i>:  (<i>Arbitrary</i>) value for message1 (optional)
@@ -182,7 +195,6 @@ class TabulatorValidate
 # Prints a FATAL ERROR message and exits. For internal problems only. Should
 # never be called. 
 
-  private
   def shouldnt(message1, value1 = "")
     message = "#{message1}" +
       (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
@@ -251,8 +263,7 @@ class TabulatorValidate
   def uid_exists?(type, uid)
     shouldnt("Invalid UID type", type) unless UID_TYPES.include?(type)
     uid = uid.to_s
-    value = self.uids[type].include?(uid)
-    value
+    self.uids[type].include?(uid)
   end
 
 # Arguments:
@@ -309,9 +320,9 @@ class TabulatorValidate
       {"election_ident"=>edinfo["election"]["ident"],
         "jurisdiction_ident"=>jdinfo["ident"],
         "audit_header"=>
-        {"software"=>"TTV Tabulator v Jeff Cook",
+        {"software"=>"TTV Tabulator",
           "file_ident"=>file,
-          "operator"=>"El Jefe",
+          "operator"=>"Jeffrey Valjean Cook",
           "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S")},
         "jurisdiction_definition"=>jdinfo,
         "election_definition"=>edinfo,
@@ -406,7 +417,7 @@ class TabulatorValidate
           validation_errors(true)
           validation_warnings(true)
         else
-          shouldnt("Warnings mismatch in #{name} 1) #{validation_warnings().inspect}")
+          shouldnt("Warnings mismatch in #{name}")
         end
       elsif (object['warning_list'] == validation_warnings())
         shouldnt("Errors mismatch in #{name}")
@@ -647,47 +658,57 @@ class TabulatorValidate
         error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count") unless
           uid_exists?("precinct", pid)
       end
-      if (validation_errors().length == 0)
-        exp_cids.push(cid) unless exp_cids.include?(cid)
-        exp_rgs.push(rg) unless exp_rgs.include?(rg)
-        ecount["precinct_ident_list"].each do |pid|
-          pid = pid.to_s
-          exp_pids.push(pid) unless exp_pids.include?(pid)
-          if (self.counts_missing["expected"][cid].is_a?(Hash))
-            if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
-              if (self.counts_missing["expected"][cid][rg].keys.include?(pid))
-                warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition")
-              else
-                self.counts_missing["expected"][cid][rg][pid] = false
-              end
-            else
-              self.counts_missing["expected"][cid][rg] = {pid=>false}
-            end
-          else
-            self.counts_missing["expected"][cid] = {rg=>{pid=>false}}
-          end
-          self.counts_missing["total"] += 1
-          self.counts_missing["missing"].push([cid, rg, pid])
-        end
+      exp_cids.push(cid) unless exp_cids.include?(cid)
+      exp_rgs.push(rg) unless exp_rgs.include?(rg)
+      ecount["precinct_ident_list"].each do |pid|
+        pid = pid.to_s
+        exp_pids.push(pid) unless exp_pids.include?(pid)
+        update_expected_counts(cid, rg, pid)
       end
     end
     self.counts_missing["precincts"] = exp_pids
     self.counts_missing["finished"] = []
-    if (validation_errors().length == 0)
-      unless (self.uids["counter"].length == exp_cids.length)
-        diff_cids = (self.uids["counter"] - exp_cids).inspect
-        warning("Missing Counter UIDs", diff_cids, "from Expected Counts")
-      end
-      unless (self.uids["reporting group"].length == exp_rgs.length)
-        diff_rgs = (self.uids["reporting group"] - exp_rgs).inspect
-        warning("Missing Reporting Groups", diff_rgs, "from Expected Counts")
-      end
-      unless (self.uids["precinct"].length == exp_pids.length)
-        diff_pids = (self.uids["precinct"] - exp_pids).inspect
-        warning("Missing Precinct UIDs", diff_pids, "from Expected Counts")
-      end
-    end
+    diff_cids = (self.uids["counter"] - exp_cids)
+    warning("Missing Counter UIDs", diff_cids, "from Expected Counts") unless
+      (diff_cids.length == 0)
+    diff_rgs = (self.uids["reporting group"] - exp_rgs)
+    warning("Missing Reporting Groups", diff_rgs, "from Expected Counts") unless
+      (diff_rgs.length == 0)
+    diff_pids = (self.uids["precinct"] - exp_pids)
+    warning("Missing Precinct UIDs", diff_pids, "from Expected Counts") unless
+      (diff_pids.length == 0)
   end
+
+# Arguments:
+# * <i>cid</i>: (<i>String</i>) Counter UID
+# * <i>rg</i>:  (<i>String</i>) Reporting Group name
+# * <i>pid</i>: (<i>String</i>) Precinct UID
+#
+# Returns: N/A
+#
+# Updates the "expected" part of the <tt><b>counts_missing</b></tt> attribute,
+# by setting <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> to
+# <i>false</i>.  It is set to <i>true</i> when the appropriate count is
+# accumulated by the Tabulator.
+
+  def update_expected_counts (cid, rg, pid)
+    if (self.counts_missing["expected"][cid].is_a?(Hash))
+      if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
+        warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition") if
+          self.counts_missing["expected"][cid][rg].keys.include?(pid)
+        self.counts_missing["expected"][cid][rg][pid] = false
+      else
+        self.counts_missing["expected"][cid][rg] = {pid=>false}
+      end
+    else
+      self.counts_missing["expected"][cid] = {rg=>{pid=>false}}
+    end
+    unless (self.counts_missing["missing"].include?([cid, rg, pid]))
+      self.counts_missing["total"] += 1
+      self.counts_missing["missing"].push([cid, rg, pid])
+    end
+  end    
+
 
 # Arguments:
 # * <i>counter_count</i>: (<i>Hash</i>) Counter Count object
@@ -728,14 +749,13 @@ class TabulatorValidate
     eid = ccinfo["election_ident"].to_s
     error("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
       uid_exists?("election", eid)
-    if (uid_exists?("file", fid = ccinfo["audit_header"]["file_ident"]))
-      error("Non-Unique File UID", fid, "in Counter Count")
-    else
-      uid_add("file", fid)
-    end
+    fid = ccinfo["audit_header"]["file_ident"]
+    error("Non-Unique File UID", fid, "in Counter Count") if
+      uid_exists?("file", fid)
     validate_contest_counts(ccinfo["contest_count_list"])
     validate_question_counts(ccinfo["question_count_list"])
-    counts_missing_update(cid, rg, pid) if (validation_errors().length == 0)
+    update_counts_missing(cid, rg, pid) if validation_errors_empty
+    uid_add("file", fid) if validation_errors_empty
     validate_errors_warnings(counter_count, "Counter Count", errwarn)
   end
 
@@ -875,47 +895,62 @@ class TabulatorValidate
 # were defined and this was the last missing count, then the Tabulator state
 # is set to DONE.
 
-  def counts_missing_update(cid, rg, pid)
+  def update_counts_missing(cid, rg, pid)
     self.tabulator_count['tabulator_count']['state'] = 'ACCUMULATING' if
       self.tabulator_count['tabulator_count']['state'] == 'INITIAL'
     warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
       (self.tabulator_count['tabulator_count']['state'] == 'DONE')
-    expected = self.counts_missing["expected"]
-    goahead = true
-    if (! expected.keys.include?(cid))
-      goahead = false
-      if (uid_exists?("counter", cid))
-        warning("Unexpected Counter UID", cid, "in Counter Count")
-      else 
-        shouldnt("Counter Count has invalid Counter UID", cid)
-      end
-    end
-    if (! (expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
-      goahead = false
-      if (uid_exists?("reporting group", rg))
-        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
-        if (! (expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
-          if (uid_exists?("precinct", pid))
-            warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
-          else 
-            shouldnt("Counter Count for #{cid} has invalid Precinct UID", pid)
-          end
+    if (self.counts_missing["accumulated"].include?([cid, rg, pid]))
+      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
+    else
+      self.counts_missing["accumulated"].push([cid, rg, pid])
+      if (really_expected?(cid, rg, pid))
+        if (self.counts_missing["expected"][cid][rg][pid] == false)
+          self.counts_missing["accumulated"].push([cid, rg, pid])
+          self.counts_missing["expected"][cid][rg][pid] = true
+          self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
+            ((cid == cid0) && (rg == rg0) && (pid == pid0)) }
+          self.counts_missing["finished"] =
+            self.counts_missing["precincts"].select { |pid|
+            self.counts_missing["missing"].all? {|cid0, rg0, pid0| (pid != pid0)}}
+          self.tabulator_count['tabulator_count']['state'] = 'DONE' if
+            ((self.counts_missing["expected"].keys.length > 0) &&
+             (self.counts_missing["missing"].length == 0))
         end
       end
     end
-    return unless goahead
-    if (expected[cid][rg][pid] == false)
-      self.counts_missing["expected"][cid][rg][pid] = true
-      self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
-        ((cid == cid0) && (rg == rg0) && (pid == pid0)) }
-      self.counts_missing["finished"] =
-        self.counts_missing["precincts"].select { |pid|
-        self.counts_missing["missing"].all? {|cid0, rg0, pid0| (pid != pid0)}}
-      self.tabulator_count['tabulator_count']['state'] = 'DONE' if
-        ((self.counts_missing["expected"].keys.length > 0) &&
-         (self.counts_missing["missing"].length == 0))
+  end
+
+# Arguments:
+# * <i>cid</i>: (<i>String</i>) Counter UID
+# * <i>rg</i>:  (<i>String</i>) Reporting Group name
+# * <i>pid</i>: (<i>String</i>) Precinct UID
+#
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> iff this count is in the list of expected counts.
+# Generates warnings if this is not the case.
+
+  def really_expected?(cid, rg, pid)
+    expected = self.counts_missing["expected"]
+    shouldnt("Counter Count has invalid Counter UID", cid) unless
+      uid_exists?("counter", cid)
+    shouldnt("Counter Count for #{cid} has invalid Precinct UID", pid) unless 
+      uid_exists?("precinct", pid)
+    if (expected.keys.include?(cid))
+      if ((expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
+        if ((expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
+          true
+        else
+          warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
+        end
+      elsif uid_exists?("reporting group", rg)
+        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
+      else
+        false
+      end
     else
-      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
+      warning("Unexpected Counter UID", cid, "in Counter Count")
     end
   end
 

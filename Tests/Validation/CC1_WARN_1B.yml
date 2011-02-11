@@ -1,11 +1,11 @@
 --- 
 counter_count: 
-  counter_ident: COUNTER_2
+  counter_ident: COUNTER_1
   reporting_group: Absentee
   election_ident: ELECTION_1
   audit_header: 
     software: GNU
-    file_ident: FILE_1
+    file_ident: FILE_111
     operator: El Jefe
     create_date: 2010-12-03
   cast_ballot_count: 99

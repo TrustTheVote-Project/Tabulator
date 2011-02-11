@@ -69,9 +69,11 @@ class TabulatorTest < Test::Unit::TestCase
 
   CC1_WARN_1 = ["Non-Existent Reporting Group (Unknown) for Counter UID (COUNTER_1) in Counter Count"]
 
-  CC1_WARN_3 = ["Unexpected Counter UID (COUNTER_2) in Counter Count",
-                "Unexpected Reporting Group (Absentee) for Counter UID (COUNTER_2) in Counter Count",
-                "Unexpected Precinct UID (PRECINCT_1) for Counter UID (COUNTER_2) in Counter Count"]
+  CC1_WARN_1A = ["Unexpected Counter UID (COUNTER_2) in Counter Count"]
+
+  CC1_WARN_1B = ["Unexpected Reporting Group (Absentee) for Counter UID (COUNTER_1) in Counter Count"]
+
+  CC1_WARN_1C = ["Unexpected Precinct UID (PRECINCT_2) for Counter UID (COUNTER_1) in Counter Count"]
 
   CC2_ERROR_1 = ["Non-Unique File UID (FILE_1) in Counter Count"]
 
@@ -109,7 +111,9 @@ class TabulatorTest < Test::Unit::TestCase
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
-    tabulator_test_counter_count(trace, "CC1_WARN_3.yml", [], CC1_WARN_3)
+    tabulator_test_counter_count(trace, "CC1_WARN_1A.yml", [], CC1_WARN_1A)
+    tabulator_test_counter_count(trace, "CC1_WARN_1B.yml", [], CC1_WARN_1B)
+    tabulator_test_counter_count(trace, "CC1_WARN_1C.yml", [], CC1_WARN_1C)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
     tabulator_test_counter_count(trace, "CC1_ERROR_4.yml", CC1_ERROR_4, [])
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])

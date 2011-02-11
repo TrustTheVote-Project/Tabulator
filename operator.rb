@@ -94,21 +94,21 @@ end
 # Resets the Tabulator state to EMPTY, by deleting all Tabulator Count
 # files.
 
-def operator_reset
-  print "\nTabulator reset to EMPTY state..."
+def operator_reset (printit = true)
+  print "\nTabulator reset to EMPTY state..." if printit
   once = false
   if (File.exists?(TABULATOR_COUNT_FILE))
-    print " Deleting Tabulator Count: #{TABULATOR_COUNT_FILE}\n"
+    print " Deleting Tabulator Count: #{TABULATOR_COUNT_FILE}\n" if printit
     File.delete(TABULATOR_COUNT_FILE)
     once = true
   end
   if (File.exists?(TABULATOR_CSV_FILE))
-    print "  Deleting Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n"
+    print "  Deleting Tabulator Spreadsheet: #{TABULATOR_CSV_FILE}\n" if printit
     File.delete(TABULATOR_CSV_FILE)
     once = true
   end
-  print " Nothing to Do\n" unless once
-  print "\n"
+  print " Nothing to Do\n" unless once if printit
+  print "\n" if printit
 end
 
 # Prints the current Tabulator data set, by re-instantiating the Tabulator
@@ -203,8 +203,12 @@ def operator_load_files(file1, file2, trace = false)
     ops_write_yaml_file(TABULATOR_COUNT_FILE, tc, "Tabulator Count", true)
     print "\n"
     operator_data(trace, tab)
+    ops_print_errs(tab, true)
+    true
+  else
+    ops_print_errs(tab, true)
+    false
   end
-  ops_print_errs(tab, true)
 end
 
 # Add the contents of a Counter Count file to the Tabulator state.
@@ -423,17 +427,21 @@ begin
     when "state"
       operator_state(false, false, true, trace)
     when "load"
-      operator_load_files((ARGV.length > 1 ? ARGV[1] : ""),
-                          (ARGV.length > 2 ? ARGV[2] : ""), trace)
-      unless (test)
-        print "** ATTENTION ** ATTENTION **\n\n"
-        print "Carefully examine the data above, then confirm approval to continue [y/n]: "
-        answer = STDIN.gets.chomp
-        if (answer =~ /^[Yy]/)
-          print "Tabulator Initialized.\n"
-        else
-          operator_reset()
+      if (operator_load_files((ARGV.length > 1 ? ARGV[1] : ""),
+                              (ARGV.length > 2 ? ARGV[2] : ""), trace))
+        unless (test)
+          print "** ATTENTION ** ATTENTION **\n\n"
+          print "Carefully examine the data above, then confirm approval to continue [y/n]: "
+          answer = STDIN.gets.chomp
+          if (answer =~ /^[Yy]/)
+            print "Tabulator Initialized.\n"
+          else
+            operator_reset(false)
+          end
         end
+      else
+        operator_reset(false)
+        print "Jurisdiction and Election Definitions REJECTED.\n"
       end
     when "add"
       operator_add_file((ARGV.length > 1 ? ARGV[1] : ""), trace)
