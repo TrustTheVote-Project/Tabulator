@@ -12,6 +12,8 @@ jurisdiction_definition:
     ident: DISTRICT_3
   - display_name: District 4
     ident: DISTRICT_4
+  - display_name: District 5
+    ident: DISTRICT_4
   precinct_list:
   - display_name: Precinct 1
     ident: PRECINCT_1
@@ -19,6 +21,8 @@ jurisdiction_definition:
     ident: PRECINCT_2
   - display_name: Precinct 2
     ident: PRECINCT_2
+  - display_name: Precinct 5
+    ident: PRECINCT_1
   audit_header: 
     file_ident: JD_1
     create_date: Sometime

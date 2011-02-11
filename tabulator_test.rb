@@ -33,8 +33,11 @@ class TabulatorTest < Test::Unit::TestCase
 
   TABULATOR_COUNT_FILE = "TABULATOR_COUNT.yml"
 
-  JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_2) in Jurisdiction Definition",
-                "Non-Unique District UID (DISTRICT_3) in Jurisdiction Definition"]
+  JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_1) in Jurisdiction Definition",
+                "Non-Unique District UID (DISTRICT_4) in Jurisdiction Definition"]
+
+  JD_WARN_2 = ["Duplicate Precinct Declaration (PRECINCT_2) in Jurisdiction Definition",
+                "Duplicate District Declaration (DISTRICT_3) in Jurisdiction Definition"]
 
   ED_ERROR_13 =
     ["Non-Existent Jurisdiction UID (JURISDICTION_11) in Election Definition",
@@ -50,6 +53,12 @@ class TabulatorTest < Test::Unit::TestCase
      "Non-Existent Counter UID (COUNTER_11) in Expected Count",
      "Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count",
      "Non-Existent Precinct UID (PRECINCT_22) for Counter UID (COUNTER_2) in Expected Count"]
+
+  ED_WARN_13_4 =
+    ["Duplicate Contest Declaration (CONTEST_2) in Election Definition",
+     "Duplicate Candidate Declaration (CANDIDATE_3) in Election Definition",
+     "Duplicate Question Declaration (QUESTION_1) in Election Definition",
+     "Duplicate Counter Declaration (COUNTER_2) in Election Definition"]
 
   ED_WARN_2 =
     ["Missing ALL Reporting Groups, None Present in Election Definition",
@@ -107,8 +116,8 @@ class TabulatorTest < Test::Unit::TestCase
   def test_tabulator
     trace = 300          # In case we need to trace, for debugging these tests
     tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, [])
+    tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, JD_WARN_2)
+    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_13.yml", ED_ERROR_13, ED_WARN_13_4)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
     tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
     tabulator_test_counter_count(trace, "CC1_WARN_1A.yml", [], CC1_WARN_1A)

@@ -363,13 +363,19 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Precincts are valid iff:
-# 1. each Precinct UID is unique (there are no duplicates).
+# 1. each Precinct UID is uniquely defined.
 
   def validate_precincts(precincts)
+    uniq_precincts = []
     precincts.each do |precinct|
       if (uid_exists?("precinct", pid = precinct["ident"].to_s))
-        error("Non-Unique Precinct UID", pid, "in Jurisdiction Definition")
+        if (uniq_precincts.include?(precinct))
+          warning("Duplicate Precinct Declaration", pid, "in Jurisdiction Definition")
+        else
+          error("Non-Unique Precinct UID", pid, "in Jurisdiction Definition")
+        end
       else
+        uniq_precincts.push(precinct)
         uid_add("precinct", pid)
       end
     end
@@ -381,13 +387,19 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Districts are valid iff:
-# 1. each District UID is unique (there are no duplicates).
+# 1. each District UID is uniquely defined.
 
   def validate_districts(districts)
+    uniq_districts = []
     districts.each do |district|
       if (uid_exists?("district", did = district["ident"].to_s))
-        error("Non-Unique District UID", did, "in Jurisdiction Definition")
+        if (uniq_districts.include?(district))
+          warning("Duplicate District Declaration", did, "in Jurisdiction Definition")
+        else
+          error("Non-Unique District UID", did, "in Jurisdiction Definition")
+        end
       else 
+        uniq_districts.push(district)
         uid_add("district", did)
       end
     end
@@ -499,10 +511,16 @@ class TabulatorValidate
 # zero-initialized Contest Count object for that Contest.
 
   def validate_contests(contests)
+    uniq_contests = []
     contests.each do |contest|
       if (uid_exists?("contest", conid = contest["ident"].to_s))
-        error("Non-Unique Contest UID", conid, "in Election Definition")
+        if (uniq_contests.include?(contest))
+          warning("Duplicate Contest Declaration", conid, "in Election Definition")
+        else
+          error("Non-Unique Contest UID", conid, "in Election Definition")
+        end
       else
+        uniq_contests.push(contest)
         uid_add("contest", conid)
       end
     end
@@ -525,7 +543,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Candidates are valid iff:
-# 1. each Candidate UID is unique (there are no duplicates), and 
+# 1. each Candidate UID is uniquely declared,
 # 2. each Candidate"s Contest UID exists (validate_contests added it to the set of Contest UIDs). 
 # This method also completes the initialization of the
 # <tt><b>counts_contests</b></tt> attribute, by, for each Candidate, adding a
@@ -533,10 +551,16 @@ class TabulatorValidate
 # object. 
 
   def validate_candidates(candidates)
+    uniq_candidates = []
     candidates.each do |candidate|
       if (uid_exists?("candidate", canid = candidate["ident"].to_s))
-        error("Non-Unique Candidate UID", canid, "in Election Definition")
+        if (uniq_candidates.include?(candidate))
+          warning("Duplicate Candidate Declaration", canid, "in Election Definition")
+        else
+          error("Non-Unique Candidate UID", canid, "in Election Definition")
+        end
       else
+        uniq_candidates.push(candidate)
         uid_add("candidate", canid)
       end
     end
@@ -558,7 +582,7 @@ class TabulatorValidate
 # Returns: N/A
 #
 # The Questions are valid iff:
-# 1. each Question UID is unique (there are no duplicates),
+# 1. each Question UID is uniquely declared,
 # 2. each Question"s District UID exists (validate_districts added it to the set of  District UIDs), and
 # 3. no Answers are duplicated.
 # This method also initializes the <tt><b>counts_questions</b></tt> attribute,
@@ -566,28 +590,32 @@ class TabulatorValidate
 # zero-initialized Question Count object for the Question. 
   
   def validate_questions(questions)
-    questions.each do |question|
-      if (uid_exists?("question", qid = question["ident"].to_s))
-        error("Non-Unique Question UID", qid, "in Election Definition")
-      else
-        uid_add("question", qid)
-      end
-    end
+    uniq_questions = []
     questions.each do |question|
       qid = question["ident"].to_s
-      did = question["district_ident"].to_s
-      error("Non-Existent District UID", did, "for Question UID", qid, "in Question") unless
-        uid_exists?("district", did)
-      answers = question["answer_list"].collect {|answer| answer.to_s}
-      unless (answers.length == answers.uniq.length)
-        ansdups = answers.dups.inspect
-        error("Duplicate Answers", ansdups, "for Question UID", qid, "in Question")
+      if (uid_exists?("question", qid))
+        if (uniq_questions.include?(question))
+          warning("Duplicate Question Declaration", qid, "in Election Definition")
+        else
+          error("Non-Unique Question UID", qid, "in Election Definition")
+        end
+      else
+        uniq_questions.push(question)
+        uid_add("question", qid)
+        did = question["district_ident"].to_s
+        error("Non-Existent District UID", did, "for Question UID", qid, "in Question") unless
+          uid_exists?("district", did)
+        answers = question["answer_list"].collect {|answer| answer.to_s}
+        unless (answers.length == answers.uniq.length)
+          ansdups = answers.dups.inspect
+          error("Duplicate Answers", ansdups, "for Question UID", qid, "in Question")
+        end
+        self.counts_questions[qid] = {"question_ident"=>qid,
+          "overvote_count"=>0,
+          "undervote_count"=>0,
+          "answer_count_list"=>answers.collect {|ans| {"answer"=> ans,
+              "count"=> 0}}}
       end
-      self.counts_questions[qid] = {"question_ident"=>qid,
-        "overvote_count"=>0,
-        "undervote_count"=>0,
-        "answer_count_list"=>answers.collect {|ans| {"answer"=> ans,
-            "count"=> 0}}}
     end
   end
 
@@ -600,10 +628,16 @@ class TabulatorValidate
 # 1. each Counter UID is unique (there are no duplicates).
 
   def validate_counters(counters)
+    uniq_counters = []
     counters.each do |counter|
       if (uid_exists?("counter", counid = counter["ident"].to_s))
-        error("Non-Unique Counter UID", counid, "in Election Definition")
+        if (uniq_counters.include?(counter))
+          warning("Duplicate Counter Declaration", counid, "in Election Definition")
+        else
+          error("Non-Unique Counter UID", counid, "in Election Definition")
+        end
       else
+        uniq_counters.push(counter)
         uid_add("counter", counid)
       end
     end

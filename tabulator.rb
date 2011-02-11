@@ -283,9 +283,9 @@ class Tabulator < TabulatorValidate
 # data structures).
 
   def tabulator_data(print = false)
-    print "Tabulator Count:\n" if print
+    print "Tabulator Count\n" if print
     print YAML::dump(self.tabulator_count),"\n" if print
-    print "Tabulator Data Summary:\n"
+    print "Tabulator Data Summary\n"
     print "  Jurisdiction UID: #{uids['jurisdiction'][0]}\n"
     print "  Election UID: #{uids['election'][0]}\n"
     ['district','precinct','contest','candidate','question','counter',

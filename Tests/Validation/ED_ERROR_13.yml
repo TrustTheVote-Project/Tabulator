@@ -26,10 +26,12 @@ election_definition:
     precinct_ident_list: [PRECINCT_22]
     reporting_group: Absentee
   counter_list:
-  - display_name: Counter 1
+  - display_name: Counter 10
     ident: COUNTER_1
   - display_name: Counter 1
     ident: COUNTER_1
+  - display_name: Counter 2
+    ident: COUNTER_2
   - display_name: Counter 2
     ident: COUNTER_2
   contest_list:
@@ -41,6 +43,14 @@ election_definition:
     ident: CONTEST_1
     district_ident: DISTRICT_1
     election_ident: ELECTION_1
+  - display_name: Contest 2
+    ident: CONTEST_2
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+  - display_name: Contest 2
+    ident: CONTEST_2
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
   - display_name: Contest 3
     ident: CONTEST_3
     district_ident: DISTRICT_11
@@ -50,7 +60,7 @@ election_definition:
     ident: CANDIDATE_1
     contest_ident: CONTEST_1
     party_display_name: Green
-  - display_name: Candidate 1
+  - display_name: Candidate 100
     ident: CANDIDATE_1
     contest_ident: CONTEST_1
     party_display_name: Green
@@ -62,11 +72,20 @@ election_definition:
     ident: CANDIDATE_3
     contest_ident: CONTEST_3
     party_display_name: Brown
+  - display_name: Candidate 3
+    ident: CANDIDATE_3
+    contest_ident: CONTEST_3
+    party_display_name: Brown
   question_list:
   - ident: QUESTION_1
     district_ident: DISTRICT_1
     election_ident: ELECTION_1
     question: Free Beer
+    answer_list: [A, B, C]
+  - ident: QUESTION_1
+    district_ident: DISTRICT_1
+    election_ident: ELECTION_1
+    question: Free Bear
     answer_list: [A, B, C]
   - ident: QUESTION_1
     district_ident: DISTRICT_1
