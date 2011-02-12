@@ -185,6 +185,16 @@ class TabulatorValidate
     self.warnings
   end
 
+# No Arguments
+# 
+# Returns: <i>Boolean</i>
+#
+# Returns <i>true</i> iff the <tt><b>warnings</b></tt> message stack is non-empty.
+
+  def validation_warnings?()
+    self.warnings.length > 0
+  end
+
 # Arguments:
 # * <i>message1</i>: (<i>String</i>) message
 # * <i>value1</i>:  (<i>Arbitrary</i>) value for message1 (optional)

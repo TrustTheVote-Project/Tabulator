@@ -17,6 +17,7 @@ test_tab ()
 test_all ()
 {
     test_syntax
+    test_tab
     test_default
     test_bedrock
     test_va
@@ -30,25 +31,15 @@ test_default ()
     ruby operator.rb reset
     ruby operator.rb test load Tests/Default/JD.yml Tests/Default/ED.yml 
     exitif
-    #ruby operator.rb data
-    #exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
     echo " "
-    #ruby operator.rb state
-    #exitif
     ruby operator.rb add Tests/Default/CC2.yml
     exitif
     echo " "
-    #ruby operator.rb state
-    #exitif
-    #ruby operator.rb data
-    #exitif
     ruby operator.rb add Tests/Default/CC3.yml
     exitif
     echo " "
-    #ruby operator.rb state
-    #exitif
 }
 
 test_def0 ()
@@ -111,9 +102,6 @@ test_bedrock ()
     ruby operator.rb test load Tests/Bedrock/Bedrock_JD.yml Tests/Bedrock/Bedrock_ED.yml
     exitif
     ruby operator.rb add Tests/Bedrock/Bedrock_CC1.yml
-    exitif
-    echo " "
-    ruby operator.rb state
     exitif
     echo " "
 }
