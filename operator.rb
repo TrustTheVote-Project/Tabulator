@@ -29,10 +29,16 @@ require "fileutils"
 require "check_syntax_yaml"
 require "tabulator"
 
-# The OperatorError class is an exception that is used by the Tabulator
-# Operator to implement error-handling.
+# The OperatorError class is used by the Tabulator Opertor to perform
+# error-handling; it holds a single value, the error message string.
 
 class OperatorError < Exception
+  def initialize(message)
+    @message = message
+  end
+  def error_message
+    return @message
+  end
 end
 
 # The Operator class contains the Tabulator Operator.  Methods beginning with
@@ -100,7 +106,7 @@ class Operator
         end
       when "check"
         if (args.length <= 2)
-          opc_check((args.length == 1) ? TABULATOR_COUNT_FILE : args[1])
+          opc_check((args.length == 1) ? false : args[1])
         else
           opx_err("Command #{cmd} has 1 optional argument (file name)")
         end
@@ -109,7 +115,8 @@ class Operator
       end
     end
     return ""
-  rescue OperatorError => message
+  rescue OperatorError => opex
+    message = opex.error_message
     opx_print("** TABOP ERROR ** #{message}\n")
     return message
   rescue
@@ -377,7 +384,12 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # <tt><b>TABULATOR_COUNT_FILE</b></tt> if <i>tc_file</i> is not specified),
 # checking for existence, correct syntax, and validity.
 
-  def opc_check(tc_file)
+  def opc_check(tc_file = false)
+    if (tc_file == false)
+      opx_err("Command \"check\" ignored, Tabulator state: EMPTY") if
+        opx_empty?()
+      tc_file = TABULATOR_COUNT_FILE
+    end
     opx_print("Reading Tabulator Count: #{tc_file}\n")
     tc = opx_file_process(tc_file, "Tabulator Count", "tabulator_count")
     tab = opx_new_tabulator(false, false, false, tc)
@@ -454,12 +466,12 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_file_process(file, type, key, fatal = false)
     etype = (fatal ? "Fatal" : "File")
     file = opx_file_prepend(file)
-    datum = opx_file_read(file, type, fatal)
+    datum = opx_file_read(file, fatal)
     if (!datum.is_a?(Hash))
-      opx_err("#{etype} error, contents of #{type} not a Hash: #{file}")
+      opx_err("#{etype} error, contents of #{type} not a Hash: #{file} #{datum.inspect}")
     elsif (!datum.keys.include?(key))
       opx_err("#{etype} error, Hash missing Key #{key} for #{type}: #{file}")
-    elsif (opx_check_syntax(datum, key))
+    elsif (opx_check_syntax(key, datum))
       datum
     else
       opx_err("#{etype} syntax error in #{type}: #{file}")
@@ -515,7 +527,6 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
 # Arguments:
 # * <i>file</i>:  (<i>String</i>) file name
-# * <i>type</i>:  (<i>String</i>) file type
 # * <i>fatal</i>: (<i>Boolean</i>) indicates when errors are Fatal (optional)
 #
 # Returns: <i>Hash</i>
@@ -527,10 +538,13 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # <tt><b>TABULATOR_COUNT_FILE</b></tt> or a built-in Schema file) if
 # a problem occurs while reading from the file.
 
-  def opx_file_read(file, type, fatal = false)
+  def opx_file_read(file, fatal = false)
     if (opx_file_exist?(file))
       infile = opx_file_open_read(file, fatal)
-      YAML::load(infile)
+      value = YAML::load(infile)
+      print "File: #{file} #{infile}\n"
+      print "Value: #{value.inspect}\n"
+      value
     else
       (fatal ?
        opx_err("Fatal failure, non-existent file: #{file}") :
@@ -648,8 +662,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   end
 
 # Arguments:
-# * <i>datum</i> (<i>Hash</i>) Tabulator input dataset to be syntax-checked against a built-in schema
 # * <i>key</i>  (<i>String</i>) Hash key expected in datum and used to identify the schema
+# * <i>datum</i> (<i>Hash</i>) Tabulator input dataset to be syntax-checked against a built-in schema
 #
 # Returns: <i>Boolean</i>
 #
@@ -657,9 +671,11 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # the <i>datum</i> against the schema identified by the <i>key</i>.  Generates
 # a Fatal error if any problems occur.
 
-  def opx_check_syntax(datum, key)
+  def opx_check_syntax(key, datum)
     schema_file = opx_file_prepend("Schemas/#{key}_schema.yml")
-    schema = opx_file_read(schema_file, "Schema", true)
+    schema = opx_file_read(schema_file, true)
+    #print "Schema: ",YAML::dump(schema),"\n"
+    #print "Datum: ",YAML::dump(datum),"\n"
     (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
   rescue
     opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)")
