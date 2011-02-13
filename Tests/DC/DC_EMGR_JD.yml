@@ -1,0 +1,890 @@
+--- 
+jurisdiction_definition: 
+  precinct_list: 
+  - ident: 1
+    display_name: PRECINCT 1
+  - ident: 2
+    display_name: PRECINCT 2
+  - ident: 3
+    display_name: PRECINCT 3
+  - ident: 4
+    display_name: PRECINCT 4
+  - ident: 5
+    display_name: PRECINCT 5
+  - ident: 6
+    display_name: PRECINCT 6
+  - ident: 7
+    display_name: PRECINCT 7
+  - ident: 8
+    display_name: PRECINCT 8
+  - ident: 9
+    display_name: PRECINCT 9
+  - ident: 10
+    display_name: PRECINCT 10
+  - ident: 11
+    display_name: PRECINCT 11
+  - ident: 12
+    display_name: PRECINCT 12
+  - ident: 13
+    display_name: PRECINCT 13
+  - ident: 14
+    display_name: PRECINCT 14
+  - ident: 15
+    display_name: PRECINCT 15
+  - ident: 16
+    display_name: PRECINCT 16
+  - ident: 17
+    display_name: PRECINCT 17
+  - ident: 18
+    display_name: PRECINCT 18
+  - ident: 19
+    display_name: PRECINCT 19
+  - ident: 20
+    display_name: PRECINCT 20
+  - ident: 21
+    display_name: PRECINCT 21
+  - ident: 22
+    display_name: PRECINCT 22
+  - ident: 23
+    display_name: PRECINCT 23
+  - ident: 24
+    display_name: PRECINCT 24
+  - ident: 25
+    display_name: PRECINCT 25
+  - ident: 26
+    display_name: PRECINCT 26
+  - ident: 27
+    display_name: PRECINCT 27
+  - ident: 28
+    display_name: PRECINCT 28
+  - ident: 29
+    display_name: PRECINCT 29
+  - ident: 30
+    display_name: PRECINCT 30
+  - ident: 31
+    display_name: PRECINCT 31
+  - ident: 32
+    display_name: PRECINCT 32
+  - ident: 33
+    display_name: PRECINCT 33
+  - ident: 34
+    display_name: PRECINCT 34
+  - ident: 35
+    display_name: PRECINCT 35
+  - ident: 36
+    display_name: PRECINCT 36
+  - ident: 37
+    display_name: PRECINCT 37
+  - ident: 38
+    display_name: PRECINCT 38
+  - ident: 39
+    display_name: PRECINCT 39
+  - ident: 40
+    display_name: PRECINCT 40
+  - ident: 41
+    display_name: PRECINCT 41
+  - ident: 42
+    display_name: PRECINCT 42
+  - ident: 43
+    display_name: PRECINCT 43
+  - ident: 44
+    display_name: PRECINCT 44
+  - ident: 45
+    display_name: PRECINCT 45
+  - ident: 46
+    display_name: PRECINCT 46
+  - ident: 47
+    display_name: PRECINCT 47
+  - ident: 48
+    display_name: PRECINCT 48
+  - ident: 49
+    display_name: PRECINCT 49
+  - ident: 50
+    display_name: PRECINCT 50
+  - ident: 51
+    display_name: PRECINCT 51
+  - ident: 52
+    display_name: PRECINCT 52
+  - ident: 53
+    display_name: PRECINCT 53
+  - ident: 54
+    display_name: PRECINCT 54
+  - ident: 55
+    display_name: PRECINCT 55
+  - ident: 56
+    display_name: PRECINCT 56
+  - ident: 57
+    display_name: PRECINCT 57
+  - ident: 58
+    display_name: PRECINCT 58
+  - ident: 59
+    display_name: PRECINCT 59
+  - ident: 60
+    display_name: PRECINCT 60
+  - ident: 61
+    display_name: PRECINCT 61
+  - ident: 62
+    display_name: PRECINCT 62
+  - ident: 63
+    display_name: PRECINCT 63
+  - ident: 64
+    display_name: PRECINCT 64
+  - ident: 65
+    display_name: PRECINCT 65
+  - ident: 66
+    display_name: PRECINCT 66
+  - ident: 67
+    display_name: PRECINCT 67
+  - ident: 68
+    display_name: PRECINCT 68
+  - ident: 69
+    display_name: PRECINCT 69
+  - ident: 70
+    display_name: PRECINCT 70
+  - ident: 71
+    display_name: PRECINCT 71
+  - ident: 72
+    display_name: PRECINCT 72
+  - ident: 73
+    display_name: PRECINCT 73
+  - ident: 74
+    display_name: PRECINCT 74
+  - ident: 75
+    display_name: PRECINCT 75
+  - ident: 76
+    display_name: PRECINCT 76
+  - ident: 77
+    display_name: PRECINCT 77
+  - ident: 78
+    display_name: PRECINCT 78
+  - ident: 79
+    display_name: PRECINCT 79
+  - ident: 80
+    display_name: PRECINCT 80
+  - ident: 81
+    display_name: PRECINCT 81
+  - ident: 82
+    display_name: PRECINCT 82
+  - ident: 83
+    display_name: PRECINCT 83
+  - ident: 84
+    display_name: PRECINCT 84
+  - ident: 85
+    display_name: PRECINCT 85
+  - ident: 86
+    display_name: PRECINCT 86
+  - ident: 87
+    display_name: PRECINCT 87
+  - ident: 88
+    display_name: PRECINCT 88
+  - ident: 89
+    display_name: PRECINCT 89
+  - ident: 90
+    display_name: PRECINCT 90
+  - ident: 91
+    display_name: PRECINCT 91
+  - ident: 92
+    display_name: PRECINCT 92
+  - ident: 93
+    display_name: PRECINCT 93
+  - ident: 94
+    display_name: PRECINCT 94
+  - ident: 95
+    display_name: PRECINCT 95
+  - ident: 96
+    display_name: PRECINCT 96
+  - ident: 97
+    display_name: PRECINCT 97
+  - ident: 98
+    display_name: PRECINCT 98
+  - ident: 99
+    display_name: PRECINCT 99
+  - ident: 100
+    display_name: PRECINCT 100
+  - ident: 101
+    display_name: PRECINCT 101
+  - ident: 102
+    display_name: PRECINCT 102
+  - ident: 103
+    display_name: PRECINCT 103
+  - ident: 104
+    display_name: PRECINCT 104
+  - ident: 105
+    display_name: PRECINCT 105
+  - ident: 106
+    display_name: PRECINCT 106
+  - ident: 107
+    display_name: PRECINCT 107
+  - ident: 108
+    display_name: PRECINCT 108
+  - ident: 109
+    display_name: PRECINCT 109
+  - ident: 110
+    display_name: PRECINCT 110
+  - ident: 111
+    display_name: PRECINCT 111
+  - ident: 112
+    display_name: PRECINCT 112
+  - ident: 113
+    display_name: PRECINCT 113
+  - ident: 114
+    display_name: PRECINCT 114
+  - ident: 115
+    display_name: PRECINCT 115
+  - ident: 116
+    display_name: PRECINCT 116
+  - ident: 117
+    display_name: PRECINCT 117
+  - ident: 118
+    display_name: PRECINCT 118
+  - ident: 119
+    display_name: PRECINCT 119
+  - ident: 120
+    display_name: PRECINCT 120
+  - ident: 121
+    display_name: PRECINCT 121
+  - ident: 122
+    display_name: PRECINCT 122
+  - ident: 123
+    display_name: PRECINCT 123
+  - ident: 124
+    display_name: PRECINCT 124
+  - ident: 125
+    display_name: PRECINCT 125
+  - ident: 126
+    display_name: PRECINCT 126
+  - ident: 127
+    display_name: PRECINCT 127
+  - ident: 128
+    display_name: PRECINCT 128
+  - ident: 129
+    display_name: PRECINCT 129
+  - ident: 130
+    display_name: PRECINCT 130
+  - ident: 131
+    display_name: PRECINCT 131
+  - ident: 132
+    display_name: PRECINCT 132
+  - ident: 133
+    display_name: PRECINCT 133
+  - ident: 134
+    display_name: PRECINCT 134
+  - ident: 135
+    display_name: PRECINCT 135
+  - ident: 136
+    display_name: PRECINCT 136
+  - ident: 137
+    display_name: PRECINCT 137
+  - ident: 138
+    display_name: PRECINCT 138
+  - ident: 139
+    display_name: PRECINCT 139
+  - ident: 140
+    display_name: PRECINCT 140
+  - ident: 141
+    display_name: PRECINCT 141
+  - ident: 142
+    display_name: PRECINCT 142
+  - ident: 143
+    display_name: PRECINCT 143
+  ident: JURISDICTION_1
+  district_list: 
+  - ident: dist-FEDERAL
+    display_name: FEDERAL
+  - ident: dist-CITY OF WASHINGTON WARD 6
+    display_name: CITY OF WASHINGTON WARD 6
+  - ident: dist-DISTRICT OF COLUMBIA
+    display_name: DISTRICT OF COLUMBIA
+  - ident: dist-1ST CONGRESSIONAL DIST
+    display_name: 1ST CONGRESSIONAL DIST
+  - ident: dist-SMD 01-ANC 6C
+    display_name: SMD 01-ANC 6C
+  - ident: dist-SMD 02-ANC 6C
+    display_name: SMD 02-ANC 6C
+  - ident: dist-SMD 03-ANC 6C
+    display_name: SMD 03-ANC 6C
+  - ident: dist-SMD 09-ANC 6C
+    display_name: SMD 09-ANC 6C
+  - ident: dist-CITY OF WASHINGTON WARD 2
+    display_name: CITY OF WASHINGTON WARD 2
+  - ident: dist-SMD 01-ANC 2A
+    display_name: SMD 01-ANC 2A
+  - ident: dist-SMD 05-ANC 2A
+    display_name: SMD 05-ANC 2A
+  - ident: dist-SMD 06-ANC 2A
+    display_name: SMD 06-ANC 2A
+  - ident: dist-SMD 03-ANC 2A
+    display_name: SMD 03-ANC 2A
+  - ident: dist-SMD 04-ANC 2A
+    display_name: SMD 04-ANC 2A
+  - ident: dist-SMD 02-ANC 2A
+    display_name: SMD 02-ANC 2A
+  - ident: dist-SMD 06-ANC 2B
+    display_name: SMD 06-ANC 2B
+  - ident: dist-SMD 02-ANC 2E
+    display_name: SMD 02-ANC 2E
+  - ident: dist-SMD 05-ANC 2E
+    display_name: SMD 05-ANC 2E
+  - ident: dist-SMD 06-ANC 2E
+    display_name: SMD 06-ANC 2E
+  - ident: dist-SMD 07-ANC 2E
+    display_name: SMD 07-ANC 2E
+  - ident: dist-SMD 01-ANC 2E
+    display_name: SMD 01-ANC 2E
+  - ident: dist-SMD 03-ANC 2E
+    display_name: SMD 03-ANC 2E
+  - ident: dist-SMD 04-ANC 2E
+    display_name: SMD 04-ANC 2E
+  - ident: dist-CITY OF WASHINGTON WARD 3
+    display_name: CITY OF WASHINGTON WARD 3
+  - ident: dist-SMD 06-ANC 3D
+    display_name: SMD 06-ANC 3D
+  - ident: dist-SMD 09-ANC 3D
+    display_name: SMD 09-ANC 3D
+  - ident: dist-SMD 01-ANC 3D
+    display_name: SMD 01-ANC 3D
+  - ident: dist-SMD 04-ANC 3D
+    display_name: SMD 04-ANC 3D
+  - ident: dist-SMD 05-ANC 3D
+    display_name: SMD 05-ANC 3D
+  - ident: dist-SMD 02-ANC 3D
+    display_name: SMD 02-ANC 3D
+  - ident: dist-SMD 03-ANC 3D
+    display_name: SMD 03-ANC 3D
+  - ident: dist-SMD 07-ANC 3D
+    display_name: SMD 07-ANC 3D
+  - ident: dist-SMD 04-ANC 3B
+    display_name: SMD 04-ANC 3B
+  - ident: dist-SMD 05-ANC 3E
+    display_name: SMD 05-ANC 3E
+  - ident: dist-SMD 08-ANC 3D
+    display_name: SMD 08-ANC 3D
+  - ident: dist-SMD 01-ANC 3B
+    display_name: SMD 01-ANC 3B
+  - ident: dist-SMD 02-ANC 3B
+    display_name: SMD 02-ANC 3B
+  - ident: dist-SMD 03-ANC 3B
+    display_name: SMD 03-ANC 3B
+  - ident: dist-SMD 05-ANC 3B
+    display_name: SMD 05-ANC 3B
+  - ident: dist-SMD 08-ANC 3C
+    display_name: SMD 08-ANC 3C
+  - ident: dist-SMD 07-ANC 3C
+    display_name: SMD 07-ANC 3C
+  - ident: dist-SMD 01-ANC 2D
+    display_name: SMD 01-ANC 2D
+  - ident: dist-SMD 02-ANC 2D
+    display_name: SMD 02-ANC 2D
+  - ident: dist-SMD 01-ANC 2B
+    display_name: SMD 01-ANC 2B
+  - ident: dist-SMD 02-ANC 2B
+    display_name: SMD 02-ANC 2B
+  - ident: dist-SMD 03-ANC 2B
+    display_name: SMD 03-ANC 2B
+  - ident: dist-SMD 07-ANC 2B
+    display_name: SMD 07-ANC 2B
+  - ident: dist-SMD 08-ANC 2B
+    display_name: SMD 08-ANC 2B
+  - ident: dist-SMD 04-ANC 2B
+    display_name: SMD 04-ANC 2B
+  - ident: dist-SMD 05-ANC 2B
+    display_name: SMD 05-ANC 2B
+  - ident: dist-SMD 01-ANC 2F
+    display_name: SMD 01-ANC 2F
+  - ident: dist-SMD 02-ANC 2F
+    display_name: SMD 02-ANC 2F
+  - ident: dist-SMD 03-ANC 2F
+    display_name: SMD 03-ANC 2F
+  - ident: dist-SMD 04-ANC 2F
+    display_name: SMD 04-ANC 2F
+  - ident: dist-SMD 05-ANC 2F
+    display_name: SMD 05-ANC 2F
+  - ident: dist-SMD 06-ANC 2F
+    display_name: SMD 06-ANC 2F
+  - ident: dist-SMD 01-ANC 2C
+    display_name: SMD 01-ANC 2C
+  - ident: dist-SMD 02-ANC 2C
+    display_name: SMD 02-ANC 2C
+  - ident: dist-SMD 03-ANC 2C
+    display_name: SMD 03-ANC 2C
+  - ident: dist-SMD 04-ANC 2C
+    display_name: SMD 04-ANC 2C
+  - ident: dist-CITY OF WASHINGTON WARD 5
+    display_name: CITY OF WASHINGTON WARD 5
+  - ident: dist-SMD 01-ANC 5C
+    display_name: SMD 01-ANC 5C
+  - ident: dist-SMD 02-ANC 5C
+    display_name: SMD 02-ANC 5C
+  - ident: dist-SMD 03-ANC 5C
+    display_name: SMD 03-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 1
+    display_name: CITY OF WASHINGTON WARD 1
+  - ident: dist-SMD 01-ANC 1B
+    display_name: SMD 01-ANC 1B
+  - ident: dist-SMD 10-ANC 1B
+    display_name: SMD 10-ANC 1B
+  - ident: dist-SMD 11-ANC 1B
+    display_name: SMD 11-ANC 1B
+  - ident: dist-SMD 02-ANC 1B
+    display_name: SMD 02-ANC 1B
+  - ident: dist-SMD 04-ANC 1B
+    display_name: SMD 04-ANC 1B
+  - ident: dist-SMD 05-ANC 1B
+    display_name: SMD 05-ANC 1B
+  - ident: dist-SMD 03-ANC 1B
+    display_name: SMD 03-ANC 1B
+  - ident: dist-SMD 06-ANC 1B
+    display_name: SMD 06-ANC 1B
+  - ident: dist-SMD 07-ANC 1C
+    display_name: SMD 07-ANC 1C
+  - ident: dist-SMD 08-ANC 1C
+    display_name: SMD 08-ANC 1C
+  - ident: dist-SMD 01-ANC 1C
+    display_name: SMD 01-ANC 1C
+  - ident: dist-SMD 02-ANC 1C
+    display_name: SMD 02-ANC 1C
+  - ident: dist-SMD 03-ANC 1C
+    display_name: SMD 03-ANC 1C
+  - ident: dist-SMD 02-ANC 3C
+    display_name: SMD 02-ANC 3C
+  - ident: dist-SMD 03-ANC 3C
+    display_name: SMD 03-ANC 3C
+  - ident: dist-SMD 01-ANC 3F
+    display_name: SMD 01-ANC 3F
+  - ident: dist-SMD 05-ANC 3C
+    display_name: SMD 05-ANC 3C
+  - ident: dist-SMD 07-ANC 3F
+    display_name: SMD 07-ANC 3F
+  - ident: dist-SMD 09-ANC 3C
+    display_name: SMD 09-ANC 3C
+  - ident: dist-SMD 06-ANC 3C
+    display_name: SMD 06-ANC 3C
+  - ident: dist-SMD 01-ANC 3E
+    display_name: SMD 01-ANC 3E
+  - ident: dist-SMD 03-ANC 3E
+    display_name: SMD 03-ANC 3E
+  - ident: dist-SMD 06-ANC 3F
+    display_name: SMD 06-ANC 3F
+  - ident: dist-SMD 02-ANC 3E
+    display_name: SMD 02-ANC 3E
+  - ident: dist-SMD 04-ANC 3E
+    display_name: SMD 04-ANC 3E
+  - ident: dist-SMD 06-ANC 3G
+    display_name: SMD 06-ANC 3G
+  - ident: dist-SMD 07-ANC 3G
+    display_name: SMD 07-ANC 3G
+  - ident: dist-SMD 02-ANC 3F
+    display_name: SMD 02-ANC 3F
+  - ident: dist-SMD 04-ANC 3F
+    display_name: SMD 04-ANC 3F
+  - ident: dist-SMD 05-ANC 3F
+    display_name: SMD 05-ANC 3F
+  - ident: dist-SMD 01-ANC 3C
+    display_name: SMD 01-ANC 3C
+  - ident: dist-SMD 03-ANC 3F
+    display_name: SMD 03-ANC 3F
+  - ident: dist-SMD 04-ANC 3C
+    display_name: SMD 04-ANC 3C
+  - ident: dist-SMD 04-ANC 1C
+    display_name: SMD 04-ANC 1C
+  - ident: dist-SMD 05-ANC 1C
+    display_name: SMD 05-ANC 1C
+  - ident: dist-SMD 06-ANC 1C
+    display_name: SMD 06-ANC 1C
+  - ident: dist-SMD 03-ANC 1A
+    display_name: SMD 03-ANC 1A
+  - ident: dist-SMD 07-ANC 1B
+    display_name: SMD 07-ANC 1B
+  - ident: dist-SMD 08-ANC 1B
+    display_name: SMD 08-ANC 1B
+  - ident: dist-SMD 09-ANC 1B
+    display_name: SMD 09-ANC 1B
+  - ident: dist-SMD 11-ANC 1A
+    display_name: SMD 11-ANC 1A
+  - ident: dist-SMD 10-ANC 1A
+    display_name: SMD 10-ANC 1A
+  - ident: dist-SMD 06-ANC 1A
+    display_name: SMD 06-ANC 1A
+  - ident: dist-SMD 07-ANC 1A
+    display_name: SMD 07-ANC 1A
+  - ident: dist-SMD 09-ANC 1A
+    display_name: SMD 09-ANC 1A
+  - ident: dist-SMD 04-ANC 1D
+    display_name: SMD 04-ANC 1D
+  - ident: dist-SMD 05-ANC 1A
+    display_name: SMD 05-ANC 1A
+  - ident: dist-SMD 05-ANC 1D
+    display_name: SMD 05-ANC 1D
+  - ident: dist-SMD 06-ANC 1D
+    display_name: SMD 06-ANC 1D
+  - ident: dist-SMD 01-ANC 1D
+    display_name: SMD 01-ANC 1D
+  - ident: dist-SMD 02-ANC 1D
+    display_name: SMD 02-ANC 1D
+  - ident: dist-SMD 03-ANC 1D
+    display_name: SMD 03-ANC 1D
+  - ident: dist-SMD 01-ANC 1A
+    display_name: SMD 01-ANC 1A
+  - ident: dist-SMD 02-ANC 1A
+    display_name: SMD 02-ANC 1A
+  - ident: dist-SMD 04-ANC 1A
+    display_name: SMD 04-ANC 1A
+  - ident: dist-SMD 08-ANC 1A
+    display_name: SMD 08-ANC 1A
+  - ident: dist-SMD 01-ANC 5A
+    display_name: SMD 01-ANC 5A
+  - ident: dist-SMD 07-ANC 5C
+    display_name: SMD 07-ANC 5C
+  - ident: dist-SMD 10-ANC 5C
+    display_name: SMD 10-ANC 5C
+  - ident: dist-SMD 11-ANC 5C
+    display_name: SMD 11-ANC 5C
+  - ident: dist-SMD 12-ANC 5C
+    display_name: SMD 12-ANC 5C
+  - ident: dist-CITY OF WASHINGTON WARD 4
+    display_name: CITY OF WASHINGTON WARD 4
+  - ident: dist-SMD 07-ANC 4C
+    display_name: SMD 07-ANC 4C
+  - ident: dist-SMD 08-ANC 4C
+    display_name: SMD 08-ANC 4C
+  - ident: dist-SMD 10-ANC 4C
+    display_name: SMD 10-ANC 4C
+  - ident: dist-SMD 06-ANC 4D
+    display_name: SMD 06-ANC 4D
+  - ident: dist-SMD 09-ANC 4C
+    display_name: SMD 09-ANC 4C
+  - ident: dist-SMD 04-ANC 4C
+    display_name: SMD 04-ANC 4C
+  - ident: dist-SMD 05-ANC 4C
+    display_name: SMD 05-ANC 4C
+  - ident: dist-SMD 06-ANC 4C
+    display_name: SMD 06-ANC 4C
+  - ident: dist-SMD 08-ANC 4A
+    display_name: SMD 08-ANC 4A
+  - ident: dist-SMD 02-ANC 4C
+    display_name: SMD 02-ANC 4C
+  - ident: dist-SMD 03-ANC 4C
+    display_name: SMD 03-ANC 4C
+  - ident: dist-SMD 03-ANC 3G
+    display_name: SMD 03-ANC 3G
+  - ident: dist-SMD 05-ANC 3G
+    display_name: SMD 05-ANC 3G
+  - ident: dist-SMD 01-ANC 3G
+    display_name: SMD 01-ANC 3G
+  - ident: dist-SMD 02-ANC 3G
+    display_name: SMD 02-ANC 3G
+  - ident: dist-SMD 04-ANC 3G
+    display_name: SMD 04-ANC 3G
+  - ident: dist-SMD 06-ANC 4A
+    display_name: SMD 06-ANC 4A
+  - ident: dist-SMD 07-ANC 4A
+    display_name: SMD 07-ANC 4A
+  - ident: dist-SMD 01-ANC 4C
+    display_name: SMD 01-ANC 4C
+  - ident: dist-SMD 03-ANC 4D
+    display_name: SMD 03-ANC 4D
+  - ident: dist-SMD 04-ANC 4D
+    display_name: SMD 04-ANC 4D
+  - ident: dist-SMD 05-ANC 4D
+    display_name: SMD 05-ANC 4D
+  - ident: dist-SMD 01-ANC 4D
+    display_name: SMD 01-ANC 4D
+  - ident: dist-SMD 02-ANC 4D
+    display_name: SMD 02-ANC 4D
+  - ident: dist-SMD 06-ANC 4B
+    display_name: SMD 06-ANC 4B
+  - ident: dist-SMD 08-ANC 4B
+    display_name: SMD 08-ANC 4B
+  - ident: dist-SMD 04-ANC 4B
+    display_name: SMD 04-ANC 4B
+  - ident: dist-SMD 05-ANC 4B
+    display_name: SMD 05-ANC 4B
+  - ident: dist-SMD 03-ANC 4B
+    display_name: SMD 03-ANC 4B
+  - ident: dist-SMD 04-ANC 4A
+    display_name: SMD 04-ANC 4A
+  - ident: dist-SMD 05-ANC 4A
+    display_name: SMD 05-ANC 4A
+  - ident: dist-SMD 01-ANC 4A
+    display_name: SMD 01-ANC 4A
+  - ident: dist-SMD 03-ANC 4A
+    display_name: SMD 03-ANC 4A
+  - ident: dist-SMD 02-ANC 4A
+    display_name: SMD 02-ANC 4A
+  - ident: dist-SMD 01-ANC 4B
+    display_name: SMD 01-ANC 4B
+  - ident: dist-SMD 02-ANC 4B
+    display_name: SMD 02-ANC 4B
+  - ident: dist-SMD 07-ANC 4B
+    display_name: SMD 07-ANC 4B
+  - ident: dist-SMD 09-ANC 4B
+    display_name: SMD 09-ANC 4B
+  - ident: dist-SMD 02-ANC 5A
+    display_name: SMD 02-ANC 5A
+  - ident: dist-SMD 03-ANC 5A
+    display_name: SMD 03-ANC 5A
+  - ident: dist-SMD 04-ANC 5A
+    display_name: SMD 04-ANC 5A
+  - ident: dist-SMD 08-ANC 5A
+    display_name: SMD 08-ANC 5A
+  - ident: dist-SMD 05-ANC 5A
+    display_name: SMD 05-ANC 5A
+  - ident: dist-SMD 06-ANC 5A
+    display_name: SMD 06-ANC 5A
+  - ident: dist-SMD 07-ANC 5A
+    display_name: SMD 07-ANC 5A
+  - ident: dist-SMD 09-ANC 5A
+    display_name: SMD 09-ANC 5A
+  - ident: dist-SMD 10-ANC 5A
+    display_name: SMD 10-ANC 5A
+  - ident: dist-SMD 11-ANC 5A
+    display_name: SMD 11-ANC 5A
+  - ident: dist-SMD 04-ANC 5B
+    display_name: SMD 04-ANC 5B
+  - ident: dist-SMD 02-ANC 5B
+    display_name: SMD 02-ANC 5B
+  - ident: dist-SMD 09-ANC 5B
+    display_name: SMD 09-ANC 5B
+  - ident: dist-SMD 01-ANC 5B
+    display_name: SMD 01-ANC 5B
+  - ident: dist-SMD 03-ANC 5B
+    display_name: SMD 03-ANC 5B
+  - ident: dist-SMD 06-ANC 5B
+    display_name: SMD 06-ANC 5B
+  - ident: dist-SMD 09-ANC 5C
+    display_name: SMD 09-ANC 5C
+  - ident: dist-SMD 06-ANC 5C
+    display_name: SMD 06-ANC 5C
+  - ident: dist-SMD 08-ANC 5C
+    display_name: SMD 08-ANC 5C
+  - ident: dist-SMD 05-ANC 5C
+    display_name: SMD 05-ANC 5C
+  - ident: dist-SMD 05-ANC 5B
+    display_name: SMD 05-ANC 5B
+  - ident: dist-SMD 07-ANC 5B
+    display_name: SMD 07-ANC 5B
+  - ident: dist-SMD 08-ANC 5B
+    display_name: SMD 08-ANC 5B
+  - ident: dist-SMD 10-ANC 5B
+    display_name: SMD 10-ANC 5B
+  - ident: dist-SMD 11-ANC 5B
+    display_name: SMD 11-ANC 5B
+  - ident: dist-SMD 12-ANC 5B
+    display_name: SMD 12-ANC 5B
+  - ident: dist-CITY OF WASHINGTON WARD 7
+    display_name: CITY OF WASHINGTON WARD 7
+  - ident: dist-SMD 01-ANC 7D
+    display_name: SMD 01-ANC 7D
+  - ident: dist-SMD 05-ANC 6A
+    display_name: SMD 05-ANC 6A
+  - ident: dist-SMD 06-ANC 6A
+    display_name: SMD 06-ANC 6A
+  - ident: dist-SMD 07-ANC 6A
+    display_name: SMD 07-ANC 6A
+  - ident: dist-SMD 08-ANC 6A
+    display_name: SMD 08-ANC 6A
+  - ident: dist-SMD 01-ANC 6A
+    display_name: SMD 01-ANC 6A
+  - ident: dist-SMD 02-ANC 6A
+    display_name: SMD 02-ANC 6A
+  - ident: dist-SMD 03-ANC 6A
+    display_name: SMD 03-ANC 6A
+  - ident: dist-SMD 04-ANC 6C
+    display_name: SMD 04-ANC 6C
+  - ident: dist-SMD 05-ANC 6C
+    display_name: SMD 05-ANC 6C
+  - ident: dist-SMD 08-ANC 6C
+    display_name: SMD 08-ANC 6C
+  - ident: dist-SMD 06-ANC 6C
+    display_name: SMD 06-ANC 6C
+  - ident: dist-SMD 07-ANC 6C
+    display_name: SMD 07-ANC 6C
+  - ident: dist-SMD 04-ANC 6A
+    display_name: SMD 04-ANC 6A
+  - ident: dist-SMD 06-ANC 6B
+    display_name: SMD 06-ANC 6B
+  - ident: dist-SMD 08-ANC 6B
+    display_name: SMD 08-ANC 6B
+  - ident: dist-SMD 09-ANC 6B
+    display_name: SMD 09-ANC 6B
+  - ident: dist-SMD 10-ANC 6B
+    display_name: SMD 10-ANC 6B
+  - ident: dist-SMD 11-ANC 6B
+    display_name: SMD 11-ANC 6B
+  - ident: dist-SMD 04-ANC 6B
+    display_name: SMD 04-ANC 6B
+  - ident: dist-SMD 05-ANC 6B
+    display_name: SMD 05-ANC 6B
+  - ident: dist-SMD 01-ANC 6B
+    display_name: SMD 01-ANC 6B
+  - ident: dist-SMD 02-ANC 6B
+    display_name: SMD 02-ANC 6B
+  - ident: dist-SMD 03-ANC 6B
+    display_name: SMD 03-ANC 6B
+  - ident: dist-SMD 07-ANC 6D
+    display_name: SMD 07-ANC 6D
+  - ident: dist-SMD 07-ANC 6B
+    display_name: SMD 07-ANC 6B
+  - ident: dist-SMD 02-ANC 7D
+    display_name: SMD 02-ANC 7D
+  - ident: dist-SMD 03-ANC 7D
+    display_name: SMD 03-ANC 7D
+  - ident: dist-SMD 04-ANC 7C
+    display_name: SMD 04-ANC 7C
+  - ident: dist-SMD 07-ANC 7C
+    display_name: SMD 07-ANC 7C
+  - ident: dist-SMD 01-ANC 7C
+    display_name: SMD 01-ANC 7C
+  - ident: dist-SMD 02-ANC 7C
+    display_name: SMD 02-ANC 7C
+  - ident: dist-SMD 05-ANC 7C
+    display_name: SMD 05-ANC 7C
+  - ident: dist-SMD 06-ANC 7C
+    display_name: SMD 06-ANC 7C
+  - ident: dist-SMD 03-ANC 7C
+    display_name: SMD 03-ANC 7C
+  - ident: dist-SMD 05-ANC 7D
+    display_name: SMD 05-ANC 7D
+  - ident: dist-SMD 06-ANC 7D
+    display_name: SMD 06-ANC 7D
+  - ident: dist-SMD 07-ANC 7D
+    display_name: SMD 07-ANC 7D
+  - ident: dist-SMD 04-ANC 7D
+    display_name: SMD 04-ANC 7D
+  - ident: dist-SMD 06-ANC 7A
+    display_name: SMD 06-ANC 7A
+  - ident: dist-SMD 01-ANC 7A
+    display_name: SMD 01-ANC 7A
+  - ident: dist-SMD 02-ANC 7A
+    display_name: SMD 02-ANC 7A
+  - ident: dist-SMD 04-ANC 7E
+    display_name: SMD 04-ANC 7E
+  - ident: dist-SMD 05-ANC 7A
+    display_name: SMD 05-ANC 7A
+  - ident: dist-SMD 03-ANC 7E
+    display_name: SMD 03-ANC 7E
+  - ident: dist-SMD 05-ANC 7E
+    display_name: SMD 05-ANC 7E
+  - ident: dist-SMD 06-ANC 7E
+    display_name: SMD 06-ANC 7E
+  - ident: dist-SMD 07-ANC 7E
+    display_name: SMD 07-ANC 7E
+  - ident: dist-SMD 01-ANC 7E
+    display_name: SMD 01-ANC 7E
+  - ident: dist-SMD 02-ANC 7E
+    display_name: SMD 02-ANC 7E
+  - ident: dist-SMD 04-ANC 7A
+    display_name: SMD 04-ANC 7A
+  - ident: dist-SMD 04-ANC 7B
+    display_name: SMD 04-ANC 7B
+  - ident: dist-SMD 07-ANC 7B
+    display_name: SMD 07-ANC 7B
+  - ident: dist-SMD 05-ANC 7B
+    display_name: SMD 05-ANC 7B
+  - ident: dist-SMD 06-ANC 7B
+    display_name: SMD 06-ANC 7B
+  - ident: dist-SMD 02-ANC 7B
+    display_name: SMD 02-ANC 7B
+  - ident: dist-SMD 03-ANC 7B
+    display_name: SMD 03-ANC 7B
+  - ident: dist-SMD 07-ANC 7A
+    display_name: SMD 07-ANC 7A
+  - ident: dist-SMD 01-ANC 7B
+    display_name: SMD 01-ANC 7B
+  - ident: dist-CITY OF WASHINGTON WARD 8
+    display_name: CITY OF WASHINGTON WARD 8
+  - ident: dist-SMD 01-ANC 8B
+    display_name: SMD 01-ANC 8B
+  - ident: dist-SMD 01-ANC 8C
+    display_name: SMD 01-ANC 8C
+  - ident: dist-SMD 03-ANC 8A
+    display_name: SMD 03-ANC 8A
+  - ident: dist-SMD 04-ANC 8A
+    display_name: SMD 04-ANC 8A
+  - ident: dist-SMD 05-ANC 8A
+    display_name: SMD 05-ANC 8A
+  - ident: dist-SMD 02-ANC 8B
+    display_name: SMD 02-ANC 8B
+  - ident: dist-SMD 03-ANC 8B
+    display_name: SMD 03-ANC 8B
+  - ident: dist-SMD 04-ANC 8B
+    display_name: SMD 04-ANC 8B
+  - ident: dist-SMD 05-ANC 8B
+    display_name: SMD 05-ANC 8B
+  - ident: dist-SMD 06-ANC 8B
+    display_name: SMD 06-ANC 8B
+  - ident: dist-SMD 07-ANC 8B
+    display_name: SMD 07-ANC 8B
+  - ident: dist-SMD 01-ANC 8E
+    display_name: SMD 01-ANC 8E
+  - ident: dist-SMD 02-ANC 8E
+    display_name: SMD 02-ANC 8E
+  - ident: dist-SMD 06-ANC 8A
+    display_name: SMD 06-ANC 8A
+  - ident: dist-SMD 07-ANC 8A
+    display_name: SMD 07-ANC 8A
+  - ident: dist-SMD 02-ANC 8C
+    display_name: SMD 02-ANC 8C
+  - ident: dist-SMD 03-ANC 8C
+    display_name: SMD 03-ANC 8C
+  - ident: dist-SMD 03-ANC 8E
+    display_name: SMD 03-ANC 8E
+  - ident: dist-SMD 04-ANC 8E
+    display_name: SMD 04-ANC 8E
+  - ident: dist-SMD 05-ANC 8E
+    display_name: SMD 05-ANC 8E
+  - ident: dist-SMD 06-ANC 8E
+    display_name: SMD 06-ANC 8E
+  - ident: dist-SMD 07-ANC 8E
+    display_name: SMD 07-ANC 8E
+  - ident: dist-SMD 04-ANC 8C
+    display_name: SMD 04-ANC 8C
+  - ident: dist-SMD 05-ANC 8C
+    display_name: SMD 05-ANC 8C
+  - ident: dist-SMD 06-ANC 8C
+    display_name: SMD 06-ANC 8C
+  - ident: dist-SMD 06-ANC 8D
+    display_name: SMD 06-ANC 8D
+  - ident: dist-SMD 07-ANC 8D
+    display_name: SMD 07-ANC 8D
+  - ident: dist-SMD 03-ANC 8D
+    display_name: SMD 03-ANC 8D
+  - ident: dist-SMD 07-ANC 8C
+    display_name: SMD 07-ANC 8C
+  - ident: dist-SMD 01-ANC 8D
+    display_name: SMD 01-ANC 8D
+  - ident: dist-SMD 02-ANC 8D
+    display_name: SMD 02-ANC 8D
+  - ident: dist-SMD 04-ANC 8D
+    display_name: SMD 04-ANC 8D
+  - ident: dist-SMD 05-ANC 8D
+    display_name: SMD 05-ANC 8D
+  - ident: dist-SMD 03-ANC 6D
+    display_name: SMD 03-ANC 6D
+  - ident: dist-SMD 04-ANC 6D
+    display_name: SMD 04-ANC 6D
+  - ident: dist-SMD 05-ANC 6D
+    display_name: SMD 05-ANC 6D
+  - ident: dist-SMD 06-ANC 6D
+    display_name: SMD 06-ANC 6D
+  - ident: dist-SMD 01-ANC 6D
+    display_name: SMD 01-ANC 6D
+  - ident: dist-SMD 02-ANC 6D
+    display_name: SMD 02-ANC 6D
+  - ident: dist-SMD 03-ANC 7A
+    display_name: SMD 03-ANC 7A
+  - ident: dist-SMD 01-ANC 8A
+    display_name: SMD 01-ANC 8A
+  - ident: dist-SMD 02-ANC 8A
+    display_name: SMD 02-ANC 8A
+  - ident: dist-SMD 04-ANC 5C
+    display_name: SMD 04-ANC 5C
+  - ident: dist-SMD 12-ANC 5A
+    display_name: SMD 12-ANC 5A
+  - ident: dist-SMD 09-ANC 2B
+    display_name: SMD 09-ANC 2B
+  audit_header: 
+    software: TTV Tabulator v El Jefe
+    operator: El Jefe
+    create_date: 2011-02-12 21:29:14
+    file_ident: ED_1

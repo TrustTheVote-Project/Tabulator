@@ -241,24 +241,23 @@ xop_Tabulator data file: #{xop_file_prepend(TABULATOR_COUNT_FILE)}
     if (tab.validation_errors?)
       warn(tab)
       print "Jurisdiction and Election Definitions: REJECTED\n"
+    elsif (proceed)
+      print "Jurisdiction and Election Definitions: ACCEPTED\n"
+      xop_file_write_tabulator(tab)
+      state(tab)
     else
-      reject = false
-      unless (proceed)
-        print "\n"
-        data(tab)
-        warn(tab)
-        print "** ATTENTION ** ATTENTION **\n\n"
-        print "Carefully examine the data above, then confirm approval to continue [y/n]: "
-        answer = STDIN.gets.chomp
-        reject = true unless (answer =~ /^[Yy]/)
-      end
-      if (reject)
-        print "\nJurisdiction and Election Definitions: REJECTED\n"
-      else
+      print "\n"
+      data(tab)
+      warn(tab)
+      print "** ATTENTION ** ATTENTION **
+Carefully examine the data above, then confirm approval to continue [y/n]: "
+      answer = STDIN.gets.chomp
+      if (answer =~ /^[Yy]/)
         print "\nJurisdiction and Election Definitions: ACCEPTED\n\n"
         xop_file_write_tabulator(tab)
         state(tab)
-        print "\n"
+      else
+        print "Jurisdiction and Election Definitions: REJECTED\n"
       end
     end
   end

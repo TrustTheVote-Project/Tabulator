@@ -5,6 +5,8 @@ exitif ()
 if [ "$?" -gt "0" ] 
 then
   exit $?
+else
+  echo " "
 fi
 }
 
@@ -29,22 +31,21 @@ test_all ()
 test_default ()
 {
     ruby operator.rb reset
+    exitif
     ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
-    echo " "
     ruby operator.rb add Tests/Default/CC2.yml
     exitif
-    echo " "
     ruby operator.rb add Tests/Default/CC3.yml
     exitif
-    echo " "
 }
 
 test_def0 ()
 {
     ruby operator.rb reset
+    exitif
     ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
 }
@@ -52,6 +53,7 @@ test_def0 ()
 test_def1 ()
 {
     ruby operator.rb reset
+    exitif
     ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
@@ -61,6 +63,7 @@ test_def1 ()
 test_def2 ()
 {
     ruby operator.rb reset
+    exitif
     ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
@@ -77,21 +80,17 @@ test_syntax ()
 
 test_dc ()
 {
-    ruby emgr_data_handler.rb
-    exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb load EMGR_JD.yml EMGR_ED.yml OK
+    ruby operator.rb load Tests/DC/DC_EMGR_JD.yml Tests/DC/DC_EMGR_ED.yml OK
     exitif
 }
 
 test_va ()
 {
-    ruby emgr_data_handler.rb va
-    exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb load EMGR_JD.yml EMGR_ED.yml OK
+    ruby operator.rb load Tests/VA/VA_EMGR_JD.yml Tests/VA/VA_EMGR_ED.yml OK
     exitif
 }
 
@@ -103,7 +102,6 @@ test_bedrock ()
     exitif
     ruby operator.rb add Tests/Bedrock/Bedrock_CC1.yml
     exitif
-    echo " "
 }
 
 if [ "$#" -eq 0 ]

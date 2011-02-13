@@ -1,0 +1,2841 @@
+--- 
+election_definition: 
+  jurisdiction_ident: JURISDICTION_1
+  question_list: []
+
+  candidate_list: 
+  - party_display_name: H.E.R.O.S.H.E.R.O.
+    contest_ident: cont-delegate
+    ident: cand-1000
+    display_name: Queen Noble
+    position: 1
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-delegate
+    ident: cand-1001
+    display_name: Missy Reilly Smith
+    position: 2
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-delegate
+    ident: cand-1002
+    display_name: Rick Tingling-Clemmons
+    position: 3
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-delegate
+    ident: cand-1003
+    display_name: Eleanor Holmes Norton
+    position: 4
+  - party_display_name: INDEPENDENT
+    contest_ident: cont-mayor
+    ident: cand-1004
+    display_name: Carlos Allen
+    position: 1
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-mayor
+    ident: cand-1005
+    display_name: Faith
+    position: 2
+  - party_display_name: SOCIALIST WORKERS
+    contest_ident: cont-mayor
+    ident: cand-1006
+    display_name: Omari Musa
+    position: 3
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-mayor
+    ident: cand-1007
+    display_name: Vincent C. Gray
+    position: 4
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-chairman
+    ident: cand-1008
+    display_name: Kwame R. Brown
+    position: 1
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-chairman
+    ident: cand-1009
+    display_name: Ann C. Wilcox
+    position: 2
+  - party_display_name: INDEPENDENT
+    contest_ident: cont-atlarge
+    ident: cand-1010
+    display_name: Richard Urban
+    position: 1
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-atlarge
+    ident: cand-1011
+    display_name: Phil Mendelson
+    position: 2
+  - party_display_name: INDEPENDENT
+    contest_ident: cont-atlarge
+    ident: cand-1012
+    display_name: David Catania
+    position: 3
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-atlarge
+    ident: cand-1013
+    display_name: David Schwartzman
+    position: 4
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-council1
+    ident: cand-1014
+    display_name: Jim Graham
+    position: 1
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-council1
+    ident: cand-1015
+    display_name: Nancy Shia
+    position: 2
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-council1
+    ident: cand-1016
+    display_name: Marc Morgan
+    position: 3
+  - contest_ident: cont-educ1
+    ident: cand-1017
+    display_name: Dotti Love Wade
+    position: 1
+  - contest_ident: cont-educ1
+    ident: cand-1018
+    display_name: Patrick Mara
+    position: 2
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-council3
+    ident: cand-1019
+    display_name: Dave Hedgepeth
+    position: 1
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-council3
+    ident: cand-1020
+    display_name: Mary Cheh
+    position: 2
+  - contest_ident: cont-educ3
+    ident: cand-1021
+    display_name: Laura McGiffert Slover
+    position: 1
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-council5
+    ident: cand-1022
+    display_name: Harry Tommy Thomas, Jr.
+    position: 1
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-council5
+    ident: cand-1023
+    display_name: Tim Day
+    position: 2
+  - party_display_name: INDEPENDENT
+    contest_ident: cont-council5
+    ident: cand-1024
+    display_name: Kathy Henderson
+    position: 3
+  - contest_ident: cont-educ5
+    ident: cand-1025
+    display_name: Darlene Glymph
+    position: 1
+  - contest_ident: cont-educ5
+    ident: cand-1026
+    display_name: Mark Jones
+    position: 2
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-council6
+    ident: cand-1027
+    display_name: Tommy Wells
+    position: 1
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-council6
+    ident: cand-1028
+    display_name: Jim DeMartino
+    position: 2
+  - contest_ident: cont-educ6
+    ident: cand-1029
+    display_name: Monica Warren-Jones
+    position: 1
+  - contest_ident: cont-educ6
+    ident: cand-1030
+    display_name: Melissa Rohan
+    position: 2
+  - party_display_name: REPUBLICAN
+    contest_ident: cont-usrep
+    ident: cand-1031
+    display_name: Nelson Rimensnyder
+    position: 1
+  - party_display_name: STATEHOOD GREEN
+    contest_ident: cont-usrep
+    ident: cand-1032
+    display_name: Joyce Robinson-Paul
+    position: 2
+  - party_display_name: DEMOCRATIC
+    contest_ident: cont-usrep
+    ident: cand-1033
+    display_name: Mike Panetta
+    position: 3
+  - ident: cand-5001
+    contest_ident: cont-anc1A01
+    display_name: Lisa Kralovic
+    position: 1
+  - ident: cand-5002
+    contest_ident: cont-anc1A02
+    display_name: Vickey A. Wright-Smith
+    position: 1
+  - ident: cand-5003
+    contest_ident: cont-anc1A04
+    display_name: Betty Pair
+    position: 1
+  - ident: cand-5004
+    contest_ident: cont-anc1A04
+    display_name: Mack A. James
+    position: 2
+  - ident: cand-5005
+    contest_ident: cont-anc1A05
+    display_name: Laina Aquiline
+    position: 1
+  - ident: cand-5006
+    contest_ident: cont-anc1A06
+    display_name: William (Bill) Brown Jr.
+    position: 1
+  - ident: cand-5007
+    contest_ident: cont-anc1A06
+    display_name: Miriam Z. Savad
+    position: 2
+  - ident: cand-5008
+    contest_ident: cont-anc1A06
+    display_name: Richard Du Beshter
+    position: 3
+  - ident: cand-5009
+    contest_ident: cont-anc1A07
+    display_name: Thomas Boisvert
+    position: 1
+  - ident: cand-5010
+    contest_ident: cont-anc1A08
+    display_name: Kent Boese
+    position: 1
+  - ident: cand-5011
+    contest_ident: cont-anc1A09
+    display_name: Bobby Holmes
+    position: 1
+  - ident: cand-5012
+    contest_ident: cont-anc1A09
+    display_name: Lakeisha G. Thomas
+    position: 1
+  - ident: cand-5013
+    contest_ident: cont-anc1A09
+    display_name: Sam Moore
+    position: 1
+  - ident: cand-5014
+    contest_ident: cont-anc1A10
+    display_name: Jonathan Madison
+    position: 1
+  - ident: cand-5015
+    contest_ident: cont-anc1A10
+    display_name: Lenwood (Lenny) Johnson
+    position: 1
+  - ident: cand-5016
+    contest_ident: cont-anc1A11
+    display_name: Kat Skiles
+    position: 1
+  - ident: cand-5017
+    contest_ident: cont-anc1B01
+    display_name: Myla Moss
+    position: 1
+  - ident: cand-5018
+    contest_ident: cont-anc1B02
+    display_name: Aaron Spencer
+    position: 1
+  - ident: cand-5019
+    contest_ident: cont-anc1B02
+    display_name: Peter J. Raia Sr
+    position: 2
+  - ident: cand-5020
+    contest_ident: cont-anc1B02
+    display_name: Tucker VE Gallagher
+    position: 3
+  - ident: cand-5021
+    contest_ident: cont-anc1B03
+    display_name: Sedrick Muhammad
+    position: 1
+  - ident: cand-5022
+    contest_ident: cont-anc1B04
+    display_name: Deborah R. Thomas
+    position: 1
+  - ident: cand-5023
+    contest_ident: cont-anc1B04
+    display_name: William M. Girardo
+    position: 2
+  - ident: cand-5024
+    contest_ident: cont-anc1B05
+    display_name: Mary M. Streett
+    position: 1
+  - ident: cand-5025
+    contest_ident: cont-anc1B06
+    display_name: Charles Meisch
+    position: 1
+  - ident: cand-5026
+    contest_ident: cont-anc1B07
+    display_name: Juan E. Lopez
+    position: 1
+  - ident: cand-5027
+    contest_ident: cont-anc1B07
+    display_name: Brittany Kademian
+    position: 2
+  - ident: cand-5028
+    contest_ident: cont-anc1B08
+    display_name: RT Akinmboni
+    position: 1
+  - ident: cand-5029
+    contest_ident: cont-anc1B08
+    display_name: Ahnna Smith
+    position: 2
+  - ident: cand-5030
+    contest_ident: cont-anc1B09
+    display_name: Shahrzad M. Rastegar
+    position: 1
+  - ident: cand-5031
+    contest_ident: cont-anc1B09
+    display_name: Lauren McKenzie
+    position: 2
+  - ident: cand-5032
+    contest_ident: cont-anc1B10
+    display_name: Tony Norman
+    position: 1
+  - ident: cand-5033
+    contest_ident: cont-anc1B11
+    display_name: E. Gail Anderson Holness
+    position: 1
+  - ident: cand-5034
+    contest_ident: cont-anc1C01
+    display_name: Stacey Moye
+    position: 1
+  - ident: cand-5035
+    contest_ident: cont-anc1C02
+    display_name: Bill O' Field
+    position: 1
+  - ident: cand-5036
+    contest_ident: cont-anc1C02
+    display_name: Martis (Marty) Davis
+    position: 2
+  - ident: cand-5037
+    contest_ident: cont-anc1C03
+    display_name: Jose Sueiro
+    position: 1
+  - ident: cand-5038
+    contest_ident: cont-anc1C03
+    display_name: Olivier Kamanda
+    position: 2
+  - ident: cand-5039
+    contest_ident: cont-anc1C03
+    display_name: Adam Eidinger
+    position: 3
+  - ident: cand-5040
+    contest_ident: cont-anc1C06
+    display_name: Steve Lanning
+    position: 1
+  - ident: cand-5041
+    contest_ident: cont-anc1C06
+    display_name: Raymond Mosley
+    position: 2
+  - ident: cand-5042
+    contest_ident: cont-anc1C07
+    display_name: Wilson Reynolds
+    position: 1
+  - ident: cand-5043
+    contest_ident: cont-anc1C08
+    display_name: Kathie Boettrich
+    position: 1
+  - ident: cand-5044
+    contest_ident: cont-anc1D02
+    display_name: Laura Wilson Phelan
+    position: 1
+  - ident: cand-5045
+    contest_ident: cont-anc1D03
+    display_name: Jack McKay
+    position: 1
+  - ident: cand-5046
+    contest_ident: cont-anc1D04
+    display_name: Gregg Edwards
+    position: 1
+  - ident: cand-5047
+    contest_ident: cont-anc1D04
+    display_name: Phil Greiner
+    position: 2
+  - ident: cand-5048
+    contest_ident: cont-anc1D05
+    display_name: China Terrell
+    position: 1
+  - ident: cand-5049
+    contest_ident: cont-anc1D06
+    display_name: Angelia D. Scott
+    position: 2
+  - ident: cand-5050
+    contest_ident: cont-anc2A01
+    display_name: David M. Lehrman
+    position: 1
+  - ident: cand-5051
+    contest_ident: cont-anc2A02
+    display_name: Rebecca Coder
+    position: 1
+  - ident: cand-5052
+    contest_ident: cont-anc2A03
+    display_name: Asher Corson
+    position: 1
+  - ident: cand-5053
+    contest_ident: cont-anc2A04
+    display_name: Armando Irizarry
+    position: 1
+  - ident: cand-5054
+    contest_ident: cont-anc2A05
+    display_name: Eric Malinen
+    position: 1
+  - ident: cand-5055
+    contest_ident: cont-anc2A06
+    display_name: Florence E. Harmon
+    position: 1
+  - ident: cand-5056
+    contest_ident: cont-anc2B01
+    display_name: Mike Feldstein
+    position: 1
+  - ident: cand-5057
+    contest_ident: cont-anc2B02
+    display_name: Kevin O' Connor
+    position: 1
+  - ident: cand-5058
+    contest_ident: cont-anc2B03
+    display_name: Bob Meehan
+    position: 1
+  - ident: cand-5059
+    contest_ident: cont-anc2B04
+    display_name: Jack Jacobson
+    position: 1
+  - ident: cand-5060
+    contest_ident: cont-anc2B05
+    display_name: Victor Wexler
+    position: 1
+  - ident: cand-5061
+    contest_ident: cont-anc2B06
+    display_name: Mike Silverstein
+    position: 1
+  - ident: cand-5062
+    contest_ident: cont-anc2B07
+    display_name: Phil Carney
+    position: 1
+  - ident: cand-5063
+    contest_ident: cont-anc2B08
+    display_name: Will Stephens
+    position: 1
+  - ident: cand-5064
+    contest_ident: cont-anc2B09
+    display_name: Ramon Estrada
+    position: 1
+  - ident: cand-5065
+    contest_ident: cont-anc2B09
+    display_name: Sunit Talapatra
+    position: 1
+  - ident: cand-5066
+    contest_ident: cont-anc2C01
+    display_name: Alexander M. (Alex) Padro
+    position: 1
+  - ident: cand-5067
+    contest_ident: cont-anc2C02
+    display_name: Kevin Chapple
+    position: 1
+  - ident: cand-5068
+    contest_ident: cont-anc2C02
+    display_name: Leroy Joseph Thorpe, Jr.
+    position: 2
+  - ident: cand-5069
+    contest_ident: cont-anc2C03
+    display_name: Doris L. Brooks
+    position: 1
+  - ident: cand-5070
+    contest_ident: cont-anc2C03
+    display_name: Rickey Williams, Jr.
+    position: 1
+  - ident: cand-5071
+    contest_ident: cont-anc2C04
+    display_name: Theresa Sule
+    position: 1
+  - ident: cand-5072
+    contest_ident: cont-anc2C04
+    display_name: Rachelle P. Nigro
+    position: 2
+  - ident: cand-5073
+    contest_ident: cont-anc2C04
+    display_name: Cary Sheih
+    position: 3
+  - ident: cand-5074
+    contest_ident: cont-anc2C04
+    display_name: Derrick Barrett
+    position: 4
+  - ident: cand-5075
+    contest_ident: cont-anc2D01
+    display_name: David R. Bender
+    position: 1
+  - ident: cand-5076
+    contest_ident: cont-anc2E01
+    display_name: Ed Solomon
+    position: 1
+  - ident: cand-5077
+    contest_ident: cont-anc2E02
+    display_name: Ron Lewis
+    position: 1
+  - ident: cand-5078
+    contest_ident: cont-anc2E03
+    display_name: Jeffrey Jones
+    position: 1
+  - ident: cand-5079
+    contest_ident: cont-anc2E04
+    display_name: Jake Gregory Sticka
+    position: 1
+  - ident: cand-5080
+    contest_ident: cont-anc2E05
+    display_name: Bill Starrels
+    position: 1
+  - ident: cand-5081
+    contest_ident: cont-anc2E06
+    display_name: Tom Birch
+    position: 1
+  - ident: cand-5082
+    contest_ident: cont-anc2E07
+    display_name: Charles F. Eason, Jr.
+    position: 1
+  - ident: cand-5083
+    contest_ident: cont-anc2F01
+    display_name: Charles Reed
+    position: 1
+  - ident: cand-5084
+    contest_ident: cont-anc2F02
+    display_name: Joshua H. Hubner
+    position: 1
+  - ident: cand-5085
+    contest_ident: cont-anc2F02
+    display_name: Emily Barton
+    position: 2
+  - ident: cand-5086
+    contest_ident: cont-anc2F03
+    display_name: Samuel Goekjian
+    position: 1
+  - ident: cand-5087
+    contest_ident: cont-anc2F06
+    display_name: Kate McMahon
+    position: 1
+  - ident: cand-5088
+    contest_ident: cont-anc2F06
+    display_name: Michael Benardo
+    position: 2
+  - ident: cand-5089
+    contest_ident: cont-anc3B01
+    display_name: Ben Thielen
+    position: 1
+  - ident: cand-5090
+    contest_ident: cont-anc3B02
+    display_name: Jackie Blumenthal
+    position: 1
+  - ident: cand-5091
+    contest_ident: cont-anc3B02
+    display_name: Alev Akbulut
+    position: 2
+  - ident: cand-5092
+    contest_ident: cont-anc3B03
+    display_name: Mark Stevens
+    position: 1
+  - ident: cand-5093
+    contest_ident: cont-anc3B04
+    display_name: Horace (Howie) Kreitzman
+    position: 1
+  - ident: cand-5094
+    contest_ident: cont-anc3B05
+    display_name: Brian A. Cohen
+    position: 1
+  - ident: cand-5095
+    contest_ident: cont-anc3C01
+    display_name: Lee Brian Reba
+    position: 1
+  - ident: cand-5096
+    contest_ident: cont-anc3C02
+    display_name: William Kummings
+    position: 1
+  - ident: cand-5097
+    contest_ident: cont-anc3C03
+    display_name: Matthew James Kozik
+    position: 1
+  - ident: cand-5098
+    contest_ident: cont-anc3C03
+    display_name: Anne-Marie Bairstow
+    position: 2
+  - ident: cand-5099
+    contest_ident: cont-anc3C04
+    display_name: Roger Burns
+    position: 1
+  - ident: cand-5100
+    contest_ident: cont-anc3C05
+    display_name: Leila J. Afzal
+    position: 1
+  - ident: cand-5101
+    contest_ident: cont-anc3C06
+    display_name: Trudy Reeves
+    position: 1
+  - ident: cand-5102
+    contest_ident: cont-anc3C07
+    display_name: Victor Silveira
+    position: 1
+  - ident: cand-5103
+    contest_ident: cont-anc3C08
+    display_name: Catherine May
+    position: 1
+  - ident: cand-5104
+    contest_ident: cont-anc3C09
+    display_name: Nancy J. MacWood
+    position: 1
+  - ident: cand-5105
+    contest_ident: cont-anc3D01
+    display_name: Kent Slowinski
+    position: 1
+  - ident: cand-5106
+    contest_ident: cont-anc3D01
+    display_name: Elizabeth (Betsy) Sandza
+    position: 2
+  - ident: cand-5107
+    contest_ident: cont-anc3D02
+    display_name: Tom Smith
+    position: 1
+  - ident: cand-5108
+    contest_ident: cont-anc3D03
+    display_name: Nan Wells
+    position: 1
+  - ident: cand-5109
+    contest_ident: cont-anc3D04
+    display_name: Stu Ross
+    position: 1
+  - ident: cand-5110
+    contest_ident: cont-anc3D05
+    display_name: William Philip Thomas
+    position: 1
+  - ident: cand-5111
+    contest_ident: cont-anc3D06
+    display_name: Ann F. Heuer
+    position: 1
+  - ident: cand-5112
+    contest_ident: cont-anc3D06
+    display_name: John Curran
+    position: 2
+  - ident: cand-5113
+    contest_ident: cont-anc3D08
+    display_name: Lee P. Minichiello
+    position: 1
+  - ident: cand-5114
+    contest_ident: cont-anc3D09
+    display_name: Ann Haas
+    position: 1
+  - ident: cand-5115
+    contest_ident: cont-anc3D09
+    display_name: Petar A. Dimtchev
+    position: 2
+  - ident: cand-5116
+    contest_ident: cont-anc3E01
+    display_name: Jonathan McHugh
+    position: 1
+  - ident: cand-5117
+    contest_ident: cont-anc3E01
+    display_name: Beverly Sklover
+    position: 2
+  - ident: cand-5118
+    contest_ident: cont-anc3E02
+    display_name: Matthew Frumin
+    position: 1
+  - ident: cand-5119
+    contest_ident: cont-anc3E03
+    display_name: Jonathan Bender
+    position: 1
+  - ident: cand-5120
+    contest_ident: cont-anc3E04
+    display_name: Tom Quinn
+    position: 1
+  - ident: cand-5121
+    contest_ident: cont-anc3E04
+    display_name: Sally J. Greenberg
+    position: 2
+  - ident: cand-5122
+    contest_ident: cont-anc3E05
+    display_name: Sam J. Serebin
+    position: 1
+  - ident: cand-5123
+    contest_ident: cont-anc3F01
+    display_name: Adam Tope
+    position: 1
+  - ident: cand-5124
+    contest_ident: cont-anc3F01
+    display_name: Mike Siegel
+    position: 2
+  - ident: cand-5125
+    contest_ident: cont-anc3F02
+    display_name: Karen Lee Perry
+    position: 1
+  - ident: cand-5126
+    contest_ident: cont-anc3F03
+    display_name: Karen Beiley
+    position: 1
+  - ident: cand-5127
+    contest_ident: cont-anc3F04
+    display_name: Tom Whitley
+    position: 1
+  - ident: cand-5128
+    contest_ident: cont-anc3F05
+    display_name: Roman Jankowski
+    position: 1
+  - ident: cand-5129
+    contest_ident: cont-anc3F06
+    display_name: Cathy Wiss
+    position: 1
+  - ident: cand-5130
+    contest_ident: cont-anc3F07
+    display_name: Bob Summersgill
+    position: 1
+  - ident: cand-5131
+    contest_ident: cont-anc3G01
+    display_name: Bayard Brewin
+    position: 1
+  - ident: cand-5132
+    contest_ident: cont-anc3G01
+    display_name: Carolyn (Callie) Cook
+    position: 2
+  - ident: cand-5133
+    contest_ident: cont-anc3G02
+    display_name: Gary Thompson
+    position: 1
+  - ident: cand-5134
+    contest_ident: cont-anc3G03
+    display_name: Margaret (Peggy) Sewell
+    position: 1
+  - ident: cand-5135
+    contest_ident: cont-anc3G04
+    display_name: Allen E. Beach
+    position: 1
+  - ident: cand-5136
+    contest_ident: cont-anc3G05
+    display_name: David Engel
+    position: 1
+  - ident: cand-5137
+    contest_ident: cont-anc3G06
+    display_name: Jim McCarthy
+    position: 1
+  - ident: cand-5138
+    contest_ident: cont-anc3G07
+    display_name: Henry Griffin
+    position: 1
+  - ident: cand-5139
+    contest_ident: cont-anc3G07
+    display_name: Jack J. Burriesci
+    position: 2
+  - ident: cand-5140
+    contest_ident: cont-anc4A01
+    display_name: Karl Kennedy
+    position: 1
+  - ident: cand-5141
+    contest_ident: cont-anc4A02
+    display_name: Dwayne M. Toliver
+    position: 1
+  - ident: cand-5142
+    contest_ident: cont-anc4A03
+    display_name: Stephen A (Steve) Whatley
+    position: 1
+  - ident: cand-5143
+    contest_ident: cont-anc4A04
+    display_name: Marian C. Bennett
+    position: 1
+  - ident: cand-5144
+    contest_ident: cont-anc4A05
+    display_name: Habieba Israel
+    position: 1
+  - ident: cand-5145
+    contest_ident: cont-anc4A06
+    display_name: Kimberly L. Boyd
+    position: 1
+  - ident: cand-5146
+    contest_ident: cont-anc4A07
+    display_name: Dave Wilson
+    position: 1
+  - ident: cand-5147
+    contest_ident: cont-anc4A08
+    display_name: Gale Black
+    position: 1
+  - ident: cand-5148
+    contest_ident: cont-anc4B01
+    display_name: Sara Green
+    position: 1
+  - ident: cand-5149
+    contest_ident: cont-anc4B02
+    display_name: Faith E. Wheeler
+    position: 1
+  - ident: cand-5150
+    contest_ident: cont-anc4B03
+    display_name: Monique-Michelle Smith
+    position: 1
+  - ident: cand-5151
+    contest_ident: cont-anc4B03
+    display_name: Frederick D. Grant
+    position: 2
+  - ident: cand-5152
+    contest_ident: cont-anc4B04
+    display_name: Gerald Long Sazon Jr
+    position: 1
+  - ident: cand-5153
+    contest_ident: cont-anc4B04
+    display_name: James J Sydnor
+    position: 2
+  - ident: cand-5154
+    contest_ident: cont-anc4B04
+    display_name: Joseph Alfred
+    position: 3
+  - ident: cand-5155
+    contest_ident: cont-anc4B04
+    display_name: Douglas E. Smith, Sr
+    position: 4
+  - ident: cand-5156
+    contest_ident: cont-anc4B05
+    display_name: Brenda K. Speaks
+    position: 1
+  - ident: cand-5157
+    contest_ident: cont-anc4B05
+    display_name: Blondine C. Hughes
+    position: 2
+  - ident: cand-5158
+    contest_ident: cont-anc4B06
+    display_name: Gloria D. Palmer
+    position: 1
+  - ident: cand-5159
+    contest_ident: cont-anc4B07
+    display_name: Judi Jones
+    position: 1
+  - ident: cand-5160
+    contest_ident: cont-anc4B08
+    display_name: Yvonne A. Jefferson
+    position: 1
+  - ident: cand-5161
+    contest_ident: cont-anc4C01
+    display_name: Michael Yates
+    position: 1
+  - ident: cand-5162
+    contest_ident: cont-anc4C02
+    display_name: Janet M. Myers
+    position: 1
+  - ident: cand-5163
+    contest_ident: cont-anc4C04
+    display_name: Steve Leraris
+    position: 1
+  - ident: cand-5164
+    contest_ident: cont-anc4C05
+    display_name: Joseph Vaughan
+    position: 1
+  - ident: cand-5165
+    contest_ident: cont-anc4C05
+    display_name: T. Tabron
+    position: 2
+  - ident: cand-5166
+    contest_ident: cont-anc4C06
+    display_name: David Tumblin
+    position: 1
+  - ident: cand-5167
+    contest_ident: cont-anc4C07
+    display_name: Shanel Anthony
+    position: 1
+  - ident: cand-5168
+    contest_ident: cont-anc4C08
+    display_name: Jeff Green
+    position: 1
+  - ident: cand-5169
+    contest_ident: cont-anc4C08
+    display_name: Timothy A. Jones
+    position: 1
+  - ident: cand-5170
+    contest_ident: cont-anc4C09
+    display_name: Joseph Martin
+    position: 1
+  - ident: cand-5171
+    contest_ident: cont-anc4C10
+    display_name: Robert H. Mandle
+    position: 1
+  - ident: cand-5172
+    contest_ident: cont-anc4D03
+    display_name: Lisa Colbert
+    position: 1
+  - ident: cand-5173
+    contest_ident: cont-anc4D06
+    display_name: Bill Quirk
+    position: 1
+  - ident: cand-5174
+    contest_ident: cont-anc5A01
+    display_name: Sandi Washington
+    position: 1
+  - ident: cand-5175
+    contest_ident: cont-anc5A02
+    display_name: Patricia Ann Roberts
+    position: 1
+  - ident: cand-5176
+    contest_ident: cont-anc5A03
+    display_name: Angel Sherri Alston
+    position: 1
+  - ident: cand-5177
+    contest_ident: cont-anc5A03
+    display_name: Antonio Baxter
+    position: 1
+  - ident: cand-5178
+    contest_ident: cont-anc5A04
+    display_name: Herman (Rip) Preston
+    position: 1
+  - ident: cand-5179
+    contest_ident: cont-anc5A06
+    display_name: John J. Feely, Jr.
+    position: 1
+  - ident: cand-5180
+    contest_ident: cont-anc5A07
+    display_name: John Daggett
+    position: 1
+  - ident: cand-5181
+    contest_ident: cont-anc5A07
+    display_name: Carolyn C. Steptoe
+    position: 2
+  - ident: cand-5182
+    contest_ident: cont-anc5A08
+    display_name: Timothy Thomas
+    position: 1
+  - ident: cand-5183
+    contest_ident: cont-anc5A09
+    display_name: Shirley Rivens Smith
+    position: 1
+  - ident: cand-5184
+    contest_ident: cont-anc5A10
+    display_name: Allen L. Tillman, Jr
+    position: 1
+  - ident: cand-5185
+    contest_ident: cont-anc5A10
+    display_name: Jehan Ashley Carter
+    position: 2
+  - ident: cand-5186
+    contest_ident: cont-anc5A10
+    display_name: Corey Arnez Griffin
+    position: 3
+  - ident: cand-5187
+    contest_ident: cont-anc5A12
+    display_name: Robert Bob King
+    position: 1
+  - ident: cand-5188
+    contest_ident: cont-anc5B01
+    display_name: Mercile Banks
+    position: 1
+  - ident: cand-5189
+    contest_ident: cont-anc5B01
+    display_name: William C. Shelton
+    position: 1
+  - ident: cand-5190
+    contest_ident: cont-anc5B02
+    display_name: Patricia Brown-Daniels
+    position: 1
+  - ident: cand-5191
+    contest_ident: cont-anc5B03
+    display_name: Regina James
+    position: 1
+  - ident: cand-5192
+    contest_ident: cont-anc5B04
+    display_name: Rayseen Woodland
+    position: 1
+  - ident: cand-5193
+    contest_ident: cont-anc5B04
+    display_name: Vaughn L. Bennett
+    position: 2
+  - ident: cand-5194
+    contest_ident: cont-anc5B05
+    display_name: Rosetta Davis
+    position: 1
+  - ident: cand-5195
+    contest_ident: cont-anc5B06
+    display_name: George Jackson
+    position: 1
+  - ident: cand-5196
+    contest_ident: cont-anc5B06
+    display_name: Thalia Wiggins
+    position: 1
+  - ident: cand-5197
+    contest_ident: cont-anc5B07
+    display_name: David L. Hooper
+    position: 1
+  - ident: cand-5198
+    contest_ident: cont-anc5B07
+    display_name: Laura A. Casperson
+    position: 2
+  - ident: cand-5199
+    contest_ident: cont-anc5B07
+    display_name: Arthur Yarbrough
+    position: 3
+  - ident: cand-5200
+    contest_ident: cont-anc5B08
+    display_name: Connell Wise
+    position: 1
+  - ident: cand-5201
+    contest_ident: cont-anc5B08
+    display_name: Tina Laskaris
+    position: 2
+  - ident: cand-5202
+    contest_ident: cont-anc5B09
+    display_name: Jacqueline Manning
+    position: 1
+  - ident: cand-5203
+    contest_ident: cont-anc5B10
+    display_name: Camille Jean-Esther Tucker
+    position: 1
+  - ident: cand-5204
+    contest_ident: cont-anc5B10
+    display_name: India A. Henderson
+    position: 1
+  - ident: cand-5205
+    contest_ident: cont-anc5B11
+    display_name: William H. (Bill) Myers, Jr.
+    position: 1
+  - ident: cand-5206
+    contest_ident: cont-anc5C01
+    display_name: Bradley Ashton Thomas
+    position: 1
+  - ident: cand-5207
+    contest_ident: cont-anc5C01
+    display_name: Kimberly Tignor
+    position: 2
+  - ident: cand-5208
+    contest_ident: cont-anc5C02
+    display_name: Joyce Robinson-Paul
+    position: 1
+  - ident: cand-5209
+    contest_ident: cont-anc5C02
+    display_name: Sylvia Pinkney
+    position: 2
+  - ident: cand-5210
+    contest_ident: cont-anc5C03
+    display_name: W. Hugh Youngblood
+    position: 1
+  - ident: cand-5211
+    contest_ident: cont-anc5C04
+    display_name: John Salatti
+    position: 1
+  - ident: cand-5212
+    contest_ident: cont-anc5C05
+    display_name: Denise L. Wright
+    position: 1
+  - ident: cand-5213
+    contest_ident: cont-anc5C05
+    display_name: Timothy (Tim) Clark
+    position: 2
+  - ident: cand-5214
+    contest_ident: cont-anc5C06
+    display_name: Mary Lois Farmer-Allen
+    position: 1
+  - ident: cand-5215
+    contest_ident: cont-anc5C06
+    display_name: Darin Allen
+    position: 2
+  - ident: cand-5216
+    contest_ident: cont-anc5C07
+    display_name: Barrie Daneker
+    position: 1
+  - ident: cand-5217
+    contest_ident: cont-anc5C07
+    display_name: James J. Fournier
+    position: 2
+  - ident: cand-5218
+    contest_ident: cont-anc5C08
+    display_name: J. Jioni Palmer
+    position: 1
+  - ident: cand-5219
+    contest_ident: cont-anc5C09
+    display_name: Silas Grant Jr.
+    position: 1
+  - ident: cand-5220
+    contest_ident: cont-anc5C11
+    display_name: Ronnie Edwards
+    position: 1
+  - ident: cand-5221
+    contest_ident: cont-anc5C12
+    display_name: Albrette (Gigi) Ransom
+    position: 1
+  - ident: cand-5222
+    contest_ident: cont-anc5C12
+    display_name: Derrick O. Holloway
+    position: 1
+  - ident: cand-5223
+    contest_ident: cont-anc6A01
+    display_name: Lawrence Russell
+    position: 1
+  - ident: cand-5224
+    contest_ident: cont-anc6A01
+    display_name: Angelia Rice
+    position: 2
+  - ident: cand-5225
+    contest_ident: cont-anc6A01
+    display_name: Adam C. Healy
+    position: 3
+  - ident: cand-5226
+    contest_ident: cont-anc6A02
+    display_name: Drew Ronneberg
+    position: 1
+  - ident: cand-5227
+    contest_ident: cont-anc6A03
+    display_name: David Holmes
+    position: 1
+  - ident: cand-5228
+    contest_ident: cont-anc6A04
+    display_name: Nick Alberti
+    position: 1
+  - ident: cand-5229
+    contest_ident: cont-anc6A05
+    display_name: William R. Mohring
+    position: 1
+  - ident: cand-5230
+    contest_ident: cont-anc6A05
+    display_name: Sharee Lawler
+    position: 2
+  - ident: cand-5231
+    contest_ident: cont-anc6A06
+    display_name: Andrew J. Hysell
+    position: 1
+  - ident: cand-5232
+    contest_ident: cont-anc6A07
+    display_name: Gladys Ann Mack
+    position: 1
+  - ident: cand-5233
+    contest_ident: cont-anc6A07
+    display_name: Necothia (Nikki) Bowens
+    position: 2
+  - ident: cand-5234
+    contest_ident: cont-anc6A08
+    display_name: Lia Veenendaal-Selck
+    position: 1
+  - ident: cand-5235
+    contest_ident: cont-anc6B01
+    display_name: Dave Garrison
+    position: 1
+  - ident: cand-5236
+    contest_ident: cont-anc6B02
+    display_name: Ivan Frishberg
+    position: 1
+  - ident: cand-5237
+    contest_ident: cont-anc6B02
+    display_name: Mary Wright
+    position: 2
+  - ident: cand-5238
+    contest_ident: cont-anc6B02
+    display_name: Vernon Mallu
+    position: 3
+  - ident: cand-5239
+    contest_ident: cont-anc6B03
+    display_name: Norman Metzger
+    position: 1
+  - ident: cand-5240
+    contest_ident: cont-anc6B03
+    display_name: Jason E. Townsend
+    position: 2
+  - ident: cand-5241
+    contest_ident: cont-anc6B04
+    display_name: Kirsten Oldenburg
+    position: 1
+  - ident: cand-5242
+    contest_ident: cont-anc6B04
+    display_name: Larry Janezich
+    position: 2
+  - ident: cand-5243
+    contest_ident: cont-anc6B04
+    display_name: Tim Casey
+    position: 3
+  - ident: cand-5244
+    contest_ident: cont-anc6B05
+    display_name: Brian Pate
+    position: 1
+  - ident: cand-5245
+    contest_ident: cont-anc6B05
+    display_name: Kenan Jarboe
+    position: 2
+  - ident: cand-5246
+    contest_ident: cont-anc6B06
+    display_name: Jared Critchfield
+    position: 1
+  - ident: cand-5247
+    contest_ident: cont-anc6B07
+    display_name: Carol J Green
+    position: 1
+  - ident: cand-5248
+    contest_ident: cont-anc6B07
+    display_name: Jon Marker
+    position: 1
+  - ident: cand-5249
+    contest_ident: cont-anc6B08
+    display_name: Michael McCamman
+    position: 1
+  - ident: cand-5250
+    contest_ident: cont-anc6B08
+    display_name: Laura McSorley
+    position: 2
+  - ident: cand-5251
+    contest_ident: cont-anc6B08
+    display_name: Neil Glick
+    position: 3
+  - ident: cand-5252
+    contest_ident: cont-anc6B09
+    display_name: Brian Flahaven
+    position: 1
+  - ident: cand-5253
+    contest_ident: cont-anc6B09
+    display_name: Michael O. Patterson
+    position: 1
+  - ident: cand-5254
+    contest_ident: cont-anc6B10
+    display_name: Richard Counts
+    position: 1
+  - ident: cand-5255
+    contest_ident: cont-anc6B10
+    display_name: Larry Frankel
+    position: 2
+  - ident: cand-5256
+    contest_ident: cont-anc6B10
+    display_name: Francis M. Campbell
+    position: 3
+  - ident: cand-5257
+    contest_ident: cont-anc6C01
+    display_name: Keith Silver
+    position: 1
+  - ident: cand-5258
+    contest_ident: cont-anc6C01
+    display_name: Marge Maceda
+    position: 1
+  - ident: cand-5259
+    contest_ident: cont-anc6C02
+    display_name: Mark A. Dixon
+    position: 1
+  - ident: cand-5260
+    contest_ident: cont-anc6C02
+    display_name: Rob Amos
+    position: 1
+  - ident: cand-5261
+    contest_ident: cont-anc6C04
+    display_name: Anne M. Phelps
+    position: 1
+  - ident: cand-5262
+    contest_ident: cont-anc6C05
+    display_name: Brian Cox
+    position: 1
+  - ident: cand-5263
+    contest_ident: cont-anc6C05
+    display_name: Tony Richardson
+    position: 2
+  - ident: cand-5264
+    contest_ident: cont-anc6C05
+    display_name: Jennifer Zatkowski
+    position: 3
+  - ident: cand-5265
+    contest_ident: cont-anc6C06
+    display_name: Tom Hamilton
+    position: 1
+  - ident: cand-5266
+    contest_ident: cont-anc6C07
+    display_name: Bill Crews
+    position: 1
+  - ident: cand-5267
+    contest_ident: cont-anc6C08
+    display_name: Karen Wirt
+    position: 1
+  - ident: cand-5268
+    contest_ident: cont-anc6C09
+    display_name: Kevin Wilsey
+    position: 1
+  - ident: cand-5269
+    contest_ident: cont-anc6C09
+    display_name: LeRoy-Jacob Smith
+    position: 2
+  - ident: cand-5270
+    contest_ident: cont-anc6D01
+    display_name: Bob Craycraft
+    position: 1
+  - ident: cand-5271
+    contest_ident: cont-anc6D02
+    display_name: Cara Lea Shockley
+    position: 1
+  - ident: cand-5272
+    contest_ident: cont-anc6D02
+    display_name: Kathleen Hoppe
+    position: 2
+  - ident: cand-5273
+    contest_ident: cont-anc6D03
+    display_name: Mary C. Williams
+    position: 1
+  - ident: cand-5274
+    contest_ident: cont-anc6D03
+    display_name: Ron McBee
+    position: 2
+  - ident: cand-5275
+    contest_ident: cont-anc6D04
+    display_name: Andy Litsky
+    position: 1
+  - ident: cand-5276
+    contest_ident: cont-anc6D05
+    display_name: Roger Moffatt
+    position: 1
+  - ident: cand-5277
+    contest_ident: cont-anc6D05
+    display_name: Grace E. Daughtridge
+    position: 2
+  - ident: cand-5278
+    contest_ident: cont-anc6D06
+    display_name: Rhonda Hamilton
+    position: 1
+  - ident: cand-5279
+    contest_ident: cont-anc6D06
+    display_name: Mark Driscoll
+    position: 2
+  - ident: cand-5280
+    contest_ident: cont-anc6D06
+    display_name: Carl L. Barnes Sr.
+    position: 3
+  - ident: cand-5281
+    contest_ident: cont-anc6D07
+    display_name: David Garber
+    position: 1
+  - ident: cand-5282
+    contest_ident: cont-anc6D07
+    display_name: Robert (Bob) Siegel
+    position: 1
+  - ident: cand-5283
+    contest_ident: cont-anc7A03
+    display_name: Shahidah Nicole Hamlett
+    position: 1
+  - ident: cand-5284
+    contest_ident: cont-anc7A04
+    display_name: Latese Q. M. Gilbert
+    position: 1
+  - ident: cand-5285
+    contest_ident: cont-anc7A05
+    display_name: Martha Kent
+    position: 1
+  - ident: cand-5286
+    contest_ident: cont-anc7A07
+    display_name: Adwoa Beidleman Aggrey
+    position: 1
+  - ident: cand-5287
+    contest_ident: cont-anc7A07
+    display_name: Villareal (VJ) Johnson
+    position: 2
+  - ident: cand-5288
+    contest_ident: cont-anc7A07
+    display_name: Robert K. Idlett
+    position: 3
+  - ident: cand-5289
+    contest_ident: cont-anc7B01
+    display_name: Holly Muhammad
+    position: 1
+  - ident: cand-5290
+    contest_ident: cont-anc7B02
+    display_name: Zina D. Williams
+    position: 1
+  - ident: cand-5291
+    contest_ident: cont-anc7B03
+    display_name: L. Yvonne Moore
+    position: 1
+  - ident: cand-5292
+    contest_ident: cont-anc7B04
+    display_name: Phillip J. Hammond
+    position: 1
+  - ident: cand-5293
+    contest_ident: cont-anc7B05
+    display_name: Robin Hammond Marlin
+    position: 1
+  - ident: cand-5294
+    contest_ident: cont-anc7B06
+    display_name: Robert A. Jordan
+    position: 1
+  - ident: cand-5295
+    contest_ident: cont-anc7B06
+    display_name: Richard Evans
+    position: 2
+  - ident: cand-5296
+    contest_ident: cont-anc7B07
+    display_name: Robert T Richards
+    position: 1
+  - ident: cand-5297
+    contest_ident: cont-anc7B07
+    display_name: D. L. Humphrey
+    position: 2
+  - ident: cand-5298
+    contest_ident: cont-anc7C01
+    display_name: Patricia Malloy
+    position: 1
+  - ident: cand-5299
+    contest_ident: cont-anc7C02
+    display_name: Khaliq
+    position: 1
+  - ident: cand-5300
+    contest_ident: cont-anc7C03
+    display_name: Catherine A. Woods
+    position: 1
+  - ident: cand-5301
+    contest_ident: cont-anc7C03
+    display_name: Ronnie Streff
+    position: 2
+  - ident: cand-5302
+    contest_ident: cont-anc7C04
+    display_name: Sylvia C. Brown
+    position: 1
+  - ident: cand-5303
+    contest_ident: cont-anc7C05
+    display_name: Mary L. Gaffney
+    position: 1
+  - ident: cand-5304
+    contest_ident: cont-anc7D01
+    display_name: Lisa White
+    position: 1
+  - ident: cand-5305
+    contest_ident: cont-anc7D01
+    display_name: Veronica E. Raglin
+    position: 1
+  - ident: cand-5306
+    contest_ident: cont-anc7D02
+    display_name: Sharita C. Slayton
+    position: 1
+  - ident: cand-5307
+    contest_ident: cont-anc7D02
+    display_name: Derric Daniels
+    position: 2
+  - ident: cand-5308
+    contest_ident: cont-anc7D03
+    display_name: Will H Ross
+    position: 1
+  - ident: cand-5309
+    contest_ident: cont-anc7D04
+    display_name: JoAnne Prue
+    position: 1
+  - ident: cand-5310
+    contest_ident: cont-anc7D05
+    display_name: Rick Tingling-Clemmons
+    position: 1
+  - ident: cand-5311
+    contest_ident: cont-anc7D05
+    display_name: Liz Pecot
+    position: 2
+  - ident: cand-5312
+    contest_ident: cont-anc7D06
+    display_name: Willette Seaward
+    position: 1
+  - ident: cand-5313
+    contest_ident: cont-anc7D07
+    display_name: Willie Henry Woods, Jr.
+    position: 1
+  - ident: cand-5314
+    contest_ident: cont-anc7E01
+    display_name: George B. Browne Jr
+    position: 1
+  - ident: cand-5315
+    contest_ident: cont-anc7E02
+    display_name: Linda S. Green
+    position: 1
+  - ident: cand-5316
+    contest_ident: cont-anc7E03
+    display_name: Rosa A. Hamlett
+    position: 1
+  - ident: cand-5317
+    contest_ident: cont-anc7E04
+    display_name: Mary D. Jackson
+    position: 1
+  - ident: cand-5318
+    contest_ident: cont-anc7E06
+    display_name: Marquette Austin
+    position: 1
+  - ident: cand-5319
+    contest_ident: cont-anc7E06
+    display_name: Evelyn Hunter Armstrong
+    position: 2
+  - ident: cand-5320
+    contest_ident: cont-anc7E07
+    display_name: Maxine Nightingale Starling
+    position: 1
+  - ident: cand-5321
+    contest_ident: cont-anc8A01
+    display_name: Anthony Muhammad
+    position: 1
+  - ident: cand-5322
+    contest_ident: cont-anc8A02
+    display_name: Barbara J. Clark
+    position: 1
+  - ident: cand-5323
+    contest_ident: cont-anc8A03
+    display_name: Greta J. Fuller
+    position: 1
+  - ident: cand-5324
+    contest_ident: cont-anc8A04
+    display_name: Charles E. Wilson
+    position: 1
+  - ident: cand-5325
+    contest_ident: cont-anc8A05
+    display_name: Carolyn Bridges-Ward
+    position: 1
+  - ident: cand-5326
+    contest_ident: cont-anc8A05
+    display_name: David DJ White
+    position: 2
+  - ident: cand-5327
+    contest_ident: cont-anc8A06
+    display_name: Gregg J Justice III
+    position: 1
+  - ident: cand-5328
+    contest_ident: cont-anc8A07
+    display_name: Lendia Sue Johnson
+    position: 1
+  - ident: cand-5329
+    contest_ident: cont-anc8B01
+    display_name: Khadijah Watson
+    position: 1
+  - ident: cand-5330
+    contest_ident: cont-anc8B01
+    display_name: Janasha Thomas
+    position: 2
+  - ident: cand-5331
+    contest_ident: cont-anc8B02
+    display_name: David S. Brewer
+    position: 1
+  - ident: cand-5332
+    contest_ident: cont-anc8B03
+    display_name: Darrel D. Gaston
+    position: 1
+  - ident: cand-5333
+    contest_ident: cont-anc8B03
+    display_name: India L. Blocker
+    position: 2
+  - ident: cand-5334
+    contest_ident: cont-anc8B04
+    display_name: JB Shoatz
+    position: 1
+  - ident: cand-5335
+    contest_ident: cont-anc8B05
+    display_name: Tijwanna U. Phillips
+    position: 1
+  - ident: cand-5336
+    contest_ident: cont-anc8B06
+    display_name: Charles Rick Turner
+    position: 1
+  - ident: cand-5337
+    contest_ident: cont-anc8B06
+    display_name: Mitchell Gary Hawkins III
+    position: 1
+  - ident: cand-5338
+    contest_ident: cont-anc8B07
+    display_name: Von Pariss
+    position: 1
+  - ident: cand-5339
+    contest_ident: cont-anc8B07
+    display_name: Louise Thorne
+    position: 2
+  - ident: cand-5340
+    contest_ident: cont-anc8C01
+    display_name: Zaccai Free
+    position: 1
+  - ident: cand-5341
+    contest_ident: cont-anc8C01
+    display_name: William R. Ellis
+    position: 2
+  - ident: cand-5342
+    contest_ident: cont-anc8C02
+    display_name: Dion Jordan
+    position: 1
+  - ident: cand-5343
+    contest_ident: cont-anc8C02
+    display_name: Lashaun N. Smith
+    position: 1
+  - ident: cand-5344
+    contest_ident: cont-anc8C03
+    display_name: Mary J. Cuthbert
+    position: 1
+  - ident: cand-5345
+    contest_ident: cont-anc8C03
+    display_name: Larry T. Pretlow II
+    position: 2
+  - ident: cand-5346
+    contest_ident: cont-anc8C04
+    display_name: Lloyd T. Logan
+    position: 1
+  - ident: cand-5347
+    contest_ident: cont-anc8C07
+    display_name: Cardell Shelton
+    position: 1
+  - ident: cand-5348
+    contest_ident: cont-anc8C07
+    display_name: Brenda E Shields
+    position: 2
+  - ident: cand-5349
+    contest_ident: cont-anc8D01
+    display_name: Patricia A Carmon
+    position: 1
+  - ident: cand-5350
+    contest_ident: cont-anc8D02
+    display_name: Olivia L. Henderson
+    position: 1
+  - ident: cand-5351
+    contest_ident: cont-anc8D03
+    display_name: Absalom (Ab) Jordan
+    position: 1
+  - ident: cand-5352
+    contest_ident: cont-anc8D04
+    display_name: Thea Dyson
+    position: 1
+  - ident: cand-5353
+    contest_ident: cont-anc8D07
+    display_name: Theresa H. Jones
+    position: 1
+  - ident: cand-5354
+    contest_ident: cont-anc8D07
+    display_name: Dionne Brown
+    position: 2
+  - ident: cand-5355
+    contest_ident: cont-anc8D07
+    display_name: Richard T. (Dick) Clark
+    position: 3
+  - ident: cand-5356
+    contest_ident: cont-anc8E02
+    display_name: S.S. - Sandra Seegars
+    position: 1
+  - ident: cand-5357
+    contest_ident: cont-anc8E03
+    display_name: Christopher L. Hawthorne
+    position: 1
+  - ident: cand-5358
+    contest_ident: cont-anc8E04
+    display_name: Melvin H. Sims
+    position: 1
+  - ident: cand-5359
+    contest_ident: cont-anc8E05
+    display_name: Phomika (PHO) Palmer
+    position: 1
+  - ident: cand-5360
+    contest_ident: cont-anc8E05
+    display_name: Charles Edward Fuller
+    position: 2
+  - ident: cand-5361
+    contest_ident: cont-anc8E05
+    display_name: Rita Margaret Steele
+    position: 3
+  - ident: cand-5362
+    contest_ident: cont-anc8E05
+    display_name: Joyce Burnette
+    position: 4
+  - ident: cand-5363
+    contest_ident: cont-anc8E06
+    display_name: Karlene (K.) Armstead
+    position: 1
+  - ident: cand-5364
+    contest_ident: cont-anc8E06
+    display_name: Angela S. Hooker
+    position: 2
+  - ident: cand-5365
+    contest_ident: cont-anc8E07
+    display_name: Stephen A. Slaughter
+    position: 1
+  counter_list: []
+
+  election: 
+    start_date: "2010-11-02"
+    type: GENERAL
+    ident: elect-14
+  reporting_group_list: []
+
+  contest_list: 
+  - ident: cont-delegate
+    display_name: DELEGATE TO THE U.S. HOUSE OF REPRESENTATIVES
+    district_ident: dist-FEDERAL
+    election_ident: elect-14
+  - ident: cont-mayor
+    display_name: MAYOR OF THE DISTRICT OF COLUMBIA
+    district_ident: dist-DISTRICT OF COLUMBIA
+    election_ident: elect-14
+  - ident: cont-chairman
+    display_name: CHAIRMAN OF THE COUNCIL
+    district_ident: dist-DISTRICT OF COLUMBIA
+    election_ident: elect-14
+  - ident: cont-atlarge
+    display_name: AT-LARGE MEMBER OF THE COUNCIL
+    district_ident: dist-DISTRICT OF COLUMBIA
+    election_ident: elect-14
+  - ident: cont-council1
+    display_name: MEMBER OF THE COUNCIL WARD ONE
+    district_ident: dist-CITY OF WASHINGTON WARD 1
+    election_ident: elect-14
+  - ident: cont-council3
+    display_name: MEMBER OF THE COUNCIL WARD THREE
+    district_ident: dist-CITY OF WASHINGTON WARD 3
+    election_ident: elect-14
+  - ident: cont-council5
+    display_name: MEMBER OF THE COUNCIL WARD FIVE
+    district_ident: dist-CITY OF WASHINGTON WARD 5
+    election_ident: elect-14
+  - ident: cont-council6
+    display_name: MEMBER OF THE COUNCIL WARD SIX
+    district_ident: dist-CITY OF WASHINGTON WARD 6
+    election_ident: elect-14
+  - ident: cont-educ1
+    display_name: MEMBER OF STATE BOARD OF EDUCATION WARD ONE
+    district_ident: dist-CITY OF WASHINGTON WARD 1
+    election_ident: elect-14
+  - ident: cont-educ3
+    display_name: MEMBER OF STATE BOARD OF EDUCATION WARD THREE
+    district_ident: dist-CITY OF WASHINGTON WARD 3
+    election_ident: elect-14
+  - ident: cont-educ5
+    display_name: MEMBER OF STATE BOARD OF EDUCATION WARD FIVE
+    district_ident: dist-CITY OF WASHINGTON WARD 5
+    election_ident: elect-14
+  - ident: cont-educ6
+    display_name: MEMBER OF STATE BOARD OF EDUCATION WARD SIX
+    district_ident: dist-CITY OF WASHINGTON WARD 6
+    election_ident: elect-14
+  - ident: cont-usrep
+    display_name: UNITED STATES REPRESENTATIVE
+    district_ident: dist-1ST CONGRESSIONAL DIST
+    election_ident: elect-14
+  - ident: cont-anc1A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A01
+    district_ident: dist-SMD 01-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A02
+    district_ident: dist-SMD 02-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A03
+    district_ident: dist-SMD 03-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A04
+    district_ident: dist-SMD 04-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A05
+    district_ident: dist-SMD 05-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A06
+    district_ident: dist-SMD 06-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A07
+    district_ident: dist-SMD 07-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A08
+    district_ident: dist-SMD 08-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A09
+    district_ident: dist-SMD 09-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A10
+    district_ident: dist-SMD 10-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1A11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1A11
+    district_ident: dist-SMD 11-ANC 1A
+    election_ident: elect-14
+  - ident: cont-anc1B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B01
+    district_ident: dist-SMD 01-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B02
+    district_ident: dist-SMD 02-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B03
+    district_ident: dist-SMD 03-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B04
+    district_ident: dist-SMD 04-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B05
+    district_ident: dist-SMD 05-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B06
+    district_ident: dist-SMD 06-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B07
+    district_ident: dist-SMD 07-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B08
+    district_ident: dist-SMD 08-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B09
+    district_ident: dist-SMD 09-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B10
+    district_ident: dist-SMD 10-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1B11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1B11
+    district_ident: dist-SMD 11-ANC 1B
+    election_ident: elect-14
+  - ident: cont-anc1C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C01
+    district_ident: dist-SMD 01-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C02
+    district_ident: dist-SMD 02-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C03
+    district_ident: dist-SMD 03-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C04
+    district_ident: dist-SMD 04-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C05
+    district_ident: dist-SMD 05-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C06
+    district_ident: dist-SMD 06-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C07
+    district_ident: dist-SMD 07-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1C08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1C08
+    district_ident: dist-SMD 08-ANC 1C
+    election_ident: elect-14
+  - ident: cont-anc1D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D01
+    district_ident: dist-SMD 01-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc1D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D02
+    district_ident: dist-SMD 02-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc1D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D03
+    district_ident: dist-SMD 03-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc1D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D04
+    district_ident: dist-SMD 04-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc1D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D05
+    district_ident: dist-SMD 05-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc1D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 1D06
+    district_ident: dist-SMD 06-ANC 1D
+    election_ident: elect-14
+  - ident: cont-anc2A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A01
+    district_ident: dist-SMD 01-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A02
+    district_ident: dist-SMD 02-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A03
+    district_ident: dist-SMD 03-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A04
+    district_ident: dist-SMD 04-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A05
+    district_ident: dist-SMD 05-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2A06
+    district_ident: dist-SMD 06-ANC 2A
+    election_ident: elect-14
+  - ident: cont-anc2B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B01
+    district_ident: dist-SMD 01-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B02
+    district_ident: dist-SMD 02-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B03
+    district_ident: dist-SMD 03-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B04
+    district_ident: dist-SMD 04-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B05
+    district_ident: dist-SMD 05-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B06
+    district_ident: dist-SMD 06-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B07
+    district_ident: dist-SMD 07-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B08
+    district_ident: dist-SMD 08-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2B09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2B09
+    district_ident: dist-SMD 09-ANC 2B
+    election_ident: elect-14
+  - ident: cont-anc2C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2C01
+    district_ident: dist-SMD 01-ANC 2C
+    election_ident: elect-14
+  - ident: cont-anc2C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2C02
+    district_ident: dist-SMD 02-ANC 2C
+    election_ident: elect-14
+  - ident: cont-anc2C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2C03
+    district_ident: dist-SMD 03-ANC 2C
+    election_ident: elect-14
+  - ident: cont-anc2C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2C04
+    district_ident: dist-SMD 04-ANC 2C
+    election_ident: elect-14
+  - ident: cont-anc2D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2D01
+    district_ident: dist-SMD 01-ANC 2D
+    election_ident: elect-14
+  - ident: cont-anc2D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2D02
+    district_ident: dist-SMD 02-ANC 2D
+    election_ident: elect-14
+  - ident: cont-anc2E01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E01
+    district_ident: dist-SMD 01-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E02
+    district_ident: dist-SMD 02-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E03
+    district_ident: dist-SMD 03-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E04
+    district_ident: dist-SMD 04-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E05
+    district_ident: dist-SMD 05-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E06
+    district_ident: dist-SMD 06-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2E07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2E07
+    district_ident: dist-SMD 07-ANC 2E
+    election_ident: elect-14
+  - ident: cont-anc2F01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F01
+    district_ident: dist-SMD 01-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc2F02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F02
+    district_ident: dist-SMD 02-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc2F03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F03
+    district_ident: dist-SMD 03-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc2F04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F04
+    district_ident: dist-SMD 04-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc2F05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F05
+    district_ident: dist-SMD 05-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc2F06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 2F06
+    district_ident: dist-SMD 06-ANC 2F
+    election_ident: elect-14
+  - ident: cont-anc3B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3B01
+    district_ident: dist-SMD 01-ANC 3B
+    election_ident: elect-14
+  - ident: cont-anc3B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3B02
+    district_ident: dist-SMD 02-ANC 3B
+    election_ident: elect-14
+  - ident: cont-anc3B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3B03
+    district_ident: dist-SMD 03-ANC 3B
+    election_ident: elect-14
+  - ident: cont-anc3B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3B04
+    district_ident: dist-SMD 04-ANC 3B
+    election_ident: elect-14
+  - ident: cont-anc3B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3B05
+    district_ident: dist-SMD 05-ANC 3B
+    election_ident: elect-14
+  - ident: cont-anc3C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C01
+    district_ident: dist-SMD 01-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C02
+    district_ident: dist-SMD 02-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C03
+    district_ident: dist-SMD 03-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C04
+    district_ident: dist-SMD 04-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C05
+    district_ident: dist-SMD 05-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C06
+    district_ident: dist-SMD 06-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C07
+    district_ident: dist-SMD 07-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C08
+    district_ident: dist-SMD 08-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3C09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3C09
+    district_ident: dist-SMD 09-ANC 3C
+    election_ident: elect-14
+  - ident: cont-anc3D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D01
+    district_ident: dist-SMD 01-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D02
+    district_ident: dist-SMD 02-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D03
+    district_ident: dist-SMD 03-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D04
+    district_ident: dist-SMD 04-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D05
+    district_ident: dist-SMD 05-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D06
+    district_ident: dist-SMD 06-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D07
+    district_ident: dist-SMD 07-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D08
+    district_ident: dist-SMD 08-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3D09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3D09
+    district_ident: dist-SMD 09-ANC 3D
+    election_ident: elect-14
+  - ident: cont-anc3E01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3E01
+    district_ident: dist-SMD 01-ANC 3E
+    election_ident: elect-14
+  - ident: cont-anc3E02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3E02
+    district_ident: dist-SMD 02-ANC 3E
+    election_ident: elect-14
+  - ident: cont-anc3E03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3E03
+    district_ident: dist-SMD 03-ANC 3E
+    election_ident: elect-14
+  - ident: cont-anc3E04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3E04
+    district_ident: dist-SMD 04-ANC 3E
+    election_ident: elect-14
+  - ident: cont-anc3E05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3E05
+    district_ident: dist-SMD 05-ANC 3E
+    election_ident: elect-14
+  - ident: cont-anc3F01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F01
+    district_ident: dist-SMD 01-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F02
+    district_ident: dist-SMD 02-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F03
+    district_ident: dist-SMD 03-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F04
+    district_ident: dist-SMD 04-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F05
+    district_ident: dist-SMD 05-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F06
+    district_ident: dist-SMD 06-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3F07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3F07
+    district_ident: dist-SMD 07-ANC 3F
+    election_ident: elect-14
+  - ident: cont-anc3G01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G01
+    district_ident: dist-SMD 01-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G02
+    district_ident: dist-SMD 02-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G03
+    district_ident: dist-SMD 03-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G04
+    district_ident: dist-SMD 04-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G05
+    district_ident: dist-SMD 05-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G06
+    district_ident: dist-SMD 06-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc3G07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 3G07
+    district_ident: dist-SMD 07-ANC 3G
+    election_ident: elect-14
+  - ident: cont-anc4A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A01
+    district_ident: dist-SMD 01-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A02
+    district_ident: dist-SMD 02-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A03
+    district_ident: dist-SMD 03-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A04
+    district_ident: dist-SMD 04-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A05
+    district_ident: dist-SMD 05-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A06
+    district_ident: dist-SMD 06-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A07
+    district_ident: dist-SMD 07-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4A08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4A08
+    district_ident: dist-SMD 08-ANC 4A
+    election_ident: elect-14
+  - ident: cont-anc4B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B01
+    district_ident: dist-SMD 01-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B02
+    district_ident: dist-SMD 02-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B03
+    district_ident: dist-SMD 03-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B04
+    district_ident: dist-SMD 04-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B05
+    district_ident: dist-SMD 05-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B06
+    district_ident: dist-SMD 06-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B07
+    district_ident: dist-SMD 07-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B08
+    district_ident: dist-SMD 08-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4B09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4B09
+    district_ident: dist-SMD 09-ANC 4B
+    election_ident: elect-14
+  - ident: cont-anc4C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C01
+    district_ident: dist-SMD 01-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C02
+    district_ident: dist-SMD 02-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C03
+    district_ident: dist-SMD 03-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C04
+    district_ident: dist-SMD 04-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C05
+    district_ident: dist-SMD 05-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C06
+    district_ident: dist-SMD 06-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C07
+    district_ident: dist-SMD 07-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C08
+    district_ident: dist-SMD 08-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C09
+    district_ident: dist-SMD 09-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4C10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4C10
+    district_ident: dist-SMD 10-ANC 4C
+    election_ident: elect-14
+  - ident: cont-anc4D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D01
+    district_ident: dist-SMD 01-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc4D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D02
+    district_ident: dist-SMD 02-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc4D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D03
+    district_ident: dist-SMD 03-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc4D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D04
+    district_ident: dist-SMD 04-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc4D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D05
+    district_ident: dist-SMD 05-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc4D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 4D06
+    district_ident: dist-SMD 06-ANC 4D
+    election_ident: elect-14
+  - ident: cont-anc5A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A01
+    district_ident: dist-SMD 01-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A02
+    district_ident: dist-SMD 02-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A03
+    district_ident: dist-SMD 03-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A04
+    district_ident: dist-SMD 04-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A05
+    district_ident: dist-SMD 05-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A06
+    district_ident: dist-SMD 06-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A07
+    district_ident: dist-SMD 07-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A08
+    district_ident: dist-SMD 08-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A09
+    district_ident: dist-SMD 09-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A10
+    district_ident: dist-SMD 10-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A11
+    district_ident: dist-SMD 11-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5A12
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5A12
+    district_ident: dist-SMD 12-ANC 5A
+    election_ident: elect-14
+  - ident: cont-anc5B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B01
+    district_ident: dist-SMD 01-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B02
+    district_ident: dist-SMD 02-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B03
+    district_ident: dist-SMD 03-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B04
+    district_ident: dist-SMD 04-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B05
+    district_ident: dist-SMD 05-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B06
+    district_ident: dist-SMD 06-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B07
+    district_ident: dist-SMD 07-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B08
+    district_ident: dist-SMD 08-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B09
+    district_ident: dist-SMD 09-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B10
+    district_ident: dist-SMD 10-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B11
+    district_ident: dist-SMD 11-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5B12
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5B12
+    district_ident: dist-SMD 12-ANC 5B
+    election_ident: elect-14
+  - ident: cont-anc5C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C01
+    district_ident: dist-SMD 01-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C02
+    district_ident: dist-SMD 02-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C03
+    district_ident: dist-SMD 03-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C04
+    district_ident: dist-SMD 04-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C05
+    district_ident: dist-SMD 05-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C06
+    district_ident: dist-SMD 06-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C07
+    district_ident: dist-SMD 07-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C08
+    district_ident: dist-SMD 08-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C09
+    district_ident: dist-SMD 09-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C10
+    district_ident: dist-SMD 10-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C11
+    district_ident: dist-SMD 11-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc5C12
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 5C12
+    district_ident: dist-SMD 12-ANC 5C
+    election_ident: elect-14
+  - ident: cont-anc6A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A01
+    district_ident: dist-SMD 01-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A02
+    district_ident: dist-SMD 02-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A03
+    district_ident: dist-SMD 03-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A04
+    district_ident: dist-SMD 04-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A05
+    district_ident: dist-SMD 05-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A06
+    district_ident: dist-SMD 06-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A07
+    district_ident: dist-SMD 07-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6A08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6A08
+    district_ident: dist-SMD 08-ANC 6A
+    election_ident: elect-14
+  - ident: cont-anc6B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B01
+    district_ident: dist-SMD 01-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B02
+    district_ident: dist-SMD 02-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B03
+    district_ident: dist-SMD 03-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B04
+    district_ident: dist-SMD 04-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B05
+    district_ident: dist-SMD 05-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B06
+    district_ident: dist-SMD 06-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B07
+    district_ident: dist-SMD 07-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B08
+    district_ident: dist-SMD 08-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B09
+    district_ident: dist-SMD 09-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B10
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B10
+    district_ident: dist-SMD 10-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6B11
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6B11
+    district_ident: dist-SMD 11-ANC 6B
+    election_ident: elect-14
+  - ident: cont-anc6C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C01
+    district_ident: dist-SMD 01-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C02
+    district_ident: dist-SMD 02-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C03
+    district_ident: dist-SMD 03-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C04
+    district_ident: dist-SMD 04-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C05
+    district_ident: dist-SMD 05-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C06
+    district_ident: dist-SMD 06-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C07
+    district_ident: dist-SMD 07-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C08
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C08
+    district_ident: dist-SMD 08-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6C09
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6C09
+    district_ident: dist-SMD 09-ANC 6C
+    election_ident: elect-14
+  - ident: cont-anc6D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D01
+    district_ident: dist-SMD 01-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D02
+    district_ident: dist-SMD 02-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D03
+    district_ident: dist-SMD 03-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D04
+    district_ident: dist-SMD 04-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D05
+    district_ident: dist-SMD 05-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D06
+    district_ident: dist-SMD 06-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc6D07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 6D07
+    district_ident: dist-SMD 07-ANC 6D
+    election_ident: elect-14
+  - ident: cont-anc7A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A01
+    district_ident: dist-SMD 01-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A02
+    district_ident: dist-SMD 02-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A03
+    district_ident: dist-SMD 03-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A04
+    district_ident: dist-SMD 04-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A05
+    district_ident: dist-SMD 05-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A06
+    district_ident: dist-SMD 06-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7A07
+    district_ident: dist-SMD 07-ANC 7A
+    election_ident: elect-14
+  - ident: cont-anc7B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B01
+    district_ident: dist-SMD 01-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B02
+    district_ident: dist-SMD 02-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B03
+    district_ident: dist-SMD 03-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B04
+    district_ident: dist-SMD 04-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B05
+    district_ident: dist-SMD 05-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B06
+    district_ident: dist-SMD 06-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7B07
+    district_ident: dist-SMD 07-ANC 7B
+    election_ident: elect-14
+  - ident: cont-anc7C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C01
+    district_ident: dist-SMD 01-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C02
+    district_ident: dist-SMD 02-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C03
+    district_ident: dist-SMD 03-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C04
+    district_ident: dist-SMD 04-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C05
+    district_ident: dist-SMD 05-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C06
+    district_ident: dist-SMD 06-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7C07
+    district_ident: dist-SMD 07-ANC 7C
+    election_ident: elect-14
+  - ident: cont-anc7D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D01
+    district_ident: dist-SMD 01-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D02
+    district_ident: dist-SMD 02-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D03
+    district_ident: dist-SMD 03-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D04
+    district_ident: dist-SMD 04-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D05
+    district_ident: dist-SMD 05-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D06
+    district_ident: dist-SMD 06-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7D07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7D07
+    district_ident: dist-SMD 07-ANC 7D
+    election_ident: elect-14
+  - ident: cont-anc7E01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E01
+    district_ident: dist-SMD 01-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E02
+    district_ident: dist-SMD 02-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E03
+    district_ident: dist-SMD 03-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E04
+    district_ident: dist-SMD 04-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E05
+    district_ident: dist-SMD 05-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E06
+    district_ident: dist-SMD 06-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc7E07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 7E07
+    district_ident: dist-SMD 07-ANC 7E
+    election_ident: elect-14
+  - ident: cont-anc8A01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A01
+    district_ident: dist-SMD 01-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A02
+    district_ident: dist-SMD 02-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A03
+    district_ident: dist-SMD 03-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A04
+    district_ident: dist-SMD 04-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A05
+    district_ident: dist-SMD 05-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A06
+    district_ident: dist-SMD 06-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8A07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8A07
+    district_ident: dist-SMD 07-ANC 8A
+    election_ident: elect-14
+  - ident: cont-anc8B01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B01
+    district_ident: dist-SMD 01-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B02
+    district_ident: dist-SMD 02-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B03
+    district_ident: dist-SMD 03-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B04
+    district_ident: dist-SMD 04-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B05
+    district_ident: dist-SMD 05-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B06
+    district_ident: dist-SMD 06-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8B07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8B07
+    district_ident: dist-SMD 07-ANC 8B
+    election_ident: elect-14
+  - ident: cont-anc8C01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C01
+    district_ident: dist-SMD 01-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C02
+    district_ident: dist-SMD 02-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C03
+    district_ident: dist-SMD 03-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C04
+    district_ident: dist-SMD 04-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C05
+    district_ident: dist-SMD 05-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C06
+    district_ident: dist-SMD 06-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8C07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8C07
+    district_ident: dist-SMD 07-ANC 8C
+    election_ident: elect-14
+  - ident: cont-anc8D01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D01
+    district_ident: dist-SMD 01-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D02
+    district_ident: dist-SMD 02-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D03
+    district_ident: dist-SMD 03-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D04
+    district_ident: dist-SMD 04-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D05
+    district_ident: dist-SMD 05-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D06
+    district_ident: dist-SMD 06-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8D07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8D07
+    district_ident: dist-SMD 07-ANC 8D
+    election_ident: elect-14
+  - ident: cont-anc8E01
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E01
+    district_ident: dist-SMD 01-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E02
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E02
+    district_ident: dist-SMD 02-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E03
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E03
+    district_ident: dist-SMD 03-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E04
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E04
+    district_ident: dist-SMD 04-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E05
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E05
+    district_ident: dist-SMD 05-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E06
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E06
+    district_ident: dist-SMD 06-ANC 8E
+    election_ident: elect-14
+  - ident: cont-anc8E07
+    display_name: MEMBER OF ADVISORY NEIGHBORHOOD COMMISSION 8E07
+    district_ident: dist-SMD 07-ANC 8E
+    election_ident: elect-14
+  expected_count_list: []
+
+  audit_header: 
+    software: TTV Tabulator v El Jefe
+    operator: El Jefe
+    create_date: 2011-02-12 21:29:14
+    file_ident: ED_1

@@ -59,14 +59,14 @@ class TempEmgrDH # Temporary EMGR Data Handler for Tabulator
   begin
     @debug = false
     if (ARGV.length > 0)
-      candfile = "Tests/va november 2010/cand-vipFeedWithBallotQuestions.yml"
-      elecfile = "Tests/va november 2010/elect-vipFeedWithBallotQuestions.yml"
-      jurifile = "Tests/va november 2010/juris-vipFeedWithBallotQuestions.yml"
-      quesfile = "Tests/va november 2010/va-question-handcrafted-with-answers.yml"
+      candfile = "Tests/VA/cand-vipFeedWithBallotQuestions.yml"
+      elecfile = "Tests/VA/elect-vipFeedWithBallotQuestions.yml"
+      jurifile = "Tests/VA/juris-vipFeedWithBallotQuestions.yml"
+      quesfile = "Tests/VA/va-question-handcrafted-with-answers.yml"
     else
-      candfile = "Tests/dc november 2010/dc-real-candidates.yml"
-      elecfile = "Tests/dc november 2010/dc-real-elect.yml"
-      jurifile = "Tests/dc november 2010/dc-real-juris.yml"
+      candfile = "Tests/DC/dc-real-candidates.yml"
+      elecfile = "Tests/DC/dc-real-elect.yml"
+      jurifile = "Tests/DC/dc-real-juris.yml"
       quesfile = ""
     end
     tedh = TempEmgrDH.new

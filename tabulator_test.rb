@@ -115,48 +115,81 @@ class TabulatorTest < Test::Unit::TestCase
 
   def test_tabulator
     trace = 300          # In case we need to trace, for debugging these tests
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_new_tabulator(trace, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, JD_WARN_2)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, ED_WARN_12_5)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
-    tabulator_test_counter_count(trace, "CC1_WARN_1A.yml", [], CC1_WARN_1A)
-    tabulator_test_counter_count(trace, "CC1_WARN_1B.yml", [], CC1_WARN_1B)
-    tabulator_test_counter_count(trace, "CC1_WARN_1C.yml", [], CC1_WARN_1C)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_counter_count(trace, "CC1_ERROR_4.yml", CC1_ERROR_4, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_counter_count(trace, "CC1_WARN_1.yml", [], CC1_WARN_1)
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_counter_count(trace, "CC1.yml", [], [])
-    tabulator_test_counter_count(trace, "CC2_ERROR_1.yml", CC2_ERROR_1, [])
-    tabulator_test_counter_count(trace, "CC2.yml", [], [])
-    tabulator_test_counter_count(trace, "CC3_ERROR_13.yml", CC3_ERROR_13, [])
-    tabulator_test_new_tabulator(trace, "JD.yml", "ED.yml", [], [])
-    tabulator_test_counter_count(trace, "CC1.yml", [], [])
-    tabulator_test_counter_count(trace, "CC2.yml", [], [])
-    tabulator_test_counter_count(trace, "CC3.yml", [], [], true)
-    tabulator_test_counter_count(trace, "CC4_ERROR_1.yml", CC4_ERROR_1, CC4_WARN_1)
+    dir = "Tests/Validation"
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_load_jd_ed(trace, dir, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, JD_WARN_2)
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, ED_WARN_12_5)
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED_WARN_2.yml", [], ED_WARN_2)
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED_WARN_4.yml", [], ED_WARN_4)
+    tabulator_test_add_cc(trace, dir, "CC1_WARN_1A.yml", [], CC1_WARN_1A)
+    tabulator_test_add_cc(trace, dir, "CC1_WARN_1B.yml", [], CC1_WARN_1B)
+    tabulator_test_add_cc(trace, dir, "CC1_WARN_1C.yml", [], CC1_WARN_1C)
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC1_ERROR_4.yml", CC1_ERROR_4, [])
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC1_WARN_1.yml", [], CC1_WARN_1)
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC1.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC2_ERROR_1.yml", CC2_ERROR_1, [])
+    tabulator_test_add_cc(trace, dir, "CC2.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC3_ERROR_13.yml", CC3_ERROR_13, [])
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC1.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC2.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC3.yml", [], [], true)
+    tabulator_test_add_cc(trace, dir, "CC4_ERROR_1.yml", CC4_ERROR_1, CC4_WARN_1)
+  end
+
+  def test_tabulator_default
+    trace = 300
+    dir = "Tests/Default"
+    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC1.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC2.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "CC3.yml", [], [], true)
+  end
+
+  def test_tabulator_bedrock
+    trace = 300
+    dir = "Tests/Bedrock"
+    tabulator_test_load_jd_ed(trace, dir, "Bedrock_JD.yml", "Bedrock_ED.yml", [], [])
+    tabulator_test_add_cc(trace, dir, "Bedrock_CC1.yml", [], [], 4)
+  end
+
+  def test_tabulator_dc
+    trace = 300
+    dir = "Tests/DC"
+    warns = ["Missing ALL Reporting Groups, None Present in Election Definition",
+             "Missing ALL Expected Counts, None Present in Election Definition"]
+    tabulator_test_load_jd_ed(trace, dir, "DC_EMGR_JD.yml", "DC_EMGR_ED.yml",
+                              [], warns)
+  end
+
+  def test_tabulator_va
+    trace = 300
+    dir = "Tests/VA"
+    warns = ["Missing ALL Reporting Groups, None Present in Election Definition",
+             "Missing ALL Expected Counts, None Present in Election Definition"]
+    tabulator_test_load_jd_ed(trace, dir, "VA_EMGR_JD.yml", "VA_EMGR_ED.yml",
+                              [], warns)
   end
 
 # Arguments:
 # * <i>trace</i>:  (<i>Integer</i>) limits tracing of output for the syntax checker
 # * <i>prefix</i>: (<i>String</i>) prefix of the schema file name
 # * <i>file</i>:   (<i>String</i>) Tabulator data file name
-# * <i>valdir</i>: (<i>Boolean</i>) indicates from where to read the Tabulator data file (optional)
 #
 # Returns: <i>Hash</i>
 #
 # Read a schema from one file (under Schemas/) and a datum from another file
-# (from either Tests/Validation/ or, if <i>valdir</i> is <i>false</i>, the
-# current working directory), and then tests the success of performing a syntax
-# check of the datum against the schema.
+# from <i>dir</i>/, and then tests the success of performing a syntax check of
+# the datum against the schema.
 
   private
-  def tabulator_test_check_syntax(trace, prefix, file, valdir = true)
+  def tabulator_test_check_syntax(trace, prefix, dir, file)
     schema_file = "Schemas/" + "#{prefix}_schema.yml"
     schema = tabulator_test_read_file(schema_file, "Schema")
-    file = "Tests/Validation/#{file}" if valdir
+    file = "#{dir}/#{file}"
     datum = tabulator_test_read_file(file, "Data")
     csy = CheckSyntaxYaml.new
     assert(csy.check_syntax(schema, datum, true, trace).length == 0,
@@ -178,11 +211,11 @@ class TabulatorTest < Test::Unit::TestCase
 # Election Definition.  The proper number of <i>errors</i> and <i>warnings</i> should
 # appear, and they should match exactly, content-wise.
 
-  def tabulator_test_new_tabulator(trace, jd_file, ed_file, errors, warnings)
+  def tabulator_test_load_jd_ed(trace, dir, jd_file, ed_file, errors, warnings)
     exit(1) unless errors.is_a?(Array) && warnings.is_a?(Array)
     print "\nGenerating Initial Tabulator Count from Files: #{jd_file} #{ed_file}\n"
-    jd = tabulator_test_check_syntax(trace, "jurisdiction_definition", jd_file)
-    ed = tabulator_test_check_syntax(trace, "election_definition", ed_file)
+    jd = tabulator_test_check_syntax(trace, "jurisdiction_definition", dir, jd_file)
+    ed = tabulator_test_check_syntax(trace, "election_definition", dir, ed_file)
     tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
     tc = tab.tabulator_count
     if (tab.validation_errors().length == 0)
@@ -307,11 +340,11 @@ class TabulatorTest < Test::Unit::TestCase
 # Tabulator.  The proper number of <i>errors</i> and <i>warnings</i> should
 # appear, and they should match exactly, content-wise.
 
-  def tabulator_test_counter_count(trace, cc_file, errors, warnings, done = false)
+  def tabulator_test_add_cc(trace, dir, cc_file, errors, warnings, done = false)
     exit(1) unless errors.is_a?(Array) && warnings.is_a?(Array)
     tab = tabulator_test_instantiate_tabulator(trace)
     print "\nTabulator Accumulating New Counter Count from File: #{cc_file}\n"
-    cc = tabulator_test_check_syntax(trace, "counter_count", cc_file)
+    cc = tabulator_test_check_syntax(trace, "counter_count", dir, cc_file)
     tab.validate_counter_count(cc)
     tab.update_tabulator_count(cc)
     tabulator_test_write_tabulator_file(tab.tabulator_count)
@@ -324,12 +357,20 @@ class TabulatorTest < Test::Unit::TestCase
     end
     print " with #{taberrs.to_s} ERRORS and #{tabwarns.to_s} WARNINGS\n"
     tabulator_print_errors_warnings(tab)
-    if (done)
-      print "Checking to see if Tabulator State is DONE... "
+    if (done != false)
       doneness = tab.tabulator_state
-      assert((doneness[0] =~ /^DONE/) && (doneness[1].length == 0),
-             "Tabulator State should be DONE but is not:\n#{doneness[0]}\n")
-      print "YES!\n"
+      if (done == true)
+        print "Checking to see if Tabulator State is DONE... "
+        assert((doneness[0] =~ /^DONE/) && (doneness[1].length == 0),
+               "Tabulator State should be DONE but is not:\n#{doneness[0]}\n")
+        print "YES!\n"
+      else
+        print "Checking the number of missing counts... "
+        missing = doneness[1].length
+        assert((missing == done),
+               "There should be #{done.to_s} missing counts, not #{missing.to_s}")
+        print "Counts missing: #{done.to_s}\n"
+      end
     end
   end
   
@@ -344,7 +385,7 @@ class TabulatorTest < Test::Unit::TestCase
   def tabulator_test_instantiate_tabulator(trace)
     tc_file = TABULATOR_COUNT_FILE
     print "\nInstantiating Tabulator from File: #{tc_file}\n"
-    tc = tabulator_test_check_syntax(trace, "tabulator_count", tc_file, false)
+    tc = tabulator_test_check_syntax(trace, "tabulator_count", ".", tc_file)
     tab = Tabulator.new(false, false, false, tc)
     taberrs = tab.validation_errors().length
     assert(0 == taberrs,
