@@ -54,13 +54,14 @@ class Tabulator < TabulatorValidate
     count = (total == 1 ? "1 Expected Count" : "#{total.to_s} Expected Counts")
     case state
     when "INITIAL"
-      ["INITIAL (Waiting for 1st of #{count})", [], []]
+      ["INITIAL (Waiting for 1st of #{count})", [], [], 0]
     when "DONE"
-      ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], []]
+      ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], [], 0]
     when "ACCUMULATING"
       ["ACCUMULATING (#{missed} Missing from #{count})",
        self.counts_missing["missing"],
-       self.counts_missing["finished"]]
+       self.counts_missing["finished"],
+       self.counts_missing["expected"].keys.length]
     else
       shouldnt("Invalid Tabulator State: #{state.to_s}")
     end
@@ -282,7 +283,7 @@ class Tabulator < TabulatorValidate
 # <i>true</i>.  Prints the values of all of the Tabulator attributes (internal
 # data structures).
 
-  def tabulator_data(print = false)
+  def tabulator_dump_data(print = false)
     print "Tabulator Count\n" if print
     print YAML::dump(self.tabulator_count),"\n" if print
     print "Tabulator Data Summary\n"

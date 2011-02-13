@@ -351,7 +351,7 @@ class TabulatorTest < Test::Unit::TestCase
     taberrs = tabulator_test_errors(tab.validation_errors(), errors)
     tabwarns = tabulator_test_warnings(tab.validation_warnings(), warnings)
     if (tab.validation_errors().length == 0)
-      print "Counter Count Accumulation"
+      print "Counter Count ACCUMULATED"
     else 
       print "Counter Count REJECTED"
     end
