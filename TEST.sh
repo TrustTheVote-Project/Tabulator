@@ -10,25 +10,19 @@ else
 fi
 }
 
+test_syn ()
+{
+    ruby check_syntax_yaml_test.rb
+    exitif
+}
+
 test_tab ()
 {
     ruby tabulator_test.rb
     exitif
 }
 
-test_all ()
-{
-    test_syntax
-    test_tab
-    test_default
-    test_bedrock
-    test_va
-    test_dc
-    echo -e "\n!! ALL TABULATOR TESTS SUCCESSFUL !!\n"
-    exit
-}
-
-test_default ()
+test_def ()
 {
     ruby operator.rb reset
     exitif
@@ -52,56 +46,25 @@ test_def0 ()
 
 test_def1 ()
 {
-    ruby operator.rb reset
-    exitif
-    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
-    exitif
+    test_def0
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
 }
 
 test_def2 ()
 {
-    ruby operator.rb reset
-    exitif
-    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
-    exitif
-    ruby operator.rb add Tests/Default/CC1.yml
-    exitif
+    test_def1
     ruby operator.rb add Tests/Default/CC2.yml
     exitif
 }
 
-test_syntax ()
+test_all ()
 {
-    ruby check_syntax_yaml_test.rb
-    exitif
-}
-
-test_dc ()
-{
-    ruby operator.rb reset
-    exitif
-    ruby operator.rb load Tests/DC/DC_EMGR_JD.yml Tests/DC/DC_EMGR_ED.yml OK
-    exitif
-}
-
-test_va ()
-{
-    ruby operator.rb reset
-    exitif
-    ruby operator.rb load Tests/VA/VA_EMGR_JD.yml Tests/VA/VA_EMGR_ED.yml OK
-    exitif
-}
-
-test_bedrock ()
-{
-    ruby operator.rb reset
-    exitif
-    ruby operator.rb load Tests/Bedrock/Bedrock_JD.yml Tests/Bedrock/Bedrock_ED.yml OK
-    exitif
-    ruby operator.rb add Tests/Bedrock/Bedrock_CC1.yml
-    exitif
+    test_syn
+    test_tab
+    test_def
+    echo -e "!! ALL TABULATOR TESTS SUCCESSFUL !!\n"
+    exit
 }
 
 if [ "$#" -eq 0 ]
@@ -112,6 +75,10 @@ fi
 case $1 in
 all*)
     test_all
+    exit
+    ;;
+syn*)
+    test_syn
     exit
     ;;
 tab*)
@@ -131,25 +98,9 @@ def2*)
     exit
     ;;
 def*)
-    test_default
-    exit
-    ;;
-syn*)
-    test_syntax
-    exit
-    ;;
-dc)
-    test_dc
-    exit
-    ;;
-va)
-    test_va
-    exit
-    ;;
-bed*)
-    test_bedrock
+    test_def
     exit
     ;;
 esac
-echo Valid arguments are: \<nothing\>, all, syntax, tab, default, bedrock, dc, va
+echo "Valid arguments are: all, syn(tax), tab(ulator), def(ault)"
 exit 1

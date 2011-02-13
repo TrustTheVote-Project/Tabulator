@@ -31,10 +31,8 @@ require "tabulator"
 
 class Operator
 
-  TABULATOR_COUNT_FILE =  "TABULATOR_COUNT.yml"
-                        
-  TABULATOR_BACKUP_FILE = "TABULATOR_BACKUP.yml"
-
+  TABULATOR_COUNT_FILE =       "TABULATOR_COUNT.yml"
+  TABULATOR_BACKUP_FILE =      "TABULATOR_BACKUP.yml"
   TABULATOR_SPREADSHEET_FILE = "TABULATOR_SPREADSHEET.csv"
 
 # Arguments:
@@ -46,40 +44,44 @@ class Operator
 # about all the Operator commands.
 
   def help(detail = false)
-    help_string_1d="
-Note: [DEBUG] indicates a temporary/prototype command option.
+    print "\n"
+    if (detail)
+      print "Note: [DEBUG] indicates a temporary/prototype command option.
+
 "
-    help_string_1 = "
-Commands:
+    end
+    print "Commands:
 
   ruby operator.rb       # basic command help information
   ruby operator.rb help  # detailed command help information
-  ruby operator.rb reset # reset Tabulator to EMPTY state"
-    help_string_2 = "
+  ruby operator.rb reset # reset Tabulator to EMPTY state
   ruby operator.rb data  # print Tabulator data
-  ruby operator.rb state # print Tabulator state: 
+  ruby operator.rb state # print Tabulator state, one of: 
                               EMPTY, INITIAL, ACCUMULATING, or DONE  
-  ruby operator.rb total # print Tabulator state, any missing counts, and
-                              voting results spreadsheet (CSV file)
+  ruby operator.rb total # print Tabulator state, show missing counts, and
+                              print spreadsheet with current voting results
 
   ruby operator.rb load <Jurisdiction_Def_File> <Election_Def_File>
 "
-    help_string_3d = "
+    if (detail)
+      print "
      # The two files must contain, respectively, a Jurisdiction Definition
      # and an Election Definition.  Each is checked for proper syntax and
      # then validated, after which a zero-initialized Tabulator Count is
      # constructed and saved to file.  This command moves the state of the
      # Tabulator from EMPTY to INITIAL.
 "
-
-    help_string_3u = "
+    else
+      print "
      # Process two Jurisdiction and Election Definition files to initialize
      # the Tabulator, moving its state from EMPTY to INITIAL.
 "
-    help_string_4 = "
+    end
+    print "
   ruby operator.rb add <Counter_Count_File>
 "
-    help_string_5d = "
+    if (detail)
+      print "
      # The file contains a Counter Count, rejected if the state of the
      # Tabulator is EMPTY.  First the Tabulator is re-instantiated using the
      # current Tabulator data file.  Then the Counter Count is checked for
@@ -88,12 +90,15 @@ Commands:
      # accumulate votes, and enter the ACCUMULATING state. When the last
      # expected count is accumulated, the Tabulator enters the DONE state.
 "
-    help_string_5u = "
+    else
+      print "
      # Process a Counter Count file to accumulate votes.  The Tabulator state
      # becomes ACCUMULATING, unless this is the last expected count, in which
      # case the Tabulator state is DONE.
 "
-    help_string_6d = "
+    end
+    if (detail)
+      print "
   ruby operator.rb check [<Tabulator_Count_File>]
 
      # [DEBUG] The file contains a Tabulator Count (the default Tabulator data
@@ -101,20 +106,11 @@ Commands:
      # syntax and validated.  This command is informational only and may be
      # used to check the consistency of the current Tabulator data file.
 "
-    help_string_6 = "
-xop_Tabulator data file: #{xop_file_prepend(TABULATOR_COUNT_FILE)}
+    end
+    print "
+Tabulator data file: #{TABULATOR_COUNT_FILE}
 
 "
-    print help_string_1d if detail
-    print help_string_1
-    print help_string_2
-    print help_string_3d if detail
-    print help_string_3u unless detail
-    print help_string_4
-    print help_string_5d if detail
-    print help_string_5u unless detail
-    print help_string_6d if detail
-    print help_string_6
   end
 
 # No Arguments
@@ -127,11 +123,9 @@ xop_Tabulator data file: #{xop_file_prepend(TABULATOR_COUNT_FILE)}
 # <tt><b>TABULATOR_BACKUP_FILE</b></tt>.
 
   def reset()
-    tc_file = xop_file_prepend(TABULATOR_COUNT_FILE)
-    if (xop_file_exist?(tc_file))
-      backup_file = xop_file_prepend(TABULATOR_BACKUP_FILE)
-      print "Moving Tabulator Data in #{tc_file} to #{backup_file}\n"
-      xop_file_backup(tc_file, backup_file)
+    unless (xop_empty?())
+      print "Moving Tabulator Data in #{TABULATOR_COUNT_FILE} to #{TABULATOR_BACKUP_FILE}\n"
+      xop_file_backup()
       print "Tabulator reset to EMPTY state.\n"
     else
       print "Nothing to do, Tabulator already in EMPTY state.\n"
@@ -206,9 +200,8 @@ xop_Tabulator data file: #{xop_file_prepend(TABULATOR_COUNT_FILE)}
     errop("Command \"total\" ignored, Tabulator state: EMPTY") if xop_empty?()
     tab = xop_instantiate()
     if (["ACCUMULATING", "DONE"].include?(state(tab, true)))
-      file = xop_file_prepend(TABULATOR_SPREADSHEET_FILE)
-      print "\nWriting Tabulator Spreadsheet: #{file}\n"
-      lines = xop_file_write_spreadsheet(tab, file)
+      print "\nWriting Tabulator Spreadsheet: #{TABULATOR_SPREADSHEET_FILE}\n"
+      lines = xop_file_write_spreadsheet(tab)
       print "\nSpreadsheet Data (CSV Format):\n\n"
       print lines
     end
@@ -225,21 +218,21 @@ xop_Tabulator data file: #{xop_file_prepend(TABULATOR_COUNT_FILE)}
 # the EMPTY state.  Processes the JD and ED files, checking them for
 # existence, correct syntax, and validity.  Any Tabulator validation errors
 # cause them to be rejected, otherwise they may be used to create a new
-# initial Tabulator dataset.  In testing mode (<i>proceed</i> is <i>true</i>),
-# they are used without question.  Otherwise, the operator is shown a data
-# summary, asked for confirmation, and they are used only if approved.
+# initial Tabulator dataset.  In testing mode, <i>proceed</i> is <i>true</i>,
+# and they are used without question.  Otherwise, the operator is shown a data
+# summary, asked for confirmation, and they are used only if approved,
+# rejected otherwise.
 
   def load(jd_file, ed_file, proceed = false)
     errop("Command \"load\" ignored, Tabulator state: not EMPTY") unless
       xop_empty?()
     print "Reading Jurisdiction Definition: #{jd_file}\n"
-    jd = xop_file_process(jd_file, "Jurisdiction Definition")
+    jd = xop_file_process(jd_file, "Jurisdiction Definition",
+                          "jurisdiction_definition")
     print "Reading Election Definition: #{ed_file}\n"
-    ed = xop_file_process(ed_file, "Election Definition")
-    tc_file = xop_file_prepend(TABULATOR_COUNT_FILE)
-    tab = xop_new_tabulator(jd, ed, tc_file, false)
+    ed = xop_file_process(ed_file, "Election Definition", "election_definition")
+    tab = xop_new_tabulator(jd, ed, TABULATOR_COUNT_FILE, false)
     if (tab.validation_errors?)
-      warn(tab)
       print "Jurisdiction and Election Definitions: REJECTED\n"
     elsif (proceed)
       print "Jurisdiction and Election Definitions: ACCEPTED\n"
@@ -278,7 +271,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
     errop("Command \"add\" ignored, Tabulator State: EMPTY\n") if xop_empty?()
     tab = xop_instantiate()
     print "Reading Counter Count: #{cc_file}\n"
-    cc = xop_file_process(cc_file, "Counter Count")
+    cc = xop_file_process(cc_file, "Counter Count", "counter_count")
     tab.validate_counter_count(cc)
     tab.update_tabulator_count(cc)
     if (tab.validation_errors?)
@@ -302,13 +295,12 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # checking for existence, correct syntax, and validity.
 
   def check(tc_file = false)
-    tc_file = xop_file_prepend(TABULATOR_COUNT_FILE) if tc_file == false
+    tc_file = TABULATOR_COUNT_FILE if tc_file == false
     print "Reading Tabulator Count: #{tc_file}\n"
-    tc = xop_file_process(tc_file, "Tabulator Count")
+    tc = xop_file_process(tc_file, "Tabulator Count", "tabulator_count")
     tab = xop_new_tabulator(false, false, false, tc)
     print "Validating Tabulator Count: OK\n" unless
       (tab.validation_errors? || tab.validation_warnings?)  
-    warn(tab)
     state(tab)
   end
 
@@ -321,21 +313,22 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # termination.
 
   def errop(message)
-    print "\n"
-    print "** OPERATOR ERROR ** #{message}\n"
+    print "\n** OPERATOR ERROR ** #{message}\n"
     exit(1)
   end
 
 # Arguments:
 # * <i>tab</i> (<i>Class Object</i>) Tabulator object
 #
-# Returns: N/A
+# Returns: Tabulator Object
 #
-# Prints out any error and/or warning messages held by the Tabulator.
+# Prints out any error and/or warning messages held by the Tabulator object,
+# and then returns it.
 
   def warn(tab)
-    tab.validation_errors.each { |message| print "** ERROR ** #{message}\n" }
-    tab.validation_warnings.each { |message| print "** WARNING ** #{message}\n" }
+    tab.validation_errors.each {|message| print "** ERROR ** #{message}\n"}
+    tab.validation_warnings.each {|message| print "** WARNING ** #{message}\n"}
+    tab
   end
 
 # No Arguments
@@ -353,48 +346,37 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # Arguments:
 # * <i>file</i> (<i>String</i>) file name
 # * <i>type</i> (<i>String</i>) file type
-# * <i>fatal</i>: (<i>Boolean</i>) indicates whether errors are Fatal (optional)
+# * <i>key</i> (<i>String</i>) Hash key expected to appear in file
+# * <i>fatal</i>: (<i>Boolean</i>) indicates when errors are Fatal (optional)
 #
 # Returns: <i>Hash</i>
 #
-# Processes a Tabulator dataset (Jurisdiction Definition, Election Definition,
-# Counter Count, or Tabulator Count) in a <i>file</i> and returns the
-# resulting datum.  The datum undergoes a syntax check before being returned.
-# Either a File or a Fatal error is generated if any problems occur.
+# Processes a Tabulator input dataset (Jurisdiction Definition, Election
+# Definition, Counter Count, or Tabulator Count) stored in <i>file</i> and
+# returns the resulting datum.  The datum undergoes a syntax check against a
+# built-in schema before being returned.  Generates a File or Fatal error
+# (depending on <i>fatal</i>, which is <i>true</i> only when processing the
+# <tt><b>TABULATOR_COUNT_FILE</b></tt>) if any problems occur.
 
-  def xop_file_process(file, type, fatal = false)
-    tk = {"Tabulator Count"=>"tabulator_count",
-      "Counter Count"=>"counter_count",
-      "Jurisdiction Definition"=>"jurisdiction_definition",
-      "Election Definition"=>"election_definition"}
-    key = tk[type]
+  def xop_file_process(file, type, key, fatal = false)
+    etype = (fatal ? "Fatal" : "File")
+    schema_file = xop_file_prepend("Schemas/#{key}_schema.yml")
+    schema = xop_file_read(schema_file, "Schema", true)
     file = xop_file_prepend(file)
-    datum = xop_file_read(file, type, fatal = false)
-    if (datum.is_a?(Hash))
-      if (datum.keys.include?(key))
-        schema_file = xop_file_prepend("Schemas/#{key}_schema.yml")
-        schema = xop_file_read(schema_file, "Schema", true)
-        csy = xop_new_check_syntax()
-        syntax_errors = csy.check_syntax(schema, datum, true)
-        if (syntax_errors.length == 0)
-          datum
-        else
-          (fatal ?
-           errop("Fatal syntax error in #{type}: #{file}") :
-           errop("File syntax error in #{type}: #{file}"))
-        end
-      else
-        (fatal ?
-         errop("Fatal error, hash missing key #{key} for #{type}: #{file}") :
-         errop("File error, hash missing key #{key} for #{type}: #{file}"))
-      end
+    datum = xop_file_read(file, type, fatal)
+    if (!datum.is_a?(Hash))
+      errop("#{etype} error, contents of #{type} not a Hash: #{file}")
+    elsif (!datum.keys.include?(key))
+      errop("#{etype} error, Hash missing Key #{key} for #{type}: #{file}")
+    elsif (xop_check_syntax(schema, datum))
+      datum
     else
-      (fatal ?
-       errop("Fatal error, contents of #{type} not a Hash: #{file}") :
-       errop("File error, contents of #{type} not a Hash: #{file}"))
+      errop("#{etype} syntax error in #{type}: #{file}")
     end
+  rescue
+    errop("Fatal failure processing file: #{file}")
   end
-  
+
 # Arguments:
 # * <i>file</i>: (<i>String</i>) file name
 #
@@ -409,20 +391,19 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
     errop("Fatal failure of File.exist? for file: #{file}")
   end
 
-# Arguments:
-# * <i>tc_file</i>: (<i>String</i>) Tabulator data file name
-# * <i>backup_file</i>: (<i>String</i>) Tabulator data backup file name
+# No Arguments
 #
 # Returns: N/A
 #
 # Backs up the Tabulator data in <tt><b>TABULATOR_COUNT_FILE</b></tt> to
-# <tt><b>TABULATOR_DATA_FILE</b></tt>, by moving (renaming) the first file to
-# the second.  Generates a Fatal error if any problems occur.
+# <tt><b>TABULATOR_BACKUP_FILE</b></tt>, by moving (renaming) the first file to
+# the second.  Generates a Fatal error if any problems occur during the move.
 
-  def xop_file_backup(tc_file, backup_file)
-    FileUtils.mv(tc_file, backup_file)
+  def xop_file_backup()
+    FileUtils.mv(xop_file_prepend(TABULATOR_COUNT_FILE),
+                 xop_file_prepend(TABULATOR_BACKUP_FILE))
   rescue
-    errop("Fatal failure of FileUtils.mv moving #{tc_file} to #{backup_file}")
+    errop("Fatal failure of FileUtils.mv to backup #{TABULATOR_COUNT_FILE}")
   end
 
 # Arguments:
@@ -436,24 +417,24 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # subdirectory. Generates a Fatal error if any problems occur. FIX THIS...JVC
 
   def xop_file_prepend(file)
-    ((File.directory?("Tabulator") && (! (file =~ /^Tabulator/))) ?
-     "Tabulator/#{file}" : file)
+    ((File.directory?("Tabulator")) ? "Tabulator/#{file}" : file)
   rescue
-    errop("Fatal failure of File.directory? for directory: Tabulator")
+    errop("Fatal failure of File.directory? for directory: Tabulator/")
   end
 
 # Arguments:
 # * <i>file</i>:  (<i>String</i>) file name
 # * <i>type</i>:  (<i>String</i>) file type
-# * <i>fatal</i>: (<i>Boolean</i>) indicates if errors are Fatal (optional)
+# * <i>fatal</i>: (<i>Boolean</i>) indicates when errors are Fatal (optional)
 #
 # Returns: <i>Hash</i>
 #
 # Reads a Tabulator dataset (Jurisdiction Definition, Election Definition,
 # Counter Count, or Tabulator Count) from an existing <i>file</i> and returns
-# the resulting YAML data.  Traces progress unless <i>fatal</i> is <i>true</i>.
-# Generates either a File or Fatal (depending on <i>fatal</i> arg) error if a
-# problem occurs while opening or reading from the file.
+# the resulting YAML dataset.  Generates a File or Fatal error (depending on
+# <i>fatal</i>, which is <i>true</i> only when reading the
+# <tt><b>TABULATOR_COUNT_FILE</b></tt> or a built-in Schema file) if
+# a problem occurs while reading from the file.
 
   def xop_file_read(file, type, fatal = false)
     if (xop_file_exist?(file))
@@ -474,26 +455,28 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # * <i>file</i>: (<i>String</i>) file name
 # * <i>fatal</i>: (<i>Boolean</i>) indicates when errors are Fatal (optional)
 #
-# Returns: N/A
+# Returns: <i>File Handle</i>
 #
-# Opens the <i>file</i> for reading.  Generates a File or Fatal error if a
-# problem occurs while opening the file.
+# Opens the <i>file</i> for reading and returns the resulting file handle.
+# Generates a File or Fatal error (depending on <i>fatal</i>, which is
+# <i>true</i> only when opening the <tt><b>TABULATOR_COUNT_FILE</b></tt> or a
+# built-in Schema file) if a problem occurs while opening the file.
 
   def xop_file_open_read(file, fatal = false)
     File.open(file, "r")
   rescue
     (fatal ?
      errop("Fatal failure of File.open for reading: #{file}") :
-     errop("File will not open for reading: #{file}"))
+     errop("File open error while trying to read: #{file}"))
   end
 
 # Arguments:
 # * <i>file</i>: (<i>String</i>) file name
 #
-# Returns: N/A
+# Returns: <i>File Handle</i>
 #
-# Opens the <i>file</i> for writing.  Generates a Fatal error if a problem
-# occurs while opening the file.
+# Opens the <i>file</i> for writing and returns the resulting file handle.
+# Generates a Fatal error if a problem occurs while opening the file.
 
   def xop_file_open_write(file)
     File.open(file, "w")
@@ -503,41 +486,37 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 
 # Arguments:
 # * <i>tab</i>: (<i>Class Object</i>) Tabulator object
-# * <i>file</i>: (<i>String</i>) output file name for spreadsheet
 #
-# Returns: N/A
+# Returns: <i>Array</i> of <i>String</i>
 #
-# Calls the Tabulator to produce the lines of data for a CSV spreadsheet
-# representing the current set of voting results, which it writes to
-# <tt><b>TABULATOR_SPREADSHEET_FILE</b></tt>.  Generates a Fatal error if
-# problems occur during the write.
+# Calls the Tabulator to produce the lines of textual data for a CSV
+# spreadsheet representing the current set of voting results, which it writes
+# to <tt><b>TABULATOR_SPREADSHEET_FILE</b></tt>, and then returns.  Generates
+# a Fatal error if problems occur during the write.
 
-  def xop_file_write_spreadsheet(tab, file)
+  def xop_file_write_spreadsheet(tab)
     lines = tab.tabulator_spreadsheet()
-    outfile = xop_file_open_write(file)
+    outfile = xop_file_open_write(xop_file_prepend(TABULATOR_SPREADSHEET_FILE))
     outfile.puts lines
     outfile.close()
     lines
   rescue
-    errop("Fatal failure writing to file: #{file}")
+    errop("Fatal failure writing to spreadsheet file: #{file}")
   end
 
 # Arguments:
 # * <i>tab</i>: (<i>Class Object</i>) Tabulator object
 #
-# Returns: <i>Hash</i>
+# Returns: N/A
 #
 # Writes the current Tabulator data to <tt><b>TABULATOR_COUNT_FILE</b></tt>.
-# Generates a Fatal error if problems occur while dumping the YAML data to the
-# file, a serious error condition because there is no reason for the data dump
-# to fail after the file was successfully opened for write access.
+# Generates a Fatal error if problems occur while writing to the file.
 
   def xop_file_write_tabulator(tab)
-    tc_file = xop_file_prepend(TABULATOR_COUNT_FILE)
-    outfile = xop_file_open_write(tc_file)
+    outfile = xop_file_open_write(xop_file_prepend(TABULATOR_COUNT_FILE))
     YAML::dump(tab.tabulator_count, outfile)
   rescue
-    errop("Fatal failure of YAML::dump for file: #{tc_file}")
+    errop("Fatal failure of YAML::dump for file: #{TABULATOR_COUNT_FILE}")
   end
 
 # No Arguments
@@ -545,17 +524,19 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 # Returns: Tabulator Object
 #
 # Use the contents of the <tt><b>TABULATOR_COUNT_FILE</b></tt> to instantiate
-# a new Tabulator object, which is returned.  Any problem results in a Fatal
-# error, because the Tabulator would then be in an inconsistent state.
+# a new Tabulator object, which is returned.  Generates a Fatal error if there
+# are any Tabulator validation errors or warnings, because this implies that
+# Tabulator is in an inconsistent state.
 
   def xop_instantiate()
-    tc = xop_file_process(TABULATOR_COUNT_FILE, "Tabulator Count", true)
+    file = TABULATOR_COUNT_FILE
+    tc = xop_file_process(file, "Tabulator Count", "tabulator_count", true)
     tab = xop_new_tabulator(false, false, false, tc)
-    if (tab.validation_errors? || tab.validation_warnings?)
-      warn(tab)
-      errop("Fatal failure during Tabulator validation: #{tc_file}")
-    end
+    errop("Fatal failure during Tabulator validation: #{file}") if
+      (tab.validation_errors? || tab.validation_warnings?)
     tab
+  rescue
+    errop("Fatal failure during Tabulator instantiation")
   end
   
 # Arguments:
@@ -566,26 +547,29 @@ Carefully examine the data above, then confirm approval to continue [y/n]: "
 #
 # Returns: new Tabulator Object
 #
-# Returns the result of calling Tabulator.new, generating a Fatal error if any
+# Returns the result of calling Tabulator.new.  Generates a Fatal error if any
 # problems occur.
 
   def xop_new_tabulator(jd, ed, file, tc)
-    Tabulator.new(jd, ed, file, tc)
+    warn(Tabulator.new(jd, ed, file, tc))
   rescue
-    errop("Fatal failure of Tabulator.new")
+    errop("Fatal failure of Tabulator.new(...)")
   end
 
-# No Arguments
+# Arguments:
+# * <i>schema</i> (<i>Hash</i>) built-in Schema for syntax checking
+# * <i>datum</i> (<i>Hash</i>) Tabulator input dataset to be syntax-checked
 #
-# Returns: new CheckSyntaxYaml Object
+# Returns: <i>Boolean</i>
 #
-# Returns the result of calling CheckSyntaxYaml.new, generating a Fatal error
-# if any problems occur.
+# Returns <i>true</i> iff there are no errors resulting from syntax-checking
+# the <i>datum</i> against the <i>schema</i>.  Generates a Fatal error if any
+# problems occur.
 
-  def xop_new_check_syntax()
-    CheckSyntaxYaml.new()
+  def xop_check_syntax(schema, datum)
+    (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
   rescue
-    errop("Fatal failure of CheckSyntaxYaml.new")
+    errop("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)")
   end
 
 end
@@ -648,4 +632,10 @@ begin
       operator.errop("Command #{cmd} not recognized")
     end
   end
+rescue
+  print "!!!!!!!!!!!!
+!!!!!!!!!!!!
+Jeff, remove the rescue clause from the Operator begin...end!
+At least while you are still debugging!\n"
+  exit(1)
 end
