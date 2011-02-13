@@ -29,7 +29,7 @@ test_all ()
 test_default ()
 {
     ruby operator.rb reset
-    ruby operator.rb test load Tests/Default/JD.yml Tests/Default/ED.yml 
+    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
@@ -45,14 +45,14 @@ test_default ()
 test_def0 ()
 {
     ruby operator.rb reset
-    ruby operator.rb test load Tests/Default/JD.yml Tests/Default/ED.yml 
+    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
 }
 
 test_def1 ()
 {
     ruby operator.rb reset
-    ruby operator.rb test load Tests/Default/JD.yml Tests/Default/ED.yml 
+    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
@@ -61,7 +61,7 @@ test_def1 ()
 test_def2 ()
 {
     ruby operator.rb reset
-    ruby operator.rb test load Tests/Default/JD.yml Tests/Default/ED.yml 
+    ruby operator.rb load Tests/Default/JD.yml Tests/Default/ED.yml OK
     exitif
     ruby operator.rb add Tests/Default/CC1.yml
     exitif
@@ -81,7 +81,7 @@ test_dc ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb test load EMGR_JD.yml EMGR_ED.yml
+    ruby operator.rb load EMGR_JD.yml EMGR_ED.yml OK
     exitif
 }
 
@@ -91,7 +91,7 @@ test_va ()
     exitif
     ruby operator.rb reset
     exitif
-    ruby operator.rb test load EMGR_JD.yml EMGR_ED.yml
+    ruby operator.rb load EMGR_JD.yml EMGR_ED.yml OK
     exitif
 }
 
@@ -99,7 +99,7 @@ test_bedrock ()
 {
     ruby operator.rb reset
     exitif
-    ruby operator.rb test load Tests/Bedrock/Bedrock_JD.yml Tests/Bedrock/Bedrock_ED.yml
+    ruby operator.rb load Tests/Bedrock/Bedrock_JD.yml Tests/Bedrock/Bedrock_ED.yml OK
     exitif
     ruby operator.rb add Tests/Bedrock/Bedrock_CC1.yml
     exitif
