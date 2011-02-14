@@ -102,7 +102,7 @@ class OperatorTest < Test::Unit::TestCase
     operator_command("load Tests/Default/JD.yml Tests/Default/ED.yml OK")
     operator_command("check")
     File.chmod(0222, tc_file)
-    operator_fatal_error("check")
+    operator_fatal_error("state")
     File.chmod(0644, tc_file)
     operator_command("check")
   end
