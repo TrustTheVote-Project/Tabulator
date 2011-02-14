@@ -22,6 +22,20 @@ test_tab ()
     exitif
 }
 
+test_val ()
+{
+    ruby operator.rb reset
+    exitif
+    ruby operator.rb load Tests/Validation/JD.yml Tests/Validation/ED.yml OK
+    exitif
+    ruby operator.rb add Tests/Validation/CC1.yml
+    exitif
+    ruby operator.rb add Tests/Validation/CC2.yml
+    exitif
+    ruby operator.rb add Tests/Validation/CC3.yml
+    exitif
+}
+
 test_def ()
 {
     ruby operator.rb reset
@@ -85,6 +99,10 @@ tab*)
     test_tab
     exit
     ;;
+val*)
+    test_val
+    exit
+    ;;
 def0*)
     test_def0
     exit
@@ -102,5 +120,5 @@ def*)
     exit
     ;;
 esac
-echo "Valid arguments are: all, syn(tax), tab(ulator), def(ault)"
+echo "Valid arguments are: all, syn(tax), tab(ulator), def(ault), val(idation)"
 exit 1

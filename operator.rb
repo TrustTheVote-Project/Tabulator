@@ -63,6 +63,12 @@ class Operator
   TABULATOR_BACKUP_FILE =      "TABULATOR_BACKUP.yml"
   TABULATOR_SPREADSHEET_FILE = "TABULATOR_SPREADSHEET.csv"
 
+  attr_accessor :errors
+  
+  def initialize()
+    errors = []
+  end
+
 # Arguments:
 # * <i>args</i> (<i>Array</i>) command-line arguments
 #

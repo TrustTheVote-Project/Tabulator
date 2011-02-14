@@ -53,8 +53,8 @@ class OperatorTest < Test::Unit::TestCase
     operator_command_error(op,"total")
     operator_command_error(op,"check")
     #operator_command(op, "load Tests/Default/JD.yml Tests/Default/ED.yml OK")
-    operator_command(op, "load Tests/Validation/JD.yml Tests/Validation/ED.yml OK")
-    operator_command(op, "check")
+    #operator_command(op, "load Tests/Validation/JD.yml Tests/Validation/ED.yml OK")
+    #operator_command(op, "check")
 
 end
 
