@@ -22,6 +22,12 @@ test_tab ()
     exitif
 }
 
+test_op ()
+{
+    ruby xoperator_test.rb
+    exitif
+}
+
 test_val ()
 {
     ruby operator.rb reset
@@ -99,6 +105,10 @@ tab*)
     test_tab
     exit
     ;;
+op*)
+    test_op
+    exit
+    ;;
 val*)
     test_val
     exit
@@ -120,5 +130,5 @@ def*)
     exit
     ;;
 esac
-echo "Valid arguments are: all, syn(tax), tab(ulator), def(ault), val(idation)"
+echo "Valid arguments are: all, syn(tax), tab(ulator), op(erator), def(ault), val(idation)"
 exit 1

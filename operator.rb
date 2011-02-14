@@ -25,12 +25,12 @@
 $LOAD_PATH << "./Tabulator" # Temporary, for testing
 
 require "yaml"
-require "fileutils"
 require "check_syntax_yaml"
 require "tabulator"
 
-# The OperatorError class is used by the Tabulator Opertor to perform
-# error-handling; it holds a single value, the error message string.
+# The OperatorError class, a subclass of Exception, is used by the Tabulator
+# Operator to perform error-handling; it holds a single value, the error
+# message string.
 
 class OperatorError < Exception
   def initialize(message)
@@ -121,13 +121,14 @@ class Operator
       end
     end
     return ""
-  rescue OperatorError => opex
-    message = opex.error_message
+  rescue OperatorError => e
+    message = e.error_message
     opx_print("** TABOP ERROR ** #{message}\n")
     return message
-  rescue
-    opx_print("!!!!!!!  Jeff, remove this for debugging !!!!!!!\n")
-    return "SHOULD NEVER HAPPEN, Unhandled Exception"
+  rescue => e
+    message = "Fatal Unrecognized Error\n#{e}\n"
+    opx_print("** TABOP ERROR ** #{message}\n")
+    return message
   end
 
 # Arguments:
@@ -391,13 +392,15 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # checking for existence, correct syntax, and validity.
 
   def opc_check(tc_file = false)
+    fatal = false
     if (tc_file == false)
       opx_err("Command \"check\" ignored, Tabulator state: EMPTY") if
         opx_empty?()
       tc_file = TABULATOR_COUNT_FILE
+      fatal = true
     end
     opx_print("Reading Tabulator Count: #{tc_file}\n")
-    tc = opx_file_process(tc_file, "Tabulator Count", "tabulator_count")
+    tc = opx_file_process(tc_file, "Tabulator Count", "tabulator_count", fatal)
     tab = opx_new_tabulator(false, false, false, tc)
     opx_print("Validating Tabulator Count: OK\n") unless
       (tab.validation_errors? || tab.validation_warnings?)  
@@ -406,13 +409,17 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
 # Arguments:
 # * <i>message</i> (<i>String</i>) error message
+# * <i>message</i> (<i>Exception Object</i> (optional) appears when the error was caused by rescuing a System-level exception
 #
 # Returns: N/A
 #
-# Handles Operator errors by raising the OperatorError exception.
+# Handles Operator-detected errors by raising the OperatorError exception.
+# Passes the error message to the OperatorError exception, and if the error
+# was produced while rescuing another exception, appends its information to
+# the end of the error message.
 
-  def opx_err(message)
-    raise OperatorError.new(message)
+  def opx_err(message, e = false)
+    raise OperatorError.new((e == false ? message : "#{message}\n#{e}"))
   end
 
 # Arguments:
@@ -424,8 +431,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_print(text)
     print text
-  rescue
-    opx_error("Fatal error while printing to STDOUT: #{text}")
+  rescue => e
+    opx_err("Fatal error while printing to STDOUT: #{text}", e)
   end
 
 # Arguments:
@@ -474,16 +481,16 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     file = opx_file_prepend(file)
     datum = opx_file_read(file, fatal)
     if (!datum.is_a?(Hash))
-      opx_err("#{etype} error, contents of #{type} not a Hash: #{file} #{datum.inspect}")
+      opx_err("#{etype} contents error, not a Hash: #{file}")
     elsif (!datum.keys.include?(key))
-      opx_err("#{etype} error, Hash missing Key #{key} for #{type}: #{file}")
+      opx_err("#{etype} contents error, Hash Key #{key} missing: #{file}")
     elsif (opx_check_syntax(key, datum))
       datum
     else
       opx_err("#{etype} syntax error in #{type}: #{file}")
     end
-  rescue
-    opx_err("Fatal failure processing file: #{file}")
+  rescue => e
+    opx_err("Fatal failure processing file: #{file}", e)
   end
 
 # Arguments:
@@ -496,8 +503,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_file_exist?(file)
     File.exist?(file)
-  rescue
-    opx_err("Fatal failure of File.exist? for file: #{file}")
+  rescue => e
+    opx_err("Fatal failure of File.exist? for file: #{file}", e)
   end
 
 # No Arguments
@@ -509,10 +516,10 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # the second.  Generates a Fatal error if any problems occur during the move.
 
   def opx_file_backup()
-    FileUtils.mv(opx_file_prepend(TABULATOR_COUNT_FILE),
-                 opx_file_prepend(TABULATOR_BACKUP_FILE))
-  rescue
-    opx_err("Fatal failure of FileUtils.mv to backup #{TABULATOR_COUNT_FILE}")
+    File.rename(opx_file_prepend(TABULATOR_COUNT_FILE),
+                opx_file_prepend(TABULATOR_BACKUP_FILE))
+  rescue => e
+    opx_err("Fatal failure of FileUtils.mv to backup #{TABULATOR_COUNT_FILE}", e)
   end
 
 # Arguments:
@@ -527,8 +534,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_file_prepend(file)
     ((File.directory?("Tabulator")) ? "Tabulator/#{file}" : file)
-  rescue
-    opx_err("Fatal failure of File.directory? for directory: Tabulator/")
+  rescue => e
+    opx_err("Fatal failure of File.directory? for directory: Tabulator/", e)
   end
 
 # Arguments:
@@ -547,16 +554,18 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_file_read(file, fatal = false)
     if (opx_file_exist?(file))
       infile = opx_file_open_read(file, fatal)
-      YAML::load(infile)
+      datum = YAML::load(infile)
+      opx_file_close(infile)
+      datum
     else
       (fatal ?
        opx_err("Fatal failure, non-existent file: #{file}") :
        opx_err("File non-existent: #{file}"))
     end
-  rescue
+  rescue => e
     (fatal ?
-     opx_err("Fatal failure of YAML::load for file: #{file}") :
-     opx_err("File read error in YAML::load for file: #{file}"))
+     opx_err("Fatal failure during YAML::load for file: #{file}", e) :
+     opx_err("File read error during YAML::load for file: #{file}", e))
   end
 
 # Arguments:
@@ -572,10 +581,24 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_file_open_read(file, fatal = false)
     File.open(file, "r")
-  rescue
+  rescue => e
     (fatal ?
-     opx_err("Fatal failure of File.open for reading: #{file}") :
-     opx_err("File open error while trying to read: #{file}"))
+     opx_err("Fatal failure while opening file for reading: #{file}", e) :
+     opx_err("File open (for read) error: #{file}", e))
+  end
+
+# Arguments:
+# * <i>file</i>: (<i>String</i>) file name
+#
+# Returns: N/A
+#
+# Closed the named <i>file</i>.  Generates a Fatal error if a problem occurs
+# while closing the file.
+
+  def opx_file_close(file)
+    file.close()
+  rescue => e
+    opx_err("Fatal failure while closing file: #{file.inspect}", e)
   end
 
 # Arguments:
@@ -588,8 +611,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_file_open_write(file)
     File.open(file, "w")
-  rescue
-    opx_err("Fatal failure of File.open for writing: #{file}")
+  rescue => e
+    opx_err("Fatal failure of File.open for writing: #{file}", e)
   end
 
 # Arguments:
@@ -606,10 +629,10 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     lines = tab.tabulator_spreadsheet()
     outfile = opx_file_open_write(opx_file_prepend(TABULATOR_SPREADSHEET_FILE))
     outfile.puts lines
-    outfile.close()
+    opx_file_close(outfile)
     lines
-  rescue
-    opx_err("Fatal failure writing to spreadsheet file: #{file}")
+  rescue => e
+    opx_err("Fatal failure writing to spreadsheet file: #{file}", e)
   end
 
 # Arguments:
@@ -623,8 +646,9 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_file_write_tabulator(tab)
     outfile = opx_file_open_write(opx_file_prepend(TABULATOR_COUNT_FILE))
     YAML::dump(tab.tabulator_count, outfile)
-  rescue
-    opx_err("Fatal failure of YAML::dump for file: #{TABULATOR_COUNT_FILE}")
+    opx_file_close(outfile)
+  rescue => e
+    opx_err("Fatal failure of YAML::dump for file: #{TABULATOR_COUNT_FILE}", e)
   end
 
 # No Arguments
@@ -643,8 +667,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     opx_err("Fatal failure during Tabulator validation: #{file}") if
       (tab.validation_errors? || tab.validation_warnings?)
     tab
-  rescue
-    opx_err("Fatal failure during Tabulator instantiation")
+  rescue => e
+    opx_err("Fatal failure during Tabulator instantiation", e)
   end
   
 # Arguments:
@@ -660,8 +684,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opx_new_tabulator(jd, ed, file, tc)
     opx_warn(Tabulator.new(jd, ed, file, tc))
-  rescue
-    opx_err("Fatal failure of Tabulator.new(...)")
+  rescue => e
+    opx_err("Fatal failure of Tabulator.new(...)", e)
   end
 
 # Arguments:
@@ -677,14 +701,9 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_check_syntax(key, datum)
     schema_file = opx_file_prepend("Schemas/#{key}_schema.yml")
     schema = opx_file_read(schema_file, true)
-    if (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
-      true
-    else
-      print "Datum: ",YAML::dump(datum),"\n" # DEBUG
-      false
-    end
-  rescue
-    opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)")
+    (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
+  rescue => e
+    opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)", e)
   end
 
 end
