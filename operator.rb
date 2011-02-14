@@ -541,10 +541,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_file_read(file, fatal = false)
     if (opx_file_exist?(file))
       infile = opx_file_open_read(file, fatal)
-      value = YAML::load(infile)
-      print "File: #{file} #{infile}\n"
-      print "Value: #{value.inspect}\n"
-      value
+      YAML::load(infile)
     else
       (fatal ?
        opx_err("Fatal failure, non-existent file: #{file}") :
@@ -674,9 +671,12 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_check_syntax(key, datum)
     schema_file = opx_file_prepend("Schemas/#{key}_schema.yml")
     schema = opx_file_read(schema_file, true)
-    #print "Schema: ",YAML::dump(schema),"\n"
-    #print "Datum: ",YAML::dump(datum),"\n"
-    (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
+    if (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
+      true
+    else
+      print "Datum: ",YAML::dump(datum),"\n" # DEBUG
+      false
+    end
   rescue
     opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)")
   end
