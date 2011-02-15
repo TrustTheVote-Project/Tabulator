@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# OSDV Tabulator - TTV Tabulator Validation of Election Datasets
+# OSDV Tabulator - TTV Tabulator Validator of Election Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
 #

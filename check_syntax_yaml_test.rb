@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# OSDV Tabulator - YAML Syntax Checker Unit Tests
+# OSDV Tabulator - TTV Tabulator Syntax Checker (YAML) Unit Tests
 # Author: Jeff Cook
 # Date: 1/20/2011
 #

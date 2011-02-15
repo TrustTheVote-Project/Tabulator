@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
+# OSDV Tabulator - TTV Tabulator Syntax Checker (YAML) for Election Datasets
 # Author: Jeff Cook
 # Date: 1/20/2011
 #

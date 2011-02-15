@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# OSDV Tabulator - YAML Syntax Checker for TTV CDF Datasets
+# OSDV Tabulator - TTV Tabulator Unit Tests
 # Author: Jeff Cook
 # Date: 2/2/2011
 #
@@ -15,7 +15,7 @@
 # License for the specific language governing rights and limitations
 # under the License.
 
-# The Original Code is: TTV Tabulator.
+# The Original Code is: TTV Tabulator
 # The Initial Developer of the Original Code is Open Source Digital Voting Foundation.
 # Portions created by Open Source Digital Voting Foundation are Copyright (C) 2010, 2011.
 # All Rights Reserved.
@@ -31,7 +31,7 @@ require "tabulator"
 
 class TabulatorTest < Test::Unit::TestCase
 
-  TABULATOR_COUNT_FILE = "TABULATOR_COUNT.yml"
+  TABULATOR_DATA_FILE = "TABULATOR_DATA.yml"
 
   JD_ERROR_2 = ["Non-Unique Precinct UID (PRECINCT_1) in Jurisdiction Definition",
                 "Non-Unique District UID (DISTRICT_4) in Jurisdiction Definition"]
@@ -216,7 +216,7 @@ class TabulatorTest < Test::Unit::TestCase
     print "\nGenerating Initial Tabulator Count from Files: #{jd_file} #{ed_file}\n"
     jd = tabulator_test_check_syntax(trace, "jurisdiction_definition", dir, jd_file)
     ed = tabulator_test_check_syntax(trace, "election_definition", dir, ed_file)
-    tab = Tabulator.new(jd, ed, TABULATOR_COUNT_FILE)
+    tab = Tabulator.new(jd, ed, TABULATOR_DATA_FILE)
     tc = tab.tabulator_count
     if (tab.validation_errors().length == 0)
       tabulator_test_write_tabulator_file(tc)
@@ -380,10 +380,10 @@ class TabulatorTest < Test::Unit::TestCase
 # Returns: N/A
 #
 # Tests the instantiation of a new Tabulator from the contents of the
-# <tt><b>TABULATOR_COUNT_FILE</b></tt>. There should be no errors or warnings.
+# <tt><b>TABULATOR_DATA_FILE</b></tt>. There should be no errors or warnings.
 
   def tabulator_test_instantiate_tabulator(trace)
-    tc_file = TABULATOR_COUNT_FILE
+    tc_file = TABULATOR_DATA_FILE
     print "\nInstantiating Tabulator from File: #{tc_file}\n"
     tc = tabulator_test_check_syntax(trace, "tabulator_count", ".", tc_file)
     tab = Tabulator.new(false, false, false, tc)
@@ -419,11 +419,11 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Returns: N/A
 #
-# Writes the Tabulator Count data to the <tt><b>TABULATOR_COUNT_FILE</b></tt>, while
+# Writes the Tabulator Count data to the <tt><b>TABULATOR_DATA_FILE</b></tt>, while
 # testing to ensure that the file write operation succeeds.
 
   def tabulator_test_write_tabulator_file(tc)
-    file = TABULATOR_COUNT_FILE
+    file = TABULATOR_DATA_FILE
     print "Writing Tabulator Count: #{file}\n"
     assert(File.open(file, "w") { |outfile| YAML::dump(tc, outfile) },
            "Error Writing to File: #{file}")
