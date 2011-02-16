@@ -28,25 +28,6 @@ require "yaml"
 require "check_syntax_yaml"
 require "tabulator"
 
-# The OperatorError class, a subclass of Exception, is used by the Tabulator
-# Operator to perform error-handling; it holds a single value, the error
-# message string.
-
-class OperatorError < Exception
-
-# Store the error message in the Exception instance.
-
-  def initialize(message)
-    @message = message
-  end
-
-# Return the error message stored in the Exception instance.
-
-  def error_message
-    return @message
-  end
-end
-
 # The Operator class contains the Tabulator Operator.  Methods beginning with
 # "op_" are public, and there is only one such, op_command, which implements
 # the command-line interface to the Operator.  Methods beginning with "opc_"
@@ -58,16 +39,21 @@ end
 # should never cause problems.  There is one other type of error, a Command
 # error, which occurs when an Operator command is syntactically invalid.
 #
-# The Operator handles errors by raising the OperatorError exception, passing
-# it the error message.  This exception is caught only by op_command, the
-# Operator's single public method and thus its only interface, which prints
-# out the error message and terminates.
+# The Operator handles errors by raising its locally-defined OperatorError
+# exception, passing it the error message.  This exception is caught only by
+# op_command, the Operator's single public method and thus its only interface,
+# which prints out the error message and terminates.
 
 class Operator
 
   TABULATOR_DATA_FILE =        "TABULATOR_DATA.yml"
   TABULATOR_BACKUP_FILE =      "TABULATOR_BACKUP.yml"
   TABULATOR_SPREADSHEET_FILE = "TABULATOR_SPREADSHEET.csv"
+
+# The OperatorError exception is used by the Operator for error-handling.
+
+  class OperatorError < Exception
+  end
 
 # Arguments:
 # * <i>args</i> (<i>Array</i>) command-line arguments
@@ -125,11 +111,10 @@ class Operator
     end
     return ""
   rescue OperatorError => e
-    message = e.error_message
-    opx_print("** TABOP ERROR ** #{message}\n")
-    return message
+    opx_print("** TABOP ERROR ** #{e.message}\n")
+    return e.message
   rescue => e
-    message = "Fatal Unrecognized Error\n#{e}\n"
+    message = "Fatal Unrecognized Error\n#{e.message}\n"
     opx_print("** TABOP ERROR ** #{message}\n")
     return message
   end
@@ -244,7 +229,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
     elsif (opx_empty?())
       opx_err("Command \"data\" ignored, Tabulator state: EMPTY")
     else
-      tab = opx_instantiate()
+      tab = opx_instantiate_tabulator()
       tab.tabulator_dump_data(true)
     end
   end
@@ -264,7 +249,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 
   def opc_state(tab = false, detail = false)
     opx_err("Command \"state\" ignored, Tabulator state: EMPTY") if opx_empty?()
-    tab = opx_instantiate() unless tab
+    tab = opx_instantiate_tabulator() unless tab
     state, missing, finished, expected = tab.tabulator_state
     opx_print("Tabulator State: #{state}\n")
     state = state.split(/ /)[0]
@@ -297,7 +282,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 
   def opc_total()
     opx_err("Command \"total\" ignored, Tabulator state: EMPTY") if opx_empty?()
-    tab = opx_instantiate()
+    tab = opx_instantiate_tabulator()
     if (["ACCUMULATING", "DONE"].include?(opc_state(tab, true)))
       opx_print("\nWriting Tabulator Spreadsheet: " +
                 "#{TABULATOR_SPREADSHEET_FILE}\n")
@@ -371,7 +356,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
   def opc_add(cc_file)
     opx_err("Command \"add\" ignored, Tabulator State: EMPTY\n") if opx_empty?()
-    tab = opx_instantiate()
+    tab = opx_instantiate_tabulator()
     opx_print("Reading Counter Count: #{cc_file}\n")
     cc = opx_file_process(cc_file, "Counter Count", "counter_count")
     tab.validate_counter_count(cc)
@@ -424,7 +409,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # message to the end of the error message.
 
   def opx_err(message, e = false)
-    raise OperatorError.new((e == false ? message : "#{message}\n#{e}"))
+    raise OperatorError.new((e == false ? message : "#{message}\n#{e.message}"))
   end
 
 # Arguments:
@@ -485,17 +470,16 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # <tt><b>TABULATOR_DATA_FILE</b></tt>) if any problems occur.
 
   def opx_file_process(file, type, key, fatal = false)
-    etype = (fatal ? "Fatal" : "File")
     file = opx_file_prepend(file)
     datum = opx_file_read(file, fatal)
     if (!datum.is_a?(Hash))
-      opx_err("#{etype} contents error, not a Hash: #{file}")
+      opx_err((fatal ? "Fatal" : "File") + " contents error, not a Hash: #{file}")
     elsif (!datum.keys.include?(key))
-      opx_err("#{etype} contents error, Hash Key #{key} missing: #{file}")
+      opx_err((fatal ? "Fatal" : "File") + " contents error, Hash Key #{key} missing: #{file}")
     elsif (opx_check_syntax(key, datum))
       datum
     else
-      opx_err("#{etype} syntax error in #{type}: #{file}")
+      opx_err((fatal ? "Fatal" : "File") + " syntax error in #{type}: #{file}")
     end
   rescue => e
     opx_err("Fatal failure processing file: #{file}", e)
@@ -670,7 +654,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # are any Tabulator validation errors or warnings, because this implies that
 # Tabulator is in an inconsistent state.
 
-  def opx_instantiate()
+  def opx_instantiate_tabulator()
     file = TABULATOR_DATA_FILE
     tc = opx_file_process(file, "Tabulator Count", "tabulator_count", true)
     tab = opx_new_tabulator_tc(tc)
@@ -738,6 +722,5 @@ end
 begin
   Operator.new.op_command(ARGV)
 rescue => e
-  message = "Fatal Unrecognized Error\n#{e}\n"
-  print "** TABOP ERROR ** #{message}\n"
+  print "** TABOP ERROR ** Fatal Unrecognized Error\n#{e.message}\n"
 end
