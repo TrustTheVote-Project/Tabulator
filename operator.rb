@@ -638,8 +638,9 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # a Fatal error if problems occur during the write.
 
   def opx_file_write_spreadsheet(tab)
+    file = TABULATOR_SPREADSHEET_FILE
     lines = tab.tabulator_spreadsheet()
-    outfile = opx_file_open_write(opx_file_prepend(TABULATOR_SPREADSHEET_FILE))
+    outfile = opx_file_open_write(opx_file_prepend(file))
     outfile.puts lines
     opx_file_close(outfile)
     lines

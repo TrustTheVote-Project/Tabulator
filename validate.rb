@@ -221,12 +221,13 @@ class TabulatorValidate
 # <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
 # message onto the <tt><b>errors</b></tt> stack.
 
-  def error (message1, value1 = "", message2 = "", value2 = "", message3 = "")
+  def error (message1, value1 = false, message2 = false, value2 = false,
+             message3 = false)
     message = "#{message1}" +
-      (value1 == "" ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
-      (message2 == "" ? "" : " #{message2}") +
-      (value2 == "" ? "" : " (#{value2.to_s})") +
-      (message3 == "" ? "" : " #{message3}")
+      (value1 == false ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
+      (message2 == false ? "" : " #{message2}") +
+      (value2 == false ? "" : " (#{value2.to_s})") +
+      (message3 == false ? "" : " #{message3}")
     self.errors.push(message)
     false
   end
@@ -244,12 +245,13 @@ class TabulatorValidate
 # <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
 # message onto the <tt><b>warnings</b></tt> stack.
 
-  def warning (message1, value1 = "", message2 = "", value2 = "", message3 = "")
+  def warning (message1, value1 = false, message2 = false, value2 = false,
+               message3 = false)
     message = "#{message1}" +
-      (value1 == "" ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
-      (message2 == "" ? "" : " #{message2}") +
-      (value2 == "" ? "" : " (#{value2.to_s})") +
-      (message3 == "" ? "" : " #{message3}")
+      (value1 == false ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
+      (message2 == false ? "" : " #{message2}") +
+      (value2 == false ? "" : " (#{value2.to_s})") +
+      (message3 == false ? "" : " #{message3}")
     self.warnings.push(message)
     false
   end
@@ -937,7 +939,8 @@ class TabulatorValidate
       self.tabulator_count['tabulator_count']['state'] == 'INITIAL'
     warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
       (self.tabulator_count['tabulator_count']['state'] == 'DONE')
-    if (self.counts_missing["accumulated"].include?([cid, rg, pid]))
+    if (self.counts_missing["accumulated"].include?([cid, rg, pid]) &&
+        rg != "")
       error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
     else
       self.counts_missing["accumulated"].push([cid, rg, pid])
