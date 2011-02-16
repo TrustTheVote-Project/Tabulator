@@ -47,7 +47,7 @@ class TabulatorTest < Test::Unit::TestCase
      "Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2) in Election Definition",
      "Non-Unique Question UID (QUESTION_1) in Election Definition",
      "Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2) in Question",
-     "Duplicate Answers (A, C) for Question UID (QUESTION_2) in Question",
+     "Duplicate Answers (A, B, C, A, C, C) for Question UID (QUESTION_2) in Question",
      "Non-Unique Counter UID (COUNTER_1) in Election Definition",
      "Non-Existent Counter UID (COUNTER_11) in Expected Count",
      "Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count",

@@ -99,6 +99,7 @@ test_all ()
 {
     test_syn
     test_tab
+    test_op
     test_def
     echo -e "!! ALL TABULATOR TESTS SUCCESSFUL !!\n"
     exit

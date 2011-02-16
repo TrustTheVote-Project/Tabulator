@@ -22,12 +22,6 @@
 
 # Contributors: Jeff Cook
 
-module Enumerable 
-  def dups 
-    inject({}) {|h,v| h[v]=h[v].to_i+1; h}.reject{|k,v| v==1}.keys
-  end # collects the duplicate elements in an Enumerable type object
-end
-
 # The TabulatorValidate class is used to validate the data sets that are
 # imported into the Tabulator.
 #
@@ -617,8 +611,7 @@ class TabulatorValidate
           uid_exists?("district", did)
         answers = question["answer_list"].collect {|answer| answer.to_s}
         unless (answers.length == answers.uniq.length)
-          ansdups = answers.dups.inspect
-          error("Duplicate Answers", ansdups, "for Question UID", qid, "in Question")
+          error("Duplicate Answers", answers.inspect, "for Question UID", qid, "in Question")
         end
         self.counts_questions[qid] = {"question_ident"=>qid,
           "overvote_count"=>0,
@@ -707,7 +700,7 @@ class TabulatorValidate
       ecount["precinct_ident_list"].each do |pid|
         pid = pid.to_s
         exp_pids.push(pid) unless exp_pids.include?(pid)
-        update_expected_counts(cid, rg, pid)
+        initialize_expected_counts(cid, rg, pid)
       end
     end
     self.counts_missing["precincts"] = exp_pids
@@ -730,12 +723,12 @@ class TabulatorValidate
 #
 # Returns: N/A
 #
-# Updates the "expected" part of the <tt><b>counts_missing</b></tt> attribute,
+# Initializes the "expected" part of the <tt><b>counts_missing</b></tt> attribute,
 # by setting <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> to
 # <i>false</i>.  It is set to <i>true</i> when the appropriate count is
 # accumulated by the Tabulator.
 
-  def update_expected_counts (cid, rg, pid)
+  def initialize_expected_counts (cid, rg, pid)
     if (self.counts_missing["expected"][cid].is_a?(Hash))
       if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
         warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition") if

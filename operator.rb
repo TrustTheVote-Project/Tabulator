@@ -225,12 +225,13 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 
   def opc_data(tab = false)
     if (tab != false)
-      tab.tabulator_dump_data()
+      opx_print_tabulator_count(tab)
     elsif (opx_empty?())
       opx_err("Command \"data\" ignored, Tabulator state: EMPTY")
     else
       tab = opx_instantiate_tabulator()
-      tab.tabulator_dump_data(true)
+      opx_print_tabulator_count(tab)
+      opx_dump_tabulator_data(tab)
     end
   end
 
@@ -425,6 +426,23 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     opx_err("Fatal error while printing to STDOUT: #{text}", e)
   end
 
+
+# Arguments:
+# * <i>tab</i> (<i>Class Object</i>) Tabulator object
+#
+# Returns: N/A
+#
+# Prints the YAML dump of the Tabulator Count.  Generates a Fatal error if
+# problems occur.
+
+  def opx_print_tabulator_count(tab)
+    opx_print("Tabulator Count\n")
+    opx_print(YAML::dump(tab.tabulator_count))
+    opx_print("\n")
+  rescue => e
+    opx_err("Fatal failure during YAML::dump of Tabulator Count", e)
+  end
+      
 # Arguments:
 # * <i>tab</i> (<i>Class Object</i>) Tabulator object
 #
@@ -716,6 +734,117 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   end
 
 end
+
+# Arguments:
+# * <i>tab</i>: (<i>Class Object</i>) Tabulator object
+#
+# Returns: N/A
+#
+# Prints a summary of the data held by the Tabulator.
+
+  def opx_dump_tabulator_data(tab)
+    print "Tabulator Data Summary\n"
+    print "  Jurisdiction UID: #{tab.uids['jurisdiction'][0]}\n"
+    print "  Election UID: #{tab.uids['election'][0]}\n"
+    ['district','precinct','contest','candidate','question','counter',
+     'file','reporting group'].each do |k|
+      length = tab.uids[k].length.to_s
+      myuids = tab.uids[k].sort
+      type = (k =~ /^report/ ? "Reporting Groups" : "#{k.capitalize} UIDs")
+      if (myuids.length == 0)
+        prefix = "  #{type} (NONE)\n"
+      else
+        prefix = "  #{type} (#{myuids.length.to_s}): "
+        print prefix
+        if (myuids.length > 10)
+          prefix = "    "
+          print "\n#{prefix}"
+        end
+        opx_pp(myuids, prefix.length, prefix.length, 78)
+      end
+    end
+    count = tab.counts_missing["missing"].length
+    total = tab.counts_missing["total"]
+    if (total == 0)
+      print "  Expected Counts (NONE)\n"
+    else
+      print "  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
+      tab.counts_missing["expected"].keys.sort.each do |cid|
+        tab.counts_missing["expected"][cid].keys.sort.each do |rg|
+          pids = tab.counts_missing["expected"][cid][rg].keys
+          print "    #{cid}, #{rg}, #{pids.inspect.gsub(/\"/,"")}\n"
+        end
+      end
+    end
+    if (count == 0)
+      print "  Missing Counts (NONE)\n"
+    else
+      print "  Missing Counts (#{count}): Counter UID, Precinct UID, Reporting Group\n"
+      tab.counts_missing["missing"].each do |cid, rg, pid|
+        print "    #{cid}, #{pid}, #{rg}\n"
+      end
+    end
+    if (tab.counts_contests.keys.length == 0)
+      print "  Contests (NONE)\n"
+    else
+      print "  Contests (",tab.counts_contests.keys.length.to_s,"):"
+      print " Contest UID: overvote, undervote, write-in, Candidate UIDs\n"
+    end
+    tab.counts_contests.keys.sort.each do |k|
+      v = tab.counts_contests[k]
+      print "    #{k}: "
+      print "overvote = #{v["overvote_count"]}, "
+      print "undervote = #{v["undervote_count"]}, "
+      print "writeins = #{v["writein_count"]}\n"
+      v["candidate_count_list"].each do |item|
+        print "      #{item["candidate_ident"]} = #{item["count"]}\n"
+      end
+    end
+    if (tab.counts_questions.keys.length == 0)
+      print "  Questions (NONE)\n"
+    else
+      print "  Questions (",tab.counts_questions.keys.length.to_s,"):"
+      print " Question UID: overvote, undervote, Answers\n"
+    end
+    tab.counts_questions.keys.sort.each do |k|
+      v = tab.counts_questions[k]
+      print "    #{k}: "
+      print "overvote = #{v["overvote_count"]}, "
+      print "undervote = #{v["undervote_count"]}\n"
+      v["answer_count_list"].each do |item|
+        print "      #{item["answer"]} = #{item["count"]}\n"
+      end
+    end
+    print "\n"
+  rescue => e
+    opx_err("Fatal failure while dumping Tabulator data", e)
+  end
+
+# Arguments:
+# * <i>item</i> (<i>String</i>) typically a UID
+# * <i>col</i> (<i>Integer</i>) current output column 
+# * <i>start_col</i> (<i>Integer</i>) output start column
+# * <i>fill_col</i> (<i>Integer</i>) output end column, fill up to this column
+#
+# Returns: N/A
+#
+# Pretty-prints the <i>items</i> as a comma-separated list, trying to keep
+# them withing the boundaries of <i>start_col</i> and <i>fill_col</i>.
+
+  def opx_pp(items, col, start_col, fill_col)
+    return print("\n") if (items.length == 0)
+    item = items.shift
+    print (item = item + (items.length == 0 ? "" : ", "))
+    col += item.length
+    if ((items.length > 0) && (fill_col <= (col + items[0].length)))
+      print "\n"
+      start_col.times { |x| print(" ") }
+      col = start_col
+    end
+    opx_pp(items, col, start_col, fill_col)
+  rescue => e
+    opx_err("Fatal failure while pretty-printing Tabulator data", e)
+  end
 
 # Command-line interface for the Tabulator Operator.
 
