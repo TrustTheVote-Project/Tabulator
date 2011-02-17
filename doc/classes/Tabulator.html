@@ -85,10 +85,26 @@
 The <a href="Tabulator.html">Tabulator</a> class inherits the capabilities
 of the <a href="TabulatorValidate.html">TabulatorValidate</a> class, and
 provides additional functionality for determining the <a
-href="Tabulator.html">Tabulator</a> State, and for counting votes by
+href="Tabulator.html">Tabulator</a> State, for writing out a <a
+href="Tabulator.html">Tabulator</a> spreadsheet, and for counting votes by
 processing Counter Counts and then updating the <a
-href="Tabulator.html">Tabulator</a> Count.
+href="Tabulator.html">Tabulator</a> Count. The <a
+href="Tabulator.html">Tabulator</a> states are:
 </p>
+<ul>
+<li>EMPTY: Waiting for Jurisdiction and Election Definitions
+
+</li>
+<li>INITIAL: Waiting for 1st Counter Count, M Missing
+
+</li>
+<li>ACCUMULATING: Waiting for N Counter Counts, M Missing
+
+</li>
+<li>DONE: All N Expected Counter Counts Accumulated
+
+</li>
+</ul>
 
     </div>
 
@@ -99,17 +115,17 @@ href="Tabulator.html">Tabulator</a> Count.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000076">tabulator_spreadsheet</a>&nbsp;&nbsp;
+      <a href="#M000068">tabulator_spreadsheet</a>&nbsp;&nbsp;
       <a href="#M000066">tabulator_state</a>&nbsp;&nbsp;
       <a href="#M000067">update_tabulator_count</a>&nbsp;&nbsp;
-      <a href="#M000068">votes_gather</a>&nbsp;&nbsp;
-      <a href="#M000072">votes_incr_contest_candidate_count</a>&nbsp;&nbsp;
-      <a href="#M000069">votes_incr_contest_overvote</a>&nbsp;&nbsp;
-      <a href="#M000070">votes_incr_contest_undervote</a>&nbsp;&nbsp;
-      <a href="#M000071">votes_incr_contest_writeinvote</a>&nbsp;&nbsp;
-      <a href="#M000075">votes_incr_question_answer_count</a>&nbsp;&nbsp;
-      <a href="#M000073">votes_incr_question_overvote</a>&nbsp;&nbsp;
-      <a href="#M000074">votes_incr_question_undervote</a>&nbsp;&nbsp;
+      <a href="#M000069">votes_gather</a>&nbsp;&nbsp;
+      <a href="#M000073">votes_incr_contest_candidate_count</a>&nbsp;&nbsp;
+      <a href="#M000070">votes_incr_contest_overvote</a>&nbsp;&nbsp;
+      <a href="#M000071">votes_incr_contest_undervote</a>&nbsp;&nbsp;
+      <a href="#M000072">votes_incr_contest_writeinvote</a>&nbsp;&nbsp;
+      <a href="#M000076">votes_incr_question_answer_count</a>&nbsp;&nbsp;
+      <a href="#M000074">votes_incr_question_overvote</a>&nbsp;&nbsp;
+      <a href="#M000075">votes_incr_question_undervote</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -131,12 +147,12 @@ href="Tabulator.html">Tabulator</a> Count.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000076" class="method-detail">
-        <a name="M000076"></a>
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000076.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000076.html');return false;">
+          <a href="Tabulator.src/M000068.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000068.html');return false;">
           <span class="method-name">tabulator_spreadsheet</span><span class="method-args">()</span>
           </a>
         </div>
@@ -150,7 +166,8 @@ Returns: <em>Array</em> of <em>String</em>
 </p>
 <p>
 Prototype implementation for dumping CSV spreadsheet with current voting
-results.
+results, returns an array of the lines of text to write to the spreadsheet
+file.
 </p>
         </div>
       </div>
@@ -167,41 +184,34 @@ results.
       
         <div class="method-description">
           <p>
-Arguments:
+No Arguments
 </p>
-<ul>
-<li><em>tabulator_count</em>: (<em>Hash</em>) <a
-href="Tabulator.html">Tabulator</a> Count
-
-</li>
-</ul>
 <p>
 Returns: <em>Array</em>
 </p>
 <p>
-Returns an <em>Array</em> whose 1st element is a message string indicating
-the current state of the <a href="Tabulator.html">Tabulator</a>, and whose
-2nd element is an <em>Array</em> of the Expected Counts that are still
-missing (let&#8216;s say there are M of them). There are four possible <a
-href="Tabulator.html">Tabulator</a> states, only the last three of which
-the <a href="Tabulator.html">Tabulator</a> is capable of reporting (the <a
-href="Tabulator.html">Tabulator</a> is in the EMPTY state before it is
-instantiated):
+Returns an <em>Array</em> of 4 items:
 </p>
 <ul>
-<li>EMPTY: Waiting for Jurisdiction and Election Definitions
+<li>a string holding the current state of the <a
+href="Tabulator.html">Tabulator</a>,
 
 </li>
-<li>INITIAL: Waiting for 1st Counter Count, M Missing
+<li>an <em>Array</em> of the still-missing Expected Counts,
 
 </li>
-<li>ACCUMULATING: Waiting for Counter Counts, M Missing
+<li>an <em>Array</em> of the Precincts whose counts are finished, and
 
 </li>
-<li>DONE: All M Expected Counter Counts Accumulated
+<li>an <em>Integer</em> represeting the original number of Expected Counts.
 
 </li>
 </ul>
+<p>
+Of the four possible <a href="Tabulator.html">Tabulator</a> states, the <a
+href="Tabulator.html">Tabulator</a> is only capable of reporting on the
+last three, because it is never in the EMPTY state while it is running.
+</p>
         </div>
       </div>
 
@@ -220,10 +230,6 @@ instantiated):
 Arguments:
 </p>
 <ul>
-<li><em>tabulator_count</em>: (<em>Hash</em>) <a
-href="Tabulator.html">Tabulator</a> Count
-
-</li>
 <li><em>counter_count</em>: (<em>Hash</em>) Counter Count
 
 </li>
@@ -232,24 +238,27 @@ href="Tabulator.html">Tabulator</a> Count
 Returns: N/A
 </p>
 <p>
-Requires that the Counter Count was previously validated. Adjusts the <a
-href="Tabulator.html">Tabulator</a> Count auditing information for the new
-Counter Count file, gathers the votes from the Counter Count, adds the
-Counter Count to the list of Counter Counts held by the <a
-href="Tabulator.html">Tabulator</a>, and returns the resulting <a
-href="Tabulator.html">Tabulator</a> Count.
+Requires that the Counter Count had previously undergone validation, but
+not that it had passed. Adjusts the <a href="Tabulator.html">Tabulator</a>
+Count auditing information for the new Counter Count file, adds the Counter
+Count to the list of Counter Counts held by the <a
+href="Tabulator.html">Tabulator</a>, and then checks the Counter Count to
+see if it had passed the validation tests, as indicated by the absence of
+errors in its error_list component. If it passed, its votes are gathered
+and counted and added to the current <a href="Tabulator.html">Tabulator</a>
+dataset.
 </p>
         </div>
       </div>
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000068" class="method-detail">
-        <a name="M000068"></a>
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000068.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000068.html');return false;">
+          <a href="Tabulator.src/M000069.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000069.html');return false;">
           <span class="method-name">votes_gather</span><span class="method-args">(counter_count)</span>
           </a>
         </div>
@@ -278,12 +287,12 @@ counts attributes are actually a part of its data structure.
         </div>
       </div>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000072.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000072.html');return false;">
+          <a href="Tabulator.src/M000073.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000073.html');return false;">
           <span class="method-name">votes_incr_contest_candidate_count</span><span class="method-args">(conid, canid, nvotes)</span>
           </a>
         </div>
@@ -313,12 +322,12 @@ specified Contest.
         </div>
       </div>
 
-      <div id="method-M000069" class="method-detail">
-        <a name="M000069"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000069.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000069.html');return false;">
+          <a href="Tabulator.src/M000070.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000070.html');return false;">
           <span class="method-name">votes_incr_contest_overvote</span><span class="method-args">(conid, nvotes)</span>
           </a>
         </div>
@@ -345,12 +354,12 @@ Contest.
         </div>
       </div>
 
-      <div id="method-M000070" class="method-detail">
-        <a name="M000070"></a>
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000070.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000070.html');return false;">
+          <a href="Tabulator.src/M000071.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000071.html');return false;">
           <span class="method-name">votes_incr_contest_undervote</span><span class="method-args">(conid, nvotes)</span>
           </a>
         </div>
@@ -377,12 +386,12 @@ Contest.
         </div>
       </div>
 
-      <div id="method-M000071" class="method-detail">
-        <a name="M000071"></a>
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000071.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000071.html');return false;">
+          <a href="Tabulator.src/M000072.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000072.html');return false;">
           <span class="method-name">votes_incr_contest_writeinvote</span><span class="method-args">(conid, nvotes)</span>
           </a>
         </div>
@@ -409,12 +418,12 @@ Contest.
         </div>
       </div>
 
-      <div id="method-M000075" class="method-detail">
-        <a name="M000075"></a>
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000075.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000075.html');return false;">
+          <a href="Tabulator.src/M000076.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000076.html');return false;">
           <span class="method-name">votes_incr_question_answer_count</span><span class="method-args">(qid, answer, nvotes)</span>
           </a>
         </div>
@@ -444,12 +453,12 @@ Question.
         </div>
       </div>
 
-      <div id="method-M000073" class="method-detail">
-        <a name="M000073"></a>
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000073.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000073.html');return false;">
+          <a href="Tabulator.src/M000074.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000074.html');return false;">
           <span class="method-name">votes_incr_question_overvote</span><span class="method-args">(qid, nvotes)</span>
           </a>
         </div>
@@ -476,12 +485,12 @@ Question.
         </div>
       </div>
 
-      <div id="method-M000074" class="method-detail">
-        <a name="M000074"></a>
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
 
         <div class="method-heading">
-          <a href="Tabulator.src/M000074.html" target="Code" class="method-signature"
-            onclick="popupCode('Tabulator.src/M000074.html');return false;">
+          <a href="Tabulator.src/M000075.html" target="Code" class="method-signature"
+            onclick="popupCode('Tabulator.src/M000075.html');return false;">
           <span class="method-name">votes_incr_question_undervote</span><span class="method-args">(qid, nvotes)</span>
           </a>
         </div>
