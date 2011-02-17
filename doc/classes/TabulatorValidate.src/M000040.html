@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>validate_expected_counts (TabulatorValidate)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 684</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_expected_counts</span>(<span class="ruby-identifier">expected_counts</span>)
+    <span class="ruby-identifier">exp_cids</span> = []
+    <span class="ruby-identifier">exp_rgs</span> = []
+    <span class="ruby-identifier">exp_pids</span> = []
+    <span class="ruby-identifier">expected_counts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ecount</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">cid</span> = <span class="ruby-identifier">ecount</span>[<span class="ruby-value str">&quot;counter_ident&quot;</span>].<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">rg</span> = <span class="ruby-identifier">ecount</span>[<span class="ruby-value str">&quot;reporting_group&quot;</span>].<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;Non-Existent Counter UID&quot;</span>, <span class="ruby-identifier">cid</span>, <span class="ruby-value str">&quot;in Expected Count&quot;</span>) <span class="ruby-keyword kw">unless</span>
+        <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;counter&quot;</span>, <span class="ruby-identifier">cid</span>)
+      <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;Non-Existent Reporting Group&quot;</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-value str">&quot;for Counter UID&quot;</span>, <span class="ruby-identifier">cid</span>, <span class="ruby-value str">&quot;in Expected Count&quot;</span>) <span class="ruby-keyword kw">unless</span>
+        <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;reporting group&quot;</span>,<span class="ruby-identifier">rg</span>)
+      <span class="ruby-identifier">ecount</span>[<span class="ruby-value str">&quot;precinct_ident_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">pid</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;Non-Existent Precinct UID&quot;</span>, <span class="ruby-identifier">pid</span>, <span class="ruby-value str">&quot;for Counter UID&quot;</span>, <span class="ruby-identifier">cid</span>, <span class="ruby-value str">&quot;in Expected Count&quot;</span>) <span class="ruby-keyword kw">unless</span>
+          <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;precinct&quot;</span>, <span class="ruby-identifier">pid</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">exp_cids</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">cid</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">exp_cids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">cid</span>)
+      <span class="ruby-identifier">exp_rgs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">rg</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">exp_rgs</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">rg</span>)
+      <span class="ruby-identifier">ecount</span>[<span class="ruby-value str">&quot;precinct_ident_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">pid</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">exp_pids</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">pid</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">exp_pids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">pid</span>)
+        <span class="ruby-identifier">initialize_expected_counts</span>(<span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;precincts&quot;</span>] = <span class="ruby-identifier">exp_pids</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;finished&quot;</span>] = []
+    <span class="ruby-identifier">diff_cids</span> = (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;counter&quot;</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">exp_cids</span>)
+    <span class="ruby-identifier">warning</span>(<span class="ruby-value str">&quot;Missing Counter UIDs&quot;</span>, <span class="ruby-identifier">diff_cids</span>, <span class="ruby-value str">&quot;from Expected Counts&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">diff_cids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">diff_rgs</span> = (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;reporting group&quot;</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">exp_rgs</span>)
+    <span class="ruby-identifier">warning</span>(<span class="ruby-value str">&quot;Missing Reporting Groups&quot;</span>, <span class="ruby-identifier">diff_rgs</span>, <span class="ruby-value str">&quot;from Expected Counts&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">diff_rgs</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">diff_pids</span> = (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;precinct&quot;</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">exp_pids</span>)
+    <span class="ruby-identifier">warning</span>(<span class="ruby-value str">&quot;Missing Precinct UIDs&quot;</span>, <span class="ruby-identifier">diff_pids</span>, <span class="ruby-value str">&quot;from Expected Counts&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">diff_pids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

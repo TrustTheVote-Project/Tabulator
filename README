@@ -7,44 +7,50 @@ operator.rb
 - Prints help info when called without args
 - Reads and Writes the file TABULATOR_COUNT.yml
 
-tabulator.rb
+lib/tabulator.rb
 - The Tabulator
 
-tabulator_test.rb
-- Ruby Unit Tests for the Tabulator
-
-validate.rb
+lib/validate.rb
 - The Validator for Tabulator data sets
 
-check_syntax_yaml.rb
+lib/check_syntax_yaml.rb
 - YAML Syntax Checker for TTV Common Data Format (CDF) datasets
 
-check_syntax_yaml_test.rb
+test/operator_test.rb
+- Ruby Unit Tests for the Tabulator Operator
+
+test/tabulator_test.rb
+- Ruby Unit Tests for the Tabulator and Validator
+
+test/check_syntax_yaml_test.rb
 - Setup and Test the YAML Syntax Checker
 
-emgr_data_handler.rb
-- Converts two real EMGR datasets into an Election Definition in preparation
-  for syntax checking and validation by the Tabulator
-- Writes the files EMGR_JD.yml and EMGR_ED.yml
+test/emgr_data_handler.rb
+- [DEBUG] Converts two real EMGR datasets into an Election Definition in
+  preparation for syntax checking and validation by the Tabulator
+
+###########################
+# Ruby Unit Test Commands #
+###########################
+
+ruby -I . test/operator_test.rb"
+ruby -I . test/tabulator_test.rb"
+ruby -I . test/check_syntax_yaml_test.rb"
 
 ################
 # Bash Scripts #
 ################
 
 TEST.sh
-- Valid arguments are: <nothing>, default, tab, syntax, bedrock, dc, va, all
-- <nothing>: run all of the tests
+- Valid arguments: all, syn(tax), tab(ulator), op(erator), def(ault)
+- <nothing>: run all of the Ruby unit tests
+- all : run all of the tests
 - default: run the default tests using a prototypical Jurisdiction
            Definition, Election Definition, and three Counter Counts,
 	   achieving the Tabulator DONE state 
-- tab: run all of the Tabulator validation tests
 - syntax: run all of the Tabulator syntax tests
-- bedrock: run John's Bedrock tests, with only partial counts
-- dc: convert the DC November 2010 datasets into an Election Definition and
-      have the Tabulator syntax check and then validate it
-- va: convert the VA November 2010 datasets into an Election Definition and
-      have the Tabulator syntax check and then validate it
-- all: run all of the above tests
+- tab: run all of the Tabulator validation tests
+- op: run all of the Tabulator Operator tests
 
 ###############
 # Directories #

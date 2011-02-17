@@ -24,8 +24,8 @@
 
 require "yaml"
 require "test/unit"
-require "check_syntax_yaml"
-require "tabulator"
+require "lib/check_syntax_yaml"
+require "lib/tabulator"
 
 # The TabulatorTest class provides Unit Testing for the Tabulator class.
 
@@ -115,7 +115,7 @@ class TabulatorTest < Test::Unit::TestCase
 
   def test_tabulator
     trace = 300          # In case we need to trace, for debugging these tests
-    dir = "Tests/Validation"
+    dir = "data/Tests/Validation"
     tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
     tabulator_test_load_jd_ed(trace, dir, "JD_ERROR_2.yml", "ED.yml", JD_ERROR_2, JD_WARN_2)
     tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED_ERROR_12.yml", ED_ERROR_12, ED_WARN_12_5)
@@ -142,7 +142,7 @@ class TabulatorTest < Test::Unit::TestCase
 
   def test_tabulator_default
     trace = 300
-    dir = "Tests/Default"
+    dir = "data/Tests/Default"
     tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml", [], [])
     tabulator_test_add_cc(trace, dir, "CC1.yml", [], [])
     tabulator_test_add_cc(trace, dir, "CC2.yml", [], [])
@@ -151,14 +151,14 @@ class TabulatorTest < Test::Unit::TestCase
 
   def test_tabulator_bedrock
     trace = 300
-    dir = "Tests/Bedrock"
+    dir = "data/Tests/Bedrock"
     tabulator_test_load_jd_ed(trace, dir, "Bedrock_JD.yml", "Bedrock_ED.yml", [], [])
     tabulator_test_add_cc(trace, dir, "Bedrock_CC1.yml", [], [], 4)
   end
 
   def test_tabulator_dc
     trace = 300
-    dir = "Tests/DC"
+    dir = "data/Tests/DC"
     warns = ["Missing ALL Reporting Groups, None Present in Election Definition",
              "Missing ALL Expected Counts, None Present in Election Definition"]
     tabulator_test_load_jd_ed(trace, dir, "DC_EMGR_JD.yml", "DC_EMGR_ED.yml",
@@ -167,7 +167,7 @@ class TabulatorTest < Test::Unit::TestCase
 
   def test_tabulator_va
     trace = 300
-    dir = "Tests/VA"
+    dir = "data/Tests/VA"
     warns = ["Missing ALL Reporting Groups, None Present in Election Definition",
              "Missing ALL Expected Counts, None Present in Election Definition"]
     tabulator_test_load_jd_ed(trace, dir, "VA_EMGR_JD.yml", "VA_EMGR_ED.yml",
@@ -181,13 +181,13 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Returns: <i>Hash</i>
 #
-# Read a schema from one file (under Schemas/) and a datum from another file
-# from <i>dir</i>/, and then tests the success of performing a syntax check of
-# the datum against the schema.
+# Read a schema from one file (under data/Schemas/) and a datum from another
+# file from <i>dir</i>/, and then tests the success of performing a syntax
+# check of the datum against the schema.
 
   private
   def tabulator_test_check_syntax(trace, prefix, dir, file)
-    schema_file = "Schemas/" + "#{prefix}_schema.yml"
+    schema_file = "data/Schemas/" + "#{prefix}_schema.yml"
     schema = tabulator_test_read_file(schema_file, "Schema")
     file = "#{dir}/#{file}"
     datum = tabulator_test_read_file(file, "Data")

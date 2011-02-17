@@ -22,7 +22,7 @@
 
 # Contributors: Jeff Cook
 
-require "validate"
+require "lib/validate"
 
 # The Tabulator class inherits the capabilities of the TabulatorValidate
 # class, and provides additional functionality for determining the Tabulator

@@ -25,8 +25,8 @@
 $LOAD_PATH << "./Tabulator" # Temporary, for testing
 
 require "yaml"
-require "check_syntax_yaml"
-require "tabulator"
+require "lib/check_syntax_yaml"
+require "lib/tabulator"
 
 # The Operator class contains the Tabulator Operator.  Methods beginning with
 # "op_" are public, and there is only one such, op_command, which implements
@@ -727,7 +727,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # a Fatal error if any problems occur.
 
   def opx_check_syntax(key, datum)
-    schema_file = opx_file_prepend("Schemas/#{key}_schema.yml")
+    schema_file = opx_file_prepend("data/Schemas/#{key}_schema.yml")
     schema = opx_file_read(schema_file, true)
     (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
   rescue => e

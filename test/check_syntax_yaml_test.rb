@@ -24,7 +24,7 @@
 
 require "yaml"
 require "test/unit"
-require "check_syntax_yaml"
+require "lib/check_syntax_yaml"
 
 # The CheckSyntaxYamlTest class provides Unit Testing for the CheckSyntaxYaml
 # class.
@@ -207,8 +207,8 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 #
 # Next test the syntax of all significant schemas, by making repeated calls to
 # schema_test_syntax, each of which uses data stored in files under
-# Tests/Syntax to syntax-check against a schema defined during setup.  Some
-# schemas, especially those with optional Hash keys, have multiple test
+# data/Tests/Syntax to syntax-check against a schema defined during setup.
+# Some schemas, especially those with optional Hash keys, have multiple test
 # variations.
 
   def test_check_syntax
@@ -264,12 +264,12 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 #
 # Assert the validity of the <i>schema</i>, unless <i>validate</i> is
 # <i>false</i>, in which case assert the invalidity of the <i>schema</i>.
-# Schemas are stored in the Schemas/ subdirectory and are named
+# Schemas are stored in the data/Schemas/ subdirectory and are named
 # "schema_foo.yml" when the schema is for an object named "foo".  If the
 # schema file does not yet exist, it is written.  If it does exist, but the
 # <i>write</i> flag is <i>true</i>, then it is over-written.  Deleting schema
-# files from the Schemas/ directory permits these schemas to be re-generated
-# when the unit tests are run.
+# files from the data/Schemas/ directory permits these schemas to be
+# re-generated when the unit tests are run.
 
   private
   def schema_setup(trace, prefix, schema, validate = true, write = false)
@@ -282,7 +282,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       assert(!CheckSyntaxYaml.new.schema_is_valid?(schema, trace),
              "Valid schema (should be invalid): #{schema.inspect}")
     end
-    file = "Schemas/" + prefix + "_schema.yml"
+    file = "data/Schemas/" + prefix + "_schema.yml"
     if (! File.exist?(file))
       print "Writing Schema File: #{file}\n"
       File.open(file, "w") { |outfile| YAML::dump(schema, outfile) }
@@ -299,15 +299,15 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 #
 # Returns: Boolean
 #
-# Read a schema from one file (under Schemas/) and a datum from another file
-# (under Tests/Syntax/), and then assert the success of performing a syntax
-# check of the datum against the schema.
+# Read a schema from one file (under data/Schemas/) and a datum from another
+# file (under data/Tests/Syntax/), and then assert the success of performing a
+# syntax check of the datum against the schema.
 
   def schema_test_syntax(trace, prefix, postfix = '')
-    file = "Schemas/" + "#{prefix}_schema.yml"
+    file = "data/Schemas/" + "#{prefix}_schema.yml"
     print "Reading Schema File: #{file}\n"
     schema = File.open(file) { |infile| YAML::load(infile) }
-    file = "Tests/Syntax/" + "#{prefix}" + postfix + ".yml"
+    file = "data/Tests/Syntax/" + "#{prefix}" + postfix + ".yml"
     print "Reading Data File: #{file}\n"
     datum = File.open(file) { |infile| YAML::load(infile) }
     csy = CheckSyntaxYaml.new
@@ -326,20 +326,20 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 #
 # Returns: Boolean
 #
-# Read a schema from one file (under Schemas/) and a datum containing a syntax
-# error from another file (under Tests/Syntax/Errors/), and then assert the
-# failure of performing a syntax check of the datum against the schema.  If
-# <i>validate</i> is <i>false</i>, assert that the syntax checker will fail
-# and the error code stack will contain -1 (schema validation error).  We are
-# testing for errors, so the syntax check must fail, and the resulting error
-# code stack's first three errors must be <i>err1</i>, <i>err2</i> (optional),
-# and <i>err3</i> (optional).
+# Read a schema from one file (under data/Schemas/) and a datum containing a
+# syntax error from another file (under data/Tests/Syntax/Errors/), and then
+# assert the failure of performing a syntax check of the datum against the
+# schema.  If <i>validate</i> is <i>false</i>, assert that the syntax checker
+# will fail and the error code stack will contain -1 (schema validation
+# error).  We are testing for errors, so the syntax check must fail, and the
+# resulting error code stack's first three errors must be <i>err1</i>,
+# <i>err2</i> (optional), and <i>err3</i> (optional).
 
   def schema_test_syntax_error(trace, prefix, validate, err1, err2 = -1, err3 = -1)
-    file = "Schemas/" + "#{prefix}_schema.yml"
+    file = "data/Schemas/" + "#{prefix}_schema.yml"
     print "Reading Schema File: #{file}\n"
     schema = File.open(file) { |infile| YAML::load(infile) }
-    file = "Tests/Syntax/Errors/" + "#{prefix}_" + err1.inspect + ".yml"
+    file = "data/Tests/Syntax/Errors/" + "#{prefix}_" + err1.inspect + ".yml"
     print "Reading Data Error File: #{file}\n"
     datum = File.open(file) { |infile| YAML::load(infile) }
     csy = CheckSyntaxYaml.new

@@ -70,10 +70,10 @@ class OperatorTest < Test::Unit::TestCase
     operator_command_error("total")
     operator_command_error("check")
     operator_command("reset")
-    operator_command_error("add Tests/Default/JD.yml")
-    operator_command("load Tests/Default/JD.yml Tests/Default/ED.yml OK")
+    operator_command_error("add data/Tests/Default/JD.yml")
+    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
     operator_command("check")
-    operator_command_error("load Tests/Default/JD.yml Tests/Default/ED.yml OK")
+    operator_command_error("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
   end
 
 # Tests each of the File errors detected by the Operator:
@@ -86,15 +86,15 @@ class OperatorTest < Test::Unit::TestCase
 
   def operator_test_file_errors
     operator_command("reset")
-    operator_command("load Tests/Default/JD.yml Tests/Default/ED.yml OK")
-    operator_file_error("add Tests/Default/CC0.yml")
-    File.chmod(0222,"Tests/Default/CC3_Write_Only.yml")
-    operator_file_error("add Tests/Default/CC3_Write_Only.yml")
-    File.chmod(0644,"Tests/Default/CC3_Write_Only.yml")
+    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
+    operator_file_error("add data/Tests/Default/CC0.yml")
+    File.chmod(0222,"data/Tests/Default/CC3_Write_Only.yml")
+    operator_file_error("add data/Tests/Default/CC3_Write_Only.yml")
+    File.chmod(0644,"data/Tests/Default/CC3_Write_Only.yml")
     operator_file_error("add tabulator.rb")
-    operator_file_error("add Tests/Default/ED.yml")
-    operator_file_error("add Tests/Default/ARRAY.yml")
-    operator_file_error("add Tests/Default/CC2_Syntax_Error.yml")
+    operator_file_error("add data/Tests/Default/ED.yml")
+    operator_file_error("add data/Tests/Default/ARRAY.yml")
+    operator_file_error("add data/Tests/Default/CC2_Syntax_Error.yml")
   end
 
 # Tests one (yes, only one) of the Fatal errors detected by the Operator:
@@ -107,7 +107,7 @@ class OperatorTest < Test::Unit::TestCase
 
   def operator_test_fatal_errors
     operator_command("reset")
-    operator_command("load Tests/Default/JD.yml Tests/Default/ED.yml OK")
+    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
     operator_command("check")
     File.chmod(0222, TABULATOR_DATA_FILE)
     operator_fatal_error("state")

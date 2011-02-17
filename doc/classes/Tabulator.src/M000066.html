@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tabulator_state (Tabulator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tabulator.rb, line 50</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_state</span>()
+    <span class="ruby-identifier">state</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span>[<span class="ruby-value str">&quot;tabulator_count&quot;</span>][<span class="ruby-value str">&quot;state&quot;</span>]
+    <span class="ruby-identifier">missed</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>].<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">total</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;total&quot;</span>].<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">count</span> = (<span class="ruby-identifier">total</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;1 Expected Count&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{total.to_s} Expected Counts&quot;</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">state</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;INITIAL&quot;</span>
+      [<span class="ruby-node">&quot;INITIAL (Waiting for 1st of #{count})&quot;</span>, [], [], <span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;DONE&quot;</span>
+      [<span class="ruby-node">&quot;DONE (All #{total.to_s} Expected Counts Accumulated)&quot;</span>, [], [], <span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;ACCUMULATING&quot;</span>
+      [<span class="ruby-node">&quot;ACCUMULATING (#{missed} Missing from #{count})&quot;</span>,
+       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>],
+       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;finished&quot;</span>],
+       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span>]
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">shouldnt</span>(<span class="ruby-node">&quot;Invalid Tabulator State: #{state.to_s}&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

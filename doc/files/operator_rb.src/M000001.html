@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>opx_dump_tabulator_data (operator.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 746</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_dump_tabulator_data</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Tabulator Data Summary\n&quot;</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Jurisdiction UID: #{tab.uids['jurisdiction'][0]}\n&quot;</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Election UID: #{tab.uids['election'][0]}\n&quot;</span>
+    [<span class="ruby-value str">'district'</span>,<span class="ruby-value str">'precinct'</span>,<span class="ruby-value str">'contest'</span>,<span class="ruby-value str">'candidate'</span>,<span class="ruby-value str">'question'</span>,<span class="ruby-value str">'counter'</span>,
+     <span class="ruby-value str">'file'</span>,<span class="ruby-value str">'reporting group'</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">length</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">myuids</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">sort</span>
+      <span class="ruby-identifier">type</span> = (<span class="ruby-identifier">k</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^report/</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;Reporting Groups&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{k.capitalize} UIDs&quot;</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">myuids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+        <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;  #{type} (NONE)\n&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;  #{type} (#{myuids.length.to_s}): &quot;</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-identifier">prefix</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">myuids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>)
+          <span class="ruby-identifier">prefix</span> = <span class="ruby-value str">&quot;    &quot;</span>
+          <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\n#{prefix}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">opx_pp</span>(<span class="ruby-identifier">myuids</span>, <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>, <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>, <span class="ruby-value">78</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>].<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">total</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;total&quot;</span>]
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">total</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Expected Counts (NONE)\n&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n&quot;</span>
+      <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>][<span class="ruby-identifier">cid</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rg</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">pids</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>][<span class="ruby-identifier">cid</span>][<span class="ruby-identifier">rg</span>].<span class="ruby-identifier">keys</span>
+          <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{cid}, #{rg}, #{pids.inspect.gsub(/\&quot;/,&quot;&quot;)}\n&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Missing Counts (NONE)\n&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Missing Counts (#{count}): Counter UID, Precinct UID, Reporting Group\n&quot;</span>
+      <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{cid}, #{pid}, #{rg}\n&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Contests (NONE)\n&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Contests (&quot;</span>,<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>,<span class="ruby-value str">&quot;):&quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot; Contest UID: overvote, undervote, write-in, Candidate UIDs\n&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">v</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">k</span>]
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{k}: &quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;overvote = #{v[&quot;overvote_count&quot;]}, &quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;undervote = #{v[&quot;undervote_count&quot;]}, &quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;writeins = #{v[&quot;writein_count&quot;]}\n&quot;</span>
+      <span class="ruby-identifier">v</span>[<span class="ruby-value str">&quot;candidate_count_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;      #{item[&quot;candidate_ident&quot;]} = #{item[&quot;count&quot;]}\n&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Questions (NONE)\n&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Questions (&quot;</span>,<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>,<span class="ruby-value str">&quot;):&quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot; Question UID: overvote, undervote, Answers\n&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">v</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">k</span>]
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{k}: &quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;overvote = #{v[&quot;overvote_count&quot;]}, &quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;undervote = #{v[&quot;undervote_count&quot;]}\n&quot;</span>
+      <span class="ruby-identifier">v</span>[<span class="ruby-value str">&quot;answer_count_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;      #{item[&quot;answer&quot;]} = #{item[&quot;count&quot;]}\n&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
+  <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal failure while dumping Tabulator data&quot;</span>, <span class="ruby-identifier">e</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

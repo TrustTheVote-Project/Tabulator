@@ -1,0 +1,149 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/CheckSyntaxYaml.html#M000077">check_syntax (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000080">check_syntax_array (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000084">check_syntax_error (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000081">check_syntax_hash (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000082">check_syntax_hash_key (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000078">check_syntax_internal (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000079">check_syntax_string (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000083">check_syntax_trace (CheckSyntaxYaml)</a><br />
+    <a href="classes/TempEmgrDH.html#M000004">die (TempEmgrDH)</a><br />
+    <a href="classes/TempEmgrDH.html#M000005">die_file (TempEmgrDH)</a><br />
+    <a href="classes/TempEmgrDH.html#M000006">die_file_contents (TempEmgrDH)</a><br />
+    <a href="classes/TabulatorValidate.html#M000023">error (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000041">initialize_expected_counts (TabulatorValidate)</a><br />
+    <a href="classes/TempEmgrDH.html#M000008">is_emgr_file? (TempEmgrDH)</a><br />
+    <a href="classes/TempEmgrDH.html#M000003">new (TempEmgrDH)</a><br />
+    <a href="classes/TabulatorValidate.html#M000017">new (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000028">new_tabulator_count (TabulatorValidate)</a><br />
+    <a href="classes/Operator.html#M000091">op_command (Operator)</a><br />
+    <a href="classes/Operator.html#M000098">opc_add (Operator)</a><br />
+    <a href="classes/Operator.html#M000099">opc_check (Operator)</a><br />
+    <a href="classes/Operator.html#M000094">opc_data (Operator)</a><br />
+    <a href="classes/Operator.html#M000092">opc_help (Operator)</a><br />
+    <a href="classes/Operator.html#M000097">opc_load (Operator)</a><br />
+    <a href="classes/Operator.html#M000093">opc_reset (Operator)</a><br />
+    <a href="classes/Operator.html#M000095">opc_state (Operator)</a><br />
+    <a href="classes/Operator.html#M000096">opc_total (Operator)</a><br />
+    <a href="classes/OperatorTest.html#M000013">operator_command (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000014">operator_command_error (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000016">operator_fatal_error (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000015">operator_file_error (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000010">operator_test_command_errors (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000012">operator_test_fatal_errors (OperatorTest)</a><br />
+    <a href="classes/OperatorTest.html#M000011">operator_test_file_errors (OperatorTest)</a><br />
+    <a href="classes/Operator.html#M000118">opx_check_syntax (Operator)</a><br />
+    <a href="files/operator_rb.html#M000001">opx_dump_tabulator_data (operator.rb)</a><br />
+    <a href="classes/Operator.html#M000104">opx_empty? (Operator)</a><br />
+    <a href="classes/Operator.html#M000100">opx_err (Operator)</a><br />
+    <a href="classes/Operator.html#M000107">opx_file_backup (Operator)</a><br />
+    <a href="classes/Operator.html#M000111">opx_file_close (Operator)</a><br />
+    <a href="classes/Operator.html#M000106">opx_file_exist? (Operator)</a><br />
+    <a href="classes/Operator.html#M000110">opx_file_open_read (Operator)</a><br />
+    <a href="classes/Operator.html#M000112">opx_file_open_write (Operator)</a><br />
+    <a href="classes/Operator.html#M000108">opx_file_prepend (Operator)</a><br />
+    <a href="classes/Operator.html#M000105">opx_file_process (Operator)</a><br />
+    <a href="classes/Operator.html#M000109">opx_file_read (Operator)</a><br />
+    <a href="classes/Operator.html#M000113">opx_file_write_spreadsheet (Operator)</a><br />
+    <a href="classes/Operator.html#M000114">opx_file_write_tabulator (Operator)</a><br />
+    <a href="classes/Operator.html#M000115">opx_instantiate_tabulator (Operator)</a><br />
+    <a href="classes/Operator.html#M000116">opx_new_tabulator_jd_ed (Operator)</a><br />
+    <a href="classes/Operator.html#M000117">opx_new_tabulator_tc (Operator)</a><br />
+    <a href="files/operator_rb.html#M000002">opx_pp (operator.rb)</a><br />
+    <a href="classes/Operator.html#M000101">opx_print (Operator)</a><br />
+    <a href="classes/Operator.html#M000102">opx_print_tabulator_count (Operator)</a><br />
+    <a href="classes/Operator.html#M000103">opx_warn (Operator)</a><br />
+    <a href="classes/TempEmgrDH.html#M000007">process_candidates (TempEmgrDH)</a><br />
+    <a href="classes/TabulatorValidate.html#M000047">really_expected? (TabulatorValidate)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000085">schema_is_valid? (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000086">schema_is_valid_array? (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000087">schema_is_valid_hash? (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000088">schema_is_valid_key_value? (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000090">schema_is_valid_trace (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYaml.html#M000089">schema_not_valid (CheckSyntaxYaml)</a><br />
+    <a href="classes/CheckSyntaxYamlTest.html#M000121">schema_setup (CheckSyntaxYamlTest)</a><br />
+    <a href="classes/CheckSyntaxYamlTest.html#M000122">schema_test_syntax (CheckSyntaxYamlTest)</a><br />
+    <a href="classes/CheckSyntaxYamlTest.html#M000123">schema_test_syntax_error (CheckSyntaxYamlTest)</a><br />
+    <a href="classes/CheckSyntaxYamlTest.html#M000119">setup (CheckSyntaxYamlTest)</a><br />
+    <a href="classes/TabulatorValidate.html#M000022">shouldnt (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorTest.html#M000060">tabulator_messages_generate (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000059">tabulator_messages_unsame (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000061">tabulator_print_errors_warnings (TabulatorTest)</a><br />
+    <a href="classes/Tabulator.html#M000076">tabulator_spreadsheet (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000066">tabulator_state (Tabulator)</a><br />
+    <a href="classes/TabulatorTest.html#M000062">tabulator_test_add_cc (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000055">tabulator_test_check_syntax (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000057">tabulator_test_errors (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000063">tabulator_test_instantiate_tabulator (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000056">tabulator_test_load_jd_ed (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000064">tabulator_test_read_file (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000058">tabulator_test_warnings (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000065">tabulator_test_write_tabulator_file (TabulatorTest)</a><br />
+    <a href="classes/CheckSyntaxYamlTest.html#M000120">test_check_syntax (CheckSyntaxYamlTest)</a><br />
+    <a href="classes/OperatorTest.html#M000009">test_operator (OperatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000050">test_tabulator (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000052">test_tabulator_bedrock (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000053">test_tabulator_dc (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000051">test_tabulator_default (TabulatorTest)</a><br />
+    <a href="classes/TabulatorTest.html#M000054">test_tabulator_va (TabulatorTest)</a><br />
+    <a href="classes/TabulatorValidate.html#M000027">uid_add (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000025">uid_exists? (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000026">uids_exist? (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000046">update_counts_missing (TabulatorValidate)</a><br />
+    <a href="classes/Tabulator.html#M000067">update_tabulator_count (Tabulator)</a><br />
+    <a href="classes/TabulatorValidate.html#M000044">validate_candidate_counts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000036">validate_candidates (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000043">validate_contest_counts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000035">validate_contests (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000042">validate_counter_count (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000049">validate_counter_counts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000038">validate_counters (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000031">validate_districts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000034">validate_election (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000033">validate_election_definition (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000032">validate_errors_warnings (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000040">validate_expected_counts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000029">validate_jurisdiction_definition (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000030">validate_precincts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000045">validate_question_counts (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000037">validate_questions (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000039">validate_reporting_groups (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000048">validate_tabulator_count (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000018">validation_errors (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000019">validation_errors? (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000020">validation_warnings (TabulatorValidate)</a><br />
+    <a href="classes/TabulatorValidate.html#M000021">validation_warnings? (TabulatorValidate)</a><br />
+    <a href="classes/Tabulator.html#M000068">votes_gather (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000072">votes_incr_contest_candidate_count (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000069">votes_incr_contest_overvote (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000070">votes_incr_contest_undervote (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000071">votes_incr_contest_writeinvote (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000075">votes_incr_question_answer_count (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000073">votes_incr_question_overvote (Tabulator)</a><br />
+    <a href="classes/Tabulator.html#M000074">votes_incr_question_undervote (Tabulator)</a><br />
+    <a href="classes/TabulatorValidate.html#M000024">warning (TabulatorValidate)</a><br />
+  </div>
+</div>
+</body>
+</html>
