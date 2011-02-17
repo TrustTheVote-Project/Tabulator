@@ -83,7 +83,7 @@
 The <a href="Operator.html">Operator</a> class contains the <a
 href="Tabulator.html">Tabulator</a> <a href="Operator.html">Operator</a>.
 Methods beginning with &quot;op_&quot; are public, and there is only one
-such, <a href="Operator.html#M000091">op_command</a>, which implements the
+such, <a href="Operator.html#M000106">op_command</a>, which implements the
 command-line interface to the <a href="Operator.html">Operator</a>. Methods
 beginning with &quot;opc_&quot; implement <a
 href="Operator.html">Operator</a> commands. Methods beginning with
@@ -101,7 +101,7 @@ href="Operator.html">Operator</a> command is syntactically invalid.
 The <a href="Operator.html">Operator</a> handles errors by raising its
 locally-defined <a href="Operator/OperatorError.html">OperatorError</a>
 exception, passing it the error message. This exception is caught only by
-<a href="Operator.html#M000091">op_command</a>, the <a
+<a href="Operator.html#M000106">op_command</a>, the <a
 href="Operator.html">Operator</a>&#8216;s single public method and thus its
 only interface, which prints out the error message and terminates.
 </p>
@@ -115,34 +115,33 @@ only interface, which prints out the error message and terminates.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000091">op_command</a>&nbsp;&nbsp;
-      <a href="#M000098">opc_add</a>&nbsp;&nbsp;
-      <a href="#M000099">opc_check</a>&nbsp;&nbsp;
-      <a href="#M000094">opc_data</a>&nbsp;&nbsp;
-      <a href="#M000092">opc_help</a>&nbsp;&nbsp;
-      <a href="#M000097">opc_load</a>&nbsp;&nbsp;
-      <a href="#M000093">opc_reset</a>&nbsp;&nbsp;
-      <a href="#M000095">opc_state</a>&nbsp;&nbsp;
-      <a href="#M000096">opc_total</a>&nbsp;&nbsp;
-      <a href="#M000118">opx_check_syntax</a>&nbsp;&nbsp;
-      <a href="#M000104">opx_empty?</a>&nbsp;&nbsp;
-      <a href="#M000100">opx_err</a>&nbsp;&nbsp;
-      <a href="#M000107">opx_file_backup</a>&nbsp;&nbsp;
-      <a href="#M000111">opx_file_close</a>&nbsp;&nbsp;
-      <a href="#M000106">opx_file_exist?</a>&nbsp;&nbsp;
-      <a href="#M000110">opx_file_open_read</a>&nbsp;&nbsp;
-      <a href="#M000112">opx_file_open_write</a>&nbsp;&nbsp;
-      <a href="#M000108">opx_file_prepend</a>&nbsp;&nbsp;
-      <a href="#M000105">opx_file_process</a>&nbsp;&nbsp;
-      <a href="#M000109">opx_file_read</a>&nbsp;&nbsp;
-      <a href="#M000113">opx_file_write_spreadsheet</a>&nbsp;&nbsp;
-      <a href="#M000114">opx_file_write_tabulator</a>&nbsp;&nbsp;
-      <a href="#M000115">opx_instantiate_tabulator</a>&nbsp;&nbsp;
-      <a href="#M000116">opx_new_tabulator_jd_ed</a>&nbsp;&nbsp;
-      <a href="#M000117">opx_new_tabulator_tc</a>&nbsp;&nbsp;
-      <a href="#M000101">opx_print</a>&nbsp;&nbsp;
-      <a href="#M000102">opx_print_tabulator_count</a>&nbsp;&nbsp;
-      <a href="#M000103">opx_warn</a>&nbsp;&nbsp;
+      <a href="#M000106">op_command</a>&nbsp;&nbsp;
+      <a href="#M000113">opc_add</a>&nbsp;&nbsp;
+      <a href="#M000114">opc_check</a>&nbsp;&nbsp;
+      <a href="#M000109">opc_data</a>&nbsp;&nbsp;
+      <a href="#M000107">opc_help</a>&nbsp;&nbsp;
+      <a href="#M000112">opc_load</a>&nbsp;&nbsp;
+      <a href="#M000108">opc_reset</a>&nbsp;&nbsp;
+      <a href="#M000110">opc_state</a>&nbsp;&nbsp;
+      <a href="#M000111">opc_total</a>&nbsp;&nbsp;
+      <a href="#M000132">opx_check_syntax</a>&nbsp;&nbsp;
+      <a href="#M000119">opx_empty?</a>&nbsp;&nbsp;
+      <a href="#M000115">opx_err</a>&nbsp;&nbsp;
+      <a href="#M000122">opx_file_backup</a>&nbsp;&nbsp;
+      <a href="#M000125">opx_file_close</a>&nbsp;&nbsp;
+      <a href="#M000121">opx_file_exist?</a>&nbsp;&nbsp;
+      <a href="#M000124">opx_file_open_read</a>&nbsp;&nbsp;
+      <a href="#M000126">opx_file_open_write</a>&nbsp;&nbsp;
+      <a href="#M000120">opx_file_process</a>&nbsp;&nbsp;
+      <a href="#M000123">opx_file_read</a>&nbsp;&nbsp;
+      <a href="#M000127">opx_file_write_spreadsheet</a>&nbsp;&nbsp;
+      <a href="#M000128">opx_file_write_tabulator</a>&nbsp;&nbsp;
+      <a href="#M000129">opx_instantiate_tabulator</a>&nbsp;&nbsp;
+      <a href="#M000130">opx_new_tabulator_jd_ed</a>&nbsp;&nbsp;
+      <a href="#M000131">opx_new_tabulator_tc</a>&nbsp;&nbsp;
+      <a href="#M000116">opx_print</a>&nbsp;&nbsp;
+      <a href="#M000117">opx_print_tabulator_count</a>&nbsp;&nbsp;
+      <a href="#M000118">opx_warn</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -193,12 +192,12 @@ only interface, which prints out the error message and terminates.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000091" class="method-detail">
-        <a name="M000091"></a>
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000091.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000091.html');return false;">
+          <a href="Operator.src/M000106.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000106.html');return false;">
           <span class="method-name">op_command</span><span class="method-args">(args)</span>
           </a>
         </div>
@@ -230,12 +229,12 @@ exceptions to cause graceful failure in this unlikely event.
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000098" class="method-detail">
-        <a name="M000098"></a>
+      <div id="method-M000113" class="method-detail">
+        <a name="M000113"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000098.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000098.html');return false;">
+          <a href="Operator.src/M000113.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000113.html');return false;">
           <span class="method-name">opc_add</span><span class="method-args">(cc_file)</span>
           </a>
         </div>
@@ -265,12 +264,12 @@ href="Tabulator.html">Tabulator</a> dataset, which is written to the
         </div>
       </div>
 
-      <div id="method-M000099" class="method-detail">
-        <a name="M000099"></a>
+      <div id="method-M000114" class="method-detail">
+        <a name="M000114"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000099.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000099.html');return false;">
+          <a href="Operator.src/M000114.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000114.html');return false;">
           <span class="method-name">opc_check</span><span class="method-args">(tc_file = false)</span>
           </a>
         </div>
@@ -298,12 +297,12 @@ is not specified), checking for existence, correct syntax, and validity.
         </div>
       </div>
 
-      <div id="method-M000094" class="method-detail">
-        <a name="M000094"></a>
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000094.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000094.html');return false;">
+          <a href="Operator.src/M000109.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000109.html');return false;">
           <span class="method-name">opc_data</span><span class="method-args">(tab = false)</span>
           </a>
         </div>
@@ -332,12 +331,12 @@ persistent data file <b><tt>TABULATOR_DATA_FILE</b></tt>.
         </div>
       </div>
 
-      <div id="method-M000092" class="method-detail">
-        <a name="M000092"></a>
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000092.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000092.html');return false;">
+          <a href="Operator.src/M000107.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000107.html');return false;">
           <span class="method-name">opc_help</span><span class="method-args">(detail = false)</span>
           </a>
         </div>
@@ -362,12 +361,12 @@ information concerning the <a href="Operator.html">Operator</a> commands.
         </div>
       </div>
 
-      <div id="method-M000097" class="method-detail">
-        <a name="M000097"></a>
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000097.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000097.html');return false;">
+          <a href="Operator.src/M000112.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000112.html');return false;">
           <span class="method-name">opc_load</span><span class="method-args">(jd_file, ed_file, proceed = false)</span>
           </a>
         </div>
@@ -406,12 +405,12 @@ rejected otherwise.
         </div>
       </div>
 
-      <div id="method-M000093" class="method-detail">
-        <a name="M000093"></a>
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000093.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000093.html');return false;">
+          <a href="Operator.src/M000108.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000108.html');return false;">
           <span class="method-name">opc_reset</span><span class="method-args">()</span>
           </a>
         </div>
@@ -433,12 +432,12 @@ contents of the <a href="Tabulator.html">Tabulator</a> data file from
         </div>
       </div>
 
-      <div id="method-M000095" class="method-detail">
-        <a name="M000095"></a>
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000095.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000095.html');return false;">
+          <a href="Operator.src/M000110.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000110.html');return false;">
           <span class="method-name">opc_state</span><span class="method-args">(tab = false, detail = false)</span>
           </a>
         </div>
@@ -472,12 +471,12 @@ applicable if Expected Counts were previously defined).
         </div>
       </div>
 
-      <div id="method-M000096" class="method-detail">
-        <a name="M000096"></a>
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000096.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000096.html');return false;">
+          <a href="Operator.src/M000111.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000111.html');return false;">
           <span class="method-name">opc_total</span><span class="method-args">()</span>
           </a>
         </div>
@@ -500,12 +499,12 @@ CSV (Comma-Separated Value) format, that contains the current vote count.
         </div>
       </div>
 
-      <div id="method-M000118" class="method-detail">
-        <a name="M000118"></a>
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000118.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000118.html');return false;">
+          <a href="Operator.src/M000132.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000132.html');return false;">
           <span class="method-name">opx_check_syntax</span><span class="method-args">(key, datum)</span>
           </a>
         </div>
@@ -535,12 +534,12 @@ syntax-checking the <em>datum</em> against the schema identified by the
         </div>
       </div>
 
-      <div id="method-M000104" class="method-detail">
-        <a name="M000104"></a>
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000104.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000104.html');return false;">
+          <a href="Operator.src/M000119.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000119.html');return false;">
           <span class="method-name">opx_empty?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -560,12 +559,12 @@ is EMPTY, as evidenced by the non-existence of the
         </div>
       </div>
 
-      <div id="method-M000100" class="method-detail">
-        <a name="M000100"></a>
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000100.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000100.html');return false;">
+          <a href="Operator.src/M000115.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000115.html');return false;">
           <span class="method-name">opx_err</span><span class="method-args">(message, e = false)</span>
           </a>
         </div>
@@ -597,12 +596,12 @@ exception&#8216;s message to the end of the error message.
         </div>
       </div>
 
-      <div id="method-M000107" class="method-detail">
-        <a name="M000107"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000107.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000107.html');return false;">
+          <a href="Operator.src/M000122.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000122.html');return false;">
           <span class="method-name">opx_file_backup</span><span class="method-args">()</span>
           </a>
         </div>
@@ -623,12 +622,12 @@ second. Generates a Fatal error if any problems occur.
         </div>
       </div>
 
-      <div id="method-M000111" class="method-detail">
-        <a name="M000111"></a>
+      <div id="method-M000125" class="method-detail">
+        <a name="M000125"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000111.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000111.html');return false;">
+          <a href="Operator.src/M000125.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000125.html');return false;">
           <span class="method-name">opx_file_close</span><span class="method-args">(file)</span>
           </a>
         </div>
@@ -652,12 +651,12 @@ while closing the file.
         </div>
       </div>
 
-      <div id="method-M000106" class="method-detail">
-        <a name="M000106"></a>
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000106.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000106.html');return false;">
+          <a href="Operator.src/M000121.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000121.html');return false;">
           <span class="method-name">opx_file_exist?</span><span class="method-args">(file)</span>
           </a>
         </div>
@@ -682,12 +681,12 @@ error if any problems occur.
         </div>
       </div>
 
-      <div id="method-M000110" class="method-detail">
-        <a name="M000110"></a>
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000110.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000110.html');return false;">
+          <a href="Operator.src/M000124.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000124.html');return false;">
           <span class="method-name">opx_file_open_read</span><span class="method-args">(file, fatal = false)</span>
           </a>
         </div>
@@ -717,12 +716,12 @@ a built-in Schema file) if a problem occurs while opening the file.
         </div>
       </div>
 
-      <div id="method-M000112" class="method-detail">
-        <a name="M000112"></a>
+      <div id="method-M000126" class="method-detail">
+        <a name="M000126"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000112.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000112.html');return false;">
+          <a href="Operator.src/M000126.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000126.html');return false;">
           <span class="method-name">opx_file_open_write</span><span class="method-args">(file)</span>
           </a>
         </div>
@@ -746,45 +745,12 @@ Generates a Fatal error if a problem occurs while opening the file.
         </div>
       </div>
 
-      <div id="method-M000108" class="method-detail">
-        <a name="M000108"></a>
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000108.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000108.html');return false;">
-          <span class="method-name">opx_file_prepend</span><span class="method-args">(file)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>file</em>: (<em>String</em>) file name
-
-</li>
-</ul>
-<p>
-Returns: <em>String</em>
-</p>
-<p>
-Temporary means of running operator.rb from the directory above which it
-normally resides, by checking the current directory and optionally
-prepending &quot;<a href="Tabulator.html">Tabulator</a>/&quot; to file
-names if the directory contains a <a href="Tabulator.html">Tabulator</a>
-subdirectory. Generates a Fatal error if any problems occur. FIX
-THIS&#8230;JVC
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000105" class="method-detail">
-        <a name="M000105"></a>
-
-        <div class="method-heading">
-          <a href="Operator.src/M000105.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000105.html');return false;">
+          <a href="Operator.src/M000120.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000120.html');return false;">
           <span class="method-name">opx_file_process</span><span class="method-args">(file, type, key, fatal = false)</span>
           </a>
         </div>
@@ -823,12 +789,12 @@ the <b><tt>TABULATOR_DATA_FILE</b></tt>) if any problems occur.
         </div>
       </div>
 
-      <div id="method-M000109" class="method-detail">
-        <a name="M000109"></a>
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000109.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000109.html');return false;">
+          <a href="Operator.src/M000123.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000123.html');return false;">
           <span class="method-name">opx_file_read</span><span class="method-args">(file, fatal = false)</span>
           </a>
         </div>
@@ -861,12 +827,12 @@ if a problem occurs while reading from the file.
         </div>
       </div>
 
-      <div id="method-M000113" class="method-detail">
-        <a name="M000113"></a>
+      <div id="method-M000127" class="method-detail">
+        <a name="M000127"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000113.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000113.html');return false;">
+          <a href="Operator.src/M000127.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000127.html');return false;">
           <span class="method-name">opx_file_write_spreadsheet</span><span class="method-args">(tab)</span>
           </a>
         </div>
@@ -893,12 +859,12 @@ then returns. Generates a Fatal error if problems occur during the write.
         </div>
       </div>
 
-      <div id="method-M000114" class="method-detail">
-        <a name="M000114"></a>
+      <div id="method-M000128" class="method-detail">
+        <a name="M000128"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000114.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000114.html');return false;">
+          <a href="Operator.src/M000128.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000128.html');return false;">
           <span class="method-name">opx_file_write_tabulator</span><span class="method-args">(tab)</span>
           </a>
         </div>
@@ -924,12 +890,12 @@ occur while writing the file.
         </div>
       </div>
 
-      <div id="method-M000115" class="method-detail">
-        <a name="M000115"></a>
+      <div id="method-M000129" class="method-detail">
+        <a name="M000129"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000115.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000115.html');return false;">
+          <a href="Operator.src/M000129.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000129.html');return false;">
           <span class="method-name">opx_instantiate_tabulator</span><span class="method-args">()</span>
           </a>
         </div>
@@ -952,12 +918,12 @@ inconsistent state.
         </div>
       </div>
 
-      <div id="method-M000116" class="method-detail">
-        <a name="M000116"></a>
+      <div id="method-M000130" class="method-detail">
+        <a name="M000130"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000116.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000116.html');return false;">
+          <a href="Operator.src/M000130.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000130.html');return false;">
           <span class="method-name">opx_new_tabulator_jd_ed</span><span class="method-args">(jd, ed, file)</span>
           </a>
         </div>
@@ -989,12 +955,12 @@ Generates a Fatal error if any problems occur.
         </div>
       </div>
 
-      <div id="method-M000117" class="method-detail">
-        <a name="M000117"></a>
+      <div id="method-M000131" class="method-detail">
+        <a name="M000131"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000117.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000117.html');return false;">
+          <a href="Operator.src/M000131.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000131.html');return false;">
           <span class="method-name">opx_new_tabulator_tc</span><span class="method-args">(tc)</span>
           </a>
         </div>
@@ -1020,12 +986,12 @@ Generates a Fatal error if any problems occur.
         </div>
       </div>
 
-      <div id="method-M000101" class="method-detail">
-        <a name="M000101"></a>
+      <div id="method-M000116" class="method-detail">
+        <a name="M000116"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000101.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000101.html');return false;">
+          <a href="Operator.src/M000116.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000116.html');return false;">
           <span class="method-name">opx_print</span><span class="method-args">(text)</span>
           </a>
         </div>
@@ -1049,12 +1015,12 @@ occur.
         </div>
       </div>
 
-      <div id="method-M000102" class="method-detail">
-        <a name="M000102"></a>
+      <div id="method-M000117" class="method-detail">
+        <a name="M000117"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000102.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000102.html');return false;">
+          <a href="Operator.src/M000117.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000117.html');return false;">
           <span class="method-name">opx_print_tabulator_count</span><span class="method-args">(tab)</span>
           </a>
         </div>
@@ -1079,12 +1045,12 @@ Generates a Fatal error if problems occur.
         </div>
       </div>
 
-      <div id="method-M000103" class="method-detail">
-        <a name="M000103"></a>
+      <div id="method-M000118" class="method-detail">
+        <a name="M000118"></a>
 
         <div class="method-heading">
-          <a href="Operator.src/M000103.html" target="Code" class="method-signature"
-            onclick="popupCode('Operator.src/M000103.html');return false;">
+          <a href="Operator.src/M000118.html" target="Code" class="method-signature"
+            onclick="popupCode('Operator.src/M000118.html');return false;">
           <span class="method-name">opx_warn</span><span class="method-args">(tab)</span>
           </a>
         </div>

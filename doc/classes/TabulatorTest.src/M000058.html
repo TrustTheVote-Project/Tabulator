@@ -5,21 +5,33 @@
 
 <html>
 <head>
-  <title>tabulator_test_warnings (TabulatorTest)</title>
+  <title>tabulator_test_contest_votes (TabulatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 264</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_warnings</span>(<span class="ruby-identifier">received</span>, <span class="ruby-identifier">expected</span>)
-    <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">expected</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">received</span>.<span class="ruby-identifier">length</span>,
-           <span class="ruby-identifier">tabulator_messages_unsame</span>(<span class="ruby-identifier">received</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-value str">&quot;Warning&quot;</span>, <span class="ruby-constant">WARHEAD</span>))
-    <span class="ruby-identifier">received</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">received</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">expected</span>[<span class="ruby-identifier">i</span>],
-             <span class="ruby-node">&quot;Unexpected Warning: #{received[i]}\n&quot;</span> <span class="ruby-operator">+</span>
-             <span class="ruby-node">&quot;          Expected: #{expected[i]}&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 221</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_contest_votes</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">cvotes</span>)
+    <span class="ruby-identifier">cvotes</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">conid</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">cvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;undervote_count&quot;</span>]
+      <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;undervote_count&quot;</span>]
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking overvote count (#{v1}) for contest #{conid}\n&quot;</span>
+      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
+             <span class="ruby-node">&quot;Contest #{conid} undervote error, expected #{v1} but got #{v2}&quot;</span>)
+      <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">cvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;overvote_count&quot;</span>]
+      <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;overvote_count&quot;</span>]
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking undervote count (#{v1}) for contest #{conid}\n&quot;</span>
+      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
+             <span class="ruby-node">&quot;Contest #{conid} overvote error, expected #{v1} but got #{v2}&quot;</span>)
+      <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">cvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;writein_count&quot;</span>]
+      <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;writein_count&quot;</span>]
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking write-in vote count (#{v1}) for contest #{conid}\n&quot;</span>
+      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
+             <span class="ruby-node">&quot;Contest #{conid} writein vote error, expected #{v1} but got #{v2}&quot;</span>)
+      <span class="ruby-identifier">cvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;candidates&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">tabulator_test_candidate_vote</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>)
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">expected</span>.<span class="ruby-identifier">length</span> 
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

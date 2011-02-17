@@ -5,18 +5,18 @@
 
 <html>
 <head>
-  <title>opx_check_syntax (Operator)</title>
+  <title>opx_warn (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 729</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_check_syntax</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">datum</span>)
-    <span class="ruby-identifier">schema_file</span> = <span class="ruby-identifier">opx_file_prepend</span>(<span class="ruby-node">&quot;data/Schemas/#{key}_schema.yml&quot;</span>)
-    <span class="ruby-identifier">schema</span> = <span class="ruby-identifier">opx_file_read</span>(<span class="ruby-identifier">schema_file</span>, <span class="ruby-keyword kw">true</span>)
-    (<span class="ruby-constant">CheckSyntaxYaml</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-keyword kw">true</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 454</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** ERROR ** #{message}\n&quot;</span>)}
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** WARNING ** #{message}\n&quot;</span>)}
+    <span class="ruby-identifier">tab</span>
   <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal failure of CheckSyntaxYaml.new.check_syntax(...)&quot;</span>, <span class="ruby-identifier">e</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal error while fetching Tabulator errors/warnings&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

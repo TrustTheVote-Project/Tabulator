@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 845</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 844</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_candidate_counts</span>(<span class="ruby-identifier">candidate_counts</span>, <span class="ruby-identifier">conid</span>)
     <span class="ruby-identifier">all_canids</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;candidate_count_list&quot;</span>].
       <span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">canc</span><span class="ruby-operator">|</span> <span class="ruby-identifier">canc</span>[<span class="ruby-value str">&quot;candidate_ident&quot;</span>].<span class="ruby-identifier">to_s</span>}

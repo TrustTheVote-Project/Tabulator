@@ -81,7 +81,8 @@
     <div id="description">
       <p>
 The <a href="TabulatorTest.html">TabulatorTest</a> class provides Unit
-Testing for the <a href="Tabulator.html">Tabulator</a> class.
+Testing for the <a href="Tabulator.html">Tabulator</a> class. It does not
+test for errors, but for achievement of state and correct vote counts.
 </p>
 
     </div>
@@ -93,22 +94,21 @@ Testing for the <a href="Tabulator.html">Tabulator</a> class.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000060">tabulator_messages_generate</a>&nbsp;&nbsp;
-      <a href="#M000059">tabulator_messages_unsame</a>&nbsp;&nbsp;
-      <a href="#M000061">tabulator_print_errors_warnings</a>&nbsp;&nbsp;
-      <a href="#M000062">tabulator_test_add_cc</a>&nbsp;&nbsp;
-      <a href="#M000055">tabulator_test_check_syntax</a>&nbsp;&nbsp;
-      <a href="#M000057">tabulator_test_errors</a>&nbsp;&nbsp;
-      <a href="#M000063">tabulator_test_instantiate_tabulator</a>&nbsp;&nbsp;
-      <a href="#M000056">tabulator_test_load_jd_ed</a>&nbsp;&nbsp;
-      <a href="#M000064">tabulator_test_read_file</a>&nbsp;&nbsp;
-      <a href="#M000058">tabulator_test_warnings</a>&nbsp;&nbsp;
-      <a href="#M000065">tabulator_test_write_tabulator_file</a>&nbsp;&nbsp;
+      <a href="#M000055">tabulator_messages_generate</a>&nbsp;&nbsp;
+      <a href="#M000056">tabulator_print_errors_warnings</a>&nbsp;&nbsp;
+      <a href="#M000057">tabulator_test_add_cc</a>&nbsp;&nbsp;
+      <a href="#M000061">tabulator_test_answer_vote</a>&nbsp;&nbsp;
+      <a href="#M000059">tabulator_test_candidate_vote</a>&nbsp;&nbsp;
+      <a href="#M000053">tabulator_test_check_syntax</a>&nbsp;&nbsp;
+      <a href="#M000058">tabulator_test_contest_votes</a>&nbsp;&nbsp;
+      <a href="#M000062">tabulator_test_instantiate_tabulator</a>&nbsp;&nbsp;
+      <a href="#M000054">tabulator_test_load_jd_ed</a>&nbsp;&nbsp;
+      <a href="#M000060">tabulator_test_question_votes</a>&nbsp;&nbsp;
+      <a href="#M000063">tabulator_test_read_file</a>&nbsp;&nbsp;
+      <a href="#M000064">tabulator_test_write_tabulator_file</a>&nbsp;&nbsp;
       <a href="#M000050">test_tabulator</a>&nbsp;&nbsp;
       <a href="#M000052">test_tabulator_bedrock</a>&nbsp;&nbsp;
-      <a href="#M000053">test_tabulator_dc</a>&nbsp;&nbsp;
       <a href="#M000051">test_tabulator_default</a>&nbsp;&nbsp;
-      <a href="#M000054">test_tabulator_va</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -129,81 +129,6 @@ Testing for the <a href="Tabulator.html">Tabulator</a> class.
           <td class="context-item-name">TABULATOR_DATA_FILE</td>
           <td>=</td>
           <td class="context-item-value">&quot;TABULATOR_DATA.yml&quot;</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">JD_ERROR_2</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Unique Precinct UID (PRECINCT_1) in Jurisdiction Definition&quot;,                 &quot;Non-Unique District UID (DISTRICT_4) in Jurisdiction Definition&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">JD_WARN_2</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Duplicate Precinct Declaration (PRECINCT_2) in Jurisdiction Definition&quot;,                 &quot;Duplicate District Declaration (DISTRICT_3) in Jurisdiction Definition&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">ED_ERROR_12</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Existent Jurisdiction UID (JURISDICTION_11) in Election Definition&quot;,      &quot;Non-Unique Contest UID (CONTEST_1) in Election Definition&quot;,      &quot;Non-Existent District UID (DISTRICT_11) in Contest UID (CONTEST_3) in Election Definition&quot;,      &quot;Non-Unique Candidate UID (CANDIDATE_1) in Election Definition&quot;,      &quot;Non-Existent Contest UID (CONTEST_11) for Candidate UID (CANDIDATE_2) in Election Definition&quot;,      &quot;Non-Unique Question UID (QUESTION_1) in Election Definition&quot;,      &quot;Non-Existent District UID (DISTRICT_21) for Question UID (QUESTION_2) in Question&quot;,      &quot;Duplicate Answers (A, B, C, A, C, C) for Question UID (QUESTION_2) in Question&quot;,      &quot;Non-Unique Counter UID (COUNTER_1) in Election Definition&quot;,      &quot;Non-Existent Counter UID (COUNTER_11) in Expected Count&quot;,      &quot;Non-Existent Reporting Group (Bad One) for Counter UID (COUNTER_2) in Expected Count&quot;,      &quot;Non-Existent Precinct UID (PRECINCT_22) for Counter UID (COUNTER_2) in Expected Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">ED_WARN_12_5</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Duplicate Contest Declaration (CONTEST_2) in Election Definition&quot;,      &quot;Duplicate Candidate Declaration (CANDIDATE_3) in Election Definition&quot;,      &quot;Duplicate Question Declaration (QUESTION_1) in Election Definition&quot;,      &quot;Duplicate Counter Declaration (COUNTER_2) in Election Definition&quot;,      &quot;Duplicate Reporting Group (Absentee) in Election Definition&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">ED_WARN_2</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Missing ALL Reporting Groups, None Present in Election Definition&quot;,      &quot;Missing ALL Expected Counts, None Present in Election Definition&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">ED_WARN_4</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Duplicate Expected Count (COUNTER_1, Normal, PRECINCT_1) in Election Definition&quot;,      &quot;Missing Counter UIDs (COUNTER_2) from Expected Counts&quot;,      &quot;Missing Reporting Groups (Absentee) from Expected Counts&quot;,      &quot;Missing Precinct UIDs (PRECINCT_2) from Expected Counts&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC1_ERROR_4</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Existent Counter UID (COUNTER_11) in Counter Count&quot;,      &quot;Non-Existent Precinct UID (PRECINCT_11) for Counter UID (COUNTER_11) in Counter Count&quot;,      &quot;Non-Existent Jurisdiction UID (JURISDICTION_11) for Counter UID (COUNTER_11) in Counter Count&quot;,      &quot;Non-Existent Election UID (ELECTION_11) for Counter UID (COUNTER_11) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC1_WARN_1</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Existent Reporting Group (Unknown) for Counter UID (COUNTER_1) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC1_WARN_1A</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Unexpected Counter UID (COUNTER_2) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC1_WARN_1B</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Unexpected Reporting Group (Absentee) for Counter UID (COUNTER_1) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC1_WARN_1C</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Unexpected Precinct UID (PRECINCT_2) for Counter UID (COUNTER_1) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC2_ERROR_1</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Unique File UID (FILE_1) in Counter Count&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC3_ERROR_13</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Non-Existent Contest UID (CONTEST_33) in Contest Count&quot;,      &quot;Duplicate Contest UID (CONTEST_1) in Contest Count&quot;,      &quot;Non-Existent Candidate UID (CANDIDATE_44) for Contest UID (CONTEST_2) in Contest Count&quot;,      &quot;Improper Candidate UID (CANDIDATE_1) for Contest UID (CONTEST_2) in Contest Count&quot;,      &quot;Duplicate Candidate UID (CANDIDATE_5) for Contest UID (CONTEST_2) in Contest Count&quot;,      &quot;Missing Candidate UIDs (CANDIDATE_4) for Contest UID (CONTEST_2) in Contest Count&quot;,      &quot;Missing Contest UIDs (CONTEST_3) in Contest Counts&quot;,      &quot;Non-Existent Question UID (QUESTION_11) in Question Count&quot;,      &quot;Duplicate Question UID (QUESTION_2) in Question Count&quot;,      &quot;Duplicate Answer (Foo) for Question UID (QUESTION_4) in Question Count&quot;,      &quot;Improper Answer (Bart) for Question UID (QUESTION_4) in Question Count&quot;,      &quot;Missing Answers (Bar, Doo) for Question UID (QUESTION_4) in Question Count&quot;,      &quot;Missing Question UIDs (QUESTION_1) in Question Counts&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC4_ERROR_1</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Duplicate Counter Count (COUNTER_2, Normal, PRECINCT_2) Input to Tabulator&quot;]</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">CC4_WARN_1</td>
-          <td>=</td>
-          <td class="context-item-value">[&quot;Unexpected Counter Count (COUNTER_2, Normal, PRECINCT_2) After Tabulator DONE&quot;]</td>
         </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">ERRHEAD</td>
@@ -240,10 +165,7 @@ Testing for the <a href="Tabulator.html">Tabulator</a> class.
       
         <div class="method-description">
           <p>
-Tests for all possible error and warning messages generated by the <a
-href="Tabulator.html">Tabulator</a> during its data validation process, and
-also tests for achievement of the <a href="Tabulator.html">Tabulator</a>
-DONE state.
+Tests for all successful state achievement with given vote counts.
 </p>
         </div>
       </div>
@@ -255,20 +177,6 @@ DONE state.
           <a href="TabulatorTest.src/M000052.html" target="Code" class="method-signature"
             onclick="popupCode('TabulatorTest.src/M000052.html');return false;">
           <span class="method-name">test_tabulator_bedrock</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000053.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000053.html');return false;">
-          <span class="method-name">test_tabulator_dc</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -290,28 +198,14 @@ DONE state.
         </div>
       </div>
 
-      <div id="method-M000054" class="method-detail">
-        <a name="M000054"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000054.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000054.html');return false;">
-          <span class="method-name">test_tabulator_va</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000060.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000060.html');return false;">
+          <a href="TabulatorTest.src/M000055.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000055.html');return false;">
           <span class="method-name">tabulator_messages_generate</span><span class="method-args">(messages, header, printit = false)</span>
           </a>
         </div>
@@ -344,54 +238,12 @@ followed by a <em>newline</em> character. If <em>printit</em> is
         </div>
       </div>
 
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000059.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000059.html');return false;">
-          <span class="method-name">tabulator_messages_unsame</span><span class="method-args">(received, expected, label, header)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>received</em>: (<em>Array</em>) of received error messages
-
-</li>
-<li><em>expected</em>: (<em>Array</em>) of expected warning messages
-
-</li>
-<li><em>label</em>: (<em>String</em>) either &quot;Errors&quot; or
-&quot;Warnings&quot;
-
-</li>
-<li><em>header</em>: (<em>String</em>) either <b><tt>ERRHEAD</b></tt> or
-<b><tt>WARHEAD</b></tt>
-
-</li>
-</ul>
-<p>
-Returns: <em>String</em>
-</p>
-<p>
-Called only when the sets of <em>received</em> and <em>expected</em>
-messages are not of the same size. Collects into and returns a single
-message <em>String</em> consisting of the <em>expected</em> error/warning
-messages followed by those actually <em>received</em>.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000061" class="method-detail">
-        <a name="M000061"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000061.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000061.html');return false;">
+          <a href="TabulatorTest.src/M000056.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000056.html');return false;">
           <span class="method-name">tabulator_print_errors_warnings</span><span class="method-args">(tab)</span>
           </a>
         </div>
@@ -416,13 +268,13 @@ href="Tabulator.html">Tabulator</a>.
         </div>
       </div>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000062.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000062.html');return false;">
-          <span class="method-name">tabulator_test_add_cc</span><span class="method-args">(trace, dir, cc_file, errors, warnings, done = false)</span>
+          <a href="TabulatorTest.src/M000057.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000057.html');return false;">
+          <span class="method-name">tabulator_test_add_cc</span><span class="method-args">(trace, dir, cc_file, done, cvotes = false, qvotes = false)</span>
           </a>
         </div>
       
@@ -436,12 +288,6 @@ checker
 
 </li>
 <li><em>cc_file</em>: (<em>String</em>) name of file holding Counter Count
-
-</li>
-<li><em>errors</em>: (<em>Array</em>) of expected error messages
-
-</li>
-<li><em>warnings</em>: (<em>Array</em>) of expected warning messages
 
 </li>
 <li><em>done</em>: (<em>Boolean</em>) check for <a
@@ -461,12 +307,88 @@ content-wise.
         </div>
       </div>
 
-      <div id="method-M000055" class="method-detail">
-        <a name="M000055"></a>
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000055.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000055.html');return false;">
+          <a href="TabulatorTest.src/M000061.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000061.html');return false;">
+          <span class="method-name">tabulator_test_answer_vote</span><span class="method-args">(tab, qid, k, v)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
+
+</li>
+<li><em>qid</em>: (<em>String</em>) Question UID
+
+</li>
+<li><em>k</em>: (<em>String</em>) Answer UID
+
+</li>
+<li><em>v</em>: (<em>String</em>) Answer vote count
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Checks the correctness of the vote count of the Answer to the Question.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000059.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000059.html');return false;">
+          <span class="method-name">tabulator_test_candidate_vote</span><span class="method-args">(tab, conid, k, v)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
+
+</li>
+<li><em>conid</em>: (<em>String</em>) Contest UID
+
+</li>
+<li><em>k</em>: (<em>String</em>) Candidate UID
+
+</li>
+<li><em>v</em>: (<em>String</em>) Candidate vote count
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Checks the correctness of the vote count of the candidate for the Contest.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000053.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000053.html');return false;">
           <span class="method-name">tabulator_test_check_syntax</span><span class="method-args">(trace, prefix, dir, file)</span>
           </a>
         </div>
@@ -499,13 +421,13 @@ check of the datum against the schema.
         </div>
       </div>
 
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000057.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000057.html');return false;">
-          <span class="method-name">tabulator_test_errors</span><span class="method-args">(received, expected)</span>
+          <a href="TabulatorTest.src/M000058.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000058.html');return false;">
+          <span class="method-name">tabulator_test_contest_votes</span><span class="method-args">(tab, cvotes)</span>
           </a>
         </div>
       
@@ -514,11 +436,11 @@ check of the datum against the schema.
 Arguments:
 </p>
 <ul>
-<li><em>received</em>: (<em>Array</em>) of received <a
-href="Tabulator.html">Tabulator</a> error messages
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
 
 </li>
-<li><em>expected</em>: (<em>Array</em>) of expected error messages
+<li><em>cvotes</em>: (<em>Array</em>) Expected contest vote counts
 
 </li>
 </ul>
@@ -526,18 +448,17 @@ href="Tabulator.html">Tabulator</a> error messages
 Returns: N/A
 </p>
 <p>
-Tests to ensure that the <em>received</em> error messages exactly match the
-<em>expected</em> error messages.
+Checks the correctness of the vote counts for contests.
 </p>
         </div>
       </div>
 
-      <div id="method-M000063" class="method-detail">
-        <a name="M000063"></a>
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000063.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000063.html');return false;">
+          <a href="TabulatorTest.src/M000062.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000062.html');return false;">
           <span class="method-name">tabulator_test_instantiate_tabulator</span><span class="method-args">(trace)</span>
           </a>
         </div>
@@ -563,13 +484,13 @@ be no errors or warnings.
         </div>
       </div>
 
-      <div id="method-M000056" class="method-detail">
-        <a name="M000056"></a>
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000056.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000056.html');return false;">
-          <span class="method-name">tabulator_test_load_jd_ed</span><span class="method-args">(trace, dir, jd_file, ed_file, errors, warnings)</span>
+          <a href="TabulatorTest.src/M000054.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000054.html');return false;">
+          <span class="method-name">tabulator_test_load_jd_ed</span><span class="method-args">(trace, dir, jd_file, ed_file)</span>
           </a>
         </div>
       
@@ -590,10 +511,38 @@ Definition
 Definition
 
 </li>
-<li><em>errors</em>: (<em>Array</em>) of expected error messages
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Tests the creation of a new <a href="Tabulator.html">Tabulator</a> from a
+Jurisdiction Definition and an Election Definition. No errors oir warnings
+should occur.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000060.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000060.html');return false;">
+          <span class="method-name">tabulator_test_question_votes</span><span class="method-args">(tab, qvotes)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
 
 </li>
-<li><em>warnings</em>: (<em>Array</em>) of expected warning messages
+<li><em>qvotes</em>: (<em>Array</em>) Expected question vote counts
 
 </li>
 </ul>
@@ -601,20 +550,17 @@ Definition
 Returns: N/A
 </p>
 <p>
-Tests the creation of a new <a href="Tabulator.html">Tabulator</a> from a
-Jurisdiction Definition and an Election Definition. The proper number of
-<em>errors</em> and <em>warnings</em> should appear, and they should match
-exactly, content-wise.
+Checks the correctness of the vote counts for questions.
 </p>
         </div>
       </div>
 
-      <div id="method-M000064" class="method-detail">
-        <a name="M000064"></a>
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000064.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000064.html');return false;">
+          <a href="TabulatorTest.src/M000063.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000063.html');return false;">
           <span class="method-name">tabulator_test_read_file</span><span class="method-args">(file, label)</span>
           </a>
         </div>
@@ -638,45 +584,12 @@ ensure the file read operation succeeds.
         </div>
       </div>
 
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000058.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000058.html');return false;">
-          <span class="method-name">tabulator_test_warnings</span><span class="method-args">(received, expected)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>received</em>: (<em>Array</em>) of received <a
-href="Tabulator.html">Tabulator</a> warning messages
-
-</li>
-<li><em>expected</em>: (<em>Array</em>) of expected warning messages
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Tests to ensure that the <em>received</em> warning messages exactly match
-the <em>expected</em> warning messages.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000065.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000065.html');return false;">
+          <a href="TabulatorTest.src/M000064.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000064.html');return false;">
           <span class="method-name">tabulator_test_write_tabulator_file</span><span class="method-args">(tc)</span>
           </a>
         </div>

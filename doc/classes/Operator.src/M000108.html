@@ -5,16 +5,15 @@
 
 <html>
 <head>
-  <title>opx_file_prepend (Operator)</title>
+  <title>opc_reset (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 547</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_file_prepend</span>(<span class="ruby-identifier">file</span>)
-    ((<span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-value str">&quot;Tabulator&quot;</span>)) <span class="ruby-operator">?</span> <span class="ruby-node">&quot;Tabulator/#{file}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">file</span>)
-  <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal failure of File.directory? for directory: Tabulator/&quot;</span>, <span class="ruby-identifier">e</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 211</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_reset</span>()
+    <span class="ruby-identifier">opx_file_backup</span>() <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">opx_empty?</span>()
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Tabulator reset to EMPTY state.\n&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,19 +5,22 @@
 
 <html>
 <head>
-  <title>test_tabulator_va (TabulatorTest)</title>
+  <title>tabulator_test_load_jd_ed (TabulatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 168</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_tabulator_va</span>
-    <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>
-    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/VA&quot;</span>
-    <span class="ruby-identifier">warns</span> = [<span class="ruby-value str">&quot;Missing ALL Reporting Groups, None Present in Election Definition&quot;</span>,
-             <span class="ruby-value str">&quot;Missing ALL Expected Counts, None Present in Election Definition&quot;</span>]
-    <span class="ruby-identifier">tabulator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;VA_EMGR_JD.yml&quot;</span>, <span class="ruby-value str">&quot;VA_EMGR_ED.yml&quot;</span>,
-                              [], <span class="ruby-identifier">warns</span>)
+  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 128</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">jd_file</span>, <span class="ruby-identifier">ed_file</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nGenerating Initial Tabulator Count from Files: #{jd_file} #{ed_file}\n&quot;</span>
+    <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">tabulator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">jd_file</span>)
+    <span class="ruby-identifier">ed</span> = <span class="ruby-identifier">tabulator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;election_definition&quot;</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">ed_file</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-constant">Tabulator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">ed</span>, <span class="ruby-constant">TABULATOR_DATA_FILE</span>)
+    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">tabulator_count</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings?</span>,
+           <span class="ruby-value str">&quot;Should be no errors or warnings.&quot;</span>)
+    <span class="ruby-identifier">tabulator_test_write_tabulator_file</span>(<span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Initial Tabulator Count&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
