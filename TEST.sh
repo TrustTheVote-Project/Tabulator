@@ -24,6 +24,13 @@ test_tab ()
     exitif
 }
 
+test_val ()
+{
+    echo "ruby -I . test/validator_test.rb"
+    ruby -I . test/validator_test.rb
+    exitif
+}
+
 test_op ()
 {
     echo "ruby -I . test/operator_test.rb"
@@ -76,9 +83,10 @@ test_def2 ()
     exitif
 }
 
-test_ruby ()
+test_unit ()
 {
     test_syn
+    test_val
     test_tab
     test_op
     echo -e "!! ALL TABULATOR UNIT TESTS SUCCESSFUL !!\n"
@@ -88,6 +96,7 @@ test_ruby ()
 test_all ()
 {
     test_syn
+    test_val
     test_tab
     test_op
     test_def
@@ -97,7 +106,7 @@ test_all ()
 
 if [ "$#" -eq 0 ]
 then 
-    test_ruby
+    test_unit
     exit 0
 fi
 case $1 in
@@ -107,6 +116,10 @@ all*)
     ;;
 syn*)
     test_syn
+    exit
+    ;;
+val*)
+    test_val
     exit
     ;;
 tab*)
@@ -134,5 +147,5 @@ def*)
     exit
     ;;
 esac
-echo "Valid arguments are: all, syn(tax), tab(ulator), op(erator), def(ault)
+echo "Valid args: all, syn(tax), val(idator), tab(ulator), op(erator), def(ault)"
 exit 1

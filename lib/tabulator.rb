@@ -70,7 +70,6 @@ class Tabulator < TabulatorValidate
   end
 
 # Arguments:
-# * <i>tabulator_count</i>: (<i>Hash</i>) Tabulator Count
 # * <i>counter_count</i>: (<i>Hash</i>) Counter Count
 #
 # Returns: N/A
@@ -94,6 +93,38 @@ class Tabulator < TabulatorValidate
     end
     tc["counter_count_list"].push(counter_count)
     votes_gather(counter_count) unless counter_count['error_list'].length > 0
+  end
+
+# No Arguments
+#
+# Returns: <i>Array</i> of <i>String</i>
+#
+# Prototype implementation for dumping CSV spreadsheet with current voting
+# results, returns an array of the lines of text to write to the spreadsheet
+# file.
+
+  def tabulator_spreadsheet()
+    notfirst = false
+    contest_votes = self.counts_contests.keys.sort.collect do |k|
+      v = self.counts_contests[k]
+      header = (notfirst ? ["","","",""] :
+                notfirst = ["CONTEST", "undervote","overvote","write-in"]) +
+        v["candidate_count_list"].collect { |cc| cc["candidate_ident"] }
+      data = [k, v["undervote_count"],v["overvote_count"],v["writein_count"]] +
+        v["candidate_count_list"].collect { |cc| cc["count"] }
+      header * "," + "\n" + data * ","
+    end
+    notfirst = false
+    question_votes = self.counts_questions.keys.sort.collect do |k|
+      v = self.counts_questions[k]
+      header = (notfirst ? ["","",""] :
+                notfirst = ["QUESTION", "undervote","overvote"]) +
+        v["answer_count_list"].collect { |ac| ac["answer"] }
+      data = [k, v["undervote_count"],v["overvote_count"]] +
+        v["answer_count_list"].collect { |ac| ac["count"] }
+      header * "," + "\n" + data * ","
+    end
+    (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n\n"
   end
 
 # Arguments:
@@ -250,38 +281,6 @@ class Tabulator < TabulatorValidate
       end
     end
     shoudnt("No such Answer (#{answer}) for Question: #{qid}")
-  end
-
-# No Arguments
-#
-# Returns: <i>Array</i> of <i>String</i>
-#
-# Prototype implementation for dumping CSV spreadsheet with current voting
-# results, returns an array of the lines of text to write to the spreadsheet
-# file.
-
-  public
-  def tabulator_spreadsheet()
-    notfirst = false
-    contest_votes = self.counts_contests.collect do |k, v|
-      header = (notfirst ? ["","","",""] :
-                notfirst = ["CONTEST", "undervote","overvote","write-in"]) +
-        v["candidate_count_list"].collect { |cc| cc["candidate_ident"] }
-      data = [k, v["undervote_count"],v["overvote_count"],
-              (self.counts_contests[k]["type"] == "contest" ? v["writein"] : 0 )] +
-        v["candidate_count_list"].collect { |cc| cc["count"] }
-      header * "," + "\n" + data * ","
-    end
-    notfirst = false
-    question_votes = self.counts_questions.collect do |k, v|
-      header = (notfirst ? ["","",""] :
-                notfirst = ["QUESTION", "undervote","overvote"]) +
-        v["answer_count_list"].collect { |ac| ac["answer"] }
-      data = [k, v["undervote_count"],v["overvote_count"]] +
-        v["answer_count_list"].collect { |ac| ac["count"] }
-      header * "," + "\n" + data * ","
-    end
-    (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n\n"
   end
 
 end

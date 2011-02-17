@@ -467,7 +467,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # non-existence of the <tt><b>TABULATOR_DATA_FILE</b></tt> .
 
   def opx_empty?()
-    ! opx_file_exist?(opx_file_prepend(TABULATOR_DATA_FILE))
+    ! opx_file_exist?(TABULATOR_DATA_FILE)
   rescue => e
     opx_err("Fatal error while checking Tabulator for EMPTY state")
   end
@@ -488,12 +488,11 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # <tt><b>TABULATOR_DATA_FILE</b></tt>) if any problems occur.
 
   def opx_file_process(file, type, key, fatal = false)
-    file = opx_file_prepend(file)
     datum = opx_file_read(file, fatal)
     if (!datum.is_a?(Hash))
       opx_err((fatal ? "Fatal" : "File") + " contents error, not a Hash: #{file}")
     elsif (!datum.keys.include?(key))
-      opx_err((fatal ? "Fatal" : "File") + " contents error, Hash Key #{key} missing: #{file}")
+      opx_err((fatal ? "Fatal" : "File") + " contents error, improper Hash, Key #{key} missing: #{file}")
     elsif (opx_check_syntax(key, datum))
       datum
     else
@@ -527,27 +526,10 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # second.  Generates a Fatal error if any problems occur.
 
   def opx_file_backup()
-    File.rename(opx_file_prepend(TABULATOR_DATA_FILE),
-                opx_file_prepend(TABULATOR_BACKUP_FILE))
+    File.rename(TABULATOR_DATA_FILE, TABULATOR_BACKUP_FILE)
   rescue => e
     opx_err("Fatal failure of File.rename from #{TABULATOR_DATA_FILE} " +
             "to #{TABULATOR_BACKUP_FILE}", e)
-  end
-
-# Arguments:
-# * <i>file</i>: (<i>String</i>) file name
-#
-# Returns: <i>String</i>
-#
-# Temporary means of running operator.rb from the directory above which it
-# normally resides, by checking the current directory and optionally
-# prepending "Tabulator/" to file names if the directory contains a Tabulator
-# subdirectory. Generates a Fatal error if any problems occur. FIX THIS...JVC
-
-  def opx_file_prepend(file)
-    ((File.directory?("Tabulator")) ? "Tabulator/#{file}" : file)
-  rescue => e
-    opx_err("Fatal failure of File.directory? for directory: Tabulator/", e)
   end
 
 # Arguments:
@@ -596,7 +578,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   rescue => e
     (fatal ?
      opx_err("Fatal failure of File.open (for read): #{file}", e) :
-     opx_err("File open (for read) error: #{file}", e))
+     opx_err("File open error: #{file}", e))
   end
 
 # Arguments:
@@ -640,7 +622,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_file_write_spreadsheet(tab)
     file = TABULATOR_SPREADSHEET_FILE
     lines = tab.tabulator_spreadsheet()
-    outfile = opx_file_open_write(opx_file_prepend(file))
+    outfile = opx_file_open_write(file)
     outfile.puts lines
     opx_file_close(outfile)
     lines
@@ -657,7 +639,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # Generates a Fatal error if problems occur while writing the file.
 
   def opx_file_write_tabulator(tab)
-    outfile = opx_file_open_write(opx_file_prepend(TABULATOR_DATA_FILE))
+    outfile = opx_file_open_write(TABULATOR_DATA_FILE)
     YAML::dump(tab.tabulator_count, outfile)
     opx_file_close(outfile)
   rescue => e
@@ -727,7 +709,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # a Fatal error if any problems occur.
 
   def opx_check_syntax(key, datum)
-    schema_file = opx_file_prepend("data/Schemas/#{key}_schema.yml")
+    schema_file = "data/Schemas/#{key}_schema.yml"
     schema = opx_file_read(schema_file, true)
     (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
   rescue => e

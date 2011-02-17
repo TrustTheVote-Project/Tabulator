@@ -195,8 +195,8 @@ class TabulatorValidate
 #
 # Returns: N/A
 #
-# Prints a FATAL ERROR message and exits. For internal problems only. Should
-# never be called. 
+# Prints a FATAL ERROR message and raises an Exception. For internal problems
+# only. Should never be called.
 
   private
   def shouldnt(message1, value1 = "")
@@ -204,8 +204,7 @@ class TabulatorValidate
       (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
     print("** FATAL ERROR ** #{message}\n")
     $stdout.flush
-    raise Foo # For debugging so we can see where the error came from
-    exit(1)
+    raise Exception # For debugging so we can see where the error came from
   end
 
 # Arguments:
