@@ -319,7 +319,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
     opx_print("Reading Election Definition: #{ed_file}\n")
     ed = opx_file_process(ed_file, "Election Definition", "election_definition")
     tab = opx_new_tabulator_jd_ed(jd, ed, TABULATOR_DATA_FILE)
-    if (tab.validation_errors?)
+    if (tab.validation_errors.length > 0)
       opx_print("Jurisdiction and Election Definitions: REJECTED\n")
     elsif (proceed)
       opx_print("Jurisdiction and Election Definitions: ACCEPTED\n")
@@ -363,7 +363,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     cc = opx_file_process(cc_file, "Counter Count", "counter_count")
     tab.validate_counter_count(cc)
     tab.update_tabulator_count(cc)
-    if (tab.validation_errors?)
+    if (tab.validation_errors.length > 0)
       opx_print("Counter Count: REJECTED\n")
     else
       opx_print("Counter Count: ACCUMULATED\n")
@@ -395,7 +395,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     tc = opx_file_process(tc_file, "Tabulator Count", "tabulator_count", fatal)
     tab = opx_new_tabulator_tc(tc)
     opx_print("Validating Tabulator Count: OK\n") unless
-      (tab.validation_errors? || tab.validation_warnings?)  
+      (tab.validation_errors.length > 0 || tab.validation_warnings.length > 0)
     opc_state(tab)
   end
 
@@ -661,7 +661,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     tc = opx_file_process(file, "Tabulator Count", "tabulator_count", true)
     tab = opx_new_tabulator_tc(tc)
     opx_err("Fatal failure during Tabulator validation: #{file}") if
-      (tab.validation_errors? || tab.validation_warnings?)
+      (tab.validation_errors.length > 0 || tab.validation_warnings.length > 0)
     tab
   rescue => e
     opx_err("Fatal failure during Tabulator instantiation", e)
@@ -712,7 +712,8 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_check_syntax(key, datum)
     schema_file = "data/Schemas/#{key}_schema.yml"
     schema = opx_file_read(schema_file, true)
-    (CheckSyntaxYaml.new.check_syntax(schema, datum, true).length == 0)
+    errors, messages = CheckSyntaxYaml.new.check_syntax(schema, datum, true)
+    errors.length == 0
   rescue => e
     opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)", e)
   end

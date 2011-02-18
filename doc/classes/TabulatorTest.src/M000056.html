@@ -5,28 +5,27 @@
 
 <html>
 <head>
-  <title>tabulator_test_question_votes (TabulatorTest)</title>
+  <title>tabulator_test_instantiate_tabulator (TabulatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 273</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_question_votes</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">qvotes</span>)
-    <span class="ruby-identifier">qvotes</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">conid</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">qvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;undervote_count&quot;</span>]
-      <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;undervote_count&quot;</span>]
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking overvote count (#{v1}) for question #{conid}\n&quot;</span>
-      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
-             <span class="ruby-node">&quot;Question #{conid} undervote error, expected #{v1} but got #{v2}&quot;</span>)
-      <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">qvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;overvote_count&quot;</span>]
-      <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;overvote_count&quot;</span>]
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking undervote count (#{v1}) for question #{conid}\n&quot;</span>
-      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
-             <span class="ruby-node">&quot;Question #{conid} overvote error, expected #{v1} but got #{v2}&quot;</span>)
-      <span class="ruby-identifier">qvotes</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;answers&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">tabulator_test_answer_vote</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>)
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 324</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_instantiate_tabulator</span>(<span class="ruby-identifier">trace</span>)
+    <span class="ruby-identifier">tc_file</span> = <span class="ruby-constant">TABULATOR_DATA_FILE</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nInstantiating Tabulator from File: #{tc_file}\n&quot;</span>
+    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">tabulator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>, <span class="ruby-value str">&quot;.&quot;</span>, <span class="ruby-identifier">tc_file</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-constant">Tabulator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">false</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">taberrs</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-value">0</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">taberrs</span>,
+           <span class="ruby-node">&quot;Expected NO Validation Errors, Received: #{taberrs.to_s}&quot;</span> <span class="ruby-operator">+</span>
+           <span class="ruby-identifier">tabulator_messages_generate</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>, <span class="ruby-constant">ERRHEAD</span>))
+    <span class="ruby-identifier">tabwarns</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-value">0</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">tabwarns</span>,
+           <span class="ruby-node">&quot;Expected NO Validation Warnings, Received: #{tabwarns.to_s}&quot;</span> <span class="ruby-operator">+</span>
+           <span class="ruby-identifier">tabulator_messages_generate</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>, <span class="ruby-constant">WARHEAD</span>))
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Tabulator Successfully Instantiated from File\n&quot;</span>
+    <span class="ruby-identifier">tab</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -20,7 +20,7 @@
     <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Election Definition: #{ed_file}\n&quot;</span>)
     <span class="ruby-identifier">ed</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">ed_file</span>, <span class="ruby-value str">&quot;Election Definition&quot;</span>, <span class="ruby-value str">&quot;election_definition&quot;</span>)
     <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_jd_ed</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">ed</span>, <span class="ruby-constant">TABULATOR_DATA_FILE</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
       <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: REJECTED\n&quot;</span>)
     <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">proceed</span>)
       <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: ACCEPTED\n&quot;</span>)

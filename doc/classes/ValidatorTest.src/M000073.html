@@ -5,28 +5,17 @@
 
 <html>
 <head>
-  <title>validator_test_add_cc (ValidatorTest)</title>
+  <title>validator_test_read_file (ValidatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 342</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">cc_file</span>, <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">warnings</span>)
-    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">validator_test_instantiate_tabulator</span>(<span class="ruby-identifier">trace</span>)
-    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nTabulator Accumulating New Counter Count from File: #{cc_file}\n&quot;</span>
-    <span class="ruby-identifier">cc</span> = <span class="ruby-identifier">validator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;counter_count&quot;</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">cc_file</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validate_counter_count</span>(<span class="ruby-identifier">cc</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">update_tabulator_count</span>(<span class="ruby-identifier">cc</span>)
-    <span class="ruby-identifier">validator_test_write_tabulator_file</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">tabulator_count</span>)
-    <span class="ruby-identifier">taberrs</span> = <span class="ruby-identifier">validator_test_errors</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>(), <span class="ruby-identifier">errors</span>)
-    <span class="ruby-identifier">tabwarns</span> = <span class="ruby-identifier">validator_test_warnings</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>(), <span class="ruby-identifier">warnings</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>().<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Counter Count ACCUMULATED&quot;</span>
-    <span class="ruby-keyword kw">else</span> 
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Counter Count REJECTED&quot;</span>
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot; with #{taberrs.to_s} ERRORS and #{tabwarns.to_s} WARNINGS\n&quot;</span>
-    <span class="ruby-identifier">tabulator_print_errors_warnings</span>(<span class="ruby-identifier">tab</span>)
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 394</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validator_test_read_file</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">label</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Reading #{label}: #{file}\n&quot;</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">schema</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">infile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">infile</span>) },
+           <span class="ruby-node">&quot;Error Reading from #{label} File: #{file}&quot;</span>)
+    <span class="ruby-identifier">schema</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

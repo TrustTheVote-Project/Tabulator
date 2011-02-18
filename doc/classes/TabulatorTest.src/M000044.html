@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_tabulator (TabulatorTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_tabulator</span>
+    <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>          <span class="ruby-comment cmt"># In case we need to trace, for debugging these tests</span>
+    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/Validation&quot;</span>
+    <span class="ruby-identifier">tabulator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>)
+    <span class="ruby-identifier">tabulator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1.yml&quot;</span>, <span class="ruby-value">2</span>)
+    <span class="ruby-identifier">tabulator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC2.yml&quot;</span>, <span class="ruby-value">1</span>)
+    <span class="ruby-identifier">tabulator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC3.yml&quot;</span>, <span class="ruby-keyword kw">true</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

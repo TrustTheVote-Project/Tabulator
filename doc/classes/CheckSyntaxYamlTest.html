@@ -82,7 +82,13 @@
       <p>
 The <a href="CheckSyntaxYamlTest.html">CheckSyntaxYamlTest</a> class
 provides Unit Testing for the <a
-href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class.
+href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class. It also
+(re)initializes, during <a
+href="CheckSyntaxYamlTest.html#M000129">setup</a>, the set of schemas used
+by the syntax checker, held in the directory data/Schemas. If the contents
+of this directory are emptied, all schemas files are written anew. If any
+schema file is missing from this directory, a new one is written to replace
+it.
 </p>
 
     </div>
@@ -110,6 +116,26 @@ href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class.
     <div id="section">
 
 
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCHEMA_OVERWRITE</td>
+          <td>=</td>
+          <td class="context-item-value">false</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Change this constant to <em>true</em> if you want these tests to regenerate
+the built-in schema files each time the tests are run. When <em>false</em>,
+new schema files are written only if they are missing from data/Schemas/.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
 
 
 
@@ -133,7 +159,7 @@ href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class.
         <div class="method-description">
           <p>
 Define schemas for all known TTV CDF dataset types recognized by the <a
-href="Tabulator.html">Tabulator</a>. Call <a
+href="Tabulator.html">Tabulator</a>. Calls <a
 href="CheckSyntaxYamlTest.html#M000131">schema_setup</a> to validate each
 significant schema and then optionally write the schema to a file for later
 use by the <a href="Tabulator.html">Tabulator</a>. The following schemas
@@ -163,6 +189,15 @@ key
 <li>precinct_info: Precinct information schema
 
 </li>
+<li>audit_header_info: Audit Header information schema
+
+</li>
+<li>audit_header: Audit Header schema
+
+</li>
+<li>jurisdiction_definition_info: Jurisdiction Definition information schema
+
+</li>
 <li>jurisdiction_definition: Jurisdiction Definition schema
 
 </li>
@@ -181,6 +216,12 @@ key
 <li>counter_info: Counter information schema
 
 </li>
+<li>election: Election schema
+
+</li>
+<li>election_definition_info: Election Definition information schema
+
+</li>
 <li>election_definition: Election Definition schema
 
 </li>
@@ -196,9 +237,6 @@ key
 <li>contest_count: Contest Count schema
 
 </li>
-<li>audit_header: Audit Header schema
-
-</li>
 <li>counter_count: Counter Count schema
 
 </li>
@@ -211,6 +249,9 @@ The following schemas are defined but not processed, because they are
 subsumed by a higher-level schemas:
 </p>
 <ul>
+<li>jurisdiction_definition_info: subsumed by Jurisdiction Definition schema
+
+</li>
 <li>election_definition_info: subsumed by Election Definition schema
 
 </li>
@@ -218,10 +259,6 @@ subsumed by a higher-level schemas:
 
 </li>
 </ul>
-<p>
-NOTE from JVC: I don&#8216;t know if it is appropriate to put the schema
-file generation process inside of this testing facility.
-</p>
         </div>
       </div>
 
@@ -244,9 +281,10 @@ of which tests for a different error code, and where all possible error
 codes are covered.
 </p>
 <p>
-Next test the syntax of all significant schemas, by making repeated calls
-to <a href="CheckSyntaxYamlTest.html#M000132">schema_test_syntax</a>, each
-of which uses data stored in files under data/Tests/Syntax to syntax-check
+Next test the syntax of data files representing all of the significant
+schemas, by making repeated calls to <a
+href="CheckSyntaxYamlTest.html#M000132">schema_test_syntax</a>, each of
+which uses data stored in files under data/Tests/Syntax to syntax-check
 against a schema defined during <a
 href="CheckSyntaxYamlTest.html#M000129">setup</a>. Some schemas, especially
 those with optional Hash keys, have multiple test variations.
@@ -262,7 +300,7 @@ those with optional Hash keys, have multiple test variations.
         <div class="method-heading">
           <a href="CheckSyntaxYamlTest.src/M000131.html" target="Code" class="method-signature"
             onclick="popupCode('CheckSyntaxYamlTest.src/M000131.html');return false;">
-          <span class="method-name">schema_setup</span><span class="method-args">(trace, prefix, schema, validate = true, write = false)</span>
+          <span class="method-name">schema_setup</span><span class="method-args">(trace, prefix, schema, validate = true)</span>
           </a>
         </div>
       
@@ -283,10 +321,6 @@ checker
 </li>
 <li><em>validate</em>: (<em>Boolean</em>) indicates when to check the validity
 of the schema (optional, default <em>true</em>)
-
-</li>
-<li><em>write</em>: (<em>Boolean</em>) indicates when to over-write the schema
-file (optional, default <em>false</em>)
 
 </li>
 </ul>

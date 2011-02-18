@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 109</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 108</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">jurisdiction_definition</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">election_definition</span> = <span class="ruby-keyword kw">false</span>,
                  <span class="ruby-identifier">file</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">tabulator_count</span> = <span class="ruby-keyword kw">false</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
@@ -28,10 +28,10 @@
           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> =
             <span class="ruby-identifier">new_tabulator_count</span>(<span class="ruby-identifier">jurisdiction_definition</span>, <span class="ruby-identifier">election_definition</span>, <span class="ruby-identifier">file</span>)
         <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only an Election Definition may be the 2nd arg to Tabulator.new&quot;</span>) 
+          <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Only an Election Definition may be the 2nd arg to Tabulator.new&quot;</span>) 
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only a Jurisdiction Definition may be the 1st arg to Tabulator.new&quot;</span>)
+        <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Only a Jurisdiction Definition may be the 1st arg to Tabulator.new&quot;</span>)
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">tabulator_count</span>)
       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tabulator_count</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span>
@@ -39,10 +39,10 @@
         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> = <span class="ruby-identifier">tabulator_count</span>
         <span class="ruby-identifier">validate_tabulator_count</span>(<span class="ruby-identifier">tabulator_count</span>)
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only a Tabulator Count may be the 4th arg to Tabulator.new&quot;</span>)
+        <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Only a Tabulator Count may be the 4th arg to Tabulator.new&quot;</span>)
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Either a Tabulator Count or a Jurisdiction/Election Definition&quot;</span> <span class="ruby-operator">+</span>
+      <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Either a Tabulator Count or a Jurisdiction/Election Definition&quot;</span> <span class="ruby-operator">+</span>
                <span class="ruby-value str">&quot;must be passed to Tabulator.new&quot;</span>)
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>

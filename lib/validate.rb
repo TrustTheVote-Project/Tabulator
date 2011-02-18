@@ -25,15 +25,14 @@
 # The TabulatorValidate class is used to validate the data sets that are
 # imported into the Tabulator.
 #
-# During the validation of a paired Jurisdiction Definition and Election
-# Definition, it performs these additional operations:
+# During the creation of a Tabulator Count, either initially from Jurisdiction
+# and Election Definitions, or by reinstantiation from file storage, it
+# performs these additional operations:
 # 1. Saves the names of all unique identifiers (UIDs)
-# 3. Constructs zero-initialized Contest Counts for each Contest
-# 4. Constructs zero-initialized Question Counts for each Question
-# 5. Constructs a data structure that holds the Missing Expected Counts
-#
-# During the successful validation of a Counter Count, the final action is to
-# update the Missing Counts data structure.
+# 3. Constructs a data structure holding the Contest Counts for each Contest
+# 4. Constructs a data structure holding the Question Counts for each Question
+# 5. Constructs a data structure holding the Expected Counts
+# 6. Constructs a data structure holding the Accumulated Counts
 
 class TabulatorValidate
 
@@ -53,7 +52,7 @@ class TabulatorValidate
 
 # <i>Hash</i> with <i>Key</i>: from <tt><b>UID_TYPES</b></tt>, <i>Value</i>:
 # <i>Array</i> of  UIDs for that type; holds all the unique identifiers
-# (UIDs), keyed by UID type
+# (UIDs), plus the names of Reporting Groups, keyed by UID type
 
   attr_accessor :uids
 
@@ -67,18 +66,18 @@ class TabulatorValidate
 
   attr_accessor :counts_questions
 
-# <i>Array</i> of accumulated counts, each sub-array of which contains
-# [Counter UID, Reporting Group, Precinct UID]
-
-  attr_accessor :counts_accumulated
-
 # <i>Array</i> of expected counts, each sub-array of which contains
 # [Counter UID, Reporting Group, Precinct UID]
 
   attr_accessor :counts_expected
 
+# <i>Array</i> of accumulated counts, each sub-array of which contains
+# [Counter UID, Reporting Group, Precinct UID]
+
+  attr_accessor :counts_accumulated
+
 # <i>Hash</i> with <i>Key</i>: "tabulator_count", <i>Value</i>: Tabulator
-# Count information; holds the Tabulator Count data set currently in effect.
+# Count information; holds the Tabulator Count dataset currently in effect.
 
   attr_accessor :tabulator_count
 
@@ -123,10 +122,10 @@ class TabulatorValidate
           self.tabulator_count =
             new_tabulator_count(jurisdiction_definition, election_definition, file)
         else
-          shouldnt("Only an Election Definition may be the 2nd arg to Tabulator.new") 
+          val_fatal("Only an Election Definition may be the 2nd arg to Tabulator.new") 
         end
       else
-        shouldnt("Only a Jurisdiction Definition may be the 1st arg to Tabulator.new")
+        val_fatal("Only a Jurisdiction Definition may be the 1st arg to Tabulator.new")
       end
     elsif (tabulator_count)
       if (tabulator_count.is_a?(Hash) &&
@@ -134,10 +133,10 @@ class TabulatorValidate
         self.tabulator_count = tabulator_count
         validate_tabulator_count(tabulator_count)
       else
-        shouldnt("Only a Tabulator Count may be the 4th arg to Tabulator.new")
+        val_fatal("Only a Tabulator Count may be the 4th arg to Tabulator.new")
       end
     else
-      shouldnt("Either a Tabulator Count or a Jurisdiction/Election Definition" +
+      val_fatal("Either a Tabulator Count or a Jurisdiction/Election Definition" +
                "must be passed to Tabulator.new")
     end
   end
@@ -153,16 +152,6 @@ class TabulatorValidate
     self.errors
   end
 
-# No Arguments
-# 
-# Returns: <i>Boolean</i>
-#
-# Returns <i>true</i> iff the <tt><b>errors</b></tt> message stack is non-empty.
-
-  def validation_errors?()
-    self.errors.length > 0
-  end
-
 # Arguments:
 # * <i>reset</i>: (<i>Boolean</i>) indicates whether to reset the <tt><b>warnings</b></tt> stack (optional)
 # 
@@ -175,32 +164,20 @@ class TabulatorValidate
     self.warnings
   end
 
-# No Arguments
-# 
-# Returns: <i>Boolean</i>
-#
-# Returns <i>true</i> iff the <tt><b>warnings</b></tt> message stack is non-empty.
-
-  def validation_warnings?()
-    self.warnings.length > 0
-  end
-
 # Arguments:
 # * <i>message1</i>: (<i>String</i>) message
 # * <i>value1</i>:  (<i>Arbitrary</i>) value for message1 (optional)
 #
 # Returns: N/A
 #
-# Prints a FATAL ERROR message and raises an Exception. For internal problems
+# Raises an Exception with a FATAL ERROR message. For internal problems
 # only. Should never be called.
 
   private
-  def shouldnt(message1, value1 = "")
+  def val_fatal (message1, value1 = "")
     message = "#{message1}" +
       (value1 == "" ? "" : " (#{value1.inspect.gsub(/[\"\[\]]/,"")})")
-    print("** FATAL ERROR ** #{message}\n")
-    $stdout.flush
-    raise Exception # For debugging so we can see where the error came from
+    raise Exception, "** TABULATOR FATAL ERROR ** #{message}\n"
   end
 
 # Arguments:
@@ -216,7 +193,7 @@ class TabulatorValidate
 # <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
 # message onto the <tt><b>errors</b></tt> stack.
 
-  def error (message1, value1 = false, message2 = false, value2 = false,
+  def val_err (message1, value1 = false, message2 = false, value2 = false,
              message3 = false)
     message = "#{message1}" +
       (value1 == false ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
@@ -240,8 +217,8 @@ class TabulatorValidate
 # <i>message1 (value1) message2 (value2) message3</i>, and then pushes the
 # message onto the <tt><b>warnings</b></tt> stack.
 
-  def warning (message1, value1 = false, message2 = false, value2 = false,
-               message3 = false)
+  def val_warn (message1, value1 = false, message2 = false, value2 = false,
+                message3 = false)
     message = "#{message1}" +
       (value1 == false ? "" : " (#{value1.to_s.gsub(/[\"\[\]]/,"")})") +
       (message2 == false ? "" : " #{message2}") +
@@ -262,7 +239,7 @@ class TabulatorValidate
 # processed.)
 
   def uid_exists?(type, uid)
-    shouldnt("Invalid UID type", type) unless UID_TYPES.include?(type)
+    val_fatal("Invalid UID type", type) unless UID_TYPES.include?(type)
     uid = uid.to_s
     self.uids[type].include?(uid)
   end
@@ -276,7 +253,7 @@ class TabulatorValidate
 # exist.
 
   def uids_exist?(type)
-    shouldnt("Invalid UID type", type) unless UID_TYPES.include?(type)
+    val_fatal("Invalid UID type", type) unless UID_TYPES.include?(type)
     return (self.uids.keys.include?(type) && self.uids[type].keys.length > 0)
   end
 
@@ -290,9 +267,9 @@ class TabulatorValidate
 # <i>String</i> before being processed.)
 
   def uid_add(type, uid)
-    shouldnt("Invalid UID type", type) unless UID_TYPES.include?(type)
+    val_fatal("Invalid UID type", type) unless UID_TYPES.include?(type)
     uid = uid.to_s
-    shouldnt("Pre-existing UID", uid) if self.uids[type].include?(uid)
+    val_fatal("Pre-existing UID", uid) if self.uids[type].include?(uid)
     self.uids[type].push(uid)
   end
 
@@ -349,7 +326,7 @@ class TabulatorValidate
 
   def validate_jurisdiction_definition(jurisdiction_definition)
     if (uids_exist?("jurisdiction"))
-      shouldnt("Pre-existing Jurisdiction UIDs",
+      val_fatal("Pre-existing Jurisdiction UIDs",
                self.uids["jurisdiction"].keys.inspect)
     else
       uid_add("jurisdiction", jurisdiction_definition["ident"])
@@ -371,9 +348,9 @@ class TabulatorValidate
     precincts.each do |precinct|
       if (uid_exists?("precinct", pid = precinct["ident"].to_s))
         if (uniq_precincts.include?(precinct))
-          warning("Duplicate Precinct Declaration", pid, "in Jurisdiction Definition")
+          val_warn("Duplicate Precinct Declaration", pid, "in Jurisdiction Definition")
         else
-          error("Non-Unique Precinct UID", pid, "in Jurisdiction Definition")
+          val_err("Non-Unique Precinct UID", pid, "in Jurisdiction Definition")
         end
       else
         uniq_precincts.push(precinct)
@@ -395,9 +372,9 @@ class TabulatorValidate
     districts.each do |district|
       if (uid_exists?("district", did = district["ident"].to_s))
         if (uniq_districts.include?(district))
-          warning("Duplicate District Declaration", did, "in Jurisdiction Definition")
+          val_warn("Duplicate District Declaration", did, "in Jurisdiction Definition")
         else
-          error("Non-Unique District UID", did, "in Jurisdiction Definition")
+          val_err("Non-Unique District UID", did, "in Jurisdiction Definition")
         end
       else 
         uniq_districts.push(district)
@@ -430,12 +407,12 @@ class TabulatorValidate
           validation_errors(true)
           validation_warnings(true)
         else
-          shouldnt("Warnings mismatch in #{name}")
+          val_fatal("Warnings mismatch in #{name}")
         end
       elsif (object['warning_list'] == validation_warnings())
-        shouldnt("Errors mismatch in #{name}")
+        val_fatal("Errors mismatch in #{name}")
       else
-        shouldnt("Errors and Warnings mismatch in #{name}")
+        val_fatal("Errors and Warnings mismatch in #{name}")
       end
     else
       object['error_list']= validation_errors()
@@ -460,7 +437,7 @@ class TabulatorValidate
 
   def validate_election_definition(election_definition, errwarn = false)
     jid = election_definition["jurisdiction_ident"].to_s
-    error("Non-Existent Jurisdiction UID", jid, "in Election Definition") unless 
+    val_err("Non-Existent Jurisdiction UID", jid, "in Election Definition") unless 
       uid_exists?("jurisdiction", jid) 
     validate_election(election_definition["election"])
     validate_contests(election_definition["contest_list"])
@@ -468,12 +445,12 @@ class TabulatorValidate
     validate_questions(election_definition["question_list"])
     validate_counters(election_definition["counter_list"])
     if (0 == election_definition["reporting_group_list"].length)
-      warning("Missing ALL Reporting Groups, None Present in Election Definition")
+      val_warn("Missing ALL Reporting Groups, None Present in Election Definition")
     else
       validate_reporting_groups(election_definition["reporting_group_list"])
     end
     if (0 == election_definition["expected_count_list"].length)
-      warning("Missing ALL Expected Counts, None Present in Election Definition")
+      val_warn("Missing ALL Expected Counts, None Present in Election Definition")
     else
       validate_expected_counts(election_definition["expected_count_list"])
     end
@@ -493,7 +470,7 @@ class TabulatorValidate
 
   def validate_election(election)
     if (uids_exist?("election"))
-      shouldnt("Pre-existing Election UIDs", self.uids["election"].keys.inspect)
+      val_fatal("Pre-existing Election UIDs", self.uids["election"].keys.inspect)
     else
       uid_add("election", election["ident"])
     end
@@ -516,9 +493,9 @@ class TabulatorValidate
     contests.each do |contest|
       if (uid_exists?("contest", conid = contest["ident"].to_s))
         if (uniq_contests.include?(contest))
-          warning("Duplicate Contest Declaration", conid, "in Election Definition")
+          val_warn("Duplicate Contest Declaration", conid, "in Election Definition")
         else
-          error("Non-Unique Contest UID", conid, "in Election Definition")
+          val_err("Non-Unique Contest UID", conid, "in Election Definition")
         end
       else
         uniq_contests.push(contest)
@@ -528,7 +505,7 @@ class TabulatorValidate
     contests.each do |contest|
       conid = contest["ident"].to_s
       did = contest["district_ident"].to_s
-      error("Non-Existent District UID", did, "in Contest UID", conid, "in Election Definition") unless
+      val_err("Non-Existent District UID", did, "in Contest UID", conid, "in Election Definition") unless
         uid_exists?("district", did)
       self.counts_contests[conid] = {"contest_ident"=>conid,
         "overvote_count"=>0,
@@ -556,9 +533,9 @@ class TabulatorValidate
     candidates.each do |candidate|
       if (uid_exists?("candidate", canid = candidate["ident"].to_s))
         if (uniq_candidates.include?(candidate))
-          warning("Duplicate Candidate Declaration", canid, "in Election Definition")
+          val_warn("Duplicate Candidate Declaration", canid, "in Election Definition")
         else
-          error("Non-Unique Candidate UID", canid, "in Election Definition")
+          val_err("Non-Unique Candidate UID", canid, "in Election Definition")
         end
       else
         uniq_candidates.push(candidate)
@@ -572,7 +549,7 @@ class TabulatorValidate
         self.counts_contests[conid]["candidate_count_list"].
           push({"candidate_ident"=>canid, "count"=>0})
       else 
-        error("Non-Existent Contest UID", conid, "for Candidate UID", canid, "in Election Definition")
+        val_err("Non-Existent Contest UID", conid, "for Candidate UID", canid, "in Election Definition")
       end
     end
   end
@@ -596,19 +573,19 @@ class TabulatorValidate
       qid = question["ident"].to_s
       if (uid_exists?("question", qid))
         if (uniq_questions.include?(question))
-          warning("Duplicate Question Declaration", qid, "in Election Definition")
+          val_warn("Duplicate Question Declaration", qid, "in Election Definition")
         else
-          error("Non-Unique Question UID", qid, "in Election Definition")
+          val_err("Non-Unique Question UID", qid, "in Election Definition")
         end
       else
         uniq_questions.push(question)
         uid_add("question", qid)
         did = question["district_ident"].to_s
-        error("Non-Existent District UID", did, "for Question UID", qid, "in Question") unless
+        val_err("Non-Existent District UID", did, "for Question UID", qid, "in Question") unless
           uid_exists?("district", did)
         answers = question["answer_list"].collect {|answer| answer.to_s}
         unless (answers.length == answers.uniq.length)
-          error("Duplicate Answers", answers.inspect, "for Question UID", qid, "in Question")
+          val_err("Duplicate Answers", answers.inspect, "for Question UID", qid, "in Question")
         end
         self.counts_questions[qid] = {"question_ident"=>qid,
           "overvote_count"=>0,
@@ -632,9 +609,9 @@ class TabulatorValidate
     counters.each do |counter|
       if (uid_exists?("counter", counid = counter["ident"].to_s))
         if (uniq_counters.include?(counter))
-          warning("Duplicate Counter Declaration", counid, "in Election Definition")
+          val_warn("Duplicate Counter Declaration", counid, "in Election Definition")
         else
-          error("Non-Unique Counter UID", counid, "in Election Definition")
+          val_err("Non-Unique Counter UID", counid, "in Election Definition")
         end
       else
         uniq_counters.push(counter)
@@ -654,7 +631,7 @@ class TabulatorValidate
   def validate_reporting_groups(reporting_groups)
     reporting_groups.each do |rg|
       if (uid_exists?("reporting group", rg))
-        warning("Duplicate Reporting Group", rg, "in Election Definition")
+        val_warn("Duplicate Reporting Group", rg, "in Election Definition")
       else
         uid_add("reporting group", rg)
       end
@@ -683,30 +660,30 @@ class TabulatorValidate
       exp_cids.push(cid) unless exp_cids.include?(cid)
       rg = ecount["reporting_group"].to_s
       exp_rgs.push(rg) unless exp_rgs.include?(rg)
-      error("Non-Existent Counter UID", cid, "in Expected Count") unless
+      val_err("Non-Existent Counter UID", cid, "in Expected Count") unless
         uid_exists?("counter", cid)
-      error("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count") unless
+      val_err("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count") unless
         uid_exists?("reporting group",rg)
       ecount["precinct_ident_list"].each do |pid|
         pid = pid.to_s
         exp_pids.push(pid) unless exp_pids.include?(pid)
-        error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count") unless
+        val_err("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count") unless
           uid_exists?("precinct", pid)
         if (self.counts_expected.include?([cid, rg, pid]))
-          warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition")
+          val_warn("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition")
         else
           self.counts_expected.push([cid, rg, pid])
         end
       end
     end
     diff_cids = (self.uids["counter"] - exp_cids)
-    warning("Missing Counter UIDs", diff_cids, "from Expected Counts") unless
+    val_warn("Missing Counter UIDs", diff_cids, "from Expected Counts") unless
       (diff_cids.length == 0)
     diff_rgs = (self.uids["reporting group"] - exp_rgs)
-    warning("Missing Reporting Groups", diff_rgs, "from Expected Counts") unless
+    val_warn("Missing Reporting Groups", diff_rgs, "from Expected Counts") unless
       (diff_rgs.length == 0)
     diff_pids = (self.uids["precinct"] - exp_pids)
-    warning("Missing Precinct UIDs", diff_pids, "from Expected Counts") unless
+    val_warn("Missing Precinct UIDs", diff_pids, "from Expected Counts") unless
       (diff_pids.length == 0)
   end
 
@@ -731,42 +708,42 @@ class TabulatorValidate
   def validate_counter_count(counter_count, errwarn = false)
     ccinfo = counter_count["counter_count"]
     cid = ccinfo["counter_ident"].to_s
-    error("Non-Existent Counter UID", cid, "in Counter Count") unless
+    val_err("Non-Existent Counter UID", cid, "in Counter Count") unless
       (uid_exists?("counter", cid))
     rg = ccinfo["reporting_group"].to_s
-    warning("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count") unless
+    val_warn("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Counter Count") unless
       (uid_exists?("reporting group", rg))
     pid = ccinfo["precinct_ident"].to_s
-    error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Counter Count") unless
+    val_err("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Counter Count") unless
       (uid_exists?("precinct", pid))
     jid = ccinfo["jurisdiction_ident"].to_s
-    error("Non-Existent Jurisdiction UID", jid, "for Counter UID", cid, "in Counter Count") unless 
+    val_err("Non-Existent Jurisdiction UID", jid, "for Counter UID", cid, "in Counter Count") unless 
       uid_exists?("jurisdiction", jid) 
     eid = ccinfo["election_ident"].to_s
-    error("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
+    val_err("Non-Existent Election UID", eid, "for Counter UID", cid, "in Counter Count") unless 
       uid_exists?("election", eid)
     fid = ccinfo["audit_header"]["file_ident"]
-    error("Non-Unique File UID", fid, "in Counter Count") if
+    val_err("Non-Unique File UID", fid, "in Counter Count") if
       uid_exists?("file", fid)
     validate_contest_counts(ccinfo["contest_count_list"])
     validate_question_counts(ccinfo["question_count_list"])
-    warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
+    val_warn("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
       (self.tabulator_count['tabulator_count']["state"] == 'DONE')
     if (self.counts_accumulated.include?([cid, rg, pid]) && rg != "")
-      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
-    elsif (!validation_errors?)
+      val_err("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
+    elsif (self.errors.length == 0)
       self.counts_accumulated.push([cid, rg, pid])
       if (self.counts_expected.include?([cid, rg, pid]))
       elsif (self.counts_expected.any? {|ce| ce[0] == cid && ce[1] == rg })
-        warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
+        val_warn("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
       elsif (self.counts_expected.any? {|ce| ce[0] == cid })
-        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count") if 
+        val_warn("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count") if 
           uid_exists?("reporting group", rg)
       else
-        warning("Unexpected Counter UID", cid, "in Counter Count")
+        val_warn("Unexpected Counter UID", cid, "in Counter Count")
       end
     end
-    unless (validation_errors?)
+    if (self.errors.length == 0)
       uid_add("file", fid)
       self.tabulator_count['tabulator_count']["state"] = 'ACCUMULATING' if
         self.tabulator_count['tabulator_count']["state"] == 'INITIAL'
@@ -795,9 +772,9 @@ class TabulatorValidate
     contest_counts.each do |contest_count|
       conid = contest_count["contest_ident"].to_s
       if (! uid_exists?("contest", conid))
-        error("Non-Existent Contest UID", conid, "in Contest Count")
+        val_err("Non-Existent Contest UID", conid, "in Contest Count")
       elsif (conids.include?(conid))
-        error("Duplicate Contest UID", conid, "in Contest Count")
+        val_err("Duplicate Contest UID", conid, "in Contest Count")
       else
         conids.push(conid)
         validate_candidate_counts(contest_count["candidate_count_list"], conid)
@@ -805,7 +782,7 @@ class TabulatorValidate
     end
     if (conids.length != all_conids.length)
       condiff = (all_conids - conids).inspect
-      error("Missing Contest UIDs", condiff, "in Contest Counts")
+      val_err("Missing Contest UIDs", condiff, "in Contest Counts")
     end
   end
 
@@ -828,18 +805,18 @@ class TabulatorValidate
     candidate_counts.each do |cancount|
       canid = cancount["candidate_ident"].to_s
       if (! uid_exists?("candidate", canid))
-        error("Non-Existent Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
+        val_err("Non-Existent Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
       elsif (! all_canids.include?(canid))
-        error("Improper Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
+        val_err("Improper Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
       elsif (canids.include?(canid))
-        error("Duplicate Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
+        val_err("Duplicate Candidate UID", canid, "for Contest UID", conid, "in Contest Count")
       else
         canids.push(canid)
       end
     end
     if (canids.length != all_canids.length)
       candiff = (all_canids - canids).inspect
-      error("Missing Candidate UIDs", candiff, "for Contest UID", conid, "in Contest Count")
+      val_err("Missing Candidate UIDs", candiff, "for Contest UID", conid, "in Contest Count")
     end
   end
 
@@ -862,10 +839,10 @@ class TabulatorValidate
     question_counts.each do |question_count|
       qid = question_count["question_ident"].to_s
       if (! uid_exists?("question", qid))
-        error("Non-Existent Question UID", qid, "in Question Count")
+        val_err("Non-Existent Question UID", qid, "in Question Count")
       else
         if (qids.include?(qid))    
-          error("Duplicate Question UID", qid, "in Question Count")
+          val_err("Duplicate Question UID", qid, "in Question Count")
         else
           qids.push(qid)
         end
@@ -876,23 +853,23 @@ class TabulatorValidate
           answer = anscount["answer"].to_s
           if (all_answers.include?(answer))
             if (answers.include?(answer))
-              error("Duplicate Answer", answer, "for Question UID", qid, "in Question Count")
+              val_err("Duplicate Answer", answer, "for Question UID", qid, "in Question Count")
             else
               answers.push(answer)
             end
           else
-            error("Improper Answer", answer, "for Question UID", qid, "in Question Count")
+            val_err("Improper Answer", answer, "for Question UID", qid, "in Question Count")
           end
         end
         if (answers.length != all_answers.length)
           ansdiff = (all_answers - answers).inspect
-          error("Missing Answers", ansdiff, "for Question UID", qid, "in Question Count")
+          val_err("Missing Answers", ansdiff, "for Question UID", qid, "in Question Count")
         end
       end
     end
     if (qids.length != all_qids.length)
       qdiff = (all_qids - qids).inspect
-      error("Missing Question UIDs", qdiff, "in Question Counts")
+      val_err("Missing Question UIDs", qdiff, "in Question Counts")
     end
   end
 
@@ -924,10 +901,10 @@ class TabulatorValidate
     validate_jurisdiction_definition(tcinfo["jurisdiction_definition"])
     validate_election_definition(tcinfo["election_definition"], errwarn)
     eid = tcinfo["election_ident"].to_s
-    shouldnt("Non-Existent Election UID (#{eid}) in Tabulator Count") unless
+    val_fatal("Non-Existent Election UID (#{eid}) in Tabulator Count") unless
       uid_exists?("election", eid)
     jid = tcinfo["jurisdiction_ident"].to_s
-    shouldnt("Non-Existent Jurisdiction UID (#{jid}) in Tabulator Count") unless
+    val_fatal("Non-Existent Jurisdiction UID (#{jid}) in Tabulator Count") unless
       uid_exists?("jurisdiction", jid)
     validate_contest_counts(tcinfo["contest_count_list"])
     validate_question_counts(tcinfo["question_count_list"])
@@ -939,7 +916,7 @@ class TabulatorValidate
     end
     validate_counter_counts(tcinfo["counter_count_list"], errwarn)
     endstate = tabulator_count["tabulator_count"]["state"]
-    shouldnt("Tabulator end state invalid (#{endstate}) expecting: #{state}") if
+    val_fatal("Tabulator end state invalid (#{endstate}) expecting: #{state}") if
       (endstate != state)
   end
 

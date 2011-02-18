@@ -27,12 +27,22 @@ require "test/unit"
 require "lib/check_syntax_yaml"
 
 # The CheckSyntaxYamlTest class provides Unit Testing for the CheckSyntaxYaml
-# class.
+# class.  It also (re)initializes, during setup, the set of schemas used by
+# the syntax checker, held in the directory data/Schemas.  If the contents of
+# this directory are emptied, all schemas files are written anew.  If any
+# schema file is missing from this directory, a new one is written to replace
+# it.
 
 class CheckSyntaxYamlTest < Test::Unit::TestCase
 
+# Change this constant to <i>true</i> if you want these tests to regenerate
+# the built-in schema files each time the tests are run.  When <i>false</i>,
+# new schema files are written only if they are missing from data/Schemas/.
+
+  SCHEMA_OVERWRITE = false
+
 # Define schemas for all known TTV CDF dataset types recognized by the
-# Tabulator.  Call schema_setup to validate each significant schema and then
+# Tabulator.  Calls schema_setup to validate each significant schema and then
 # optionally write the schema to a file for later use by the Tabulator.  The
 # following schemas are processed:  
 # * unknown_type: for testing (invalid) schemas containing an unknown type
@@ -42,28 +52,30 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # * test_alt: for testing schemas with ALT(ernate) Hash keys
 # * district_info: District information schema
 # * precinct_info: Precinct information schema
+# * audit_header_info: Audit Header information schema
+# * audit_header: Audit Header schema
+# * jurisdiction_definition_info: Jurisdiction Definition information schema
 # * jurisdiction_definition: Jurisdiction Definition schema
 # * expected_count_info: Expected Count information schema
 # * contest_info: Contest information schema
 # * candidate_info: Candidate information schema
 # * question_info: Question information schema
 # * counter_info: Counter information schema
+# * election: Election schema
+# * election_definition_info: Election Definition information schema
 # * election_definition: Election Definition schema
 # * answer_count: Answer Count schema
 # * question_count: Question Count schema
 # * candidate_count: Candidate Count schema
 # * contest_count: Contest Count schema
-# * audit_header: Audit Header schema
 # * counter_count: Counter Count schema
 # * tabulator_count: Tabulator Count schema
 #
 # The following schemas are defined but not processed, because they are
 # subsumed by a higher-level schemas:
+# * jurisdiction_definition_info: subsumed by Jurisdiction Definition schema
 # * election_definition_info: subsumed by Election Definition schema
 # * audit_header_info: subsumed by Audit Header schema
-#
-# NOTE from JVC: I don't know if it is appropriate to put the schema file
-# generation process inside of this testing facility.
 
   def setup
     trace = 300
@@ -87,6 +99,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "|OPT2|"=>{"type"=>"String"},
       "|OPT3|"=>{"hardware"=>"String"},
       "|OPT4|"=>{"provenance"=>["String"]}}
+    schema_audit_header = {"audit_header"=>schema_audit_header_info}
     schema_jurisdiction_definition_info =
       {"ident"=>"Atomic",
       "district_list"=>[schema_district_info],
@@ -151,7 +164,6 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
       "undervote_count"=>"Integer",
       "overvote_count"=>"Integer",
       "answer_count_list"=>[schema_answer_count]}
-    schema_audit_header = {"audit_header"=>schema_audit_header_info}
     schema_counter_count =
       {"counter_count"=>
       {"election_ident"=>"Atomic",
@@ -183,8 +195,7 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     schema_setup(trace, "test_alt", schema_test_alt)
     schema_setup(trace, "district_info", schema_district_info)
     schema_setup(trace, "precinct_info", schema_precinct_info)
-    schema_setup(trace, "jurisdiction_definition",
-                 schema_jurisdiction_definition)
+    schema_setup(trace, "jurisdiction_definition",schema_jurisdiction_definition)
     schema_setup(trace, "expected_count_info", schema_expected_count_info)
     schema_setup(trace, "contest_info", schema_contest_info)
     schema_setup(trace, "candidate_info", schema_candidate_info)
@@ -205,11 +216,11 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # calls to schema_test_syntax_error, each of which tests for a different
 # error code, and where all possible error codes are covered.
 #
-# Next test the syntax of all significant schemas, by making repeated calls to
-# schema_test_syntax, each of which uses data stored in files under
-# data/Tests/Syntax to syntax-check against a schema defined during setup.
-# Some schemas, especially those with optional Hash keys, have multiple test
-# variations.
+# Next test the syntax of data files representing all of the significant
+# schemas, by making repeated calls to schema_test_syntax, each of which uses
+# data stored in files under data/Tests/Syntax to syntax-check against a
+# schema defined during setup.  Some schemas, especially those with optional
+# Hash keys, have multiple test variations.
 
   def test_check_syntax
     trace = 300          # In case we need to trace, for debugging these tests
@@ -258,7 +269,6 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # * <i>prefix</i>:   (<i>String</i>) prefix of the schema file name
 # * <i>schema</i>:   (<i>Arbitrary</i>) schema to be written to a schema file
 # * <i>validate</i>: (<i>Boolean</i>) indicates when to check the validity of the schema (optional, default <i>true</i>)
-# * <i>write</i>:    (<i>Boolean</i>) indicates when to over-write the schema file (optional, default <i>false</i>)
 #
 # Returns: N/A
 #
@@ -272,21 +282,25 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
 # re-generated when the unit tests are run.
 
   private
-  def schema_setup(trace, prefix, schema, validate = true, write = false)
+  def schema_setup(trace, prefix, schema, validate = true)
     if (validate)
-      print "Checking Validity of Schema: #{prefix}\n" 
-      assert(CheckSyntaxYaml.new.schema_is_valid?(schema, trace),
-             "Invalid schema: #{schema.inspect}")
+      print "Checking Validity of Schema: #{prefix}\n"
+      csy = CheckSyntaxYaml.new
+      result = csy.schema_is_valid?(schema, trace)
+      assert(result, "Invalid schema: #{schema.inspect}")
+      print csy.error_messages unless result
     else
-      print "Checking Invalidity of Schema: #{prefix}\n" 
-      assert(!CheckSyntaxYaml.new.schema_is_valid?(schema, trace),
-             "Valid schema (should be invalid): #{schema.inspect}")
+      print "Checking Invalidity of Schema: #{prefix}\n"
+      csy = CheckSyntaxYaml.new
+      result = csy.schema_is_valid?(schema, trace)
+      assert(!result, "Valid schema (should be invalid): #{schema.inspect}")
+      print csy.error_messages unless result
     end
     file = "data/Schemas/" + prefix + "_schema.yml"
     if (! File.exist?(file))
       print "Writing Schema File: #{file}\n"
       File.open(file, "w") { |outfile| YAML::dump(schema, outfile) }
-    elsif (write)
+    elsif (SCHEMA_OVERWRITE)
       print "Overwriting Schema File: #{file}\n"
       File.open(file, "w") { |outfile| YAML::dump(schema, outfile) }
     end
@@ -311,8 +325,9 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     print "Reading Data File: #{file}\n"
     datum = File.open(file) { |infile| YAML::load(infile) }
     csy = CheckSyntaxYaml.new
-    assert(csy.check_syntax(schema, datum, true, trace).length == 0,
-           "Check Syntax of #{prefix} FAILED")
+    errors, messages = csy.check_syntax(schema, datum, true, trace)
+    print messages unless errors.length == 0
+    assert(errors.length == 0, "Check Syntax of #{prefix} FAILED")
     print "Check Syntax of #{prefix}: OK\n\n"
   end
   
@@ -344,11 +359,15 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     datum = File.open(file) { |infile| YAML::load(infile) }
     csy = CheckSyntaxYaml.new
     unless (validate)
-      assert((errors = csy.check_syntax(schema, datum, true, trace)).length > 0,
+      errors, messages = csy.check_syntax(schema, datum, true, trace)
+      print messages unless errors.length == 0
+      assert(errors.length > 0,
              "Check Syntax schema validation check of #{prefix}_schema did not FAIL, but SHOULD")
       assert((errors[0] == -1), "Check Syntax error code not: -1")
     end
-    assert((errors = csy.check_syntax(schema, datum, validate, trace)).length > 0,
+    errors, messages = csy.check_syntax(schema, datum, validate, trace)
+    print messages unless errors.length == 0
+    assert(errors.length > 0,
            "Check Syntax of #{prefix} did not FAIL, but SHOULD")
     assert((err3 == errors[2]),
            "Check Syntax of #{prefix} 3rd error code should be: #{err3}") unless (err3 < 0)

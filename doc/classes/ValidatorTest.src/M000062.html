@@ -5,19 +5,19 @@
 
 <html>
 <head>
-  <title>test_validator_default (ValidatorTest)</title>
+  <title>test_validator_dc (ValidatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 144</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_validator_default</span>
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 160</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_validator_dc</span>
     <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>
-    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/Default&quot;</span>
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC2.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC3.yml&quot;</span>, [], [])
+    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/DC&quot;</span>
+    <span class="ruby-identifier">warns</span> = [<span class="ruby-value str">&quot;Missing ALL Reporting Groups, None Present in Election Definition&quot;</span>,
+             <span class="ruby-value str">&quot;Missing ALL Expected Counts, None Present in Election Definition&quot;</span>]
+    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;DC_EMGR_JD.yml&quot;</span>, <span class="ruby-value str">&quot;DC_EMGR_ED.yml&quot;</span>,
+                              [], <span class="ruby-identifier">warns</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -23,7 +23,7 @@
     <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">tc_file</span>, <span class="ruby-value str">&quot;Tabulator Count&quot;</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>, <span class="ruby-identifier">fatal</span>)
     <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_tc</span>(<span class="ruby-identifier">tc</span>)
     <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Validating Tabulator Count: OK\n&quot;</span>) <span class="ruby-keyword kw">unless</span>
-      (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings?</span>)  
+      (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
     <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>

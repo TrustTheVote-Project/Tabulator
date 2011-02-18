@@ -5,28 +5,17 @@
 
 <html>
 <head>
-  <title>check_syntax_internal (CheckSyntaxYaml)</title>
+  <title>check_syntax_array (CheckSyntaxYaml)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 89</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax_internal</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-identifier">check_syntax_trace</span>(<span class="ruby-value str">&quot;check_syntax&quot;</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>))
-      <span class="ruby-identifier">check_syntax_string</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>))
-      (<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">?</span>
-       ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-operator">||</span>
-        <span class="ruby-identifier">check_syntax_array</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">schema</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)) <span class="ruby-operator">:</span>
-       <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">6</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>))
-    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>))
-      (<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span>
-       <span class="ruby-identifier">check_syntax_hash</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">schema</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">:</span>
-       <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">7</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>))
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 165</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax_array</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-identifier">check_syntax_trace</span>(<span class="ruby-node">&quot;check_syntax_array#{index}&quot;</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
+    ((<span class="ruby-identifier">check_syntax_internal</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>[<span class="ruby-identifier">index</span>], <span class="ruby-identifier">depth</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">||</span>
+      <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">8</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-identifier">index</span>)) <span class="ruby-operator">&amp;&amp;</span>
+     ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">index</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">check_syntax_array</span>(<span class="ruby-identifier">index</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)))
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

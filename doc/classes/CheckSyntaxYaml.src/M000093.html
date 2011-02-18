@@ -5,34 +5,56 @@
 
 <html>
 <head>
-  <title>check_syntax_hash_key (CheckSyntaxYaml)</title>
+  <title>check_syntax_error (CheckSyntaxYaml)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 211</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax_hash_key</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-identifier">check_syntax_trace</span>(<span class="ruby-node">&quot;check_syntax_hash_#{key}&quot;</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    ((<span class="ruby-operator">!</span><span class="ruby-identifier">key</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)) <span class="ruby-operator">?</span>
-     <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">9</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-identifier">key</span>) <span class="ruby-operator">:</span>
-     ((<span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\|ALT.*\|/</span>) <span class="ruby-operator">?</span>
-      ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>])) <span class="ruby-operator">?</span>
-       ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">1</span>])) <span class="ruby-operator">?</span>
-        <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">15</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">:</span>
-        (<span class="ruby-identifier">check_syntax_hash_key</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">||</span>
-         <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">14</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;First&quot;</span>))) <span class="ruby-operator">:</span>
-       ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">1</span>])) <span class="ruby-operator">?</span>
-        (<span class="ruby-identifier">check_syntax_hash_key</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">||</span>
-         <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">14</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;Second&quot;</span>)) <span class="ruby-operator">:</span>
-        <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">13</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>))) <span class="ruby-operator">:</span>
-      ((<span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\|OPT.*\|/</span>) <span class="ruby-operator">?</span>
-       ( <span class="ruby-operator">!</span> <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>]) <span class="ruby-operator">||</span>
-         (<span class="ruby-identifier">check_syntax_hash_key</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">keys</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">||</span>
-          <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">12</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>))) <span class="ruby-operator">:</span>
-       (<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">?</span>
-        (<span class="ruby-identifier">check_syntax_internal</span>(<span class="ruby-identifier">schema</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">datum</span>[<span class="ruby-identifier">key</span>], <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">||</span>
-         <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">11</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-identifier">key</span>)) <span class="ruby-operator">:</span>
-        <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">10</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-identifier">key</span>)))))
+  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 286</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-identifier">errcode</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>, <span class="ruby-identifier">extra</span> = <span class="ruby-value str">''</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">error_codes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">errcode</span>)
+    <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;\n**SYNTAX ERROR \##{errcode}** &quot;</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">errcode</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">-1</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Invalid schema: #{schema.inspect[0 .. trace.abs]}&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Schema type \'#{schema.class}\' not handled&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Schema string \'#{schema}\' not handled&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Datum not a String: #{datum.class}&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Datum not an Integer&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Datum not a Date - Error Deprecated, Should Not Happen!&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">5</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Datum not Atomic&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">6</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Datum not an Array (Sequence)&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">7</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Datum not a Hash (Dictionary)&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">8</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Array element Datum[#{extra}] of incorrect type&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">9</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Schema Hash Key \'#{extra}\' not of String type&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">10</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Hash key \'#{extra}\' not found in Datum&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">11</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Hash value Datum[#{extra}] of incorrect type&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">12</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;OPT(ional) Hash value of incorrect type&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">13</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Failure to match either key in ALT(ernative) Hash&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">14</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;#{extra} ALT(ernative) hash value of incorrect type&quot;</span>)
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">15</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-value str">&quot;Both keys present for ALT(ernative) hash&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;Unknown error code: #{errcode}&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;\n  Schema: #{schema.inspect[0 .. trace.abs]}&quot;</span>)
+    <span class="ruby-identifier">xprint</span>(<span class="ruby-node">&quot;\n   Datum: #{datum.inspect[0 .. trace.abs]}\n&quot;</span>)
+    <span class="ruby-keyword kw">false</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

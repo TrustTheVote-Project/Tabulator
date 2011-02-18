@@ -193,8 +193,9 @@ class ValidatorTest < Test::Unit::TestCase
     file = "#{dir}/#{file}"
     datum = validator_test_read_file(file, "Data")
     csy = CheckSyntaxYaml.new
-    assert(csy.check_syntax(schema, datum, true, trace).length == 0,
-           "Check Syntax of #{file} FAILED")
+    errors, messages = csy.check_syntax(schema, datum, true, trace)
+    print messages unless errors.length == 0
+    assert(errors.length == 0, "Check Syntax of #{file} FAILED")
     print "Check Syntax of #{file}: OK\n"
     datum
   end
@@ -218,12 +219,12 @@ class ValidatorTest < Test::Unit::TestCase
     ed = validator_test_check_syntax(trace, "election_definition", dir, ed_file)
     tab = Tabulator.new(jd, ed, TABULATOR_DATA_FILE)
     tc = tab.tabulator_count
-    if (tab.validation_errors().length == 0)
+    if (tab.validation_errors.length == 0)
       validator_test_write_tabulator_file(tc)
     end
-    taberrs = validator_test_errors(tab.validation_errors(), errors)
-    tabwarns = validator_test_warnings(tab.validation_warnings(), warnings) 
-    if (tab.validation_errors().length == 0)
+    taberrs = validator_test_errors(tab.validation_errors, errors)
+    tabwarns = validator_test_warnings(tab.validation_warnings, warnings) 
+    if (tab.validation_errors.length == 0)
       print "Initial Tabulator Count"
     else
       print "Initial Tabulator Count REJECTED"
@@ -319,11 +320,11 @@ class ValidatorTest < Test::Unit::TestCase
 # Prints all error and warning messages currently held by the Tabulator.
 
   def tabulator_print_errors_warnings(tab)
-    unless (tab.validation_errors().length == 0 &&
-            tab.validation_warnings().length == 0)
+    unless (tab.validation_errors.length == 0 &&
+            tab.validation_warnings.length == 0)
       print "\n" 
-      tabulator_messages_generate(tab.validation_errors(), ERRHEAD, true)
-      tabulator_messages_generate(tab.validation_warnings(), WARHEAD, true)
+      tabulator_messages_generate(tab.validation_errors, ERRHEAD, true)
+      tabulator_messages_generate(tab.validation_warnings, WARHEAD, true)
     end
   end
 
@@ -346,9 +347,9 @@ class ValidatorTest < Test::Unit::TestCase
     tab.validate_counter_count(cc)
     tab.update_tabulator_count(cc)
     validator_test_write_tabulator_file(tab.tabulator_count)
-    taberrs = validator_test_errors(tab.validation_errors(), errors)
-    tabwarns = validator_test_warnings(tab.validation_warnings(), warnings)
-    if (tab.validation_errors().length == 0)
+    taberrs = validator_test_errors(tab.validation_errors, errors)
+    tabwarns = validator_test_warnings(tab.validation_warnings, warnings)
+    if (tab.validation_errors.length == 0)
       print "Counter Count ACCUMULATED"
     else 
       print "Counter Count REJECTED"
@@ -370,14 +371,14 @@ class ValidatorTest < Test::Unit::TestCase
     print "\nInstantiating Tabulator from File: #{tc_file}\n"
     tc = validator_test_check_syntax(trace, "tabulator_count", ".", tc_file)
     tab = Tabulator.new(false, false, false, tc)
-    taberrs = tab.validation_errors().length
+    taberrs = tab.validation_errors.length
     assert(0 == taberrs,
            "Expected NO Validation Errors, Received: #{taberrs.to_s}" +
-           tabulator_messages_generate(tab.validation_errors(), ERRHEAD))
-    tabwarns = tab.validation_warnings().length
+           tabulator_messages_generate(tab.validation_errors, ERRHEAD))
+    tabwarns = tab.validation_warnings.length
     assert(0 == tabwarns,
            "Expected NO Validation Warnings, Received: #{tabwarns.to_s}" +
-           tabulator_messages_generate(tab.validation_warnings(), WARHEAD))
+           tabulator_messages_generate(tab.validation_warnings, WARHEAD))
     print "Tabulator Successfully Instantiated from File\n"
     tab
   end

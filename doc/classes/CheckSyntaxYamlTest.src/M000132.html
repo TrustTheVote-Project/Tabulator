@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 306</span>
+  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 320</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_test_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">postfix</span> = <span class="ruby-value str">''</span>)
     <span class="ruby-identifier">file</span> = <span class="ruby-value str">&quot;data/Schemas/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{prefix}_schema.yml&quot;</span>
     <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Reading Schema File: #{file}\n&quot;</span>
@@ -19,8 +19,9 @@
     <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Reading Data File: #{file}\n&quot;</span>
     <span class="ruby-identifier">datum</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">infile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">infile</span>) }
     <span class="ruby-identifier">csy</span> = <span class="ruby-constant">CheckSyntaxYaml</span>.<span class="ruby-identifier">new</span>
-    <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">csy</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">trace</span>).<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>,
-           <span class="ruby-node">&quot;Check Syntax of #{prefix} FAILED&quot;</span>)
+    <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">messages</span> = <span class="ruby-identifier">csy</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">messages</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>, <span class="ruby-node">&quot;Check Syntax of #{prefix} FAILED&quot;</span>)
     <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Check Syntax of #{prefix}: OK\n\n&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>

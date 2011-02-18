@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 68</span>
+  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 80</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
     <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>
     <span class="ruby-identifier">schema_unknown_type</span> = {<span class="ruby-value str">&quot;unknown_type&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value">100</span>}
@@ -33,6 +33,7 @@
       <span class="ruby-value str">&quot;|OPT2|&quot;</span>=<span class="ruby-operator">&gt;</span>{<span class="ruby-value str">&quot;type&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;String&quot;</span>},
       <span class="ruby-value str">&quot;|OPT3|&quot;</span>=<span class="ruby-operator">&gt;</span>{<span class="ruby-value str">&quot;hardware&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;String&quot;</span>},
       <span class="ruby-value str">&quot;|OPT4|&quot;</span>=<span class="ruby-operator">&gt;</span>{<span class="ruby-value str">&quot;provenance&quot;</span>=<span class="ruby-operator">&gt;</span>[<span class="ruby-value str">&quot;String&quot;</span>]}}
+    <span class="ruby-identifier">schema_audit_header</span> = {<span class="ruby-value str">&quot;audit_header&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">schema_audit_header_info</span>}
     <span class="ruby-identifier">schema_jurisdiction_definition_info</span> =
       {<span class="ruby-value str">&quot;ident&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;Atomic&quot;</span>,
       <span class="ruby-value str">&quot;district_list&quot;</span>=<span class="ruby-operator">&gt;</span>[<span class="ruby-identifier">schema_district_info</span>],
@@ -97,7 +98,6 @@
       <span class="ruby-value str">&quot;undervote_count&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;Integer&quot;</span>,
       <span class="ruby-value str">&quot;overvote_count&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;Integer&quot;</span>,
       <span class="ruby-value str">&quot;answer_count_list&quot;</span>=<span class="ruby-operator">&gt;</span>[<span class="ruby-identifier">schema_answer_count</span>]}
-    <span class="ruby-identifier">schema_audit_header</span> = {<span class="ruby-value str">&quot;audit_header&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">schema_audit_header_info</span>}
     <span class="ruby-identifier">schema_counter_count</span> =
       {<span class="ruby-value str">&quot;counter_count&quot;</span>=<span class="ruby-operator">&gt;</span>
       {<span class="ruby-value str">&quot;election_ident&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;Atomic&quot;</span>,
@@ -129,8 +129,7 @@
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_alt&quot;</span>, <span class="ruby-identifier">schema_test_alt</span>)
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;district_info&quot;</span>, <span class="ruby-identifier">schema_district_info</span>)
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;precinct_info&quot;</span>, <span class="ruby-identifier">schema_precinct_info</span>)
-    <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>,
-                 <span class="ruby-identifier">schema_jurisdiction_definition</span>)
+    <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>,<span class="ruby-identifier">schema_jurisdiction_definition</span>)
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;expected_count_info&quot;</span>, <span class="ruby-identifier">schema_expected_count_info</span>)
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;contest_info&quot;</span>, <span class="ruby-identifier">schema_contest_info</span>)
     <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;candidate_info&quot;</span>, <span class="ruby-identifier">schema_candidate_info</span>)
