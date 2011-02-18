@@ -5,22 +5,15 @@
 
 <html>
 <head>
-  <title>schema_is_valid? (CheckSyntaxYaml)</title>
+  <title>schema_not_valid (CheckSyntaxYaml)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 337</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span> = <span class="ruby-constant">TRACE_DEFAULT</span>)
-    <span class="ruby-identifier">schema_is_valid_trace</span>(<span class="ruby-value str">&quot;schema_is_valid?&quot;</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>)
-    ((<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)) <span class="ruby-operator">?</span>
-     ([<span class="ruby-value str">&quot;Integer&quot;</span>, <span class="ruby-value str">&quot;String&quot;</span>, <span class="ruby-value str">&quot;Atomic&quot;</span>, <span class="ruby-value str">&quot;Any&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">schema</span>) <span class="ruby-operator">||</span>
-      <span class="ruby-identifier">schema_not_valid</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-value str">&quot;Schema string not recognized&quot;</span>, <span class="ruby-identifier">trace</span>)) <span class="ruby-operator">:</span>
-     ((<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)) <span class="ruby-operator">?</span>
-      <span class="ruby-identifier">schema_is_valid_array?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">:</span>
-      ((<span class="ruby-identifier">schema</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)) <span class="ruby-operator">?</span>
-       <span class="ruby-identifier">schema_is_valid_hash?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>) <span class="ruby-operator">:</span>
-       <span class="ruby-identifier">schema_not_valid</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-node">&quot;Schema type #{schema.class} invalid&quot;</span>, <span class="ruby-identifier">trace</span>))))
+  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 429</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_not_valid</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\n** INVALID SCHEMA ** #{message}: #{schema.inspect}\n&quot;</span>
+    <span class="ruby-keyword kw">false</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

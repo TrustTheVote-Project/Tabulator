@@ -42,7 +42,7 @@ require "lib/tabulator"
 # The Operator handles errors by raising its locally-defined OperatorError
 # exception, passing it the error message.  This exception is caught only by
 # op_command, the Operator's single public method and thus its only interface,
-# which prints out the error message and terminates.
+# which displays the error message and terminates.
 
 class Operator
 
@@ -50,7 +50,8 @@ class Operator
   TABULATOR_BACKUP_FILE =      "TABULATOR_BACKUP.yml"
   TABULATOR_SPREADSHEET_FILE = "TABULATOR_SPREADSHEET.csv"
 
-# The OperatorError exception is used by the Operator for error-handling.
+# The OperatorError exception is used internally by the Operator for
+# error-handling.
 
   class OperatorError < Exception
   end
@@ -62,10 +63,10 @@ class Operator
 #
 # Implements the command-line interface for the Tabulator Operator.  Checks
 # all commands for syntactic correctness, and generates Command errors when
-# violations occur. Rescues OperatorError exceptions, and consequently prints
-# out their error messages and any messages from previously caught System
-# exceptions.  Finally, rescues any unhandled exceptions to cause graceful
-# failure in this unlikely event.
+# violations occur. Rescues OperatorError exceptions, by displaying their
+# error messages and any messages from previously caught System exceptions,
+# and then terminating.  Finally, any unhandled exceptions are rescued to
+# permit a graceful failure in this unlikely event.
 
   def op_command(args)
     if (args.length == 0)
@@ -746,24 +747,31 @@ end
         opx_pp(myuids, prefix.length, prefix.length, 78)
       end
     end
-    count = tab.counts_missing["missing"].length
-    total = tab.counts_missing["total"]
+    missing = (tab.counts_expected - tab.counts_accumulated)
+    count = missing.length
+    total = tab.counts_expected.length
+    print "  Expected Counts "
     if (total == 0)
-      print "  Expected Counts (NONE)\n"
+      print "(NONE)\n"
     else
-      print "  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
-      tab.counts_missing["expected"].keys.sort.each do |cid|
-        tab.counts_missing["expected"][cid].keys.sort.each do |rg|
-          pids = tab.counts_missing["expected"][cid][rg].keys
-          print "    #{cid}, #{rg}, #{pids.inspect.gsub(/\"/,"")}\n"
+      print "(#{total}): Counter UID, Reporting Group, Precinct UIDs\n"
+      tab.uids["counter"].sort.each do |cid|
+        if (tab.counts_expected.any? {|ce| ce[0] == cid})
+          rgs = tab.uids["reporting group"].sort.select { |rg|
+            tab.counts_expected.any? {|ce| ce[0] == cid && ce[1] == rg }}
+          rgs.each { |rg|
+            pids = tab.uids["precinct"].sort.select { |pid|
+              tab.counts_expected.any? {|ce| ce == [cid, rg, pid]}}
+            print "    #{cid}, #{rg}, #{pids.uniq.inspect.gsub(/\"/,"")}\n"}
         end
       end
     end
+    print "  Missing Counts "
     if (count == 0)
-      print "  Missing Counts (NONE)\n"
+      print "(NONE)\n"
     else
-      print "  Missing Counts (#{count}): Counter UID, Precinct UID, Reporting Group\n"
-      tab.counts_missing["missing"].each do |cid, rg, pid|
+      print "(#{count}): Counter UID, Precinct UID, Reporting Group\n"
+      missing.each do |cid, rg, pid|
         print "    #{cid}, #{pid}, #{rg}\n"
       end
     end

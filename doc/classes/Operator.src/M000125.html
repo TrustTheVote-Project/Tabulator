@@ -5,16 +5,21 @@
 
 <html>
 <head>
-  <title>opx_file_close (Operator)</title>
+  <title>opx_instantiate_tabulator (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 592</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_file_close</span>(<span class="ruby-identifier">file</span>)
-    <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span>()
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 659</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_instantiate_tabulator</span>()
+    <span class="ruby-identifier">file</span> = <span class="ruby-constant">TABULATOR_DATA_FILE</span>
+    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;Tabulator Count&quot;</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>, <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_tc</span>(<span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-node">&quot;Fatal failure during Tabulator validation: #{file}&quot;</span>) <span class="ruby-keyword kw">if</span>
+      (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings?</span>)
+    <span class="ruby-identifier">tab</span>
   <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-node">&quot;Fatal failure while closing file: #{file.inspect}&quot;</span>, <span class="ruby-identifier">e</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal failure during Tabulator instantiation&quot;</span>, <span class="ruby-identifier">e</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

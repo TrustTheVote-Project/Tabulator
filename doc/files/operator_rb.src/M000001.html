@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 728</span>
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 729</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_dump_tabulator_data</span>(<span class="ruby-identifier">tab</span>)
     <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Tabulator Data Summary\n&quot;</span>
     <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Jurisdiction UID: #{tab.uids['jurisdiction'][0]}\n&quot;</span>
@@ -32,24 +32,31 @@
         <span class="ruby-identifier">opx_pp</span>(<span class="ruby-identifier">myuids</span>, <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>, <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>, <span class="ruby-value">78</span>)
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>].<span class="ruby-identifier">length</span>
-    <span class="ruby-identifier">total</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;total&quot;</span>]
+    <span class="ruby-identifier">missing</span> = (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_expected</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_accumulated</span>)
+    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">missing</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">total</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Expected Counts &quot;</span>
     <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">total</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Expected Counts (NONE)\n&quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;(NONE)\n&quot;</span>
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Expected Counts (#{total}): Counter UID, Reporting Group, Precinct UIDs\n&quot;</span>
-      <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>][<span class="ruby-identifier">cid</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rg</span><span class="ruby-operator">|</span>
-          <span class="ruby-identifier">pids</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;expected&quot;</span>][<span class="ruby-identifier">cid</span>][<span class="ruby-identifier">rg</span>].<span class="ruby-identifier">keys</span>
-          <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{cid}, #{rg}, #{pids.inspect.gsub(/\&quot;/,&quot;&quot;)}\n&quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;(#{total}): Counter UID, Reporting Group, Precinct UIDs\n&quot;</span>
+      <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;counter&quot;</span>].<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ce</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ce</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">cid</span>})
+          <span class="ruby-identifier">rgs</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;reporting group&quot;</span>].<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rg</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ce</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ce</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">cid</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">ce</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">rg</span> }}
+          <span class="ruby-identifier">rgs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rg</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">pids</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;precinct&quot;</span>].<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+              <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ce</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ce</span> <span class="ruby-operator">==</span> [<span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span>]}}
+            <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{cid}, #{rg}, #{pids.uniq.inspect.gsub(/\&quot;/,&quot;&quot;)}\n&quot;</span>}
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Missing Counts &quot;</span>
     <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;  Missing Counts (NONE)\n&quot;</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;(NONE)\n&quot;</span>
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  Missing Counts (#{count}): Counter UID, Precinct UID, Reporting Group\n&quot;</span>
-      <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_missing</span>[<span class="ruby-value str">&quot;missing&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;(#{count}): Counter UID, Precinct UID, Reporting Group\n&quot;</span>
+      <span class="ruby-identifier">missing</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;    #{cid}, #{pid}, #{rg}\n&quot;</span>
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>

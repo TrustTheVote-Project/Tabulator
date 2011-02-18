@@ -5,37 +5,19 @@
 
 <html>
 <head>
-  <title>test_validate (ValidatorTest)</title>
+  <title>test_validator_va (ValidatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 117</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_validate</span>
-    <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>          <span class="ruby-comment cmt"># In case we need to trace, for debugging these tests</span>
-    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/Validation&quot;</span>
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD_ERROR_2.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, <span class="ruby-constant">JD_ERROR_2</span>, <span class="ruby-constant">JD_WARN_2</span>)
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED_ERROR_12.yml&quot;</span>, <span class="ruby-constant">ED_ERROR_12</span>, <span class="ruby-constant">ED_WARN_12_5</span>)
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED_WARN_2.yml&quot;</span>, [], <span class="ruby-constant">ED_WARN_2</span>)
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED_WARN_4.yml&quot;</span>, [], <span class="ruby-constant">ED_WARN_4</span>)
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1_WARN_1A.yml&quot;</span>, [], <span class="ruby-constant">CC1_WARN_1A</span>)
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1_WARN_1B.yml&quot;</span>, [], <span class="ruby-constant">CC1_WARN_1B</span>)
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1_WARN_1C.yml&quot;</span>, [], <span class="ruby-constant">CC1_WARN_1C</span>)
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1_ERROR_4.yml&quot;</span>, <span class="ruby-constant">CC1_ERROR_4</span>, [])
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1_WARN_1.yml&quot;</span>, [], <span class="ruby-constant">CC1_WARN_1</span>)
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC2_ERROR_1.yml&quot;</span>, <span class="ruby-constant">CC2_ERROR_1</span>, [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC2.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC3_ERROR_13.yml&quot;</span>, <span class="ruby-constant">CC3_ERROR_13</span>, [])
-    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;JD.yml&quot;</span>, <span class="ruby-value str">&quot;ED.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC1.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC2.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC3.yml&quot;</span>, [], [])
-    <span class="ruby-identifier">validator_test_add_cc</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;CC4_ERROR_1.yml&quot;</span>, <span class="ruby-constant">CC4_ERROR_1</span>, <span class="ruby-constant">CC4_WARN_1</span>)
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 169</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_validator_va</span>
+    <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>
+    <span class="ruby-identifier">dir</span> = <span class="ruby-value str">&quot;data/Tests/VA&quot;</span>
+    <span class="ruby-identifier">warns</span> = [<span class="ruby-value str">&quot;Missing ALL Reporting Groups, None Present in Election Definition&quot;</span>,
+             <span class="ruby-value str">&quot;Missing ALL Expected Counts, None Present in Election Definition&quot;</span>]
+    <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-value str">&quot;VA_EMGR_JD.yml&quot;</span>, <span class="ruby-value str">&quot;VA_EMGR_ED.yml&quot;</span>,
+                              [], <span class="ruby-identifier">warns</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

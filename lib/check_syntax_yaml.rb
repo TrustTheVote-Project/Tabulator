@@ -38,17 +38,19 @@ class CheckSyntaxYaml
 # Arguments:
 # * <i>schema</i>: (<i>Arbitrary</i>) schema to syntax-check against
 # * <i>datum</i>:  (<i>Arbitrary</i>) datum being checked
+# * <i>validate</i>:  (<i>Boolean</i>) whether to validate the schema (optional)
 # * <i>trace</i>:  (<i>Integer</i>) limits tracing of output (optional, default 300 characters)
 #
 # Returns: <tt><b>errors</b></tt> <i>Array</i> 
 #
 # The function check_syntax is the primary entry point into the
-# CheckSyntaxYaml class.  It first sets the error code stack to empty.  It
-# then checks the validity of the <i>schema</i>, and if invalid, generates a
-# syntax error and returns the error code stack [-1].  Finally, it initializes
-# the data inspection depth to 0, checks the syntax of the <i>datum</i>
-# against the <i>schema</i>, and returns the resulting error code stack, which
-# will be empty if the check succeeds, non-empty if it fails.
+# CheckSyntaxYaml class.  It first sets the error code stack to empty.  If
+# <i>validate</i> is <i>true</i> it checks the validity of the <i>schema</i>,
+# and if invalid, generates a syntax error and returns the error code stack
+# [-1].  Finally, it initializes the data inspection depth to 0, checks the
+# syntax of the <i>datum</i> against the <i>schema</i>, and returns the
+# resulting error code stack, which will be empty if the check succeeds,
+# non-empty if it fails.
 #
 # The optional <i>trace</i> value limits tracing of output, and is consumed by
 # the functions check_syntax_trace, check_syntax_error, and

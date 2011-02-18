@@ -5,21 +5,17 @@
 
 <html>
 <head>
-  <title>tabulator_test_answer_vote (TabulatorTest)</title>
+  <title>tabulator_test_write_tabulator_file (TabulatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 301</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_answer_vote</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>][<span class="ruby-value str">&quot;answer_count_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ac</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ac</span>[<span class="ruby-value str">&quot;answer&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">k</span>)
-        <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">ac</span>[<span class="ruby-value str">&quot;count&quot;</span>]
-        <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking #{k} vote count (#{v}) for question #{qid}\n&quot;</span>
-        <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">v</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v2</span>,
-               <span class="ruby-node">&quot;Question #{qid} Answer #{k} vote error, expected #{v} but got #{v2}&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File test/tabulator_test.rb, line 361</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_test_write_tabulator_file</span>(<span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">file</span> = <span class="ruby-constant">TABULATOR_DATA_FILE</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Writing Tabulator Count: #{file}\n&quot;</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">outfile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">tc</span>, <span class="ruby-identifier">outfile</span>) },
+           <span class="ruby-node">&quot;Error Writing to File: #{file}&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

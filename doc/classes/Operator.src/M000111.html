@@ -5,22 +5,14 @@
 
 <html>
 <head>
-  <title>opc_total (Operator)</title>
+  <title>opx_err (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 284</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_total</span>()
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;total\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
-    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
-    <span class="ruby-keyword kw">if</span> ([<span class="ruby-value str">&quot;ACCUMULATING&quot;</span>, <span class="ruby-value str">&quot;DONE&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-keyword kw">true</span>)))
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nWriting Tabulator Spreadsheet: &quot;</span> <span class="ruby-operator">+</span>
-                <span class="ruby-node">&quot;#{TABULATOR_SPREADSHEET_FILE}\n&quot;</span>)
-      <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">opx_file_write_spreadsheet</span>(<span class="ruby-identifier">tab</span>)
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nSpreadsheet Data (CSV Format):\n\n&quot;</span>)
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-identifier">lines</span>)
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 413</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_err</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">e</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">OperatorError</span>.<span class="ruby-identifier">new</span>((<span class="ruby-identifier">e</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{message}\n#{e.message}&quot;</span>))
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -43,56 +43,33 @@ class Tabulator < TabulatorValidate
 # Returns an <i>Array</i> of 4 items:
 # * a string holding the current state of the Tabulator,
 # * an <i>Array</i> of the still-missing Expected Counts,
-# * an <i>Array</i> of the Precincts whose counts are finished, and
-# * an <i>Integer</i> represeting the original number of Expected Counts.
+# * an <i>Array</i> of the Precincts whose counts are expected and finished, and
+# * an <i>Integer</i> represeting the total number of Expected Counts.
 # Of the four possible Tabulator states, the Tabulator is only capable of
 # reporting on the last three, because it is never in the EMPTY state
 # while it is running.
 
   def tabulator_state()
     state = self.tabulator_count["tabulator_count"]["state"]
-    missed = self.counts_missing["missing"].length.to_s
-    total = self.counts_missing["total"].to_s
-    count = (total == 1 ? "1 Expected Count" : "#{total.to_s} Expected Counts")
+    expect = self.counts_expected.length
+    count = (expect == 1 ? "1 Expected Count" : "#{expect.to_s} Expected Counts")
     case state
     when "INITIAL"
-      ["INITIAL (Waiting for 1st of #{count})", [], [], 0]
+      ["INITIAL (Waiting for #{count})", [], [], 0]
     when "DONE"
-      ["DONE (All #{total.to_s} Expected Counts Accumulated)", [], [], 0]
+      ["DONE (All #{expect.to_s} Expected Counts Accumulated)", [], [], 0]
     when "ACCUMULATING"
-      ["ACCUMULATING (#{missed} Missing from #{count})",
-       self.counts_missing["missing"],
-       self.counts_missing["finished"],
-       self.counts_missing["expected"].keys.length]
+      missing = (self.counts_expected - self.counts_accumulated)
+      finished = self.uids["precinct"].select { |pid|
+        self.counts_expected.any? {|cid0, rg0, pid0| (pid == pid0) } &&
+        missing.all? {|cid0, rg0, pid0| (pid != pid0) } }
+      ["ACCUMULATING (#{missing.length.to_s} Missing from #{count})",
+       missing,
+       finished,
+       expect ]
     else
       shouldnt("Invalid Tabulator State: #{state.to_s}")
     end
-  end
-
-# Arguments:
-# * <i>counter_count</i>: (<i>Hash</i>) Counter Count
-#
-# Returns: N/A
-#
-# Requires that the Counter Count had previously undergone validation, but not
-# that it had passed.  Adjusts the Tabulator Count auditing information for
-# the new Counter Count file, adds the Counter Count to the list of Counter
-# Counts held by the Tabulator, and then checks the Counter Count to see if it
-# had passed the validation tests, as indicated by the absence of errors in
-# its error_list component.  If it passed, its votes are gathered and counted
-# and added to the current Tabulator dataset.
-
-  def update_tabulator_count(counter_count)
-    fid = counter_count["counter_count"]["audit_header"]["file_ident"].to_s
-    tc = self.tabulator_count["tabulator_count"]
-    at = tc["audit_header"]
-    if (at.keys.include?("provenance"))
-      at["provenance"].push(fid)
-    else
-      at["provenance"] = [fid]
-    end
-    tc["counter_count_list"].push(counter_count)
-    votes_gather(counter_count) unless counter_count['error_list'].length > 0
   end
 
 # No Arguments
@@ -125,6 +102,38 @@ class Tabulator < TabulatorValidate
       header * "," + "\n" + data * ","
     end
     (contest_votes * "\n") + "\n\n" + (question_votes * "\n") + "\n\n"
+  end
+
+# Arguments:
+# * <i>counter_count</i>: (<i>Hash</i>) Counter Count
+#
+# Returns: N/A
+#
+# Requires that the Counter Count had previously undergone validation, but not
+# that it had passed.  Adjusts the Tabulator Count auditing information for
+# the new Counter Count file, adds the Counter Count to the list of Counter
+# Counts held by the Tabulator, and then checks the Counter Count to see if it
+# had passed the validation tests, as indicated by the absence of errors in
+# its error_list component.  If it passed, its votes are gathered and counted
+# and added to the current Tabulator dataset.
+
+  def update_tabulator_count(counter_count)
+    ccinfo = counter_count["counter_count"]
+    cid = ccinfo["counter_ident"].to_s
+    rg = ccinfo["reporting_group"].to_s
+    pid = ccinfo["precinct_ident"].to_s
+    fid = ccinfo["audit_header"]["file_ident"].to_s
+    tc = self.tabulator_count["tabulator_count"]
+    at = tc["audit_header"]
+    if (at.keys.include?("provenance"))
+      at["provenance"].push(fid)
+    else
+      at["provenance"] = [fid]
+    end
+    tc["counter_count_list"].push(counter_count)
+    if (counter_count['error_list'].length == 0)
+      votes_gather(counter_count)
+    end
   end
 
 # Arguments:

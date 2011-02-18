@@ -5,22 +5,27 @@
 
 <html>
 <head>
-  <title>opc_data (Operator)</title>
+  <title>opc_add (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 226</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_data</span>(<span class="ruby-identifier">tab</span> = <span class="ruby-keyword kw">false</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">false</span>)
-      <span class="ruby-identifier">opx_print_tabulator_count</span>(<span class="ruby-identifier">tab</span>)
-    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">opx_empty?</span>())
-      <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;data\&quot; ignored, Tabulator state: EMPTY&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 359</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_add</span>(<span class="ruby-identifier">cc_file</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;add\&quot; ignored, Tabulator State: EMPTY\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Counter Count: #{cc_file}\n&quot;</span>)
+    <span class="ruby-identifier">cc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">cc_file</span>, <span class="ruby-value str">&quot;Counter Count&quot;</span>, <span class="ruby-value str">&quot;counter_count&quot;</span>)
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validate_counter_count</span>(<span class="ruby-identifier">cc</span>)
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">update_tabulator_count</span>(<span class="ruby-identifier">cc</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Counter Count: REJECTED\n&quot;</span>)
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
-      <span class="ruby-identifier">opx_print_tabulator_count</span>(<span class="ruby-identifier">tab</span>)
-      <span class="ruby-identifier">opx_dump_tabulator_data</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Counter Count: ACCUMULATED\n&quot;</span>)
     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opx_file_write_tabulator</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

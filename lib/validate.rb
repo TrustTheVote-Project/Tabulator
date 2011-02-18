@@ -67,19 +67,15 @@ class TabulatorValidate
 
   attr_accessor :counts_questions
 
-# <i>Hash</i> with <i>Keys</i>: "total" (<i>Integer</i> number of individually
-# expected counts); "precincts" <i>Array</i> of expected precinct UIDs;
-# "finished" <i>Array</i> of finished precinct UIDs; "missing" <i>Array</i> of
-# missing counts, each sub-array of which contains [Counter UID, Reporting
-# Group, Precinct UID]; "accumulated" <i>Array</i> of
-# accumulated counts, each sub-array of which contains [Counter UID, Reporting
-# Group, Precinct UID]; and "expected" (expected counts, <i>Hash</i> with
-# <i>Key</i>: Counter UID, <i>Value</i>: <i>Hash</i> with <i>Key</i>:
-# Reporting Group, <i>Value</i>: <i>Hash</i> with <i>Key</i>: Precinct UID,
-# <i>Value</i>: <i>Boolean</i>, <i>true</i> iff this particular count has been
-# processed)
+# <i>Array</i> of accumulated counts, each sub-array of which contains
+# [Counter UID, Reporting Group, Precinct UID]
 
-  attr_accessor :counts_missing
+  attr_accessor :counts_accumulated
+
+# <i>Array</i> of expected counts, each sub-array of which contains
+# [Counter UID, Reporting Group, Precinct UID]
+
+  attr_accessor :counts_expected
 
 # <i>Hash</i> with <i>Key</i>: "tabulator_count", <i>Value</i>: Tabulator
 # Count information; holds the Tabulator Count data set currently in effect.
@@ -115,8 +111,8 @@ class TabulatorValidate
     self.uids = Hash.new { |h,k| h[k] = [] }
     self.counts_contests = Hash.new { |h,k| h[k] = {} }
     self.counts_questions = Hash.new { |h,k| h[k] = {} }
-    self.counts_missing = {"total"=>0, "precincts"=>[], "finished"=>[], "missing"=>[],
-      "accumulated"=>[], "expected"=>Hash.new { |h,k| h[k] = {} }}
+    self.counts_accumulated = []
+    self.counts_expected = []
     self.errors = []
     self.warnings = []
     if (jurisdiction_definition)
@@ -677,8 +673,6 @@ class TabulatorValidate
 #
 # Warnings are generated unless all Counters, Reporting Groups, and Precincts
 # are mentioned in the Expected Counts.
-#
-# This method also initializes the <tt><b>counts_missing</b></tt> attribute.
 
   def validate_expected_counts(expected_counts)
     exp_cids = []
@@ -686,26 +680,25 @@ class TabulatorValidate
     exp_pids = []
     expected_counts.each do |ecount|
       cid = ecount["counter_ident"].to_s
+      exp_cids.push(cid) unless exp_cids.include?(cid)
       rg = ecount["reporting_group"].to_s
+      exp_rgs.push(rg) unless exp_rgs.include?(rg)
       error("Non-Existent Counter UID", cid, "in Expected Count") unless
         uid_exists?("counter", cid)
       error("Non-Existent Reporting Group", rg, "for Counter UID", cid, "in Expected Count") unless
         uid_exists?("reporting group",rg)
       ecount["precinct_ident_list"].each do |pid|
         pid = pid.to_s
+        exp_pids.push(pid) unless exp_pids.include?(pid)
         error("Non-Existent Precinct UID", pid, "for Counter UID", cid, "in Expected Count") unless
           uid_exists?("precinct", pid)
-      end
-      exp_cids.push(cid) unless exp_cids.include?(cid)
-      exp_rgs.push(rg) unless exp_rgs.include?(rg)
-      ecount["precinct_ident_list"].each do |pid|
-        pid = pid.to_s
-        exp_pids.push(pid) unless exp_pids.include?(pid)
-        initialize_expected_counts(cid, rg, pid)
+        if (self.counts_expected.include?([cid, rg, pid]))
+          warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition")
+        else
+          self.counts_expected.push([cid, rg, pid])
+        end
       end
     end
-    self.counts_missing["precincts"] = exp_pids
-    self.counts_missing["finished"] = []
     diff_cids = (self.uids["counter"] - exp_cids)
     warning("Missing Counter UIDs", diff_cids, "from Expected Counts") unless
       (diff_cids.length == 0)
@@ -716,37 +709,6 @@ class TabulatorValidate
     warning("Missing Precinct UIDs", diff_pids, "from Expected Counts") unless
       (diff_pids.length == 0)
   end
-
-# Arguments:
-# * <i>cid</i>: (<i>String</i>) Counter UID
-# * <i>rg</i>:  (<i>String</i>) Reporting Group name
-# * <i>pid</i>: (<i>String</i>) Precinct UID
-#
-# Returns: N/A
-#
-# Initializes the "expected" part of the <tt><b>counts_missing</b></tt> attribute,
-# by setting <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> to
-# <i>false</i>.  It is set to <i>true</i> when the appropriate count is
-# accumulated by the Tabulator.
-
-  def initialize_expected_counts (cid, rg, pid)
-    if (self.counts_missing["expected"][cid].is_a?(Hash))
-      if (self.counts_missing["expected"][cid][rg].is_a?(Hash))
-        warning("Duplicate Expected Count", "#{cid}, #{rg}, #{pid}", "in Election Definition") if
-          self.counts_missing["expected"][cid][rg].keys.include?(pid)
-        self.counts_missing["expected"][cid][rg][pid] = false
-      else
-        self.counts_missing["expected"][cid][rg] = {pid=>false}
-      end
-    else
-      self.counts_missing["expected"][cid] = {rg=>{pid=>false}}
-    end
-    unless (self.counts_missing["missing"].include?([cid, rg, pid]))
-      self.counts_missing["total"] += 1
-      self.counts_missing["missing"].push([cid, rg, pid])
-    end
-  end    
-
 
 # Arguments:
 # * <i>counter_count</i>: (<i>Hash</i>) Counter Count object
@@ -763,11 +725,7 @@ class TabulatorValidate
 # 6. the Contest Counts are valid, and
 # 7. the Question Counts are valid.
 #
-# A Warning is generated if the Reporting Group is not recognized.
-#
-# If the Counter Count is valid, the final act of this method is to update the
-# <tt><b>counts_missing</b></tt> attribute to reflect the presence of this new
-# count.
+# A Warning is generated if the Reporting Group is not recognized. MORE...JVC
 
   public
   def validate_counter_count(counter_count, errwarn = false)
@@ -792,8 +750,30 @@ class TabulatorValidate
       uid_exists?("file", fid)
     validate_contest_counts(ccinfo["contest_count_list"])
     validate_question_counts(ccinfo["question_count_list"])
-    update_counts_missing(cid, rg, pid) unless validation_errors?
-    uid_add("file", fid) unless validation_errors?
+    warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
+      (self.tabulator_count['tabulator_count']["state"] == 'DONE')
+    if (self.counts_accumulated.include?([cid, rg, pid]) && rg != "")
+      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
+    elsif (!validation_errors?)
+      self.counts_accumulated.push([cid, rg, pid])
+      if (self.counts_expected.include?([cid, rg, pid]))
+      elsif (self.counts_expected.any? {|ce| ce[0] == cid && ce[1] == rg })
+        warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
+      elsif (self.counts_expected.any? {|ce| ce[0] == cid })
+        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count") if 
+          uid_exists?("reporting group", rg)
+      else
+        warning("Unexpected Counter UID", cid, "in Counter Count")
+      end
+    end
+    unless (validation_errors?)
+      uid_add("file", fid)
+      self.tabulator_count['tabulator_count']["state"] = 'ACCUMULATING' if
+        self.tabulator_count['tabulator_count']["state"] == 'INITIAL'
+      self.tabulator_count['tabulator_count']["state"] = 'DONE' if
+        ((self.counts_expected.length > 0) &&
+         (0 == (self.counts_expected - self.counts_accumulated).length))
+    end
     validate_errors_warnings(counter_count, "Counter Count", errwarn)
   end
 
@@ -864,7 +844,7 @@ class TabulatorValidate
   end
 
 # Arguments:
-# * <i>counts_questions</i>: (<i>Array</i>) of Question Count objects
+# * <i>question_counts</i>: (<i>Array</i>) of Question Count objects
 #
 # Returns: N/A
 #
@@ -917,83 +897,6 @@ class TabulatorValidate
   end
 
 # Arguments:
-# * <i>cid</i>: (<i>String</i>) Counter UID
-# * <i>rg</i>:  (<i>String</i>) Reporting Group name
-# * <i>pid</i>: (<i>String</i>) Precinct UID
-#
-# Returns: N/A
-#
-# First, the Tabulator state is set to ACCUMULATING if it is currently
-# INITIAL. The <tt><b>counts_missing</b></tt> attribute is updated using the
-# information from the (previously validated) Counter Count, provided the
-# count was expected. The
-# <tt><b>counts_missing['expected'][cid][rg][pid]</b></tt> attribute is set to
-# <i>false</i> and the corresponding sub-array ([cid, rg, pid]) in
-# <tt><b>counts_missing['missing']</b></tt> is deleted.  If expected counts
-# were defined and this was the last missing count, then the Tabulator state
-# is set to DONE.
-
-  def update_counts_missing(cid, rg, pid)
-    self.tabulator_count['tabulator_count']['state'] = 'ACCUMULATING' if
-      self.tabulator_count['tabulator_count']['state'] == 'INITIAL'
-    warning("Unexpected Counter Count", "#{cid}, #{rg}, #{pid}", "After Tabulator DONE") if
-      (self.tabulator_count['tabulator_count']['state'] == 'DONE')
-    if (self.counts_missing["accumulated"].include?([cid, rg, pid]) &&
-        rg != "")
-      error("Duplicate Counter Count", "#{cid}, #{rg}, #{pid}", "Input to Tabulator")
-    else
-      self.counts_missing["accumulated"].push([cid, rg, pid])
-      if (really_expected?(cid, rg, pid))
-        if (self.counts_missing["expected"][cid][rg][pid] == false)
-          self.counts_missing["accumulated"].push([cid, rg, pid])
-          self.counts_missing["expected"][cid][rg][pid] = true
-          self.counts_missing["missing"].delete_if {|cid0, rg0, pid0|
-            ((cid == cid0) && (rg == rg0) && (pid == pid0)) }
-          self.counts_missing["finished"] =
-            self.counts_missing["precincts"].select { |pid|
-            self.counts_missing["missing"].all? {|cid0, rg0, pid0| (pid != pid0)}}
-          self.tabulator_count['tabulator_count']['state'] = 'DONE' if
-            ((self.counts_missing["expected"].keys.length > 0) &&
-             (self.counts_missing["missing"].length == 0))
-        end
-      end
-    end
-  end
-
-# Arguments:
-# * <i>cid</i>: (<i>String</i>) Counter UID
-# * <i>rg</i>:  (<i>String</i>) Reporting Group name
-# * <i>pid</i>: (<i>String</i>) Precinct UID
-#
-# Returns: <i>Boolean</i>
-#
-# Returns <i>true</i> iff this count is in the list of expected counts.
-# Generates warnings if this is not the case.
-
-  def really_expected?(cid, rg, pid)
-    expected = self.counts_missing["expected"]
-    shouldnt("Counter Count has invalid Counter UID", cid) unless
-      uid_exists?("counter", cid)
-    shouldnt("Counter Count for #{cid} has invalid Precinct UID", pid) unless 
-      uid_exists?("precinct", pid)
-    if (expected.keys.include?(cid))
-      if ((expected[cid].is_a?(Hash) && expected[cid].keys.include?(rg)))
-        if ((expected[cid][rg].is_a?(Hash) && expected[cid][rg].keys.include?(pid)))
-          true
-        else
-          warning("Unexpected Precinct UID", pid, "for Counter UID", cid, "in Counter Count")
-        end
-      elsif uid_exists?("reporting group", rg)
-        warning("Unexpected Reporting Group", rg, "for Counter UID", cid, "in Counter Count")
-      else
-        false
-      end
-    else
-      warning("Unexpected Counter UID", cid, "in Counter Count")
-    end
-  end
-
-# Arguments:
 # * <i>tabulator_count</i>: (<i>Hash</i>) Tabulator Count object
 #
 # Returns: N/A
@@ -1001,20 +904,20 @@ class TabulatorValidate
 # This methods expects to be called only when the Tabulator is in its initial
 # state.  A Tabulator Count is valid iff:
 # 1. the Jurisdiction Definition is valid (this begins the initialization of the Tabulator, by initializing the <tt><b>uids</b></tt> for Jurisdiction, Precincts and Districts),
-# 2. the Election Definition is valid (this completes the initialization of the Tabulator, by initializing the remaining <tt><b>uids</b></tt> and the <tt><b>counts_contests</b></tt>, <tt><b>counts_questions</b></tt>, and <tt><b>counts_missing</b></tt> attributes),
+# 2. the Election Definition is valid (this completes the initialization of the Tabulator, by initializing the remaining <tt><b>uids</b></tt> and the <tt><b>counts_contests</b></tt>, and <tt><b>counts_questions</b></tt> attributes),
 # 3. the Election UID exists (matches the only such UID),
 # 4. the Jurisdiction UID exists (matches the only such UID),
 # 5. all Contest Counts are valid (this finalizes the <tt><b>counts_contests</b></tt> attribute), and
 # 6. all Question Counts are valid (this finalizes the <tt><b>counts_questions</b></tt> attribute).
-# 7. all Counter Counts are valid (this finalizes the <tt><b>counts_missing</b></tt> attribute).
+# 7. all Counter Counts are valid (this finalizes the <tt><b>counts_accumulated</b></tt> attribute).
 #
 # An invalid Tabulator Count could imply the presence of a serious and fatal
 # internal error in the Tabulator, as all Tabulator Counts are validated
 # before being output.
 
   def validate_tabulator_count(tabulator_count)
-    state = tabulator_count["tabulator_count"]['state']
-    tabulator_count["tabulator_count"]['state'] = 'INITIAL'
+    state = tabulator_count["tabulator_count"]["state"]
+    tabulator_count["tabulator_count"]["state"] = 'INITIAL'
     errwarn = true
     self.tabulator_count = tabulator_count
     tcinfo = tabulator_count["tabulator_count"]
@@ -1035,7 +938,7 @@ class TabulatorValidate
       self.counts_questions[question_count["question_ident"]] = question_count
     end
     validate_counter_counts(tcinfo["counter_count_list"], errwarn)
-    endstate = tabulator_count["tabulator_count"]['state']
+    endstate = tabulator_count["tabulator_count"]["state"]
     shouldnt("Tabulator end state invalid (#{endstate}) expecting: #{state}") if
       (endstate != state)
   end

@@ -5,30 +5,33 @@
 
 <html>
 <head>
-  <title>schema_setup (CheckSyntaxYamlTest)</title>
+  <title>schema_test_syntax_error (CheckSyntaxYamlTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 275</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">validate</span> = <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">write</span> = <span class="ruby-keyword kw">false</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">validate</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking Validity of Schema: #{prefix}\n&quot;</span> 
-      <span class="ruby-identifier">assert</span>(<span class="ruby-constant">CheckSyntaxYaml</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>),
-             <span class="ruby-node">&quot;Invalid schema: #{schema.inspect}&quot;</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking Invalidity of Schema: #{prefix}\n&quot;</span> 
-      <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-constant">CheckSyntaxYaml</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>),
-             <span class="ruby-node">&quot;Valid schema (should be invalid): #{schema.inspect}&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File test/check_syntax_yaml_test.rb, line 338</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_test_syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">validate</span>, <span class="ruby-identifier">err1</span>, <span class="ruby-identifier">err2</span> = <span class="ruby-value">-1</span>, <span class="ruby-identifier">err3</span> = <span class="ruby-value">-1</span>)
+    <span class="ruby-identifier">file</span> = <span class="ruby-value str">&quot;data/Schemas/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{prefix}_schema.yml&quot;</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Reading Schema File: #{file}\n&quot;</span>
+    <span class="ruby-identifier">schema</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">infile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">infile</span>) }
+    <span class="ruby-identifier">file</span> = <span class="ruby-value str">&quot;data/Tests/Syntax/Errors/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{prefix}_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">err1</span>.<span class="ruby-identifier">inspect</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.yml&quot;</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Reading Data Error File: #{file}\n&quot;</span>
+    <span class="ruby-identifier">datum</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">infile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load</span>(<span class="ruby-identifier">infile</span>) }
+    <span class="ruby-identifier">csy</span> = <span class="ruby-constant">CheckSyntaxYaml</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">validate</span>)
+      <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">errors</span> = <span class="ruby-identifier">csy</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">trace</span>)).<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+             <span class="ruby-node">&quot;Check Syntax schema validation check of #{prefix}_schema did not FAIL, but SHOULD&quot;</span>)
+      <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">errors</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">-1</span>), <span class="ruby-value str">&quot;Check Syntax error code not: -1&quot;</span>)
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">file</span> = <span class="ruby-value str">&quot;data/Schemas/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_schema.yml&quot;</span>
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>))
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Writing Schema File: #{file}\n&quot;</span>
-      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">outfile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">outfile</span>) }
-    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">write</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Overwriting Schema File: #{file}\n&quot;</span>
-      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">outfile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">outfile</span>) }
-    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">errors</span> = <span class="ruby-identifier">csy</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">validate</span>, <span class="ruby-identifier">trace</span>)).<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>,
+           <span class="ruby-node">&quot;Check Syntax of #{prefix} did not FAIL, but SHOULD&quot;</span>)
+    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">err3</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">errors</span>[<span class="ruby-value">2</span>]),
+           <span class="ruby-node">&quot;Check Syntax of #{prefix} 3rd error code should be: #{err3}&quot;</span>) <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">err3</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">err2</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">errors</span>[<span class="ruby-value">1</span>]),
+           <span class="ruby-node">&quot;Check Syntax of #{prefix} 2nd error code should be: #{err2}&quot;</span>) <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">err2</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">err1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">errors</span>[<span class="ruby-value">0</span>]),
+           <span class="ruby-node">&quot;Check Syntax of #{prefix} 1st error code should be: #{err1}&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

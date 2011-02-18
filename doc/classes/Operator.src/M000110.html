@@ -5,33 +5,26 @@
 
 <html>
 <head>
-  <title>opc_state (Operator)</title>
+  <title>opc_check (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 251</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">detail</span> = <span class="ruby-keyword kw">false</span>)
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;state\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
-    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>() <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tab</span>
-    <span class="ruby-identifier">state</span>, <span class="ruby-identifier">missing</span>, <span class="ruby-identifier">finished</span>, <span class="ruby-identifier">expected</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">tabulator_state</span>
-    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Tabulator State: #{state}\n&quot;</span>)
-    <span class="ruby-identifier">state</span> = <span class="ruby-identifier">state</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/ /</span>)[<span class="ruby-value">0</span>]
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">detail</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">state</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;ACCUMULATING&quot;</span>))
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">expected</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-        <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;No Missing Counts, because no Expected Counts\n&quot;</span>)
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">state</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Missing Counts: Counter UID, Precinct UID, Reporting Group\n&quot;</span>)
-      <span class="ruby-identifier">missing</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">cid</span>, <span class="ruby-identifier">rg</span>, <span class="ruby-identifier">pid</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;  #{cid}, #{pid}, #{rg}\n&quot;</span>) }
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Precincts Finished Reporting: &quot;</span>)
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">finished</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) 
-        <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;NONE\n&quot;</span>)
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;#{finished.inspect.gsub(/[\&quot;)\[\]]/,&quot;&quot;)}\n&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 386</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_check</span>(<span class="ruby-identifier">tc_file</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">fatal</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tc_file</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;check\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span>
+        <span class="ruby-identifier">opx_empty?</span>()
+      <span class="ruby-identifier">tc_file</span> = <span class="ruby-constant">TABULATOR_DATA_FILE</span>
+      <span class="ruby-identifier">fatal</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">state</span>
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Tabulator Count: #{tc_file}\n&quot;</span>)
+    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">tc_file</span>, <span class="ruby-value str">&quot;Tabulator Count&quot;</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>, <span class="ruby-identifier">fatal</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_tc</span>(<span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Validating Tabulator Count: OK\n&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings?</span>)  
+    <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

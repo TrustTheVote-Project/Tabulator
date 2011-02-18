@@ -95,20 +95,20 @@ input to the <a href="Tabulator.html">Tabulator</a>.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000092">check_syntax</a>&nbsp;&nbsp;
-      <a href="#M000095">check_syntax_array</a>&nbsp;&nbsp;
-      <a href="#M000099">check_syntax_error</a>&nbsp;&nbsp;
-      <a href="#M000096">check_syntax_hash</a>&nbsp;&nbsp;
-      <a href="#M000097">check_syntax_hash_key</a>&nbsp;&nbsp;
-      <a href="#M000093">check_syntax_internal</a>&nbsp;&nbsp;
-      <a href="#M000094">check_syntax_string</a>&nbsp;&nbsp;
-      <a href="#M000098">check_syntax_trace</a>&nbsp;&nbsp;
-      <a href="#M000100">schema_is_valid?</a>&nbsp;&nbsp;
-      <a href="#M000101">schema_is_valid_array?</a>&nbsp;&nbsp;
-      <a href="#M000102">schema_is_valid_hash?</a>&nbsp;&nbsp;
-      <a href="#M000103">schema_is_valid_key_value?</a>&nbsp;&nbsp;
-      <a href="#M000105">schema_is_valid_trace</a>&nbsp;&nbsp;
-      <a href="#M000104">schema_not_valid</a>&nbsp;&nbsp;
+      <a href="#M000088">check_syntax</a>&nbsp;&nbsp;
+      <a href="#M000091">check_syntax_array</a>&nbsp;&nbsp;
+      <a href="#M000095">check_syntax_error</a>&nbsp;&nbsp;
+      <a href="#M000092">check_syntax_hash</a>&nbsp;&nbsp;
+      <a href="#M000093">check_syntax_hash_key</a>&nbsp;&nbsp;
+      <a href="#M000089">check_syntax_internal</a>&nbsp;&nbsp;
+      <a href="#M000090">check_syntax_string</a>&nbsp;&nbsp;
+      <a href="#M000094">check_syntax_trace</a>&nbsp;&nbsp;
+      <a href="#M000096">schema_is_valid?</a>&nbsp;&nbsp;
+      <a href="#M000097">schema_is_valid_array?</a>&nbsp;&nbsp;
+      <a href="#M000098">schema_is_valid_hash?</a>&nbsp;&nbsp;
+      <a href="#M000099">schema_is_valid_key_value?</a>&nbsp;&nbsp;
+      <a href="#M000101">schema_is_valid_trace</a>&nbsp;&nbsp;
+      <a href="#M000100">schema_not_valid</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -163,12 +163,12 @@ output.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000092" class="method-detail">
-        <a name="M000092"></a>
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000092.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000092.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000088.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000088.html');return false;">
           <span class="method-name">check_syntax</span><span class="method-args">(schema, datum, validate = true, trace = TRACE_DEFAULT)</span>
           </a>
         </div>
@@ -184,6 +184,10 @@ Arguments:
 <li><em>datum</em>: (<em>Arbitrary</em>) datum being checked
 
 </li>
+<li><em>validate</em>: (<em>Boolean</em>) whether to validate the schema
+(optional)
+
+</li>
 <li><em>trace</em>: (<em>Integer</em>) limits tracing of output (optional,
 default 300 characters)
 
@@ -193,38 +197,38 @@ default 300 characters)
 Returns: <b><tt>errors</b></tt> <em>Array</em>
 </p>
 <p>
-The function <a href="CheckSyntaxYaml.html#M000092">check_syntax</a> is the
+The function <a href="CheckSyntaxYaml.html#M000088">check_syntax</a> is the
 primary entry point into the <a
 href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class. It first sets the
-error code stack to empty. It then checks the validity of the
-<em>schema</em>, and if invalid, generates a syntax error and returns the
-error code stack [-1]. Finally, it initializes the data inspection depth to
-0, checks the syntax of the <em>datum</em> against the <em>schema</em>, and
-returns the resulting error code stack, which will be empty if the check
-succeeds, non-empty if it fails.
+error code stack to empty. If <em>validate</em> is <em>true</em> it checks
+the validity of the <em>schema</em>, and if invalid, generates a syntax
+error and returns the error code stack [-1]. Finally, it initializes the
+data inspection depth to 0, checks the syntax of the <em>datum</em> against
+the <em>schema</em>, and returns the resulting error code stack, which will
+be empty if the check succeeds, non-empty if it fails.
 </p>
 <p>
 The optional <em>trace</em> value limits tracing of output, and is consumed
 by the functions <a
-href="CheckSyntaxYaml.html#M000098">check_syntax_trace</a>, <a
-href="CheckSyntaxYaml.html#M000099">check_syntax_error</a>, and <a
-href="CheckSyntaxYaml.html#M000105">schema_is_valid_trace</a>. When
+href="CheckSyntaxYaml.html#M000094">check_syntax_trace</a>, <a
+href="CheckSyntaxYaml.html#M000095">check_syntax_error</a>, and <a
+href="CheckSyntaxYaml.html#M000101">schema_is_valid_trace</a>. When
 <em>trace</em> is negative, calls to all syntax-checking and
 schema-validity-checking functions in this library are traced, and the
 amount of output generated is limited to <em>trace.abs</em> characters of
 output per item printed. When positive, it acts similarly to limit the
 output printed by <a
-href="CheckSyntaxYaml.html#M000099">check_syntax_error</a>.
+href="CheckSyntaxYaml.html#M000095">check_syntax_error</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000100" class="method-detail">
-        <a name="M000100"></a>
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000100.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000100.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000096.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000096.html');return false;">
           <span class="method-name">schema_is_valid?</span><span class="method-args">(schema, trace = TRACE_DEFAULT)</span>
           </a>
         </div>
@@ -248,15 +252,15 @@ Returns: <em>Boolean</em>
 <p>
 A <em>schema</em> is a data structure comprised of Strings, Arrays, Hashes,
 and combinations thereof, and nothing else. The function <a
-href="CheckSyntaxYaml.html#M000100">schema_is_valid?</a> returns
+href="CheckSyntaxYaml.html#M000096">schema_is_valid?</a> returns
 <em>true</em> only when the <em>schema</em> has a valid format.
 </p>
 <p>
 If the schema is a <em>String</em>, it must be one of (Integer, String,
 Atomic, Any). If the schema is an <em>Array</em>, <a
-href="CheckSyntaxYaml.html#M000101">schema_is_valid_array?</a> is called to
+href="CheckSyntaxYaml.html#M000097">schema_is_valid_array?</a> is called to
 perform the validity check. If the schema is a <em>Hash</em>, <a
-href="CheckSyntaxYaml.html#M000102">schema_is_valid_hash?</a> is called to
+href="CheckSyntaxYaml.html#M000098">schema_is_valid_hash?</a> is called to
 perform the validity check. No other types of schemas are valid.
 </p>
         </div>
@@ -264,12 +268,12 @@ perform the validity check. No other types of schemas are valid.
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000095" class="method-detail">
-        <a name="M000095"></a>
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000095.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000095.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000091.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000091.html');return false;">
           <span class="method-name">check_syntax_array</span><span class="method-args">(index, schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -308,12 +312,12 @@ and match the same schema.
         </div>
       </div>
 
-      <div id="method-M000099" class="method-detail">
-        <a name="M000099"></a>
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000099.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000099.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000095.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000095.html');return false;">
           <span class="method-name">check_syntax_error</span><span class="method-args">(errcode, schema, datum, trace, extra = '')</span>
           </a>
         </div>
@@ -353,19 +357,19 @@ prints the values of the mismatched <em>schema</em> and <em>data</em> items
 <p>
 When a syntax error is discovered, error codes are stacked onto
 <b><tt>errors</b></tt>, via repeated calls to <a
-href="CheckSyntaxYaml.html#M000099">check_syntax_error</a>, as the syntax
+href="CheckSyntaxYaml.html#M000095">check_syntax_error</a>, as the syntax
 checker recursively unwinds. Error stacking permits the testing of other
 than 1st-level errors, e.g., 2nd-level, 3rd-level, etc.
 </p>
         </div>
       </div>
 
-      <div id="method-M000096" class="method-detail">
-        <a name="M000096"></a>
+      <div id="method-M000092" class="method-detail">
+        <a name="M000092"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000096.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000096.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000092.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000092.html');return false;">
           <span class="method-name">check_syntax_hash</span><span class="method-args">(index, keys, schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -406,12 +410,12 @@ Recursively check all of the <em>keys</em> in the <em>Hash</em>
         </div>
       </div>
 
-      <div id="method-M000097" class="method-detail">
-        <a name="M000097"></a>
+      <div id="method-M000093" class="method-detail">
+        <a name="M000093"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000097.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000097.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000093.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000093.html');return false;">
           <span class="method-name">check_syntax_hash_key</span><span class="method-args">(key, schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -478,12 +482,12 @@ the datum and the corresponding value must match.
         </div>
       </div>
 
-      <div id="method-M000093" class="method-detail">
-        <a name="M000093"></a>
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000093.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000093.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000089.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000089.html');return false;">
           <span class="method-name">check_syntax_internal</span><span class="method-args">(schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -511,27 +515,27 @@ Returns: <em>Boolean</em>
 </p>
 <p>
 The function <a
-href="CheckSyntaxYaml.html#M000093">check_syntax_internal</a> is the
+href="CheckSyntaxYaml.html#M000089">check_syntax_internal</a> is the
 internal top-level version of <a
-href="CheckSyntaxYaml.html#M000092">check_syntax</a> (which is never called
+href="CheckSyntaxYaml.html#M000088">check_syntax</a> (which is never called
 internally), and performs the actual recursive syntax-checking. If the
 <em>schema</em> is a <em>String</em>, <a
-href="CheckSyntaxYaml.html#M000094">check_syntax_string</a> checks the
+href="CheckSyntaxYaml.html#M000090">check_syntax_string</a> checks the
 syntax. Otherwise, the <em>schema</em> must be an <em>Array</em> or a
 <em>Hash</em>, and likewise for the <em>datum</em>, so either <a
-href="CheckSyntaxYaml.html#M000095">check_syntax_array</a> or <a
-href="CheckSyntaxYaml.html#M000096">check_syntax_hash</a> checks the
+href="CheckSyntaxYaml.html#M000091">check_syntax_array</a> or <a
+href="CheckSyntaxYaml.html#M000092">check_syntax_hash</a> checks the
 syntax.
 </p>
         </div>
       </div>
 
-      <div id="method-M000094" class="method-detail">
-        <a name="M000094"></a>
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000094.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000094.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000090.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000090.html');return false;">
           <span class="method-name">check_syntax_string</span><span class="method-args">(schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -584,12 +588,12 @@ used is invalid.
         </div>
       </div>
 
-      <div id="method-M000098" class="method-detail">
-        <a name="M000098"></a>
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000098.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000098.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000094.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000094.html');return false;">
           <span class="method-name">check_syntax_trace</span><span class="method-args">(context, schema, datum, depth, trace)</span>
           </a>
         </div>
@@ -627,12 +631,12 @@ characters for each item).
         </div>
       </div>
 
-      <div id="method-M000101" class="method-detail">
-        <a name="M000101"></a>
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000101.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000101.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000097.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000097.html');return false;">
           <span class="method-name">schema_is_valid_array?</span><span class="method-args">(schema, trace)</span>
           </a>
         </div>
@@ -661,12 +665,12 @@ and match the same schema.
         </div>
       </div>
 
-      <div id="method-M000102" class="method-detail">
-        <a name="M000102"></a>
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000102.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000102.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000098.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000098.html');return false;">
           <span class="method-name">schema_is_valid_hash?</span><span class="method-args">(schema, trace)</span>
           </a>
         </div>
@@ -693,12 +697,12 @@ A <em>schema</em> of type <em>Hash</em> is valid only each of its
         </div>
       </div>
 
-      <div id="method-M000103" class="method-detail">
-        <a name="M000103"></a>
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000103.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000103.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000099.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000099.html');return false;">
           <span class="method-name">schema_is_valid_key_value?</span><span class="method-args">(key, value, trace)</span>
           </a>
         </div>
@@ -725,7 +729,7 @@ Returns: <em>Boolean</em>
 A <em>Hash</em> <em>key,value</em> pair is valid if the <em>key</em> is a
 <em>String</em> and the value is a valid schema. But there are two special
 types of keys, as documented under <a
-href="CheckSyntaxYaml.html#M000097">check_syntax_hash_key</a>:
+href="CheckSyntaxYaml.html#M000093">check_syntax_hash_key</a>:
 </p>
 <ul>
 <li>keys matching &quot;|OPT.*|&quot;, in which case the value must be a
@@ -748,12 +752,12 @@ alternative <em>Hash</em> keys, but not both.
         </div>
       </div>
 
-      <div id="method-M000105" class="method-detail">
-        <a name="M000105"></a>
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000105.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000105.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000101.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000101.html');return false;">
           <span class="method-name">schema_is_valid_trace</span><span class="method-args">(context, schema, trace, key = '')</span>
           </a>
         </div>
@@ -788,12 +792,12 @@ characters).
         </div>
       </div>
 
-      <div id="method-M000104" class="method-detail">
-        <a name="M000104"></a>
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYaml.src/M000104.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYaml.src/M000104.html');return false;">
+          <a href="CheckSyntaxYaml.src/M000100.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYaml.src/M000100.html');return false;">
           <span class="method-name">schema_not_valid</span><span class="method-args">(schema, message, trace)</span>
           </a>
         </div>

@@ -5,30 +5,17 @@
 
 <html>
 <head>
-  <title>validator_test_load_jd_ed (ValidatorTest)</title>
+  <title>tabulator_messages_generate (ValidatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 215</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validator_test_load_jd_ed</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">jd_file</span>, <span class="ruby-identifier">ed_file</span>, <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">warnings</span>)
-    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nGenerating Initial Tabulator Count from Files: #{jd_file} #{ed_file}\n&quot;</span>
-    <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">validator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">jd_file</span>)
-    <span class="ruby-identifier">ed</span> = <span class="ruby-identifier">validator_test_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;election_definition&quot;</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">ed_file</span>)
-    <span class="ruby-identifier">tab</span> = <span class="ruby-constant">Tabulator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">ed</span>, <span class="ruby-constant">TABULATOR_DATA_FILE</span>)
-    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">tabulator_count</span>
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>().<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">validator_test_write_tabulator_file</span>(<span class="ruby-identifier">tc</span>)
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">taberrs</span> = <span class="ruby-identifier">validator_test_errors</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>(), <span class="ruby-identifier">errors</span>)
-    <span class="ruby-identifier">tabwarns</span> = <span class="ruby-identifier">validator_test_warnings</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>(), <span class="ruby-identifier">warnings</span>) 
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>().<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Initial Tabulator Count&quot;</span>
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Initial Tabulator Count REJECTED&quot;</span>
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot; with #{taberrs.to_s} ERRORS and #{tabwarns.to_s} WARNINGS\n&quot;</span>    
-    <span class="ruby-identifier">tabulator_print_errors_warnings</span>(<span class="ruby-identifier">tab</span>)
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 307</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_messages_generate</span>(<span class="ruby-identifier">messages</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">printit</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">message</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">messages</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">text</span><span class="ruby-operator">|</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{header} #{text}\n&quot;</span>}
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">message</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">printit</span>
+    <span class="ruby-identifier">message</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

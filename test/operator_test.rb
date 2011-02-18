@@ -27,18 +27,12 @@ require "test/unit"
 require "operator"
 
 # The OperatorTest class provides Unit Testing for the Tabulator Operator.
+# Tests are provided for all three types of errors detected by the Operator:
+# Command errors, File errors, and Fatal errors.
 
 class OperatorTest < Test::Unit::TestCase
 
   TABULATOR_DATA_FILE = "TABULATOR_DATA.yml"
-
-# Tests many different Operator error-handling situations.
-
-  def test_operator
-    operator_test_command_errors()
-    operator_test_file_errors()
-    operator_test_fatal_errors()
-  end
 
 # Tests each of the Command errors detected by the Operator:
 # * Command ... has no arguments
@@ -49,31 +43,30 @@ class OperatorTest < Test::Unit::TestCase
 # * Command ... ignored, Tabulator state: EMPTY
 # * Command ... ignored, Tabulator state: not EMPTY
 
-  private
-  def operator_test_command_errors
-    operator_command("reset")
-    operator_command_error("foo")
-    operator_command_error("foo blah blah")
-    operator_command_error("reset blah blah")
-    operator_command_error("data blah blah")
-    operator_command_error("state blah blah")
-    operator_command_error("total blah blah")
-    operator_command_error("help blah blah")
-    operator_command_error("load")
-    operator_command_error("load blah")
-    operator_command_error("load blah OK blah")
-    operator_command_error("add")
-    operator_command_error("add blah blah")
-    operator_command_error("check blah blah")
-    operator_command_error("data")
-    operator_command_error("state")
-    operator_command_error("total")
-    operator_command_error("check")
-    operator_command("reset")
-    operator_command_error("add data/Tests/Default/JD.yml")
-    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
-    operator_command("check")
-    operator_command_error("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
+  def test_operator_command_errors
+    optest_command_ok("reset")
+    optest_command_error("foo")
+    optest_command_error("foo blah blah")
+    optest_command_error("reset blah blah")
+    optest_command_error("data blah blah")
+    optest_command_error("state blah blah")
+    optest_command_error("total blah blah")
+    optest_command_error("help blah blah")
+    optest_command_error("load")
+    optest_command_error("load blah")
+    optest_command_error("load blah OK blah")
+    optest_command_error("add")
+    optest_command_error("add blah blah")
+    optest_command_error("check blah blah")
+    optest_command_error("data")
+    optest_command_error("state")
+    optest_command_error("total")
+    optest_command_error("check")
+    optest_command_ok("reset")
+    optest_command_error("add data/Tests/Default/JD.yml")
+    optest_command_ok("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
+    optest_command_ok("check")
+    optest_command_error("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
   end
 
 # Tests each of the File errors detected by the Operator:
@@ -84,17 +77,17 @@ class OperatorTest < Test::Unit::TestCase
 # * File contents error, improper Hash, Key (...) missing ...
 # * File syntax error ...
 
-  def operator_test_file_errors
-    operator_command("reset")
-    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
-    operator_file_error("add data/Tests/Default/CC0.yml")
+  def test_operator_file_errors
+    optest_command_ok("reset")
+    optest_command_ok("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
+    optest_file_error("add data/Tests/Default/CC0.yml")
     File.chmod(0222,"data/Tests/Default/CC3_Write_Only.yml")
-    operator_file_error("add data/Tests/Default/CC3_Write_Only.yml")
+    optest_file_error("add data/Tests/Default/CC3_Write_Only.yml")
     File.chmod(0644,"data/Tests/Default/CC3_Write_Only.yml")
-    operator_file_error("add tabulator.rb")
-    operator_file_error("add data/Tests/Default/ED.yml")
-    operator_file_error("add data/Tests/Default/ARRAY.yml")
-    operator_file_error("add data/Tests/Default/CC2_Syntax_Error.yml")
+    optest_file_error("add tabulator.rb")
+    optest_file_error("add data/Tests/Default/ED.yml")
+    optest_file_error("add data/Tests/Default/ARRAY.yml")
+    optest_file_error("add data/Tests/Default/CC2_Syntax_Error.yml")
   end
 
 # Tests one (yes, only one) of the Fatal errors detected by the Operator:
@@ -105,14 +98,14 @@ class OperatorTest < Test::Unit::TestCase
 # to write-only, then try to read from it (generating the Fatal error), then
 # we change it back, and try again to make sure it is OK.
 
-  def operator_test_fatal_errors
-    operator_command("reset")
-    operator_command("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
-    operator_command("check")
+  def test_operator_fatal_errors
+    optest_command_ok("reset")
+    optest_command_ok("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
+    optest_command_ok("check")
     File.chmod(0222, TABULATOR_DATA_FILE)
-    operator_fatal_error("state")
+    optest_fatal_error("state")
     File.chmod(0644, TABULATOR_DATA_FILE)
-    operator_command("state")
+    optest_command_ok("state")
   end
 
 # Arguments:
@@ -122,7 +115,7 @@ class OperatorTest < Test::Unit::TestCase
 #
 # Execute an Operator command, asserting that it will be error-free.
 
-  def operator_command(line)
+  def optest_command_ok(line)
     print "\nTesting Operator Command: #{line}\n"
     args = line.split(/ /)
     result = Operator.new.op_command(args)
@@ -136,7 +129,7 @@ class OperatorTest < Test::Unit::TestCase
 #
 # Execute an Operator command, asserting that it will produce a Command error.
 
-  def operator_command_error(line)
+  def optest_command_error(line)
     print "\nTesting Operator Command Error: #{line}\n"
     args = line.split(/ /)
     result = Operator.new.op_command(args)
@@ -150,7 +143,7 @@ class OperatorTest < Test::Unit::TestCase
 #
 # Execute an Operator command, asserting that it will produce a File error.
 
-  def operator_file_error(line)
+  def optest_file_error(line)
     print "\nTesting Operator File Error: #{line}\n"
     args = line.split(/ /)
     result = Operator.new.op_command(args)
@@ -164,7 +157,7 @@ class OperatorTest < Test::Unit::TestCase
 #
 # Execute an Operator command, asserting that it will produce a Fatal error.
 
-  def operator_fatal_error(line)
+  def optest_fatal_error(line)
     print "\nTesting Operator Fatal Error: #{line}\n"
     args = line.split(/ /)
     result = Operator.new.op_command(args)

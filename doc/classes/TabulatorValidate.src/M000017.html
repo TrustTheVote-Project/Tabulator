@@ -5,46 +5,15 @@
 
 <html>
 <head>
-  <title>new (TabulatorValidate)</title>
+  <title>validation_errors (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 113</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">jurisdiction_definition</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">election_definition</span> = <span class="ruby-keyword kw">false</span>,
-                 <span class="ruby-identifier">file</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">tabulator_count</span> = <span class="ruby-keyword kw">false</span>)
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_contests</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = {} }
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = {} }
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_missing</span> = {<span class="ruby-value str">&quot;total&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>, <span class="ruby-value str">&quot;precincts&quot;</span>=<span class="ruby-operator">&gt;</span>[], <span class="ruby-value str">&quot;finished&quot;</span>=<span class="ruby-operator">&gt;</span>[], <span class="ruby-value str">&quot;missing&quot;</span>=<span class="ruby-operator">&gt;</span>[],
-      <span class="ruby-value str">&quot;accumulated&quot;</span>=<span class="ruby-operator">&gt;</span>[], <span class="ruby-value str">&quot;expected&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = {} }}
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span> = []
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">warnings</span> = []
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">jurisdiction_definition</span>)
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">jurisdiction_definition</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span>
-          <span class="ruby-identifier">jurisdiction_definition</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>))
-        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">election_definition</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span>
-            <span class="ruby-identifier">election_definition</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;election_definition&quot;</span>))
-          <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> =
-            <span class="ruby-identifier">new_tabulator_count</span>(<span class="ruby-identifier">jurisdiction_definition</span>, <span class="ruby-identifier">election_definition</span>, <span class="ruby-identifier">file</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only an Election Definition may be the 2nd arg to Tabulator.new&quot;</span>) 
-        <span class="ruby-keyword kw">end</span>
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only a Jurisdiction Definition may be the 1st arg to Tabulator.new&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">tabulator_count</span>)
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tabulator_count</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span>
-          <span class="ruby-identifier">tabulator_count</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;tabulator_count&quot;</span>))
-        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> = <span class="ruby-identifier">tabulator_count</span>
-        <span class="ruby-identifier">validate_tabulator_count</span>(<span class="ruby-identifier">tabulator_count</span>)
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Only a Tabulator Count may be the 4th arg to Tabulator.new&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">shouldnt</span>(<span class="ruby-value str">&quot;Either a Tabulator Count or a Jurisdiction/Election Definition&quot;</span> <span class="ruby-operator">+</span>
-               <span class="ruby-value str">&quot;must be passed to Tabulator.new&quot;</span>)
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 151</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validation_errors</span>(<span class="ruby-identifier">reset</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span> = [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reset</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -82,7 +82,9 @@
       <p>
 The <a href="OperatorTest.html">OperatorTest</a> class provides Unit
 Testing for the <a href="Tabulator.html">Tabulator</a> <a
-href="Operator.html">Operator</a>.
+href="Operator.html">Operator</a>. Tests are provided for all three types
+of errors detected by the <a href="Operator.html">Operator</a>: Command
+errors, File errors, and Fatal errors.
 </p>
 
     </div>
@@ -94,14 +96,13 @@ href="Operator.html">Operator</a>.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000013">operator_command</a>&nbsp;&nbsp;
-      <a href="#M000014">operator_command_error</a>&nbsp;&nbsp;
-      <a href="#M000016">operator_fatal_error</a>&nbsp;&nbsp;
-      <a href="#M000015">operator_file_error</a>&nbsp;&nbsp;
-      <a href="#M000010">operator_test_command_errors</a>&nbsp;&nbsp;
-      <a href="#M000012">operator_test_fatal_errors</a>&nbsp;&nbsp;
-      <a href="#M000011">operator_test_file_errors</a>&nbsp;&nbsp;
-      <a href="#M000009">test_operator</a>&nbsp;&nbsp;
+      <a href="#M000013">optest_command_error</a>&nbsp;&nbsp;
+      <a href="#M000012">optest_command_ok</a>&nbsp;&nbsp;
+      <a href="#M000015">optest_fatal_error</a>&nbsp;&nbsp;
+      <a href="#M000014">optest_file_error</a>&nbsp;&nbsp;
+      <a href="#M000009">test_operator_command_errors</a>&nbsp;&nbsp;
+      <a href="#M000011">test_operator_fatal_errors</a>&nbsp;&nbsp;
+      <a href="#M000010">test_operator_file_errors</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -136,62 +137,13 @@ href="Operator.html">Operator</a>.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000009" class="method-detail">
-        <a name="M000009"></a>
-
-        <div class="method-heading">
-          <a href="OperatorTest.src/M000009.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000009.html');return false;">
-          <span class="method-name">test_operator</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Tests many different <a href="Operator.html">Operator</a> error-handling
-situations.
-</p>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Private Instance methods</h3>
-
       <div id="method-M000013" class="method-detail">
         <a name="M000013"></a>
 
         <div class="method-heading">
           <a href="OperatorTest.src/M000013.html" target="Code" class="method-signature"
             onclick="popupCode('OperatorTest.src/M000013.html');return false;">
-          <span class="method-name">operator_command</span><span class="method-args">(line)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>line</em>: (<em>String</em>) command line string
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Execute an <a href="Operator.html">Operator</a> command, asserting that it
-will be error-free.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
-
-        <div class="method-heading">
-          <a href="OperatorTest.src/M000014.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000014.html');return false;">
-          <span class="method-name">operator_command_error</span><span class="method-args">(line)</span>
+          <span class="method-name">optest_command_error</span><span class="method-args">(line)</span>
           </a>
         </div>
       
@@ -214,13 +166,42 @@ will produce a Command error.
         </div>
       </div>
 
-      <div id="method-M000016" class="method-detail">
-        <a name="M000016"></a>
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
 
         <div class="method-heading">
-          <a href="OperatorTest.src/M000016.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000016.html');return false;">
-          <span class="method-name">operator_fatal_error</span><span class="method-args">(line)</span>
+          <a href="OperatorTest.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000012.html');return false;">
+          <span class="method-name">optest_command_ok</span><span class="method-args">(line)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>line</em>: (<em>String</em>) command line string
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Execute an <a href="Operator.html">Operator</a> command, asserting that it
+will be error-free.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="OperatorTest.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000015.html');return false;">
+          <span class="method-name">optest_fatal_error</span><span class="method-args">(line)</span>
           </a>
         </div>
       
@@ -243,13 +224,13 @@ will produce a Fatal error.
         </div>
       </div>
 
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="OperatorTest.src/M000015.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000015.html');return false;">
-          <span class="method-name">operator_file_error</span><span class="method-args">(line)</span>
+          <a href="OperatorTest.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000014.html');return false;">
+          <span class="method-name">optest_file_error</span><span class="method-args">(line)</span>
           </a>
         </div>
       
@@ -272,13 +253,13 @@ will produce a File error.
         </div>
       </div>
 
-      <div id="method-M000010" class="method-detail">
-        <a name="M000010"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="OperatorTest.src/M000010.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000010.html');return false;">
-          <span class="method-name">operator_test_command_errors</span><span class="method-args">()</span>
+          <a href="OperatorTest.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000009.html');return false;">
+          <span class="method-name">test_operator_command_errors</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -315,13 +296,13 @@ EMPTY
         </div>
       </div>
 
-      <div id="method-M000012" class="method-detail">
-        <a name="M000012"></a>
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
 
         <div class="method-heading">
-          <a href="OperatorTest.src/M000012.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000012.html');return false;">
-          <span class="method-name">operator_test_fatal_errors</span><span class="method-args">()</span>
+          <a href="OperatorTest.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000011.html');return false;">
+          <span class="method-name">test_operator_fatal_errors</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -346,13 +327,13 @@ again to make sure it is OK.
         </div>
       </div>
 
-      <div id="method-M000011" class="method-detail">
-        <a name="M000011"></a>
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
 
         <div class="method-heading">
-          <a href="OperatorTest.src/M000011.html" target="Code" class="method-signature"
-            onclick="popupCode('OperatorTest.src/M000011.html');return false;">
-          <span class="method-name">operator_test_file_errors</span><span class="method-args">()</span>
+          <a href="OperatorTest.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('OperatorTest.src/M000010.html');return false;">
+          <span class="method-name">test_operator_file_errors</span><span class="method-args">()</span>
           </a>
         </div>
       

@@ -1,0 +1,4 @@
+1 tests, 85 assertions, 0 failures, 0 errors: Syntax Tests
+5 tests, 357 assertions, 0 failures, 0 errors: Tabulator Validation Tests
+3 tests, 143 assertions, 0 failures, 0 errors: Tabulator State, Missing Counts, and Vote Count Tests
+1 tests, 36 assertions, 0 failures, 0 errors: Operator Tests

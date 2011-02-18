@@ -5,14 +5,18 @@
 
 <html>
 <head>
-  <title>validation_warnings? (TabulatorValidate)</title>
+  <title>shouldnt (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 188</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validation_warnings?</span>()
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">warnings</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 198</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shouldnt</span>(<span class="ruby-identifier">message1</span>, <span class="ruby-identifier">value1</span> = <span class="ruby-value str">&quot;&quot;</span>)
+    <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;#{message1}&quot;</span> <span class="ruby-operator">+</span>
+      (<span class="ruby-identifier">value1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot; (#{value1.inspect.gsub(/[\&quot;\[\]]/,&quot;&quot;)})&quot;</span>)
+    <span class="ruby-identifier">print</span>(<span class="ruby-node">&quot;** FATAL ERROR ** #{message}\n&quot;</span>)
+    <span class="ruby-identifier">$stdout</span>.<span class="ruby-identifier">flush</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span> <span class="ruby-comment cmt"># For debugging so we can see where the error came from</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
