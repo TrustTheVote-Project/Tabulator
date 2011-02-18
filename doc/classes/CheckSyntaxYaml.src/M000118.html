@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>check_syntax (CheckSyntaxYaml)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 63</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">validate</span> = <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">trace</span> = <span class="ruby-constant">TRACE_DEFAULT</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span> = []
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">validate</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>))
+      <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">-1</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">check_syntax_internal</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

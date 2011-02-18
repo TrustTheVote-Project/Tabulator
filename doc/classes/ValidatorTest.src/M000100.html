@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tabulator_messages_unsame (ValidatorTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 288</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_messages_unsame</span>(<span class="ruby-identifier">received</span>, <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">label</span>, <span class="ruby-identifier">header</span>)
+    <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Expected #{expected.length.to_s} Validation #{label}s:\n&quot;</span>
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">tabulator_messages_generate</span>(<span class="ruby-identifier">expected</span>, <span class="ruby-identifier">header</span>)
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;Actually Received #{received.length.to_s}:\n&quot;</span>
+    <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">tabulator_messages_generate</span>(<span class="ruby-identifier">received</span>, <span class="ruby-identifier">header</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

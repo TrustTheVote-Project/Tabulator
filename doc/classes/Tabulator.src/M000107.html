@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tabulator_state (Tabulator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/tabulator.rb, line 52</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tabulator_state</span>()
+    <span class="ruby-identifier">state</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span>[<span class="ruby-value str">&quot;tabulator_count&quot;</span>][<span class="ruby-value str">&quot;state&quot;</span>]
+    <span class="ruby-identifier">expect</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">length</span>
+    <span class="ruby-identifier">count</span> = (<span class="ruby-identifier">expect</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;1 Expected Count&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{expect.to_s} Expected Counts&quot;</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">state</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;INITIAL&quot;</span>
+      [<span class="ruby-node">&quot;INITIAL (Waiting for #{count})&quot;</span>, [], [], <span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;DONE&quot;</span>
+      [<span class="ruby-node">&quot;DONE (All #{expect.to_s} Expected Counts Accumulated)&quot;</span>, [], [], <span class="ruby-value">0</span>]
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;ACCUMULATING&quot;</span>
+      <span class="ruby-identifier">missing</span> = (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_expected</span> <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_accumulated</span>)
+      <span class="ruby-identifier">finished</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-value str">&quot;precinct&quot;</span>].<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_expected</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">cid0</span>, <span class="ruby-identifier">rg0</span>, <span class="ruby-identifier">pid0</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">pid</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">pid0</span>) } <span class="ruby-operator">&amp;&amp;</span>
+        <span class="ruby-identifier">missing</span>.<span class="ruby-identifier">all?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">cid0</span>, <span class="ruby-identifier">rg0</span>, <span class="ruby-identifier">pid0</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">pid</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">pid0</span>) } }
+      [<span class="ruby-node">&quot;ACCUMULATING (#{missing.length.to_s} Missing from #{count})&quot;</span>,
+       <span class="ruby-identifier">missing</span>,
+       <span class="ruby-identifier">finished</span>,
+       <span class="ruby-identifier">expect</span> ]
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">shouldnt</span>(<span class="ruby-node">&quot;Invalid Tabulator State: #{state.to_s}&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

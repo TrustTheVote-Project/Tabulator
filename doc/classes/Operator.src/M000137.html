@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>opc_total (Operator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 285</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_total</span>()
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;total\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
+    <span class="ruby-keyword kw">if</span> ([<span class="ruby-value str">&quot;ACCUMULATING&quot;</span>, <span class="ruby-value str">&quot;DONE&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-keyword kw">true</span>)))
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nWriting Tabulator Spreadsheet: &quot;</span> <span class="ruby-operator">+</span>
+                <span class="ruby-node">&quot;#{TABULATOR_SPREADSHEET_FILE}\n&quot;</span>)
+      <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">opx_file_write_spreadsheet</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nSpreadsheet Data (CSV Format):\n\n&quot;</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-identifier">lines</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
