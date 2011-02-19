@@ -1,4 +1,4 @@
-grep -e "error(" -e "def " -e "warning(" validate.rb >> VALIDATION_ERRORS.txt
+grep -e "err(" -e "def " -e "warn(" validate.rb >> VALIDATION_ERRORS.txt
 
 ERROR/WARNING prefixes:
 
