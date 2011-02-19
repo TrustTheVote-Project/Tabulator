@@ -20,7 +20,10 @@ test/operator_test.rb
 - Ruby Unit Tests for the Tabulator Operator
 
 test/tabulator_test.rb
-- Ruby Unit Tests for the Tabulator and Validator
+- Ruby Unit Tests for the Tabulator
+
+test/validator_test.rb
+- Ruby Unit Tests for the Tabulator Validator
 
 test/check_syntax_yaml_test.rb
 - Setup and Test the YAML Syntax Checker
@@ -33,40 +36,48 @@ test/emgr_data_handler.rb
 # Ruby Unit Test Commands #
 ###########################
 
-ruby -I . test/operator_test.rb"
-ruby -I . test/tabulator_test.rb"
-ruby -I . test/check_syntax_yaml_test.rb"
+ruby -I . test/operator_test.rb
+ruby -I . test/tabulator_test.rb
+ruby -I . test/validator_test.rb
+ruby -I . test/check_syntax_yaml_test.rb
 
 ################
 # Bash Scripts #
 ################
 
 TEST.sh
-- Valid arguments: all, syn(tax), tab(ulator), op(erator), def(ault)
+- Valid arguments: all, syn(tax), val(idator), tab(ulator), op(erator), def(ault)
 - <nothing>: run all of the Ruby unit tests
 - all : run all of the tests
-- default: run the default tests using a prototypical Jurisdiction
-           Definition, Election Definition, and three Counter Counts,
-	   achieving the Tabulator DONE state 
-- syntax: run all of the Tabulator syntax tests
-- tab: run all of the Tabulator validation tests
+- syn: run all of the Tabulator syntax tests
+- val: run all of the Tabulator Validator tests
+- tab: run all of the Tabulator Vote Counting tests
 - op: run all of the Tabulator Operator tests
+- def: run a default set of tests using a prototypical Jurisdiction
+       Definition, Election Definition, and three Counter Counts, achieving
+       the Tabulator DONE state  
 
 ###############
 # Directories #
 ###############
 
-Docs/
-- the BNF for the language recognized by the Tabulator
-- a list of Tabulator ERRORS
-- the Tabulator SPEC
+data/
+- Docs/
+  - miscellaneous documents
+- Schemas/
+  - schema files for all data structures processed by the Tabulator
+- Tests/
+  - test data files
 
-Schemas/
-- schema files encompassing all data structures processed by the Tabulator
+doc/
+- RDoc documentation
 
-Tests/
-- test data files (Syntax, Election Definitions, Counter Counts, EMGR datasets)
+lib/
+- primary Ruby executables
+
+test/
+- Ruby unit tests
 
 -----------------
 Author: Jeff Cook
-Date: 2 Feb 2011
+Date: 18 Feb 2011

@@ -1,12 +1,16 @@
-407,851,349,"operator.rb"
-,851,349,"total"
+397,847,450,"operator.rb"
+,847,450,"total"
 ,,,
-271,454,183,"check_syntax_yaml.rb"
-140,251,224,"tabulator.rb"
-500,1054,560,"validate.rb"
-,1759,967,"total"
+300,492,192,"check_syntax_yaml.rb"
+152,295,143,"tabulator.rb"
+431,936,505,"validate.rb"
+,1723,840,"total"
 ,,,
-127,361,234,"check_syntax_yaml_test.rb"
-175,432,257,"tabulator_test.rb"
-92,174,82,"xoperator_test.rb"
-,967,573,
+137,380,243,"check_syntax_yaml_test.rb"
+91,167,76,"operator_test.rb"
+160,371,211,"tabulator_test.rb"
+175,416,241,"validator_test.rb"
+,1334,771,"total"
+,,,
+,,,"wc -l *rb"
+,,,"gnc *rb"
