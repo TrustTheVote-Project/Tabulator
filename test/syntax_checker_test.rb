@@ -24,16 +24,16 @@
 
 require "yaml"
 require "test/unit"
-require "lib/check_syntax_yaml"
+require "lib/syntax_checker"
 
-# The CheckSyntaxYamlTest class provides Unit Testing for the CheckSyntaxYaml
+# The SyntaxCheckerYamlTest class provides Unit Testing for the SyntaxCheckerYaml
 # class.  It also (re)initializes, during setup, the set of schemas used by
 # the syntax checker, held in the directory data/Schemas.  If the contents of
 # this directory are emptied, all schemas files are written anew.  If any
 # schema file is missing from this directory, a new one is written to replace
 # it.
 
-class CheckSyntaxYamlTest < Test::Unit::TestCase
+class SyntaxCheckerYamlTest < Test::Unit::TestCase
 
 # Change this constant to <i>true</i> if you want these tests to regenerate
 # the built-in schema files each time the tests are run.  When <i>false</i>,
@@ -285,16 +285,16 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
   def schema_setup(trace, prefix, schema, validate = true)
     if (validate)
       print "Checking Validity of Schema: #{prefix}\n"
-      csy = CheckSyntaxYaml.new
-      result = csy.schema_is_valid?(schema, trace)
+      scy = SyntaxCheckerYaml.new
+      result = scy.schema_is_valid?(schema, trace)
       assert(result, "Invalid schema: #{schema.inspect}")
-      print csy.error_messages unless result
+      print scy.error_messages unless result
     else
       print "Checking Invalidity of Schema: #{prefix}\n"
-      csy = CheckSyntaxYaml.new
-      result = csy.schema_is_valid?(schema, trace)
+      scy = SyntaxCheckerYaml.new
+      result = scy.schema_is_valid?(schema, trace)
       assert(!result, "Valid schema (should be invalid): #{schema.inspect}")
-      print csy.error_messages unless result
+      print scy.error_messages unless result
     end
     file = "data/Schemas/" + prefix + "_schema.yml"
     if (! File.exist?(file))
@@ -324,8 +324,8 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     file = "data/Tests/Syntax/" + "#{prefix}" + postfix + ".yml"
     print "Reading Data File: #{file}\n"
     datum = File.open(file) { |infile| YAML::load(infile) }
-    csy = CheckSyntaxYaml.new
-    errors, messages = csy.check_syntax(schema, datum, true, trace)
+    scy = SyntaxCheckerYaml.new
+    errors, messages = scy.check_syntax(schema, datum, true, trace)
     print messages unless errors.length == 0
     assert(errors.length == 0, "Check Syntax of #{prefix} FAILED")
     print "Check Syntax of #{prefix}: OK\n\n"
@@ -357,15 +357,15 @@ class CheckSyntaxYamlTest < Test::Unit::TestCase
     file = "data/Tests/Syntax/Errors/" + "#{prefix}_" + err1.inspect + ".yml"
     print "Reading Data Error File: #{file}\n"
     datum = File.open(file) { |infile| YAML::load(infile) }
-    csy = CheckSyntaxYaml.new
+    scy = SyntaxCheckerYaml.new
     unless (validate)
-      errors, messages = csy.check_syntax(schema, datum, true, trace)
+      errors, messages = scy.check_syntax(schema, datum, true, trace)
       print messages unless errors.length == 0
       assert(errors.length > 0,
              "Check Syntax schema validation check of #{prefix}_schema did not FAIL, but SHOULD")
       assert((errors[0] == -1), "Check Syntax error code not: -1")
     end
-    errors, messages = csy.check_syntax(schema, datum, validate, trace)
+    errors, messages = scy.check_syntax(schema, datum, validate, trace)
     print messages unless errors.length == 0
     assert(errors.length > 0,
            "Check Syntax of #{prefix} did not FAIL, but SHOULD")

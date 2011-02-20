@@ -5,38 +5,31 @@
 
 <html>
 <head>
-  <title>validate_questions (TabulatorValidate)</title>
+  <title>validate_candidate_counts (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 570</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_questions</span>(<span class="ruby-identifier">questions</span>)
-    <span class="ruby-identifier">uniq_questions</span> = []
-    <span class="ruby-identifier">questions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">question</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">qid</span> = <span class="ruby-identifier">question</span>[<span class="ruby-value str">&quot;ident&quot;</span>].<span class="ruby-identifier">to_s</span>
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;question&quot;</span>, <span class="ruby-identifier">qid</span>))
-        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">uniq_questions</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">question</span>))
-          <span class="ruby-identifier">val_warn</span>(<span class="ruby-value str">&quot;Duplicate Question Declaration&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Election Definition&quot;</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Non-Unique Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Election Definition&quot;</span>)
-        <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 785</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_candidate_counts</span>(<span class="ruby-identifier">candidate_counts</span>, <span class="ruby-identifier">conid</span>)
+    <span class="ruby-identifier">all_canids</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_contests</span>[<span class="ruby-identifier">conid</span>][<span class="ruby-value str">&quot;candidate_count_list&quot;</span>].
+      <span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">canc</span><span class="ruby-operator">|</span> <span class="ruby-identifier">canc</span>[<span class="ruby-value str">&quot;candidate_ident&quot;</span>].<span class="ruby-identifier">to_s</span>}
+    <span class="ruby-identifier">canids</span> = []
+    <span class="ruby-identifier">candidate_counts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cancount</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">canid</span> = <span class="ruby-identifier">cancount</span>[<span class="ruby-value str">&quot;candidate_ident&quot;</span>].<span class="ruby-identifier">to_s</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;candidate&quot;</span>, <span class="ruby-identifier">canid</span>))
+        <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Non-Existent Candidate UID&quot;</span>, <span class="ruby-identifier">canid</span>, <span class="ruby-value str">&quot;for Contest UID&quot;</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-value str">&quot;in Contest Count&quot;</span>)
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">all_canids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">canid</span>))
+        <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Improper Candidate UID&quot;</span>, <span class="ruby-identifier">canid</span>, <span class="ruby-value str">&quot;for Contest UID&quot;</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-value str">&quot;in Contest Count&quot;</span>)
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">canids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">canid</span>))
+        <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Duplicate Candidate UID&quot;</span>, <span class="ruby-identifier">canid</span>, <span class="ruby-value str">&quot;for Contest UID&quot;</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-value str">&quot;in Contest Count&quot;</span>)
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">uniq_questions</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">question</span>)
-        <span class="ruby-identifier">uid_add</span>(<span class="ruby-value str">&quot;question&quot;</span>, <span class="ruby-identifier">qid</span>)
-        <span class="ruby-identifier">did</span> = <span class="ruby-identifier">question</span>[<span class="ruby-value str">&quot;district_ident&quot;</span>].<span class="ruby-identifier">to_s</span>
-        <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Non-Existent District UID&quot;</span>, <span class="ruby-identifier">did</span>, <span class="ruby-value str">&quot;for Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question&quot;</span>) <span class="ruby-keyword kw">unless</span>
-          <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;district&quot;</span>, <span class="ruby-identifier">did</span>)
-        <span class="ruby-identifier">answers</span> = <span class="ruby-identifier">question</span>[<span class="ruby-value str">&quot;answer_list&quot;</span>].<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">answer</span><span class="ruby-operator">|</span> <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">to_s</span>}
-        <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">answers</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">length</span>)
-          <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Duplicate Answers&quot;</span>, <span class="ruby-identifier">answers</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-value str">&quot;for Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question&quot;</span>)
-        <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>] = {<span class="ruby-value str">&quot;question_ident&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">qid</span>,
-          <span class="ruby-value str">&quot;overvote_count&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>,
-          <span class="ruby-value str">&quot;undervote_count&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>,
-          <span class="ruby-value str">&quot;answer_count_list&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">answers</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ans</span><span class="ruby-operator">|</span> {<span class="ruby-value str">&quot;answer&quot;</span>=<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ans</span>,
-              <span class="ruby-value str">&quot;count&quot;</span>=<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>}}}
+        <span class="ruby-identifier">canids</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">canid</span>)
       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">canids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">all_canids</span>.<span class="ruby-identifier">length</span>)
+      <span class="ruby-identifier">candiff</span> = (<span class="ruby-identifier">all_canids</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">canids</span>).<span class="ruby-identifier">inspect</span>
+      <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Missing Candidate UIDs&quot;</span>, <span class="ruby-identifier">candiff</span>, <span class="ruby-value str">&quot;for Contest UID&quot;</span>, <span class="ruby-identifier">conid</span>, <span class="ruby-value str">&quot;in Contest Count&quot;</span>)
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>

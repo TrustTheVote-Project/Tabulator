@@ -5,18 +5,18 @@
 
 <html>
 <head>
-  <title>opx_print_tabulator_count (Operator)</title>
+  <title>opx_warn (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 439</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_print_tabulator_count</span>(<span class="ruby-identifier">tab</span>)
-    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Tabulator Count\n&quot;</span>)
-    <span class="ruby-identifier">opx_print</span>(<span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">tabulator_count</span>))
-    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 455</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** ERROR ** #{message}\n&quot;</span>)}
+    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** WARNING ** #{message}\n&quot;</span>)}
+    <span class="ruby-identifier">tab</span>
   <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal failure during YAML::dump of Tabulator Count&quot;</span>, <span class="ruby-identifier">e</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal error while fetching Tabulator errors/warnings&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -94,21 +94,21 @@ test for errors, but for achievement of state and correct vote counts.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000049">tabulator_messages_generate</a>&nbsp;&nbsp;
-      <a href="#M000050">tabulator_print_errors_warnings</a>&nbsp;&nbsp;
-      <a href="#M000051">tabulator_test_add_cc</a>&nbsp;&nbsp;
-      <a href="#M000055">tabulator_test_answer_vote</a>&nbsp;&nbsp;
-      <a href="#M000053">tabulator_test_candidate_vote</a>&nbsp;&nbsp;
-      <a href="#M000047">tabulator_test_check_syntax</a>&nbsp;&nbsp;
-      <a href="#M000052">tabulator_test_contest_votes</a>&nbsp;&nbsp;
-      <a href="#M000056">tabulator_test_instantiate_tabulator</a>&nbsp;&nbsp;
-      <a href="#M000048">tabulator_test_load_jd_ed</a>&nbsp;&nbsp;
-      <a href="#M000054">tabulator_test_question_votes</a>&nbsp;&nbsp;
-      <a href="#M000057">tabulator_test_read_file</a>&nbsp;&nbsp;
-      <a href="#M000058">tabulator_test_write_tabulator_file</a>&nbsp;&nbsp;
-      <a href="#M000044">test_tabulator</a>&nbsp;&nbsp;
-      <a href="#M000046">test_tabulator_bedrock</a>&nbsp;&nbsp;
-      <a href="#M000045">test_tabulator_default</a>&nbsp;&nbsp;
+      <a href="#M000022">tabtest_add_counter_count</a>&nbsp;&nbsp;
+      <a href="#M000018">tabtest_check_syntax</a>&nbsp;&nbsp;
+      <a href="#M000028">tabtest_file_read</a>&nbsp;&nbsp;
+      <a href="#M000029">tabtest_file_write_tabulator</a>&nbsp;&nbsp;
+      <a href="#M000021">tabtest_print_errors_warnings</a>&nbsp;&nbsp;
+      <a href="#M000020">tabtest_print_messages</a>&nbsp;&nbsp;
+      <a href="#M000027">tabtest_tabulator_instantiate</a>&nbsp;&nbsp;
+      <a href="#M000019">tabtest_tabulator_new</a>&nbsp;&nbsp;
+      <a href="#M000026">tabtest_vote_answer</a>&nbsp;&nbsp;
+      <a href="#M000024">tabtest_vote_candidate</a>&nbsp;&nbsp;
+      <a href="#M000023">tabtest_votes_contest</a>&nbsp;&nbsp;
+      <a href="#M000025">tabtest_votes_question</a>&nbsp;&nbsp;
+      <a href="#M000015">test_tabulator</a>&nbsp;&nbsp;
+      <a href="#M000017">test_tabulator_bedrock</a>&nbsp;&nbsp;
+      <a href="#M000016">test_tabulator_default</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -153,128 +153,70 @@ test for errors, but for achievement of state and correct vote counts.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000044" class="method-detail">
-        <a name="M000044"></a>
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000044.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000044.html');return false;">
+          <a href="TabulatorTest.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000015.html');return false;">
           <span class="method-name">test_tabulator</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Tests for all successful state achievement with given vote counts.
+Tests for successful DONE state achievement and specified number of missing
+counts, test data from data/Tests/Validation.
 </p>
         </div>
       </div>
 
-      <div id="method-M000046" class="method-detail">
-        <a name="M000046"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000046.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000046.html');return false;">
+          <a href="TabulatorTest.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000017.html');return false;">
           <span class="method-name">test_tabulator_bedrock</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Tests for specified number of missing counts, test data from
+data/Test/Bedrock.
+</p>
         </div>
       </div>
 
-      <div id="method-M000045" class="method-detail">
-        <a name="M000045"></a>
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000045.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000045.html');return false;">
+          <a href="TabulatorTest.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000016.html');return false;">
           <span class="method-name">test_tabulator_default</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Tests for successful DONE state achievement, specified number of missing
+counts, and exact voting results for three Counter Counts; test data from
+data/Tests/Default.
+</p>
         </div>
       </div>
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000049" class="method-detail">
-        <a name="M000049"></a>
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000049.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000049.html');return false;">
-          <span class="method-name">tabulator_messages_generate</span><span class="method-args">(messages, header, printit = false)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>messages</em>: (<em>Array</em>) of error/warning messages
-
-</li>
-<li><em>header</em>: (<em>Array</em>) of error/warning messages
-
-</li>
-<li><em>printit</em>: (<em>Boolean</em>) whether to print the error/warning
-messages (optional)
-
-</li>
-</ul>
-<p>
-Returns: <em>String</em>
-</p>
-<p>
-Returns a <em>String</em> containing the concatenation of all of the
-error/warning <em>messages</em>, each preceded by the <em>header</em> and
-followed by a <em>newline</em> character. If <em>printit</em> is
-<em>true</em>, the <em>messages</em> are printed before being returned.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000050" class="method-detail">
-        <a name="M000050"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000050.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000050.html');return false;">
-          <span class="method-name">tabulator_print_errors_warnings</span><span class="method-args">(tab)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
-href="Tabulator.html">Tabulator</a> object
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Prints all error and warning messages currently held by the <a
-href="Tabulator.html">Tabulator</a>.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000051.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000051.html');return false;">
-          <span class="method-name">tabulator_test_add_cc</span><span class="method-args">(trace, dir, cc_file, done, cvotes = false, qvotes = false)</span>
+          <a href="TabulatorTest.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000022.html');return false;">
+          <span class="method-name">tabtest_add_counter_count</span><span class="method-args">(trace, dir, cc_file, done, cvotes = false, qvotes = false)</span>
           </a>
         </div>
       
@@ -307,89 +249,13 @@ content-wise.
         </div>
       </div>
 
-      <div id="method-M000055" class="method-detail">
-        <a name="M000055"></a>
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000055.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000055.html');return false;">
-          <span class="method-name">tabulator_test_answer_vote</span><span class="method-args">(tab, qid, k, v)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
-href="Tabulator.html">Tabulator</a> object
-
-</li>
-<li><em>qid</em>: (<em>String</em>) Question UID
-
-</li>
-<li><em>k</em>: (<em>String</em>) Answer UID
-
-</li>
-<li><em>v</em>: (<em>String</em>) Answer vote count
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Checks the correctness of the vote count of the Answer to the Question.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000053.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000053.html');return false;">
-          <span class="method-name">tabulator_test_candidate_vote</span><span class="method-args">(tab, conid, k, v)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
-href="Tabulator.html">Tabulator</a> object
-
-</li>
-<li><em>conid</em>: (<em>String</em>) Contest UID
-
-</li>
-<li><em>k</em>: (<em>String</em>) Candidate UID
-
-</li>
-<li><em>v</em>: (<em>String</em>) Candidate vote count
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Checks the correctness of the vote count of the candidate for the Contest.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000047" class="method-detail">
-        <a name="M000047"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000047.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000047.html');return false;">
-          <span class="method-name">tabulator_test_check_syntax</span><span class="method-args">(trace, prefix, dir, file)</span>
+          <a href="TabulatorTest.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000018.html');return false;">
+          <span class="method-name">tabtest_check_syntax</span><span class="method-args">(trace, prefix, dir, file)</span>
           </a>
         </div>
       
@@ -421,13 +287,73 @@ check of the datum against the schema.
         </div>
       </div>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000052.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000052.html');return false;">
-          <span class="method-name">tabulator_test_contest_votes</span><span class="method-args">(tab, cvotes)</span>
+          <a href="TabulatorTest.src/M000028.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000028.html');return false;">
+          <span class="method-name">tabtest_file_read</span><span class="method-args">(file, label)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>file</em>: (<em>String</em>) file name
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Reads and returns the contents of the <em>file</em>, while testing to
+ensure the file read operation succeeds.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000029.html');return false;">
+          <span class="method-name">tabtest_file_write_tabulator</span><span class="method-args">(tc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tc</em>: (<em>Hash</em>) <a href="Tabulator.html">Tabulator</a> Count
+data
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Writes the <a href="Tabulator.html">Tabulator</a> Count data to the
+<b><tt>TABULATOR_DATA_FILE</b></tt>, while testing to ensure that the file
+write operation succeeds.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000021.html');return false;">
+          <span class="method-name">tabtest_print_errors_warnings</span><span class="method-args">(tab)</span>
           </a>
         </div>
       
@@ -440,26 +366,62 @@ Arguments:
 href="Tabulator.html">Tabulator</a> object
 
 </li>
-<li><em>cvotes</em>: (<em>Array</em>) Expected contest vote counts
-
-</li>
 </ul>
 <p>
 Returns: N/A
 </p>
 <p>
-Checks the correctness of the vote counts for contests.
+Prints all error and warning messages currently held by the <a
+href="Tabulator.html">Tabulator</a>.
 </p>
         </div>
       </div>
 
-      <div id="method-M000056" class="method-detail">
-        <a name="M000056"></a>
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000056.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000056.html');return false;">
-          <span class="method-name">tabulator_test_instantiate_tabulator</span><span class="method-args">(trace)</span>
+          <a href="TabulatorTest.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000020.html');return false;">
+          <span class="method-name">tabtest_print_messages</span><span class="method-args">(messages, header, printit = false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>messages</em>: (<em>Array</em>) of error/warning messages
+
+</li>
+<li><em>header</em>: (<em>Array</em>) of error/warning messages
+
+</li>
+<li><em>printit</em>: (<em>Boolean</em>) whether to print the error/warning
+messages (optional)
+
+</li>
+</ul>
+<p>
+Returns: <em>String</em>
+</p>
+<p>
+Returns a <em>String</em> containing the concatenation of all of the
+error/warning <em>messages</em>, each preceded by the <em>header</em> and
+followed by a <em>newline</em> character. If <em>printit</em> is
+<em>true</em>, the <em>messages</em> are printed before being returned.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000027.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000027.html');return false;">
+          <span class="method-name">tabtest_tabulator_instantiate</span><span class="method-args">(trace)</span>
           </a>
         </div>
       
@@ -484,13 +446,13 @@ be no errors or warnings.
         </div>
       </div>
 
-      <div id="method-M000048" class="method-detail">
-        <a name="M000048"></a>
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000048.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000048.html');return false;">
-          <span class="method-name">tabulator_test_load_jd_ed</span><span class="method-args">(trace, dir, jd_file, ed_file)</span>
+          <a href="TabulatorTest.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000019.html');return false;">
+          <span class="method-name">tabtest_tabulator_new</span><span class="method-args">(trace, dir, jd_file, ed_file)</span>
           </a>
         </div>
       
@@ -523,13 +485,121 @@ should occur.
         </div>
       </div>
 
-      <div id="method-M000054" class="method-detail">
-        <a name="M000054"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="TabulatorTest.src/M000054.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000054.html');return false;">
-          <span class="method-name">tabulator_test_question_votes</span><span class="method-args">(tab, qvotes)</span>
+          <a href="TabulatorTest.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000026.html');return false;">
+          <span class="method-name">tabtest_vote_answer</span><span class="method-args">(tab, qid, k, v)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
+
+</li>
+<li><em>qid</em>: (<em>String</em>) Question UID
+
+</li>
+<li><em>k</em>: (<em>String</em>) Answer UID
+
+</li>
+<li><em>v</em>: (<em>String</em>) Answer vote count
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Checks the correctness of the vote count of the Answer to the Question.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000024.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000024.html');return false;">
+          <span class="method-name">tabtest_vote_candidate</span><span class="method-args">(tab, conid, k, v)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
+
+</li>
+<li><em>conid</em>: (<em>String</em>) Contest UID
+
+</li>
+<li><em>k</em>: (<em>String</em>) Candidate UID
+
+</li>
+<li><em>v</em>: (<em>String</em>) Candidate vote count
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Checks the correctness of the vote count of the candidate for the Contest.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000023.html');return false;">
+          <span class="method-name">tabtest_votes_contest</span><span class="method-args">(tab, cvotes)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>tab</em>: (<em><a href="Tabulator.html">Tabulator</a></em>) <a
+href="Tabulator.html">Tabulator</a> object
+
+</li>
+<li><em>cvotes</em>: (<em>Array</em>) Expected contest vote counts
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Checks the correctness of the vote counts for contests.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="TabulatorTest.src/M000025.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorTest.src/M000025.html');return false;">
+          <span class="method-name">tabtest_votes_question</span><span class="method-args">(tab, qvotes)</span>
           </a>
         </div>
       
@@ -551,66 +621,6 @@ Returns: N/A
 </p>
 <p>
 Checks the correctness of the vote counts for questions.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000057.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000057.html');return false;">
-          <span class="method-name">tabulator_test_read_file</span><span class="method-args">(file, label)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>file</em>: (<em>String</em>) file name
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Reads and returns the contents of the <em>file</em>, while testing to
-ensure the file read operation succeeds.
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
-
-        <div class="method-heading">
-          <a href="TabulatorTest.src/M000058.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorTest.src/M000058.html');return false;">
-          <span class="method-name">tabulator_test_write_tabulator_file</span><span class="method-args">(tc)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Arguments:
-</p>
-<ul>
-<li><em>tc</em>: (<em>Hash</em>) <a href="Tabulator.html">Tabulator</a> Count
-data
-
-</li>
-</ul>
-<p>
-Returns: N/A
-</p>
-<p>
-Writes the <a href="Tabulator.html">Tabulator</a> Count data to the
-<b><tt>TABULATOR_DATA_FILE</b></tt>, while testing to ensure that the file
-write operation succeeds.
 </p>
         </div>
       </div>

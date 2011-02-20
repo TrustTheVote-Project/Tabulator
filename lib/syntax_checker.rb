@@ -28,7 +28,7 @@
 # checking the syntax of data files, and schema_is_valid? for checking the
 # syntax of the schemas used to check everything else.
 
-class CheckSyntaxYaml
+class SyntaxCheckerYaml
 
 # <tt><b>TRACE_DEFAULT</b></tt> is an <i>Integer</i> constant (300) that holds
 # the default setting for character-limited printing while tracing output.

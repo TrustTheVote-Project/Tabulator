@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: SyntaxCheckerYamlTest</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">SyntaxCheckerYamlTest</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/test/syntax_checker_test_rb.html">
+                test/syntax_checker_test.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Test::Unit::TestCase
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <a href="SyntaxCheckerYamlTest.html">SyntaxCheckerYamlTest</a> class
+provides Unit Testing for the <a
+href="SyntaxCheckerYaml.html">SyntaxCheckerYaml</a> class. It also
+(re)initializes, during <a
+href="SyntaxCheckerYamlTest.html#M000003">setup</a>, the set of schemas
+used by the syntax checker, held in the directory data/Schemas. If the
+contents of this directory are emptied, all schemas files are written anew.
+If any schema file is missing from this directory, a new one is written to
+replace it.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000005">schema_setup</a>&nbsp;&nbsp;
+      <a href="#M000003">setup</a>&nbsp;&nbsp;
+      <a href="#M000007">syntax_error</a>&nbsp;&nbsp;
+      <a href="#M000006">syntax_ok</a>&nbsp;&nbsp;
+      <a href="#M000004">test_check_syntax</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCHEMA_OVERWRITE</td>
+          <td>=</td>
+          <td class="context-item-value">false</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Change this constant to <em>true</em> if you want these tests to regenerate
+the built-in schema files each time the tests are run. When <em>false</em>,
+new schema files are written only if they are missing from data/Schemas/.
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="SyntaxCheckerYamlTest.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('SyntaxCheckerYamlTest.src/M000003.html');return false;">
+          <span class="method-name">setup</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Define schemas for all known TTV CDF dataset types recognized by the <a
+href="Tabulator.html">Tabulator</a>. Calls <a
+href="SyntaxCheckerYamlTest.html#M000005">schema_setup</a> to validate each
+significant schema and then optionally write the schema to a file for later
+use by the <a href="Tabulator.html">Tabulator</a>. The following schemas
+are processed:
+</p>
+<ul>
+<li>unknown_type: for testing (invalid) schemas containing an unknown type
+
+</li>
+<li>unknown_string: for testing (invalid) schemas containing an unrecognized
+string
+
+</li>
+<li>invalid_hash_key: for testing (invalid) schema containing non-String Hash
+key
+
+</li>
+<li>test_opt: for testing schemas with OPT(ional) Hash keys
+
+</li>
+<li>test_alt: for testing schemas with ALT(ernate) Hash keys
+
+</li>
+<li>district_info: District information schema
+
+</li>
+<li>precinct_info: Precinct information schema
+
+</li>
+<li>audit_header_info: Audit Header information schema
+
+</li>
+<li>audit_header: Audit Header schema
+
+</li>
+<li>jurisdiction_definition_info: Jurisdiction Definition information schema
+
+</li>
+<li>jurisdiction_definition: Jurisdiction Definition schema
+
+</li>
+<li>expected_count_info: Expected Count information schema
+
+</li>
+<li>contest_info: Contest information schema
+
+</li>
+<li>candidate_info: Candidate information schema
+
+</li>
+<li>question_info: Question information schema
+
+</li>
+<li>counter_info: Counter information schema
+
+</li>
+<li>election: Election schema
+
+</li>
+<li>election_definition_info: Election Definition information schema
+
+</li>
+<li>election_definition: Election Definition schema
+
+</li>
+<li>answer_count: Answer Count schema
+
+</li>
+<li>question_count: Question Count schema
+
+</li>
+<li>candidate_count: Candidate Count schema
+
+</li>
+<li>contest_count: Contest Count schema
+
+</li>
+<li>counter_count: Counter Count schema
+
+</li>
+<li>tabulator_count: <a href="Tabulator.html">Tabulator</a> Count schema
+
+</li>
+</ul>
+<p>
+The following schemas are defined but not processed, because they are
+subsumed by a higher-level schemas:
+</p>
+<ul>
+<li>jurisdiction_definition_info: subsumed by Jurisdiction Definition schema
+
+</li>
+<li>election_definition_info: subsumed by Election Definition schema
+
+</li>
+<li>audit_header_info: subsumed by Audit Header schema
+
+</li>
+</ul>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="SyntaxCheckerYamlTest.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('SyntaxCheckerYamlTest.src/M000004.html');return false;">
+          <span class="method-name">test_check_syntax</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+First test the errors generated by the syntax checker, by making repeated
+calls to syntax_ok_error, each of which tests for a different error code,
+and where all possible error codes are covered.
+</p>
+<p>
+Next test the syntax of data files representing all of the significant
+schemas, by making repeated calls to <a
+href="SyntaxCheckerYamlTest.html#M000006">syntax_ok</a>, each of which uses
+data stored in files under data/Tests/Syntax to syntax-check against a
+schema defined during <a
+href="SyntaxCheckerYamlTest.html#M000003">setup</a>. Some schemas,
+especially those with optional Hash keys, have multiple test variations.
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="SyntaxCheckerYamlTest.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('SyntaxCheckerYamlTest.src/M000005.html');return false;">
+          <span class="method-name">schema_setup</span><span class="method-args">(trace, prefix, schema, validate = true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>trace</em>: (<em>Integer</em>) limits tracing of output for the syntax
+checker
+
+</li>
+<li><em>prefix</em>: (<em>String</em>) prefix of the schema file name
+
+</li>
+<li><em>schema</em>: (<em>Arbitrary</em>) schema to be written to a schema file
+
+</li>
+<li><em>validate</em>: (<em>Boolean</em>) indicates when to check the validity
+of the schema (optional, default <em>true</em>)
+
+</li>
+</ul>
+<p>
+Returns: N/A
+</p>
+<p>
+Assert the validity of the <em>schema</em>, unless <em>validate</em> is
+<em>false</em>, in which case assert the invalidity of the <em>schema</em>.
+Schemas are stored in the data/Schemas/ subdirectory and are named
+&quot;schema_foo.yml&quot; when the schema is for an object named
+&quot;foo&quot;. If the schema file does not yet exist, it is written. If
+it does exist, but the <em>write</em> flag is <em>true</em>, then it is
+over-written. Deleting schema files from the data/Schemas/ directory
+permits these schemas to be re-generated when the unit tests are run.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="SyntaxCheckerYamlTest.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('SyntaxCheckerYamlTest.src/M000007.html');return false;">
+          <span class="method-name">syntax_error</span><span class="method-args">(trace, prefix, validate, err1, err2 = -1, err3 = -1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>trace</em>: (<em>Integer</em>) limits tracing of output for the syntax
+checker
+
+</li>
+<li><em>prefix</em>: (<em>String</em>) prefix of the schema and data file names
+
+</li>
+<li><em>validate</em>: (<em>Boolean</em>) indicates when the schema is to be
+validated
+
+</li>
+<li><em>err1</em>: (<em>Integer</em>) error code 1
+
+</li>
+<li><em>err2</em>: (<em>Integer</em>) error code 2 (optional, default -1)
+
+</li>
+<li><em>err3</em>: (<em>Integer</em>) error code 3 (optional, default -1)
+
+</li>
+</ul>
+<p>
+Returns: Boolean
+</p>
+<p>
+Read a schema from one file (under data/Schemas/) and a datum containing a
+syntax error from another file (under data/Tests/Syntax/Errors/), and then
+assert the failure of performing a syntax check of the datum against the
+schema. If <em>validate</em> is <em>false</em>, assert that the syntax
+checker will fail and the error code stack will contain -1 (schema
+validation error). We are testing for errors, so the syntax check must
+fail, and the resulting error code stack&#8216;s first three errors must be
+<em>err1</em>, <em>err2</em> (optional), and <em>err3</em> (optional).
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="SyntaxCheckerYamlTest.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('SyntaxCheckerYamlTest.src/M000006.html');return false;">
+          <span class="method-name">syntax_ok</span><span class="method-args">(trace, prefix, postfix = '')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Arguments:
+</p>
+<ul>
+<li><em>trace</em>: (<em>Integer</em>) limits tracing of output for the syntax
+checker
+
+</li>
+<li><em>prefix</em>: (<em>String</em>) prefix of the schema and data file names
+
+</li>
+<li><em>postfix</em>: (<em>String</em>) postfix for the data file name
+(optional, default &#8217;&#8217;)
+
+</li>
+</ul>
+<p>
+Returns: Boolean
+</p>
+<p>
+Read a schema from one file (under data/Schemas/) and a datum from another
+file (under data/Tests/Syntax/), and then assert the success of performing
+a syntax check of the datum against the schema.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>opc_help (TabulatorOperator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 130</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_help</span>(<span class="ruby-identifier">detail</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">detail</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Note: [DEBUG] indicates a temporary/prototype command option.
+
+&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Commands:
+
+  ruby operator.rb       # basic command help information
+  ruby operator.rb help  # detailed command help information
+  ruby operator.rb reset # reset Tabulator to EMPTY state
+  ruby operator.rb data  # print Tabulator data
+  ruby operator.rb state # print Tabulator state, one of: 
+                              EMPTY, INITIAL, ACCUMULATING, or DONE  
+  ruby operator.rb total # print Tabulator state, show missing counts, and
+                              print spreadsheet with current voting results
+
+  ruby operator.rb load &lt;Jurisdiction_Def_File&gt; &lt;Election_Def_File&gt;
+&quot;</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">detail</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+     # The two files must contain, respectively, a Jurisdiction Definition
+     # and an Election Definition.  Each is checked for proper syntax and
+     # then validated, after which a zero-initialized Tabulator Count is
+     # constructed and saved to file.  This command moves the state of the
+     # Tabulator from EMPTY to INITIAL.
+&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+     # Process two Jurisdiction and Election Definition files to initialize
+     # the Tabulator, moving its state from EMPTY to INITIAL.
+&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+  ruby operator.rb add &lt;Counter_Count_File&gt;
+&quot;</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">detail</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+     # The file contains a Counter Count, rejected if the state of the
+     # Tabulator is EMPTY.  First the Tabulator is re-instantiated using the
+     # current Tabulator data file.  Then the Counter Count is checked for
+     # proper syntax, validated, and incorporated into the Tabulator dataset,
+     # which is saved to file.  This command allows the Tabulator to
+     # accumulate votes, and enter the ACCUMULATING state. When the last
+     # expected count is accumulated, the Tabulator enters the DONE state.
+&quot;</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+     # Process a Counter Count file to accumulate votes.  The Tabulator state
+     # becomes ACCUMULATING, unless this is the last expected count, in which
+     # case the Tabulator state is DONE.
+&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">detail</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;
+  ruby operator.rb check [&lt;Tabulator_Count_File&gt;]
+
+     # [DEBUG] The file contains a Tabulator
+     # Count (the default Tabulator dataset is used if the file is left
+     # unspecified).  It is checked for proper syntax and validated.  This
+     # command is informational only and may be used to check the consistency
+     # of the current Tabulator dataset.
+&quot;</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;
+Tabulator data file: #{TABULATOR_DATA_FILE}
+
+&quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

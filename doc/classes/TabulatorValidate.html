@@ -116,34 +116,34 @@ reinstantiation from file storage, it performs these additional operations:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000016">new</a>&nbsp;&nbsp;
-      <a href="#M000025">new_tabulator_count</a>&nbsp;&nbsp;
-      <a href="#M000024">uid_add</a>&nbsp;&nbsp;
-      <a href="#M000022">uid_exists?</a>&nbsp;&nbsp;
-      <a href="#M000023">uids_exist?</a>&nbsp;&nbsp;
-      <a href="#M000020">val_err</a>&nbsp;&nbsp;
-      <a href="#M000019">val_fatal</a>&nbsp;&nbsp;
-      <a href="#M000021">val_warn</a>&nbsp;&nbsp;
-      <a href="#M000040">validate_candidate_counts</a>&nbsp;&nbsp;
-      <a href="#M000033">validate_candidates</a>&nbsp;&nbsp;
-      <a href="#M000039">validate_contest_counts</a>&nbsp;&nbsp;
-      <a href="#M000032">validate_contests</a>&nbsp;&nbsp;
-      <a href="#M000038">validate_counter_count</a>&nbsp;&nbsp;
-      <a href="#M000043">validate_counter_counts</a>&nbsp;&nbsp;
-      <a href="#M000035">validate_counters</a>&nbsp;&nbsp;
-      <a href="#M000028">validate_districts</a>&nbsp;&nbsp;
-      <a href="#M000031">validate_election</a>&nbsp;&nbsp;
-      <a href="#M000030">validate_election_definition</a>&nbsp;&nbsp;
-      <a href="#M000029">validate_errors_warnings</a>&nbsp;&nbsp;
-      <a href="#M000037">validate_expected_counts</a>&nbsp;&nbsp;
-      <a href="#M000026">validate_jurisdiction_definition</a>&nbsp;&nbsp;
-      <a href="#M000027">validate_precincts</a>&nbsp;&nbsp;
-      <a href="#M000041">validate_question_counts</a>&nbsp;&nbsp;
-      <a href="#M000034">validate_questions</a>&nbsp;&nbsp;
-      <a href="#M000036">validate_reporting_groups</a>&nbsp;&nbsp;
-      <a href="#M000042">validate_tabulator_count</a>&nbsp;&nbsp;
-      <a href="#M000017">validation_errors</a>&nbsp;&nbsp;
-      <a href="#M000018">validation_warnings</a>&nbsp;&nbsp;
+      <a href="#M000010">new</a>&nbsp;&nbsp;
+      <a href="#M000019">new_tabulator_count</a>&nbsp;&nbsp;
+      <a href="#M000018">uid_add</a>&nbsp;&nbsp;
+      <a href="#M000016">uid_exists?</a>&nbsp;&nbsp;
+      <a href="#M000017">uids_exist?</a>&nbsp;&nbsp;
+      <a href="#M000014">val_err</a>&nbsp;&nbsp;
+      <a href="#M000013">val_fatal</a>&nbsp;&nbsp;
+      <a href="#M000015">val_warn</a>&nbsp;&nbsp;
+      <a href="#M000034">validate_candidate_counts</a>&nbsp;&nbsp;
+      <a href="#M000027">validate_candidates</a>&nbsp;&nbsp;
+      <a href="#M000033">validate_contest_counts</a>&nbsp;&nbsp;
+      <a href="#M000026">validate_contests</a>&nbsp;&nbsp;
+      <a href="#M000032">validate_counter_count</a>&nbsp;&nbsp;
+      <a href="#M000037">validate_counter_counts</a>&nbsp;&nbsp;
+      <a href="#M000029">validate_counters</a>&nbsp;&nbsp;
+      <a href="#M000022">validate_districts</a>&nbsp;&nbsp;
+      <a href="#M000025">validate_election</a>&nbsp;&nbsp;
+      <a href="#M000024">validate_election_definition</a>&nbsp;&nbsp;
+      <a href="#M000023">validate_errors_warnings</a>&nbsp;&nbsp;
+      <a href="#M000031">validate_expected_counts</a>&nbsp;&nbsp;
+      <a href="#M000020">validate_jurisdiction_definition</a>&nbsp;&nbsp;
+      <a href="#M000021">validate_precincts</a>&nbsp;&nbsp;
+      <a href="#M000035">validate_question_counts</a>&nbsp;&nbsp;
+      <a href="#M000028">validate_questions</a>&nbsp;&nbsp;
+      <a href="#M000030">validate_reporting_groups</a>&nbsp;&nbsp;
+      <a href="#M000036">validate_tabulator_count</a>&nbsp;&nbsp;
+      <a href="#M000011">validation_errors</a>&nbsp;&nbsp;
+      <a href="#M000012">validation_warnings</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -264,13 +264,13 @@ identifiers (UIDs), plus the names of Reporting Groups, keyed by UID type
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000016" class="method-detail">
-        <a name="M000016"></a>
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000016.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000016.html');return false;">
-          <span class="method-name">new</span><span class="method-args">(jurisdiction_definition = false, election_definition = false, file = false, tabulator_count = false)</span>
+          <a href="TabulatorValidate.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000010.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(jd = false, ed = false, file = false, tc = false)</span>
           </a>
         </div>
       
@@ -279,21 +279,19 @@ identifiers (UIDs), plus the names of Reporting Groups, keyed by UID type
 Arguments:
 </p>
 <ul>
-<li><em>jurisdiction_definition</em>: (<em>Hash</em>) Jurisdiction Definition
-(optional)
+<li><em>jd</em>: (<em>Hash</em>) Jurisdiction Definition (optional)
 
 </li>
-<li><em>election_definition</em>: (<em>Hash</em>) Election Definition
-(optional)
+<li><em>ed</em>: (<em>Hash</em>) Election Definition (optional)
 
 </li>
 <li><em>file</em>: (<em>String</em>) File name for <a
-href="TabulatorValidate.html#M000016">new</a> <a
+href="TabulatorValidate.html#M000010">new</a> <a
 href="Tabulator.html">Tabulator</a> Count (optional)
 
 </li>
-<li><em>tabulator_count</em>: (<em>Hash</em>) <a
-href="Tabulator.html">Tabulator</a> Count (optional)
+<li><em>tc</em>: (<em>Hash</em>) <a href="Tabulator.html">Tabulator</a> Count
+(optional)
 
 </li>
 </ul>
@@ -311,7 +309,7 @@ href="Tabulator.html">Tabulator</a> Count as the 4th arg.
 <p>
 If a Jurisdiction Definition, Election Definition, and File Name are
 provided, they are validated and used to construct a <a
-href="TabulatorValidate.html#M000016">new</a> <a
+href="TabulatorValidate.html#M000010">new</a> <a
 href="Tabulator.html">Tabulator</a> Count, which puts the <a
 href="Tabulator.html">Tabulator</a> into its initial state, ready to accept
 counting data.
@@ -320,20 +318,21 @@ counting data.
 If a <a href="Tabulator.html">Tabulator</a> Count is provided, it is
 validated, which puts the <a href="Tabulator.html">Tabulator</a> either
 into an initial state, or into a state where some votes have been counted,
-depending whether or not Counter Counts appear within the <a
-href="Tabulator.html">Tabulator</a> Count.
+depending on whether or not error-free Counter Counts appear within the <a
+href="Tabulator.html">Tabulator</a> Count. This is how the <a
+href="Tabulator.html">Tabulator</a> is instantiated.
 </p>
         </div>
       </div>
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000038" class="method-detail">
-        <a name="M000038"></a>
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000038.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000038.html');return false;">
+          <a href="TabulatorValidate.src/M000032.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000032.html');return false;">
           <span class="method-name">validate_counter_count</span><span class="method-args">(counter_count, errwarn = false)</span>
           </a>
         </div>
@@ -347,7 +346,7 @@ Arguments:
 
 </li>
 <li><em>errwarn</em>: (<em>Boolean</em>) (see <a
-href="TabulatorValidate.html#M000029">validate_errors_warnings</a>)
+href="TabulatorValidate.html#M000023">validate_errors_warnings</a>)
 
 </li>
 </ul>
@@ -387,12 +386,12 @@ MORE&#8230;JVC
         </div>
       </div>
 
-      <div id="method-M000017" class="method-detail">
-        <a name="M000017"></a>
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000017.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000017.html');return false;">
+          <a href="TabulatorValidate.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000011.html');return false;">
           <span class="method-name">validation_errors</span><span class="method-args">(reset = false)</span>
           </a>
         </div>
@@ -414,12 +413,12 @@ first if <em>reset</em> is <em>true</em>
         </div>
       </div>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000018.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000018.html');return false;">
+          <a href="TabulatorValidate.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000012.html');return false;">
           <span class="method-name">validation_warnings</span><span class="method-args">(reset = false)</span>
           </a>
         </div>
@@ -446,12 +445,12 @@ first if <em>reset</em> is <em>true</em>
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000025.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000025.html');return false;">
+          <a href="TabulatorValidate.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000019.html');return false;">
           <span class="method-name">new_tabulator_count</span><span class="method-args">(jurisdiction_definition, election_definition, file)</span>
           </a>
         </div>
@@ -468,7 +467,7 @@ Arguments:
 
 </li>
 <li><em>file</em>: (<em>String</em>) File name for <a
-href="TabulatorValidate.html#M000016">new</a> <a
+href="TabulatorValidate.html#M000010">new</a> <a
 href="Tabulator.html">Tabulator</a> Count
 
 </li>
@@ -479,22 +478,22 @@ Returns: <em>Hash</em>
 <p>
 Returns an initial <a href="Tabulator.html">Tabulator</a> Count constructed
 from the information provided by the Jurisdiction Definition, Election
-Definition, and File. Uses the side effects of the validation of the
+Definition, and File. Uses the side effects of the previously validated
 Jurisdiction and Election Definitions (the initialization of the
 <b><tt>counts_contests</b></tt> and <b><tt>counts_questions</b></tt>
 attributes) to create and insert zero-initialized Contest and Question
-Counts into the <a href="Tabulator.html">Tabulator</a> Count, and sets its
-Counter Count to the empty array.
+Counts into the <a href="Tabulator.html">Tabulator</a> Count, sets its
+Counter Count to the empty array, and sets its state to INITIAL.
 </p>
         </div>
       </div>
 
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000024.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000024.html');return false;">
+          <a href="TabulatorValidate.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000018.html');return false;">
           <span class="method-name">uid_add</span><span class="method-args">(type, uid)</span>
           </a>
         </div>
@@ -522,12 +521,12 @@ The UID is added to its associated UIDs list. (UIDs are always cast to type
         </div>
       </div>
 
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000022.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000022.html');return false;">
+          <a href="TabulatorValidate.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000016.html');return false;">
           <span class="method-name">uid_exists?</span><span class="method-args">(type, uid)</span>
           </a>
         </div>
@@ -556,12 +555,12 @@ Returns <em>true</em> if a UID named <em>uid</em>, of the specified
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000023.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000023.html');return false;">
+          <a href="TabulatorValidate.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000017.html');return false;">
           <span class="method-name">uids_exist?</span><span class="method-args">(type)</span>
           </a>
         </div>
@@ -586,12 +585,12 @@ already exist.
         </div>
       </div>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000020.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000020.html');return false;">
+          <a href="TabulatorValidate.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000014.html');return false;">
           <span class="method-name">val_err</span><span class="method-args">(message1, value1 = false, message2 = false, value2 = false, message3 = false)</span>
           </a>
         </div>
@@ -628,12 +627,12 @@ message onto the <b><tt>errors</b></tt> stack.
         </div>
       </div>
 
-      <div id="method-M000019" class="method-detail">
-        <a name="M000019"></a>
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000019.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000019.html');return false;">
+          <a href="TabulatorValidate.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000013.html');return false;">
           <span class="method-name">val_fatal</span><span class="method-args">(message1, value1 = &quot;&quot;)</span>
           </a>
         </div>
@@ -660,12 +659,12 @@ Should never be called.
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000021.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000021.html');return false;">
+          <a href="TabulatorValidate.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000015.html');return false;">
           <span class="method-name">val_warn</span><span class="method-args">(message1, value1 = false, message2 = false, value2 = false, message3 = false)</span>
           </a>
         </div>
@@ -702,12 +701,12 @@ message onto the <b><tt>warnings</b></tt> stack.
         </div>
       </div>
 
-      <div id="method-M000040" class="method-detail">
-        <a name="M000040"></a>
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000040.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000040.html');return false;">
+          <a href="TabulatorValidate.src/M000034.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000034.html');return false;">
           <span class="method-name">validate_candidate_counts</span><span class="method-args">(candidate_counts, conid)</span>
           </a>
         </div>
@@ -747,12 +746,12 @@ The Candidate Counts are valid iff:
         </div>
       </div>
 
-      <div id="method-M000033" class="method-detail">
-        <a name="M000033"></a>
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000033.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000033.html');return false;">
+          <a href="TabulatorValidate.src/M000027.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000027.html');return false;">
           <span class="method-name">validate_candidates</span><span class="method-args">(candidates)</span>
           </a>
         </div>
@@ -777,7 +776,7 @@ The Candidates are valid iff:
 
 </li>
 <li>each Candidate&quot;s Contest UID exists (<a
-href="TabulatorValidate.html#M000032">validate_contests</a> added it to the
+href="TabulatorValidate.html#M000026">validate_contests</a> added it to the
 set of Contest UIDs).
 
 </li>
@@ -791,12 +790,12 @@ object.
         </div>
       </div>
 
-      <div id="method-M000039" class="method-detail">
-        <a name="M000039"></a>
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000039.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000039.html');return false;">
+          <a href="TabulatorValidate.src/M000033.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000033.html');return false;">
           <span class="method-name">validate_contest_counts</span><span class="method-args">(contest_counts)</span>
           </a>
         </div>
@@ -834,12 +833,12 @@ validated Contest Count),
         </div>
       </div>
 
-      <div id="method-M000032" class="method-detail">
-        <a name="M000032"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000032.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000032.html');return false;">
+          <a href="TabulatorValidate.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000026.html');return false;">
           <span class="method-name">validate_contests</span><span class="method-args">(contests)</span>
           </a>
         </div>
@@ -864,7 +863,7 @@ The Contests are valid iff:
 
 </li>
 <li>each Contest&quot;s District UID exists (<a
-href="TabulatorValidate.html#M000028">validate_districts</a> added it to
+href="TabulatorValidate.html#M000022">validate_districts</a> added it to
 the set of District UIDs).
 
 </li>
@@ -877,12 +876,12 @@ zero-initialized Contest Count object for that Contest.
         </div>
       </div>
 
-      <div id="method-M000043" class="method-detail">
-        <a name="M000043"></a>
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000043.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000043.html');return false;">
+          <a href="TabulatorValidate.src/M000037.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000037.html');return false;">
           <span class="method-name">validate_counter_counts</span><span class="method-args">(counter_counts, errwarn = false)</span>
           </a>
         </div>
@@ -896,7 +895,7 @@ Arguments:
 
 </li>
 <li><em>errwarn</em>: (<em>Boolean</em>) (see <a
-href="TabulatorValidate.html#M000029">validate_errors_warnings</a>)
+href="TabulatorValidate.html#M000023">validate_errors_warnings</a>)
 
 </li>
 </ul>
@@ -909,12 +908,12 @@ The Counter Counts are valid iff each Counter Count is valid.
         </div>
       </div>
 
-      <div id="method-M000035" class="method-detail">
-        <a name="M000035"></a>
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000035.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000035.html');return false;">
+          <a href="TabulatorValidate.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000029.html');return false;">
           <span class="method-name">validate_counters</span><span class="method-args">(counters)</span>
           </a>
         </div>
@@ -942,12 +941,12 @@ The Counters are valid iff:
         </div>
       </div>
 
-      <div id="method-M000028" class="method-detail">
-        <a name="M000028"></a>
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000028.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000028.html');return false;">
+          <a href="TabulatorValidate.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000022.html');return false;">
           <span class="method-name">validate_districts</span><span class="method-args">(districts)</span>
           </a>
         </div>
@@ -975,12 +974,12 @@ The Districts are valid iff:
         </div>
       </div>
 
-      <div id="method-M000031" class="method-detail">
-        <a name="M000031"></a>
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000031.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000031.html');return false;">
+          <a href="TabulatorValidate.src/M000025.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000025.html');return false;">
           <span class="method-name">validate_election</span><span class="method-args">(election)</span>
           </a>
         </div>
@@ -1013,12 +1012,12 @@ state.
         </div>
       </div>
 
-      <div id="method-M000030" class="method-detail">
-        <a name="M000030"></a>
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000030.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000030.html');return false;">
+          <a href="TabulatorValidate.src/M000024.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000024.html');return false;">
           <span class="method-name">validate_election_definition</span><span class="method-args">(election_definition, errwarn = false)</span>
           </a>
         </div>
@@ -1032,7 +1031,7 @@ Arguments:
 
 </li>
 <li><em>errwarn</em>: (<em>Boolean</em>) (see <a
-href="TabulatorValidate.html#M000029">validate_errors_warnings</a>)
+href="TabulatorValidate.html#M000023">validate_errors_warnings</a>)
 
 </li>
 </ul>
@@ -1068,12 +1067,12 @@ An Election Definition is valid iff:
         </div>
       </div>
 
-      <div id="method-M000029" class="method-detail">
-        <a name="M000029"></a>
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000029.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000029.html');return false;">
+          <a href="TabulatorValidate.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000023.html');return false;">
           <span class="method-name">validate_errors_warnings</span><span class="method-args">(object, name, errwarn)</span>
           </a>
         </div>
@@ -1112,12 +1111,12 @@ warnings inside the object, for later consistency checking.
         </div>
       </div>
 
-      <div id="method-M000037" class="method-detail">
-        <a name="M000037"></a>
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000037.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000037.html');return false;">
+          <a href="TabulatorValidate.src/M000031.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000031.html');return false;">
           <span class="method-name">validate_expected_counts</span><span class="method-args">(expected_counts)</span>
           </a>
         </div>
@@ -1155,12 +1154,12 @@ are mentioned in the Expected Counts.
         </div>
       </div>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000026.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000026.html');return false;">
+          <a href="TabulatorValidate.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000020.html');return false;">
           <span class="method-name">validate_jurisdiction_definition</span><span class="method-args">(jurisdiction_definition)</span>
           </a>
         </div>
@@ -1196,12 +1195,12 @@ internal error, as this method should only be called in an initial state.
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000027.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000027.html');return false;">
+          <a href="TabulatorValidate.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000021.html');return false;">
           <span class="method-name">validate_precincts</span><span class="method-args">(precincts)</span>
           </a>
         </div>
@@ -1229,12 +1228,12 @@ The Precincts are valid iff:
         </div>
       </div>
 
-      <div id="method-M000041" class="method-detail">
-        <a name="M000041"></a>
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000041.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000041.html');return false;">
+          <a href="TabulatorValidate.src/M000035.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000035.html');return false;">
           <span class="method-name">validate_question_counts</span><span class="method-args">(question_counts)</span>
           </a>
         </div>
@@ -1278,12 +1277,12 @@ Question Count),
         </div>
       </div>
 
-      <div id="method-M000034" class="method-detail">
-        <a name="M000034"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000034.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000034.html');return false;">
+          <a href="TabulatorValidate.src/M000028.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000028.html');return false;">
           <span class="method-name">validate_questions</span><span class="method-args">(questions)</span>
           </a>
         </div>
@@ -1308,7 +1307,7 @@ The Questions are valid iff:
 
 </li>
 <li>each Question&quot;s District UID exists (<a
-href="TabulatorValidate.html#M000028">validate_districts</a> added it to
+href="TabulatorValidate.html#M000022">validate_districts</a> added it to
 the set of District UIDs), and
 
 </li>
@@ -1324,12 +1323,12 @@ which to hash a zero-initialized Question Count object for the Question.
         </div>
       </div>
 
-      <div id="method-M000036" class="method-detail">
-        <a name="M000036"></a>
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000036.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000036.html');return false;">
+          <a href="TabulatorValidate.src/M000030.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000030.html');return false;">
           <span class="method-name">validate_reporting_groups</span><span class="method-args">(reporting_groups)</span>
           </a>
         </div>
@@ -1357,12 +1356,12 @@ The Reporting Groups are valid iff:
         </div>
       </div>
 
-      <div id="method-M000042" class="method-detail">
-        <a name="M000042"></a>
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
 
         <div class="method-heading">
-          <a href="TabulatorValidate.src/M000042.html" target="Code" class="method-signature"
-            onclick="popupCode('TabulatorValidate.src/M000042.html');return false;">
+          <a href="TabulatorValidate.src/M000036.html" target="Code" class="method-signature"
+            onclick="popupCode('TabulatorValidate.src/M000036.html');return false;">
           <span class="method-name">validate_tabulator_count</span><span class="method-args">(tabulator_count)</span>
           </a>
         </div>

@@ -5,18 +5,21 @@
 
 <html>
 <head>
-  <title>votes_incr_question_undervote (Tabulator)</title>
+  <title>votes_incr_question_answer_count (Tabulator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/tabulator.rb, line 267</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">votes_incr_question_undervote</span>(<span class="ruby-identifier">qid</span>, <span class="ruby-identifier">nvotes</span>)
+  <pre><span class="ruby-comment cmt"># File lib/tabulator.rb, line 284</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">votes_incr_question_answer_count</span>(<span class="ruby-identifier">qid</span>, <span class="ruby-identifier">answer</span>, <span class="ruby-identifier">nvotes</span>)
     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nvotes</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-    <span class="ruby-identifier">type</span> = <span class="ruby-value str">&quot;undervote_count&quot;</span>
-    <span class="ruby-identifier">shouldnt</span>(<span class="ruby-node">&quot;No such vote type (#{type}) for Question: #{qid}\n&quot;</span>) <span class="ruby-keyword kw">unless</span>
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>].<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">type</span>)
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>][<span class="ruby-identifier">type</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">nvotes</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>][<span class="ruby-value str">&quot;answer_count_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cc</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">cc</span>[<span class="ruby-value str">&quot;answer&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">answer</span>)
+        <span class="ruby-identifier">cc</span>[<span class="ruby-value str">&quot;count&quot;</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">nvotes</span>
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">shoudnt</span>(<span class="ruby-node">&quot;No such Answer (#{answer}) for Question: #{qid}&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,25 +5,49 @@
 
 <html>
 <head>
-  <title>validate_counters (TabulatorValidate)</title>
+  <title>validate_question_counts (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 607</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_counters</span>(<span class="ruby-identifier">counters</span>)
-    <span class="ruby-identifier">uniq_counters</span> = []
-    <span class="ruby-identifier">counters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">counter</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;counter&quot;</span>, <span class="ruby-identifier">counid</span> = <span class="ruby-identifier">counter</span>[<span class="ruby-value str">&quot;ident&quot;</span>].<span class="ruby-identifier">to_s</span>))
-        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">uniq_counters</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">counter</span>))
-          <span class="ruby-identifier">val_warn</span>(<span class="ruby-value str">&quot;Duplicate Counter Declaration&quot;</span>, <span class="ruby-identifier">counid</span>, <span class="ruby-value str">&quot;in Election Definition&quot;</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Non-Unique Counter UID&quot;</span>, <span class="ruby-identifier">counid</span>, <span class="ruby-value str">&quot;in Election Definition&quot;</span>)
-        <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 820</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_question_counts</span>(<span class="ruby-identifier">question_counts</span>)
+    <span class="ruby-identifier">all_qids</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>.<span class="ruby-identifier">keys</span>
+    <span class="ruby-identifier">qids</span> = []
+    <span class="ruby-identifier">question_counts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">question_count</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">qid</span> = <span class="ruby-identifier">question_count</span>[<span class="ruby-value str">&quot;question_ident&quot;</span>].<span class="ruby-identifier">to_s</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-identifier">uid_exists?</span>(<span class="ruby-value str">&quot;question&quot;</span>, <span class="ruby-identifier">qid</span>))
+        <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Non-Existent Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question Count&quot;</span>)
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">uniq_counters</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">counter</span>)
-        <span class="ruby-identifier">uid_add</span>(<span class="ruby-value str">&quot;counter&quot;</span>, <span class="ruby-identifier">counid</span>)
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">qids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">qid</span>))    
+          <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Duplicate Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question Count&quot;</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">qids</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">qid</span>)
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">all_answers</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts_questions</span>[<span class="ruby-identifier">qid</span>][<span class="ruby-value str">&quot;answer_count_list&quot;</span>].
+          <span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">anscount</span><span class="ruby-operator">|</span> <span class="ruby-identifier">anscount</span>[<span class="ruby-value str">&quot;answer&quot;</span>].<span class="ruby-identifier">to_s</span>}
+        <span class="ruby-identifier">answers</span> = []
+        <span class="ruby-identifier">question_count</span>[<span class="ruby-value str">&quot;answer_count_list&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">anscount</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">answer</span> = <span class="ruby-identifier">anscount</span>[<span class="ruby-value str">&quot;answer&quot;</span>].<span class="ruby-identifier">to_s</span>
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">all_answers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">answer</span>))
+            <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">answer</span>))
+              <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Duplicate Answer&quot;</span>, <span class="ruby-identifier">answer</span>, <span class="ruby-value str">&quot;for Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question Count&quot;</span>)
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">answers</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">answer</span>)
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Improper Answer&quot;</span>, <span class="ruby-identifier">answer</span>, <span class="ruby-value str">&quot;for Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question Count&quot;</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">answers</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">all_answers</span>.<span class="ruby-identifier">length</span>)
+          <span class="ruby-identifier">ansdiff</span> = (<span class="ruby-identifier">all_answers</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">answers</span>).<span class="ruby-identifier">inspect</span>
+          <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Missing Answers&quot;</span>, <span class="ruby-identifier">ansdiff</span>, <span class="ruby-value str">&quot;for Question UID&quot;</span>, <span class="ruby-identifier">qid</span>, <span class="ruby-value str">&quot;in Question Count&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">qids</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">all_qids</span>.<span class="ruby-identifier">length</span>)
+      <span class="ruby-identifier">qdiff</span> = (<span class="ruby-identifier">all_qids</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">qids</span>).<span class="ruby-identifier">inspect</span>
+      <span class="ruby-identifier">val_err</span>(<span class="ruby-value str">&quot;Missing Question UIDs&quot;</span>, <span class="ruby-identifier">qdiff</span>, <span class="ruby-value str">&quot;in Question Counts&quot;</span>)
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>

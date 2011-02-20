@@ -5,21 +5,43 @@
 
 <html>
 <head>
-  <title>opc_total (Operator)</title>
+  <title>opc_load (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 285</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_total</span>()
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;total\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
-    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
-    <span class="ruby-keyword kw">if</span> ([<span class="ruby-value str">&quot;ACCUMULATING&quot;</span>, <span class="ruby-value str">&quot;DONE&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>, <span class="ruby-keyword kw">true</span>)))
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nWriting Tabulator Spreadsheet: &quot;</span> <span class="ruby-operator">+</span>
-                <span class="ruby-node">&quot;#{TABULATOR_SPREADSHEET_FILE}\n&quot;</span>)
-      <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">opx_file_write_spreadsheet</span>(<span class="ruby-identifier">tab</span>)
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\nSpreadsheet Data (CSV Format):\n\n&quot;</span>)
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-identifier">lines</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 313</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_load</span>(<span class="ruby-identifier">jd_file</span>, <span class="ruby-identifier">ed_file</span>, <span class="ruby-identifier">proceed</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;load\&quot; ignored, Tabulator state: not EMPTY&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      <span class="ruby-identifier">opx_empty_state?</span>()
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Jurisdiction Definition: #{jd_file}\n&quot;</span>)
+    <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">jd_file</span>, <span class="ruby-value str">&quot;Jurisdiction Definition&quot;</span>,
+                          <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>)
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Election Definition: #{ed_file}\n&quot;</span>)
+    <span class="ruby-identifier">ed</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">ed_file</span>, <span class="ruby-value str">&quot;Election Definition&quot;</span>, <span class="ruby-value str">&quot;election_definition&quot;</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_jd_ed</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">ed</span>, <span class="ruby-constant">TABULATOR_DATA_FILE</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: REJECTED\n&quot;</span>)
+    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">proceed</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: ACCEPTED\n&quot;</span>)
+      <span class="ruby-identifier">opx_file_write_tabulator</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+      <span class="ruby-identifier">opc_data</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;** ATTENTION ** ATTENTION **
+
+Carefully examine the data above, then confirm approval to continue [y/n]: &quot;</span>)
+      <span class="ruby-identifier">answer</span> = <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">answer</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^[Yy]/</span>)
+        <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: ACCEPTED\n&quot;</span>)
+        <span class="ruby-identifier">opx_file_write_tabulator</span>(<span class="ruby-identifier">tab</span>)
+        <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Jurisdiction and Election Definitions: REJECTED\n&quot;</span>)
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>

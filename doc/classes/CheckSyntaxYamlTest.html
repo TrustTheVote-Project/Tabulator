@@ -84,7 +84,7 @@ The <a href="CheckSyntaxYamlTest.html">CheckSyntaxYamlTest</a> class
 provides Unit Testing for the <a
 href="CheckSyntaxYaml.html">CheckSyntaxYaml</a> class. It also
 (re)initializes, during <a
-href="CheckSyntaxYamlTest.html#M000129">setup</a>, the set of schemas used
+href="CheckSyntaxYamlTest.html#M000123">setup</a>, the set of schemas used
 by the syntax checker, held in the directory data/Schemas. If the contents
 of this directory are emptied, all schemas files are written anew. If any
 schema file is missing from this directory, a new one is written to replace
@@ -100,11 +100,11 @@ it.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000131">schema_setup</a>&nbsp;&nbsp;
-      <a href="#M000129">setup</a>&nbsp;&nbsp;
-      <a href="#M000133">syntax_error</a>&nbsp;&nbsp;
-      <a href="#M000132">syntax_ok</a>&nbsp;&nbsp;
-      <a href="#M000130">test_check_syntax</a>&nbsp;&nbsp;
+      <a href="#M000125">schema_setup</a>&nbsp;&nbsp;
+      <a href="#M000123">setup</a>&nbsp;&nbsp;
+      <a href="#M000127">syntax_error</a>&nbsp;&nbsp;
+      <a href="#M000126">syntax_ok</a>&nbsp;&nbsp;
+      <a href="#M000124">test_check_syntax</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -146,12 +146,12 @@ new schema files are written only if they are missing from data/Schemas/.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000129" class="method-detail">
-        <a name="M000129"></a>
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYamlTest.src/M000129.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYamlTest.src/M000129.html');return false;">
+          <a href="CheckSyntaxYamlTest.src/M000123.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYamlTest.src/M000123.html');return false;">
           <span class="method-name">setup</span><span class="method-args">()</span>
           </a>
         </div>
@@ -160,7 +160,7 @@ new schema files are written only if they are missing from data/Schemas/.
           <p>
 Define schemas for all known TTV CDF dataset types recognized by the <a
 href="Tabulator.html">Tabulator</a>. Calls <a
-href="CheckSyntaxYamlTest.html#M000131">schema_setup</a> to validate each
+href="CheckSyntaxYamlTest.html#M000125">schema_setup</a> to validate each
 significant schema and then optionally write the schema to a file for later
 use by the <a href="Tabulator.html">Tabulator</a>. The following schemas
 are processed:
@@ -262,12 +262,12 @@ subsumed by a higher-level schemas:
         </div>
       </div>
 
-      <div id="method-M000130" class="method-detail">
-        <a name="M000130"></a>
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYamlTest.src/M000130.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYamlTest.src/M000130.html');return false;">
+          <a href="CheckSyntaxYamlTest.src/M000124.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYamlTest.src/M000124.html');return false;">
           <span class="method-name">test_check_syntax</span><span class="method-args">()</span>
           </a>
         </div>
@@ -281,9 +281,9 @@ and where all possible error codes are covered.
 <p>
 Next test the syntax of data files representing all of the significant
 schemas, by making repeated calls to <a
-href="CheckSyntaxYamlTest.html#M000132">syntax_ok</a>, each of which uses
+href="CheckSyntaxYamlTest.html#M000126">syntax_ok</a>, each of which uses
 data stored in files under data/Tests/Syntax to syntax-check against a
-schema defined during <a href="CheckSyntaxYamlTest.html#M000129">setup</a>.
+schema defined during <a href="CheckSyntaxYamlTest.html#M000123">setup</a>.
 Some schemas, especially those with optional Hash keys, have multiple test
 variations.
 </p>
@@ -292,12 +292,12 @@ variations.
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000131" class="method-detail">
-        <a name="M000131"></a>
+      <div id="method-M000125" class="method-detail">
+        <a name="M000125"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYamlTest.src/M000131.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYamlTest.src/M000131.html');return false;">
+          <a href="CheckSyntaxYamlTest.src/M000125.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYamlTest.src/M000125.html');return false;">
           <span class="method-name">schema_setup</span><span class="method-args">(trace, prefix, schema, validate = true)</span>
           </a>
         </div>
@@ -338,12 +338,12 @@ permits these schemas to be re-generated when the unit tests are run.
         </div>
       </div>
 
-      <div id="method-M000133" class="method-detail">
-        <a name="M000133"></a>
+      <div id="method-M000127" class="method-detail">
+        <a name="M000127"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYamlTest.src/M000133.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYamlTest.src/M000133.html');return false;">
+          <a href="CheckSyntaxYamlTest.src/M000127.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYamlTest.src/M000127.html');return false;">
           <span class="method-name">syntax_error</span><span class="method-args">(trace, prefix, validate, err1, err2 = -1, err3 = -1)</span>
           </a>
         </div>
@@ -390,12 +390,12 @@ fail, and the resulting error code stack&#8216;s first three errors must be
         </div>
       </div>
 
-      <div id="method-M000132" class="method-detail">
-        <a name="M000132"></a>
+      <div id="method-M000126" class="method-detail">
+        <a name="M000126"></a>
 
         <div class="method-heading">
-          <a href="CheckSyntaxYamlTest.src/M000132.html" target="Code" class="method-signature"
-            onclick="popupCode('CheckSyntaxYamlTest.src/M000132.html');return false;">
+          <a href="CheckSyntaxYamlTest.src/M000126.html" target="Code" class="method-signature"
+            onclick="popupCode('CheckSyntaxYamlTest.src/M000126.html');return false;">
           <span class="method-name">syntax_ok</span><span class="method-args">(trace, prefix, postfix = '')</span>
           </a>
         </div>

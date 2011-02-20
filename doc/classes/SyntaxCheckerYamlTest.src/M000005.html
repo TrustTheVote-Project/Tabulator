@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>schema_setup (SyntaxCheckerYamlTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/syntax_checker_test.rb, line 285</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_setup</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">validate</span> = <span class="ruby-keyword kw">true</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">validate</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking Validity of Schema: #{prefix}\n&quot;</span>
+      <span class="ruby-identifier">scy</span> = <span class="ruby-constant">SyntaxCheckerYaml</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">scy</span>.<span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>)
+      <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">result</span>, <span class="ruby-node">&quot;Invalid schema: #{schema.inspect}&quot;</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-identifier">scy</span>.<span class="ruby-identifier">error_messages</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Checking Invalidity of Schema: #{prefix}\n&quot;</span>
+      <span class="ruby-identifier">scy</span> = <span class="ruby-constant">SyntaxCheckerYaml</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">scy</span>.<span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>)
+      <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">result</span>, <span class="ruby-node">&quot;Valid schema (should be invalid): #{schema.inspect}&quot;</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-identifier">scy</span>.<span class="ruby-identifier">error_messages</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">file</span> = <span class="ruby-value str">&quot;data/Schemas/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;_schema.yml&quot;</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>))
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Writing Schema File: #{file}\n&quot;</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">outfile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">outfile</span>) }
+    <span class="ruby-keyword kw">elsif</span> (<span class="ruby-constant">SCHEMA_OVERWRITE</span>)
+      <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Overwriting Schema File: #{file}\n&quot;</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;w&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">outfile</span><span class="ruby-operator">|</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">outfile</span>) }
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

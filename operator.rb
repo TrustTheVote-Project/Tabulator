@@ -22,38 +22,36 @@
 
 # Contributors: Jeff Cook
 
-$LOAD_PATH << "./Tabulator" # Temporary, for testing
-
 require "yaml"
-require "lib/check_syntax_yaml"
+require "lib/syntax_checker"
 require "lib/tabulator"
 
-# The Operator class contains the Tabulator Operator.  Methods beginning with
-# "op_" are public, and there is only one such, op_command, which implements
-# the command-line interface to the Operator.  Methods beginning with "opc_"
-# implement Operator commands.  Methods beginning with "opx_" handle the
-# system calls, and all are protected from exceptions by rescue clauses that
-# generate either a File error, in the case the exception was raised while
-# processing an Operator-supplied file, or a Fatal error, in the case that the
-# operation being performed was internal to the Tabulator and/or Operator and
-# should never cause problems.  There is one other type of error, a Command
-# error, which occurs when an Operator command is syntactically invalid.
+# The Operator class contains the Tabulator Operator.  There is only one
+# public method, operator_command, which implements the command-line interface
+# to the Operator.  Methods beginning with "opc_" implement Operator commands.
+# Methods beginning with "opx_" handle the system calls, and all are protected
+# from exceptions by rescue clauses that generate either a File error, in the
+# case the exception was raised while processing an Operator-supplied file, or
+# a Fatal error, in the case that the operation being performed was internal
+# to the Tabulator and/or Operator and should never cause problems.  There is
+# one other type of error, a Command error, which occurs when an Operator
+# command is syntactically invalid.
 #
-# The Operator handles errors by raising its locally-defined OperatorError
+# The Operator handles errors by raising its locally-defined TabOpError
 # exception, passing it the error message.  This exception is caught only by
-# op_command, the Operator's single public method and thus its only interface,
-# which displays the error message and terminates.
+# operator_command, the Operator's single public method and thus its only
+# interface, which displays the error message and terminates.
 
-class Operator
+class TabulatorOperator
 
   TABULATOR_DATA_FILE =        "TABULATOR_DATA.yml"
   TABULATOR_BACKUP_FILE =      "TABULATOR_BACKUP.yml"
   TABULATOR_SPREADSHEET_FILE = "TABULATOR_SPREADSHEET.csv"
 
-# The OperatorError exception is used internally by the Operator for
+# The TabOpError exception is used internally by the Operator for
 # error-handling.
 
-  class OperatorError < Exception
+  class TabOpError < Exception
   end
 
 # Arguments:
@@ -63,12 +61,12 @@ class Operator
 #
 # Implements the command-line interface for the Tabulator Operator.  Checks
 # all commands for syntactic correctness, and generates Command errors when
-# violations occur. Rescues OperatorError exceptions, by displaying their
+# violations occur. Rescues TabOpError exceptions, by displaying their
 # error messages and any messages from previously caught System exceptions,
 # and then terminating.  Finally, any unhandled exceptions are rescued to
 # permit a graceful failure in this unlikely event.
 
-  def op_command(args)
+  def operator_command(args)
     if (args.length == 0)
       opc_help()
     else
@@ -111,7 +109,7 @@ class Operator
       end
     end
     return ""
-  rescue OperatorError => e
+  rescue TabOpError => e
     opx_print("** TABOP ERROR ** #{e.message}\n")
     return e.message
   rescue => e
@@ -210,7 +208,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 # <tt><b>TABULATOR_BACKUP_FILE</b></tt>.
 
   def opc_reset()
-    opx_file_backup() unless opx_empty?()
+    opx_file_backup() unless opx_empty_state?()
     opx_print("Tabulator reset to EMPTY state.\n")
   end
 
@@ -227,7 +225,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
   def opc_data(tab = false)
     if (tab != false)
       opx_print_tabulator_count(tab)
-    elsif (opx_empty?())
+    elsif (opx_empty_state?())
       opx_err("Command \"data\" ignored, Tabulator state: EMPTY")
     else
       tab = opx_instantiate_tabulator()
@@ -250,7 +248,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 # Counts were previously defined).
 
   def opc_state(tab = false, detail = false)
-    opx_err("Command \"state\" ignored, Tabulator state: EMPTY") if opx_empty?()
+    opx_err("Command \"state\" ignored, Tabulator state: EMPTY") if opx_empty_state?()
     tab = opx_instantiate_tabulator() unless tab
     state, missing, finished, expected = tab.tabulator_state
     opx_print("Tabulator State: #{state}\n")
@@ -283,7 +281,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 # testing purposes, it also prints the CSV data to STDOUT.)
 
   def opc_total()
-    opx_err("Command \"total\" ignored, Tabulator state: EMPTY") if opx_empty?()
+    opx_err("Command \"total\" ignored, Tabulator state: EMPTY") if opx_empty_state?()
     tab = opx_instantiate_tabulator()
     if (["ACCUMULATING", "DONE"].include?(opc_state(tab, true)))
       opx_print("\nWriting Tabulator Spreadsheet: " +
@@ -312,7 +310,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 
   def opc_load(jd_file, ed_file, proceed = false)
     opx_err("Command \"load\" ignored, Tabulator state: not EMPTY") unless
-      opx_empty?()
+      opx_empty_state?()
     opx_print("Reading Jurisdiction Definition: #{jd_file}\n")
     jd = opx_file_process(jd_file, "Jurisdiction Definition",
                           "jurisdiction_definition")
@@ -357,7 +355,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # which is written to the <tt><b>TABULATOR_DATA_FILE</b></tt>.
 
   def opc_add(cc_file)
-    opx_err("Command \"add\" ignored, Tabulator State: EMPTY\n") if opx_empty?()
+    opx_err("Command \"add\" ignored, Tabulator State: EMPTY\n") if opx_empty_state?()
     tab = opx_instantiate_tabulator()
     opx_print("Reading Counter Count: #{cc_file}\n")
     cc = opx_file_process(cc_file, "Counter Count", "counter_count")
@@ -387,7 +385,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
     fatal = false
     if (tc_file == false)
       opx_err("Command \"check\" ignored, Tabulator state: EMPTY") if
-        opx_empty?()
+        opx_empty_state?()
       tc_file = TABULATOR_DATA_FILE
       fatal = true
     end
@@ -405,13 +403,13 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 #
 # Returns: N/A
 #
-# Handles Operator-detected errors by raising the OperatorError exception.
-# Passes the error message to the OperatorError exception, and if the error
+# Handles Operator-detected errors by raising the TabOpError exception.
+# Passes the error message to the TabOpError exception, and if the error
 # was produced while rescuing another exception, appends the exception's
 # message to the end of the error message.
 
   def opx_err(message, e = false)
-    raise OperatorError.new((e == false ? message : "#{message}\n#{e.message}"))
+    raise TabOpError.new((e == false ? message : "#{message}\n#{e.message}"))
   end
 
 # Arguments:
@@ -467,7 +465,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # Returns <i>true</i> iff the Tabulator state is EMPTY, as evidenced by the
 # non-existence of the <tt><b>TABULATOR_DATA_FILE</b></tt> .
 
-  def opx_empty?()
+  def opx_empty_state?()
     ! opx_file_exist?(TABULATOR_DATA_FILE)
   rescue => e
     opx_err("Fatal error while checking Tabulator for EMPTY state")
@@ -712,10 +710,10 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
   def opx_check_syntax(key, datum)
     schema_file = "data/Schemas/#{key}_schema.yml"
     schema = opx_file_read(schema_file, true)
-    errors, messages = CheckSyntaxYaml.new.check_syntax(schema, datum, true)
+    errors, messages = SyntaxCheckerYaml.new.check_syntax(schema, datum, true)
     errors.length == 0
   rescue => e
-    opx_err("Fatal failure of CheckSyntaxYaml.new.check_syntax(...)", e)
+    opx_err("Fatal failure of SyntaxCheckerYaml.new.check_syntax(...)", e)
   end
 
 end
@@ -841,7 +839,7 @@ end
 # Command-line interface for the Tabulator Operator.
 
 begin
-  Operator.new.op_command(ARGV)
+  TabulatorOperator.new.operator_command(ARGV)
 rescue => e
   print "** TABOP ERROR ** Fatal Unrecognized Error\n#{e.message}\n"
 end

@@ -5,18 +5,16 @@
 
 <html>
 <head>
-  <title>opx_warn (Operator)</title>
+  <title>opx_empty_state? (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 455</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** ERROR ** #{message}\n&quot;</span>)}
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">message</span><span class="ruby-operator">|</span> <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;** WARNING ** #{message}\n&quot;</span>)}
-    <span class="ruby-identifier">tab</span>
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 470</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opx_empty_state?</span>()
+    <span class="ruby-operator">!</span> <span class="ruby-identifier">opx_file_exist?</span>(<span class="ruby-constant">TABULATOR_DATA_FILE</span>)
   <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal error while fetching Tabulator errors/warnings&quot;</span>)
+    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Fatal error while checking Tabulator for EMPTY state&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

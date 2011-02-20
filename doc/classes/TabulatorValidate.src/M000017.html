@@ -5,15 +5,15 @@
 
 <html>
 <head>
-  <title>validation_errors (TabulatorValidate)</title>
+  <title>uids_exist? (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 150</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validation_errors</span>(<span class="ruby-identifier">reset</span> = <span class="ruby-keyword kw">false</span>)
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span> = [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reset</span>
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">errors</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 241</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uids_exist?</span>(<span class="ruby-identifier">type</span>)
+    <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Invalid UID type&quot;</span>, <span class="ruby-identifier">type</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">UID_TYPES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">type</span>)
+    <span class="ruby-keyword kw">return</span> (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">type</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-identifier">type</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

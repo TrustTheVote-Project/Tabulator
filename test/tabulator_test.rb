@@ -24,7 +24,7 @@
 
 require "yaml"
 require "test/unit"
-require "lib/check_syntax_yaml"
+require "lib/syntax_checker"
 require "lib/tabulator"
 
 # The TabulatorTest class provides Unit Testing for the Tabulator class.  It
@@ -37,21 +37,26 @@ class TabulatorTest < Test::Unit::TestCase
   ERRHEAD = "** ERROR **"
   WARHEAD = "** WARNING **"
   
-# Tests for all successful state achievement with given vote counts.
+# Tests for successful DONE state achievement and specified number of missing
+# counts, test data from data/Tests/Validation.
 
   def test_tabulator
     trace = 300          # In case we need to trace, for debugging these tests
     dir = "data/Tests/Validation"
-    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml")
-    tabulator_test_add_cc(trace, dir, "CC1.yml", 2)
-    tabulator_test_add_cc(trace, dir, "CC2.yml", 1)
-    tabulator_test_add_cc(trace, dir, "CC3.yml", true)
+    tabtest_tabulator_new(trace, dir, "JD.yml", "ED.yml")
+    tabtest_add_counter_count(trace, dir, "CC1.yml", 2)
+    tabtest_add_counter_count(trace, dir, "CC2.yml", 1)
+    tabtest_add_counter_count(trace, dir, "CC3.yml", true)
   end
+
+# Tests for successful DONE state achievement, specified number of missing
+# counts, and exact voting results for three Counter Counts; test data from
+# data/Tests/Default.
 
   def test_tabulator_default
     trace = 300
     dir = "data/Tests/Default"
-    tabulator_test_load_jd_ed(trace, dir, "JD.yml", "ED.yml")
+    tabtest_tabulator_new(trace, dir, "JD.yml", "ED.yml")
     cvotes = {"CONTEST_1"=>
       {"undervote_count"=>0,"overvote_count"=>0,"writein_count"=>1,
         "candidates"=>{"CANDIDATE_1"=>5,"CANDIDATE_2"=>10}},
@@ -61,7 +66,7 @@ class TabulatorTest < Test::Unit::TestCase
     qvotes = {"QUESTION_2"=>
       {"undervote_count"=>1,"overvote_count"=>0,
         "answers"=>{"A"=>20,"B"=>25,"C"=>30}}}
-    tabulator_test_add_cc(trace, dir, "CC1.yml", 2, cvotes, qvotes)
+    tabtest_add_counter_count(trace, dir, "CC1.yml", 2, cvotes, qvotes)
     cvotes = {"CONTEST_1"=>
       {"undervote_count"=>0,"overvote_count"=>1,"writein_count"=>1,
         "candidates"=>{"CANDIDATE_1"=>35,"CANDIDATE_2"=>35}},
@@ -71,7 +76,7 @@ class TabulatorTest < Test::Unit::TestCase
     qvotes = {"QUESTION_2"=>
       {"undervote_count"=>1,"overvote_count"=>1,
         "answers"=>{"A"=>35,"B"=>35,"C"=>35}}}
-    tabulator_test_add_cc(trace, dir, "CC2.yml", 1, cvotes, qvotes)
+    tabtest_add_counter_count(trace, dir, "CC2.yml", 1, cvotes, qvotes)
     cvotes = {"CONTEST_1"=>
       {"undervote_count"=>3,"overvote_count"=>3,"writein_count"=>3,
         "candidates"=>{"CANDIDATE_1"=>50,"CANDIDATE_2"=>50}},
@@ -81,14 +86,17 @@ class TabulatorTest < Test::Unit::TestCase
     qvotes = {"QUESTION_2"=>
       {"undervote_count"=>3,"overvote_count"=>3,
         "answers"=>{"A"=>50,"B"=>50,"C"=>50}}}
-    tabulator_test_add_cc(trace, dir, "CC3.yml", true, cvotes, qvotes)
+    tabtest_add_counter_count(trace, dir, "CC3.yml", true, cvotes, qvotes)
   end
+
+# Tests for specified number of missing counts, test data from
+# data/Test/Bedrock.
 
   def test_tabulator_bedrock
     trace = 300
     dir = "data/Tests/Bedrock"
-    tabulator_test_load_jd_ed(trace, dir, "Bedrock_JD.yml", "Bedrock_ED.yml")
-    tabulator_test_add_cc(trace, dir, "Bedrock_CC1.yml", 4)
+    tabtest_tabulator_new(trace, dir, "Bedrock_JD.yml", "Bedrock_ED.yml")
+    tabtest_add_counter_count(trace, dir, "Bedrock_CC1.yml", 4)
   end
 
 # Arguments:
@@ -103,13 +111,13 @@ class TabulatorTest < Test::Unit::TestCase
 # check of the datum against the schema.
 
   private
-  def tabulator_test_check_syntax(trace, prefix, dir, file)
+  def tabtest_check_syntax(trace, prefix, dir, file)
     schema_file = "data/Schemas/" + "#{prefix}_schema.yml"
-    schema = tabulator_test_read_file(schema_file, "Schema")
+    schema = tabtest_file_read(schema_file, "Schema")
     file = "#{dir}/#{file}"
-    datum = tabulator_test_read_file(file, "Data")
-    csy = CheckSyntaxYaml.new
-    errors, messages = csy.check_syntax(schema, datum, true, trace)
+    datum = tabtest_file_read(file, "Data")
+    scy = SyntaxCheckerYaml.new
+    errors, messages = scy.check_syntax(schema, datum, true, trace)
     print messages unless errors.length == 0
     assert(errors.length == 0, "Check Syntax of #{file} FAILED")
     print "Check Syntax of #{file}: OK\n"
@@ -126,16 +134,16 @@ class TabulatorTest < Test::Unit::TestCase
 # Tests the creation of a new Tabulator from a Jurisdiction Definition and an
 # Election Definition.  No errors oir warnings should occur.
 
-  def tabulator_test_load_jd_ed(trace, dir, jd_file, ed_file)
+  def tabtest_tabulator_new(trace, dir, jd_file, ed_file)
     print "\nGenerating Initial Tabulator Count from Files: #{jd_file} #{ed_file}\n"
-    jd = tabulator_test_check_syntax(trace, "jurisdiction_definition", dir, jd_file)
-    ed = tabulator_test_check_syntax(trace, "election_definition", dir, ed_file)
+    jd = tabtest_check_syntax(trace, "jurisdiction_definition", dir, jd_file)
+    ed = tabtest_check_syntax(trace, "election_definition", dir, ed_file)
     tab = Tabulator.new(jd, ed, TABULATOR_DATA_FILE)
     tc = tab.tabulator_count
     assert((tab.validation_errors.length == 0 &&
             tab.validation_warnings.length == 0),
            "Should be no errors or warnings.")
-    tabulator_test_write_tabulator_file(tc)
+    tabtest_file_write_tabulator(tc)
     print "Initial Tabulator Count"
   end
 
@@ -151,7 +159,7 @@ class TabulatorTest < Test::Unit::TestCase
 # followed by a <i>newline</i> character.  If <i>printit</i> is <i>true</i>,
 # the <i>messages</i> are printed before being returned.
 
-  def tabulator_messages_generate(messages, header, printit = false)
+  def tabtest_print_messages(messages, header, printit = false)
     message = ""
     messages.each { |text| message += "#{header} #{text}\n"}
     print message if printit
@@ -165,12 +173,12 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Prints all error and warning messages currently held by the Tabulator.
 
-  def tabulator_print_errors_warnings(tab)
+  def tabtest_print_errors_warnings(tab)
     unless (tab.validation_errors.length == 0 &&
             tab.validation_warnings.length == 0)
       print "\n" 
-      tabulator_messages_generate(tab.validation_errors, ERRHEAD, true)
-      tabulator_messages_generate(tab.validation_warnings, WARHEAD, true)
+      tabtest_print_messages(tab.validation_errors, ERRHEAD, true)
+      tabtest_print_messages(tab.validation_warnings, WARHEAD, true)
     end
   end
 
@@ -185,18 +193,19 @@ class TabulatorTest < Test::Unit::TestCase
 # Tabulator.  The proper number of <i>errors</i> and <i>warnings</i> should
 # appear, and they should match exactly, content-wise.
 
-  def tabulator_test_add_cc(trace, dir, cc_file, done, cvotes = false, qvotes = false)
-    tab = tabulator_test_instantiate_tabulator(trace)
+  def tabtest_add_counter_count(trace, dir, cc_file, done, cvotes = false,
+                                qvotes = false)
+    tab = tabtest_tabulator_instantiate(trace)
     print "\nTabulator Accumulating New Counter Count from File: #{cc_file}\n"
-    cc = tabulator_test_check_syntax(trace, "counter_count", dir, cc_file)
+    cc = tabtest_check_syntax(trace, "counter_count", dir, cc_file)
     tab.validate_counter_count(cc)
     tab.update_tabulator_count(cc)
     assert((tab.validation_errors.length == 0 &&
             tab.validation_warnings.length == 0),
            "Should be no errors or warnings.")
-    tabulator_test_write_tabulator_file(tab.tabulator_count)
+    tabtest_file_write_tabulator(tab.tabulator_count)
     print "Counter Count ACCUMULATED\n"
-    tabulator_print_errors_warnings(tab)
+    tabtest_print_errors_warnings(tab)
     doneness = tab.tabulator_state
     if (done == true)
       print "Checking to see if Tabulator State is DONE... "
@@ -209,8 +218,8 @@ class TabulatorTest < Test::Unit::TestCase
       assert((missing == done),
              "There should be #{done.to_s} missing counts, not #{missing.to_s}")
     end
-    tabulator_test_contest_votes(tab, cvotes) unless cvotes == false
-    tabulator_test_question_votes(tab, qvotes) unless qvotes == false
+    tabtest_votes_contest(tab, cvotes) unless cvotes == false
+    tabtest_votes_question(tab, qvotes) unless qvotes == false
   end
   
 # Arguments:
@@ -221,7 +230,7 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Checks the correctness of the vote counts for contests.
 
-  def tabulator_test_contest_votes(tab, cvotes)
+  def tabtest_votes_contest(tab, cvotes)
     cvotes.keys.each do |conid|
       v1 = cvotes[conid]["undervote_count"]
       v2 = tab.counts_contests[conid]["undervote_count"]
@@ -239,7 +248,7 @@ class TabulatorTest < Test::Unit::TestCase
       assert(v1 == v2,
              "Contest #{conid} writein vote error, expected #{v1} but got #{v2}")
       cvotes[conid]["candidates"].each do |k, v|
-        tabulator_test_candidate_vote(tab, conid, k, v)
+        tabtest_vote_candidate(tab, conid, k, v)
       end
     end
   end
@@ -254,7 +263,7 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Checks the correctness of the vote count of the candidate for the Contest.
 
-  def tabulator_test_candidate_vote(tab, conid, k, v)
+  def tabtest_vote_candidate(tab, conid, k, v)
     tab.counts_contests[conid]["candidate_count_list"].each do |cc|
       if (cc["candidate_ident"] == k)
         v2 = cc["count"]
@@ -273,7 +282,7 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Checks the correctness of the vote counts for questions.
 
-  def tabulator_test_question_votes(tab, qvotes)
+  def tabtest_votes_question(tab, qvotes)
     qvotes.keys.each do |conid|
       v1 = qvotes[conid]["undervote_count"]
       v2 = tab.counts_questions[conid]["undervote_count"]
@@ -286,7 +295,7 @@ class TabulatorTest < Test::Unit::TestCase
       assert(v1 == v2,
              "Question #{conid} overvote error, expected #{v1} but got #{v2}")
       qvotes[conid]["answers"].each do |k, v|
-        tabulator_test_answer_vote(tab, conid, k, v)
+        tabtest_vote_answer(tab, conid, k, v)
       end
     end
   end
@@ -301,7 +310,7 @@ class TabulatorTest < Test::Unit::TestCase
 #
 # Checks the correctness of the vote count of the Answer to the Question.
 
-  def tabulator_test_answer_vote(tab, qid, k, v)
+  def tabtest_vote_answer(tab, qid, k, v)
     tab.counts_questions[qid]["answer_count_list"].each do |ac|
       if (ac["answer"] == k)
         v2 = ac["count"]
@@ -321,19 +330,19 @@ class TabulatorTest < Test::Unit::TestCase
 # Tests the instantiation of a new Tabulator from the contents of the
 # <tt><b>TABULATOR_DATA_FILE</b></tt>. There should be no errors or warnings.
 
-  def tabulator_test_instantiate_tabulator(trace)
+  def tabtest_tabulator_instantiate(trace)
     tc_file = TABULATOR_DATA_FILE
     print "\nInstantiating Tabulator from File: #{tc_file}\n"
-    tc = tabulator_test_check_syntax(trace, "tabulator_count", ".", tc_file)
+    tc = tabtest_check_syntax(trace, "tabulator_count", ".", tc_file)
     tab = Tabulator.new(false, false, false, tc)
     taberrs = tab.validation_errors.length
     assert(0 == taberrs,
            "Expected NO Validation Errors, Received: #{taberrs.to_s}" +
-           tabulator_messages_generate(tab.validation_errors, ERRHEAD))
+           tabtest_print_messages(tab.validation_errors, ERRHEAD))
     tabwarns = tab.validation_warnings.length
     assert(0 == tabwarns,
            "Expected NO Validation Warnings, Received: #{tabwarns.to_s}" +
-           tabulator_messages_generate(tab.validation_warnings, WARHEAD))
+           tabtest_print_messages(tab.validation_warnings, WARHEAD))
     print "Tabulator Successfully Instantiated from File\n"
     tab
   end
@@ -346,7 +355,7 @@ class TabulatorTest < Test::Unit::TestCase
 # Reads and returns the contents of the <i>file</i>, while testing to ensure
 # the file read operation succeeds.
 
-  def tabulator_test_read_file(file, label)
+  def tabtest_file_read(file, label)
     print "Reading #{label}: #{file}\n"
     assert(schema = File.open(file) { |infile| YAML::load(infile) },
            "Error Reading from #{label} File: #{file}")
@@ -361,7 +370,7 @@ class TabulatorTest < Test::Unit::TestCase
 # Writes the Tabulator Count data to the <tt><b>TABULATOR_DATA_FILE</b></tt>, while
 # testing to ensure that the file write operation succeeds.
 
-  def tabulator_test_write_tabulator_file(tc)
+  def tabtest_file_write_tabulator(tc)
     file = TABULATOR_DATA_FILE
     print "Writing Tabulator Count: #{file}\n"
     assert(File.open(file, "w") { |outfile| YAML::dump(tc, outfile) },

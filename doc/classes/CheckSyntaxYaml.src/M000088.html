@@ -5,26 +5,15 @@
 
 <html>
 <head>
-  <title>check_syntax_string (CheckSyntaxYaml)</title>
+  <title>schema_is_valid? (CheckSyntaxYaml)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 135</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_syntax_string</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    <span class="ruby-identifier">check_syntax_trace</span>(<span class="ruby-value str">'check_syntax_string'</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">depth</span>, <span class="ruby-identifier">trace</span>)
-    ((<span class="ruby-identifier">schema</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">datum</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">schema</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Any&quot;</span>) <span class="ruby-operator">||</span>
-     ((<span class="ruby-identifier">schema</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;String&quot;</span>) <span class="ruby-operator">?</span>
-      ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Date</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Time</span>)) <span class="ruby-operator">||</span>
-       <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">2</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)) <span class="ruby-operator">:</span>
-      ((<span class="ruby-identifier">schema</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Integer&quot;</span>) <span class="ruby-operator">?</span>
-       (<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">||</span>
-        <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">3</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)) <span class="ruby-operator">:</span>
-       ((<span class="ruby-identifier">schema</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Atomic&quot;</span>) <span class="ruby-operator">?</span>
-        ((<span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">||</span>
-          <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Date</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">datum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Time</span>)) <span class="ruby-operator">||</span>
-         <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">5</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)) <span class="ruby-operator">:</span>
-        <span class="ruby-identifier">check_syntax_error</span>(<span class="ruby-value">1</span>, <span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-identifier">trace</span>)))))
+  <pre><span class="ruby-comment cmt"># File lib/check_syntax_yaml.rb, line 346</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">schema_is_valid?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span> = <span class="ruby-constant">TRACE_DEFAULT</span>)
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">error_messages</span> = <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-comment cmt"># so it can be called independent of check_syntax</span>
+    <span class="ruby-identifier">schema_is_valid_internal?</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">trace</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

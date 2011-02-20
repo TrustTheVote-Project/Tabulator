@@ -12,8 +12,8 @@ fi
 
 test_syn ()
 {
-    echo "ruby -I . test/check_syntax_yaml_test.rb"
-    ruby -I . test/check_syntax_yaml_test.rb
+    echo "ruby -I . test/syntax_checker_test.rb"
+    ruby -I . test/syntax_checker_test.rb
     exitif
 }
 

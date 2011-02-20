@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>test_check_syntax (SyntaxCheckerYamlTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/syntax_checker_test.rb, line 225</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test_check_syntax</span>
+    <span class="ruby-identifier">trace</span> = <span class="ruby-value">300</span>          <span class="ruby-comment cmt"># In case we need to trace, for debugging these tests</span>
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;unknown_type&quot;</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;unknown_string&quot;</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value">1</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;question_info&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">2</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_opt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">3</span>)
+    <span class="ruby-comment cmt">#syntax_error(trace, &quot;test_alt&quot;, true, 4)</span>
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;district_info&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">5</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;expected_count_info&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">6</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">7</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;question_info&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">2</span>, <span class="ruby-value">8</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;invalid_hash_key&quot;</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-value">9</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;contest_info&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">10</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_opt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">3</span>, <span class="ruby-value">11</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_opt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">3</span>, <span class="ruby-value">11</span>, <span class="ruby-value">12</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_alt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">13</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_alt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">2</span>, <span class="ruby-value">11</span>, <span class="ruby-value">14</span>)
+    <span class="ruby-identifier">syntax_error</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_alt&quot;</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-value">15</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_opt&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;test_alt&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;district_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;precinct_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;expected_count_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;contest_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;candidate_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;question_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;counter_info&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;election_definition&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;answer_count&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;question_count&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;candidate_count&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;contest_count&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>, <span class="ruby-value str">&quot;_hardware&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>, <span class="ruby-value str">&quot;_provenance&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>, <span class="ruby-value str">&quot;_nil_provenance&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;audit_header&quot;</span>, <span class="ruby-value str">&quot;_all&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;counter_count&quot;</span>)
+    <span class="ruby-identifier">syntax_ok</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

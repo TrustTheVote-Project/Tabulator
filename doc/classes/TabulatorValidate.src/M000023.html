@@ -5,15 +5,30 @@
 
 <html>
 <head>
-  <title>uids_exist? (TabulatorValidate)</title>
+  <title>validate_errors_warnings (TabulatorValidate)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 255</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uids_exist?</span>(<span class="ruby-identifier">type</span>)
-    <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Invalid UID type&quot;</span>, <span class="ruby-identifier">type</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">UID_TYPES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">type</span>)
-    <span class="ruby-keyword kw">return</span> (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">type</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">uids</span>[<span class="ruby-identifier">type</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 387</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_errors_warnings</span> (<span class="ruby-identifier">object</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">errwarn</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">errwarn</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">object</span>[<span class="ruby-value str">'error_list'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">validation_errors</span>())
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">object</span>[<span class="ruby-value str">'warning_list'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">validation_warnings</span>())
+          <span class="ruby-identifier">validation_errors</span>(<span class="ruby-keyword kw">true</span>)
+          <span class="ruby-identifier">validation_warnings</span>(<span class="ruby-keyword kw">true</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">val_fatal</span>(<span class="ruby-node">&quot;Warnings mismatch in #{name}&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">object</span>[<span class="ruby-value str">'warning_list'</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">validation_warnings</span>())
+        <span class="ruby-identifier">val_fatal</span>(<span class="ruby-node">&quot;Errors mismatch in #{name}&quot;</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">val_fatal</span>(<span class="ruby-node">&quot;Errors and Warnings mismatch in #{name}&quot;</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">object</span>[<span class="ruby-value str">'error_list'</span>]= <span class="ruby-identifier">validation_errors</span>()
+      <span class="ruby-identifier">object</span>[<span class="ruby-value str">'warning_list'</span>]= <span class="ruby-identifier">validation_warnings</span>()
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

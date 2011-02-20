@@ -22,9 +22,9 @@
 
 # Contributors: Jeff Cook
 
-require "lib/validate"
+require "lib/validator"
 
-# The Tabulator class inherits the capabilities of the TabulatorValidate
+# The Tabulator class inherits the capabilities of the TabulatorValidator
 # class, and provides additional functionality for determining the Tabulator
 # State, for writing out a Tabulator spreadsheet, and for counting votes by
 # processing Counter Counts and then updating the Tabulator Count. The
@@ -34,7 +34,7 @@ require "lib/validate"
 # * ACCUMULATING: Waiting for N Counter Counts, M Missing
 # * DONE:         All N Expected Counter Counts Accumulated
 
-class Tabulator < TabulatorValidate
+class Tabulator < TabulatorValidator
 
 # No Arguments
 #

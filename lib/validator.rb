@@ -34,7 +34,7 @@
 # 5. Constructs a data structure holding the Expected Counts
 # 6. Constructs a data structure holding the Accumulated Counts
 
-class TabulatorValidate
+class TabulatorValidator
 
 # All of the election objects that can be given unique identifiers (UIDs).
 
@@ -82,10 +82,10 @@ class TabulatorValidate
   attr_accessor :tabulator_count
 
 # Arguments:
-# * <i>jurisdiction_definition</i>: (<i>Hash</i>) Jurisdiction Definition (optional)
-# * <i>election_definition</i>: (<i>Hash</i>) Election Definition (optional)
+# * <i>jd</i>:   (<i>Hash</i>) Jurisdiction Definition (optional)
+# * <i>ed</i>:   (<i>Hash</i>) Election Definition (optional)
 # * <i>file</i>: (<i>String</i>) File name for new Tabulator Count (optional)
-# * <i>tabulator_count</i>: (<i>Hash</i>) Tabulator Count (optional)
+# * <i>tc</i>:   (<i>Hash</i>) Tabulator Count (optional)
 # 
 # Returns: N/A
 #
@@ -102,11 +102,10 @@ class TabulatorValidate
 #
 # If a Tabulator Count is provided, it is validated, which puts the Tabulator
 # either into an initial state, or into a state where some votes have been
-# counted, depending whether or not Counter Counts appear within the Tabulator
-# Count.
+# counted, depending on whether or not error-free Counter Counts appear within
+# the Tabulator Count.  This is how the Tabulator is instantiated.
 
-  def initialize(jurisdiction_definition = false, election_definition = false,
-                 file = false, tabulator_count = false)
+  def initialize(jd = false, ed = false, file = false, tc = false)
     self.uids = Hash.new { |h,k| h[k] = [] }
     self.counts_contests = Hash.new { |h,k| h[k] = {} }
     self.counts_questions = Hash.new { |h,k| h[k] = {} }
@@ -114,30 +113,17 @@ class TabulatorValidate
     self.counts_expected = []
     self.errors = []
     self.warnings = []
-    if (jurisdiction_definition)
-      if (jurisdiction_definition.is_a?(Hash) &&
-          jurisdiction_definition.keys.include?("jurisdiction_definition"))
-        if (election_definition.is_a?(Hash) &&
-            election_definition.keys.include?("election_definition"))
-          self.tabulator_count =
-            new_tabulator_count(jurisdiction_definition, election_definition, file)
-        else
-          val_fatal("Only an Election Definition may be the 2nd arg to Tabulator.new") 
-        end
-      else
-        val_fatal("Only a Jurisdiction Definition may be the 1st arg to Tabulator.new")
-      end
-    elsif (tabulator_count)
-      if (tabulator_count.is_a?(Hash) &&
-          tabulator_count.keys.include?("tabulator_count"))
-        self.tabulator_count = tabulator_count
-        validate_tabulator_count(tabulator_count)
-      else
-        val_fatal("Only a Tabulator Count may be the 4th arg to Tabulator.new")
-      end
+    if (tc == false)
+      val_fatal("Unexpected JD/ED args to Validator initialize") unless
+        (jd.is_a?(Hash) && jd.keys.include?("jurisdiction_definition") &&
+         ed.is_a?(Hash) && ed.keys.include?("election_definition"))
+      validate_jurisdiction_definition(jd["jurisdiction_definition"])
+      validate_election_definition(ed["election_definition"])
+      new_tabulator_count(jd, ed, file)
+    elsif (tc.is_a?(Hash) && tc.keys.include?("tabulator_count"))
+      validate_tabulator_count(tc)
     else
-      val_fatal("Either a Tabulator Count or a Jurisdiction/Election Definition" +
-               "must be passed to Tabulator.new")
+      val_fatal("Unexpected TC args to Validator initialize")
     end
   end
 
@@ -282,34 +268,32 @@ class TabulatorValidate
 #
 # Returns an initial Tabulator Count constructed from the information provided
 # by the Jurisdiction Definition, Election Definition, and File.  Uses the
-# side effects of the validation of the Jurisdiction and Election Definitions
-# (the initialization of the <tt><b>counts_contests</b></tt> and
+# side effects of the previously validated Jurisdiction and Election
+# Definitions (the initialization of the <tt><b>counts_contests</b></tt> and
 # <tt><b>counts_questions</b></tt> attributes) to create and insert
-# zero-initialized Contest and Question Counts into the Tabulator Count, and
-# sets its Counter Count to the empty array.
+# zero-initialized Contest and Question Counts into the Tabulator Count, sets
+# its Counter Count to the empty array, and sets its state to INITIAL.
 
   def new_tabulator_count(jurisdiction_definition, election_definition, file)
     jdinfo = jurisdiction_definition["jurisdiction_definition"]
-    validate_jurisdiction_definition(jdinfo)
     edinfo = election_definition["election_definition"]
-    validate_election_definition(edinfo)
     self.tabulator_count = 
-     {"tabulator_count"=>
-      {"election_ident"=>edinfo["election"]["ident"],
-        "jurisdiction_ident"=>jdinfo["ident"],
-        "audit_header"=>
-        {"software"=>"TTV Tabulator",
-          "file_ident"=>file,
-          "operator"=>"Jeffrey Valjean Cook",
-          "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S")},
-        "jurisdiction_definition"=>jdinfo,
-        "election_definition"=>edinfo,
-        "contest_count_list"=>self.counts_contests.keys.collect { |k|
-          self.counts_contests[k] },
-        "question_count_list"=>self.counts_questions.keys.collect { |k|
-          self.counts_questions[k] },
-        "counter_count_list"=>[],
-        "state"=>"INITIAL"}}
+        {"tabulator_count"=>
+          {"election_ident"=>edinfo["election"]["ident"],
+            "jurisdiction_ident"=>jdinfo["ident"],
+            "audit_header"=>
+            {"software"=>"TTV Tabulator",
+              "file_ident"=>file,
+              "operator"=>"Jeffrey Valjean Cook",
+              "create_date"=>Time.new.strftime("%Y-%m-%d %H:%M:%S")},
+            "jurisdiction_definition"=>jdinfo,
+            "election_definition"=>edinfo,
+            "contest_count_list"=>self.counts_contests.keys.collect { |k|
+              self.counts_contests[k] },
+            "question_count_list"=>self.counts_questions.keys.collect { |k|
+              self.counts_questions[k] },
+            "counter_count_list"=>[],
+            "state"=>"INITIAL"}}
   end
 
 # Arguments:
@@ -893,10 +877,13 @@ class TabulatorValidate
 # before being output.
 
   def validate_tabulator_count(tabulator_count)
+    val_fatal("Not a Tabulator Count to Validate") unless
+      (tabulator_count.is_a?(Hash) &&
+       tabulator_count.keys.include?('tabulator_count'))
+    self.tabulator_count = tabulator_count
     state = tabulator_count["tabulator_count"]["state"]
     tabulator_count["tabulator_count"]["state"] = 'INITIAL'
     errwarn = true
-    self.tabulator_count = tabulator_count
     tcinfo = tabulator_count["tabulator_count"]
     validate_jurisdiction_definition(tcinfo["jurisdiction_definition"])
     validate_election_definition(tcinfo["election_definition"], errwarn)

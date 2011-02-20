@@ -5,26 +5,25 @@
 
 <html>
 <head>
-  <title>opc_add (Operator)</title>
+  <title>opc_check (Operator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File operator.rb, line 359</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_add</span>(<span class="ruby-identifier">cc_file</span>)
-    <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;add\&quot; ignored, Tabulator State: EMPTY\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opx_empty?</span>()
-    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_instantiate_tabulator</span>()
-    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Counter Count: #{cc_file}\n&quot;</span>)
-    <span class="ruby-identifier">cc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">cc_file</span>, <span class="ruby-value str">&quot;Counter Count&quot;</span>, <span class="ruby-value str">&quot;counter_count&quot;</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validate_counter_count</span>(<span class="ruby-identifier">cc</span>)
-    <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">update_tabulator_count</span>(<span class="ruby-identifier">cc</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Counter Count: REJECTED\n&quot;</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Counter Count: ACCUMULATED\n&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File operator.rb, line 386</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opc_check</span>(<span class="ruby-identifier">tc_file</span> = <span class="ruby-keyword kw">false</span>)
+    <span class="ruby-identifier">fatal</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">tc_file</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">opx_err</span>(<span class="ruby-value str">&quot;Command \&quot;check\&quot; ignored, Tabulator state: EMPTY&quot;</span>) <span class="ruby-keyword kw">if</span>
+        <span class="ruby-identifier">opx_empty_state?</span>()
+      <span class="ruby-identifier">tc_file</span> = <span class="ruby-constant">TABULATOR_DATA_FILE</span>
+      <span class="ruby-identifier">fatal</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">opx_file_write_tabulator</span>(<span class="ruby-identifier">tab</span>)
-    <span class="ruby-identifier">opx_warn</span>(<span class="ruby-identifier">tab</span>)
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-node">&quot;Reading Tabulator Count: #{tc_file}\n&quot;</span>)
+    <span class="ruby-identifier">tc</span> = <span class="ruby-identifier">opx_file_process</span>(<span class="ruby-identifier">tc_file</span>, <span class="ruby-value str">&quot;Tabulator Count&quot;</span>, <span class="ruby-value str">&quot;tabulator_count&quot;</span>, <span class="ruby-identifier">fatal</span>)
+    <span class="ruby-identifier">tab</span> = <span class="ruby-identifier">opx_new_tabulator_tc</span>(<span class="ruby-identifier">tc</span>)
+    <span class="ruby-identifier">opx_print</span>(<span class="ruby-value str">&quot;Validating Tabulator Count: OK\n&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tab</span>.<span class="ruby-identifier">validation_warnings</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
     <span class="ruby-identifier">opc_state</span>(<span class="ruby-identifier">tab</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>

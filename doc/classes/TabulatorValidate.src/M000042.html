@@ -10,12 +10,15 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 895</span>
+  <pre><span class="ruby-comment cmt"># File lib/validate.rb, line 879</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_tabulator_count</span>(<span class="ruby-identifier">tabulator_count</span>)
+    <span class="ruby-identifier">val_fatal</span>(<span class="ruby-value str">&quot;Not a Tabulator Count to Validate&quot;</span>) <span class="ruby-keyword kw">unless</span>
+      (<span class="ruby-identifier">tabulator_count</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span>
+       <span class="ruby-identifier">tabulator_count</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'tabulator_count'</span>))
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> = <span class="ruby-identifier">tabulator_count</span>
     <span class="ruby-identifier">state</span> = <span class="ruby-identifier">tabulator_count</span>[<span class="ruby-value str">&quot;tabulator_count&quot;</span>][<span class="ruby-value str">&quot;state&quot;</span>]
     <span class="ruby-identifier">tabulator_count</span>[<span class="ruby-value str">&quot;tabulator_count&quot;</span>][<span class="ruby-value str">&quot;state&quot;</span>] = <span class="ruby-value str">'INITIAL'</span>
     <span class="ruby-identifier">errwarn</span> = <span class="ruby-keyword kw">true</span>
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tabulator_count</span> = <span class="ruby-identifier">tabulator_count</span>
     <span class="ruby-identifier">tcinfo</span> = <span class="ruby-identifier">tabulator_count</span>[<span class="ruby-value str">&quot;tabulator_count&quot;</span>]
     <span class="ruby-identifier">validate_jurisdiction_definition</span>(<span class="ruby-identifier">tcinfo</span>[<span class="ruby-value str">&quot;jurisdiction_definition&quot;</span>])
     <span class="ruby-identifier">validate_election_definition</span>(<span class="ruby-identifier">tcinfo</span>[<span class="ruby-value str">&quot;election_definition&quot;</span>], <span class="ruby-identifier">errwarn</span>)

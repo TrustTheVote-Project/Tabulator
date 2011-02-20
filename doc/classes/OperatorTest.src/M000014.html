@@ -5,17 +5,17 @@
 
 <html>
 <head>
-  <title>optest_file_error (OperatorTest)</title>
+  <title>optest_fatal_error (OperatorTest)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File test/operator_test.rb, line 146</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">optest_file_error</span>(<span class="ruby-identifier">line</span>)
-    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nTesting Operator File Error: #{line}\n&quot;</span>
+  <pre><span class="ruby-comment cmt"># File test/operator_test.rb, line 160</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">optest_fatal_error</span>(<span class="ruby-identifier">line</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;\nTesting Operator Fatal Error: #{line}\n&quot;</span>
     <span class="ruby-identifier">args</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/ /</span>)
     <span class="ruby-identifier">result</span> = <span class="ruby-constant">Operator</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">op_command</span>(<span class="ruby-identifier">args</span>)
-    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">result</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^File*/</span>), <span class="ruby-node">&quot;Expected File error: #{result}&quot;</span>)
+    <span class="ruby-identifier">assert</span>((<span class="ruby-identifier">result</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^Fatal*/</span>), <span class="ruby-node">&quot;Expected Fatal error: #{result}&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

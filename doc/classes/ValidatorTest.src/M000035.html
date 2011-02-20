@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>valtest_check_syntax (ValidatorTest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File test/validator_test.rb, line 190</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valtest_check_syntax</span>(<span class="ruby-identifier">trace</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">file</span>)
+    <span class="ruby-identifier">schema_file</span> = <span class="ruby-value str">&quot;data/Schemas/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;#{prefix}_schema.yml&quot;</span>
+    <span class="ruby-identifier">schema</span> = <span class="ruby-identifier">valtest_file_read</span>(<span class="ruby-identifier">schema_file</span>, <span class="ruby-value str">&quot;Schema&quot;</span>)
+    <span class="ruby-identifier">file</span> = <span class="ruby-node">&quot;#{dir}/#{file}&quot;</span>
+    <span class="ruby-identifier">datum</span> = <span class="ruby-identifier">valtest_file_read</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;Data&quot;</span>)
+    <span class="ruby-identifier">scy</span> = <span class="ruby-constant">SyntaxCheckerYaml</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">messages</span> = <span class="ruby-identifier">scy</span>.<span class="ruby-identifier">check_syntax</span>(<span class="ruby-identifier">schema</span>, <span class="ruby-identifier">datum</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">trace</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">messages</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>, <span class="ruby-node">&quot;Check Syntax of #{file} FAILED&quot;</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;Check Syntax of #{file}: OK\n&quot;</span>
+    <span class="ruby-identifier">datum</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

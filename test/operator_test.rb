@@ -30,7 +30,7 @@ require "operator"
 # Tests are provided for all three types of errors detected by the Operator:
 # Command errors, File errors, and Fatal errors.
 
-class OperatorTest < Test::Unit::TestCase
+class TabulatorOperatorTest < Test::Unit::TestCase
 
   TABULATOR_DATA_FILE = "TABULATOR_DATA.yml"
 
@@ -115,10 +115,11 @@ class OperatorTest < Test::Unit::TestCase
 #
 # Execute an Operator command, asserting that it will be error-free.
 
+  private
   def optest_command_ok(line)
     print "\nTesting Operator Command: #{line}\n"
     args = line.split(/ /)
-    result = Operator.new.op_command(args)
+    result = TabulatorOperator.new.operator_command(args)
     assert((result == ""), "Expected no errors: #{result}")
   end
 
@@ -132,7 +133,7 @@ class OperatorTest < Test::Unit::TestCase
   def optest_command_error(line)
     print "\nTesting Operator Command Error: #{line}\n"
     args = line.split(/ /)
-    result = Operator.new.op_command(args)
+    result = TabulatorOperator.new.operator_command(args)
     assert((result =~ /^Command*/), "Expected Command error: #{result}")
   end
 
@@ -146,7 +147,7 @@ class OperatorTest < Test::Unit::TestCase
   def optest_file_error(line)
     print "\nTesting Operator File Error: #{line}\n"
     args = line.split(/ /)
-    result = Operator.new.op_command(args)
+    result = TabulatorOperator.new.operator_command(args)
     assert((result =~ /^File*/), "Expected File error: #{result}")
   end
 
@@ -160,7 +161,7 @@ class OperatorTest < Test::Unit::TestCase
   def optest_fatal_error(line)
     print "\nTesting Operator Fatal Error: #{line}\n"
     args = line.split(/ /)
-    result = Operator.new.op_command(args)
+    result = TabulatorOperator.new.operator_command(args)
     assert((result =~ /^Fatal*/), "Expected Fatal error: #{result}")
   end
 
