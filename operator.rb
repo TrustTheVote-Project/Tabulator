@@ -248,7 +248,10 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
 # Counts were previously defined).
 
   def opc_state(tab = false, detail = false)
-    opx_err("Command \"state\" ignored, Tabulator state: EMPTY") if opx_empty_state?()
+    if (opx_empty_state?)
+      opx_print("Tabulator State: EMPTY\n")
+      return
+    end
     tab = opx_instantiate_tabulator() unless tab
     state, missing, finished, expected = tab.tabulator_state
     opx_print("Tabulator State: #{state}\n")
