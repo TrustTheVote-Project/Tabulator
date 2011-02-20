@@ -81,13 +81,13 @@ class TabulatorOperatorTest < Test::Unit::TestCase
     optest_command_ok("reset")
     optest_command_ok("load data/Tests/Default/JD.yml data/Tests/Default/ED.yml OK")
     optest_file_error("add data/Tests/Default/CC0.yml")
-    File.chmod(0222,"data/Tests/Default/CC3_Write_Only.yml")
-    optest_file_error("add data/Tests/Default/CC3_Write_Only.yml")
-    File.chmod(0644,"data/Tests/Default/CC3_Write_Only.yml")
+    File.chmod(0222,"data/Tests/Validation/CC3_Write_Only.yml")
+    optest_file_error("add data/Tests/Validation/CC3_Write_Only.yml")
+    File.chmod(0644,"data/Tests/Validation/CC3_Write_Only.yml")
     optest_file_error("add tabulator.rb")
     optest_file_error("add data/Tests/Default/ED.yml")
-    optest_file_error("add data/Tests/Default/ARRAY.yml")
-    optest_file_error("add data/Tests/Default/CC2_Syntax_Error.yml")
+    optest_file_error("add data/Tests/Validation/ARRAY.yml")
+    optest_file_error("add data/Tests/Validation/CC2_Syntax_Error.yml")
   end
 
 # Tests one (yes, only one) of the Fatal errors detected by the Operator:

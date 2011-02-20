@@ -10,6 +10,26 @@ else
 fi
 }
 
+test_help ()
+{
+  echo " "
+  echo "Valid args: help, syn(tax), val(idator), tab(ulator), op(erator), def(ault), all"
+  echo " "
+  echo "  help  what you are looking at"
+  echo "   syn  run the unit tests for the Tabulator Syntax Checker"
+  echo "   val  run the unit tests for the Tabulator Validator"
+  echo "   tab  run the unit tests for the Tabulator Core"
+  echo "    op  run the unit tests for the Tabulator Operator"
+  echo "   def  run a default set of tests"
+  echo "  def0  run the default tests to step 0 (load JD/ED)"
+  echo "  def1  run the default tests to step 1 (load CC1)"
+  echo "  def2  run the default tests to step 2 (load CC2)"
+  echo "  def3  run the default tests to step 3 (load CC3)"
+  echo "   all  run all the tests"
+  echo "<none>  run all the unit tests"
+  echo " "
+}
+
 test_syn ()
 {
     echo "ruby -I . test/syntax_checker_test.rb"
@@ -146,6 +166,10 @@ def*)
     test_def
     exit
     ;;
+h*)
+    test_help
+    exit
+    ;;
 esac
-echo "Valid args: all, syn(tax), val(idator), tab(ulator), op(erator), def(ault)"
+echo "Invalid argument, try this: help"
 exit 1

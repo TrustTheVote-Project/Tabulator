@@ -5,15 +5,15 @@
 operator.rb
 - Operates the Tabulator
 - Prints help info when called without args
-- Reads and Writes the file TABULATOR_COUNT.yml
+- Reads and writes the file TABULATOR_DATA.yml
 
 lib/tabulator.rb
 - The Tabulator
 
-lib/validate.rb
+lib/validator.rb
 - The Validator for Tabulator data sets
 
-lib/check_syntax_yaml.rb
+lib/syntax_checker.rb
 - YAML Syntax Checker for TTV Common Data Format (CDF) datasets
 
 test/operator_test.rb
@@ -25,7 +25,7 @@ test/tabulator_test.rb
 test/validator_test.rb
 - Ruby Unit Tests for the Tabulator Validator
 
-test/check_syntax_yaml_test.rb
+test/syntax_checker_test.rb
 - Setup and Test the YAML Syntax Checker
 
 test/emgr_data_handler.rb
@@ -39,23 +39,18 @@ test/emgr_data_handler.rb
 ruby -I . test/operator_test.rb
 ruby -I . test/tabulator_test.rb
 ruby -I . test/validator_test.rb
-ruby -I . test/check_syntax_yaml_test.rb
+ruby -I . test/syntax_checker_test.rb
 
 ################
 # Bash Scripts #
 ################
 
+ERRS.sh
+- prints out all the error/warning messages in the Tabulator code base
+- checks to see if the validator test is in sync with the code
+
 TEST.sh
-- Valid arguments: all, syn(tax), val(idator), tab(ulator), op(erator), def(ault)
-- <nothing>: run all of the Ruby unit tests
-- all : run all of the tests
-- syn: run all of the Tabulator syntax tests
-- val: run all of the Tabulator Validator tests
-- tab: run all of the Tabulator Vote Counting tests
-- op: run all of the Tabulator Operator tests
-- def: run a default set of tests using a prototypical Jurisdiction
-       Definition, Election Definition, and three Counter Counts, achieving
-       the Tabulator DONE state  
+- runs various tests, use "help" as an arg for a complete explanation
 
 ###############
 # Directories #
@@ -80,4 +75,4 @@ test/
 
 -----------------
 Author: Jeff Cook
-Date: 18 Feb 2011
+Date: 19 Feb 2011
