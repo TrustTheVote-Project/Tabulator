@@ -289,7 +289,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
     state = opc_state(tab, true)
     if (["ACCUMULATING", "DONE"].include?(state))
       if (state == "DONE")
-        opx_print("\nWriting Tabulator Spreadsheet: " +
+        opx_print("Writing Tabulator Spreadsheet: " +
                   "#{TABULATOR_SPREADSHEET_FILE}\n")
         lines = opx_file_write_spreadsheet(tab, true)
         #opx_print("\nFinal Vote Count Data (CSV Spreadsheet Format):\n\n")
