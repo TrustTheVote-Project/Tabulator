@@ -292,7 +292,7 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
         opx_print("\nWriting Tabulator Spreadsheet: " +
                   "#{TABULATOR_SPREADSHEET_FILE}\n")
         lines = opx_file_write_spreadsheet(tab, true)
-        opx_print("\Final Vote Count Data (CSV Spreadsheet Format):\n\n")
+        opx_print("\nFinal Vote Count Data (CSV Spreadsheet Format):\n\n")
         opx_print(lines)
       else
         lines = opx_file_write_spreadsheet(tab, false)
