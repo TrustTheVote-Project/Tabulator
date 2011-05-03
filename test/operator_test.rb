@@ -59,7 +59,6 @@ class TabulatorOperatorTest < Test::Unit::TestCase
     optest_command_error("add blah blah")
     optest_command_error("check blah blah")
     optest_command_error("data")
-    optest_command_error("state")
     optest_command_error("total")
     optest_command_error("check")
     optest_command_ok("reset")

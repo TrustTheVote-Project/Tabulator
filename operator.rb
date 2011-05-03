@@ -286,12 +286,19 @@ Tabulator data file: #{TABULATOR_DATA_FILE}
   def opc_total()
     opx_err("Command \"total\" ignored, Tabulator state: EMPTY") if opx_empty_state?()
     tab = opx_instantiate_tabulator()
-    if (["ACCUMULATING", "DONE"].include?(opc_state(tab, true)))
-      opx_print("\nWriting Tabulator Spreadsheet: " +
-                "#{TABULATOR_SPREADSHEET_FILE}\n")
-      lines = opx_file_write_spreadsheet(tab)
-      opx_print("\nSpreadsheet Data (CSV Format):\n\n")
-      opx_print(lines)
+    state = opc_state(tab, true)
+    if (["ACCUMULATING", "DONE"].include?(state))
+      if (state == "DONE")
+        opx_print("\nWriting Tabulator Spreadsheet: " +
+                  "#{TABULATOR_SPREADSHEET_FILE}\n")
+        lines = opx_file_write_spreadsheet(tab, true)
+        opx_print("\Final Vote Count Data (CSV Spreadsheet Format):\n\n")
+        opx_print(lines)
+      else
+        lines = opx_file_write_spreadsheet(tab, false)
+        opx_print("\nPartial Vote Count Data (CSV Spreadsheet Format):\n\n")
+        opx_print(lines)
+      end
     end
   end
   
@@ -613,6 +620,7 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 
 # Arguments:
 # * <i>tab</i>: (<i>Class Object</i>) Tabulator object
+# * <i>output</i>: (<i>Boolean</i>) whether or not to write the data to file
 #
 # Returns: <i>Array</i> of <i>String</i>
 #
@@ -621,12 +629,14 @@ Carefully examine the data above, then confirm approval to continue [y/n]: ")
 # to <tt><b>TABULATOR_SPREADSHEET_FILE</b></tt>, and then returns.  Generates
 # a Fatal error if problems occur during the write.
 
-  def opx_file_write_spreadsheet(tab)
+  def opx_file_write_spreadsheet(tab, output)
     file = TABULATOR_SPREADSHEET_FILE
     lines = tab.tabulator_spreadsheet()
-    outfile = opx_file_open_write(file)
-    outfile.puts lines
-    opx_file_close(outfile)
+    if (output)
+      outfile = opx_file_open_write(file)
+      outfile.puts lines
+      opx_file_close(outfile)
+    end
     lines
   rescue => e
     opx_err("Fatal failure writing to spreadsheet file: #{file}", e)
